@@ -19,9 +19,18 @@
     "types": [
       "node"
     ],
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "checkJs": true
   },
   "include": [
-    "src/**/*.ts"
+    "src/**/*.ts",
+    "src/ui/**/*.js",
+    "src/screens/**/*.js",
+    "src/ui/**/*.d.ts",
+    "src/ui/assets.d.ts"
+  ],
+  "exclude": [
+    "src/**/*.loose.js"
   ]
 }

@@ -1,9 +1,16 @@
+// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// घोषदंड संकेत page: learn the 8 signals (शिका) and watch a full cycle with real sound (पूर्ण आवर्तन).
+// The figure is src/screens/ghoshdand/figure; every sound comes from the app's engine, scheduled by the shared Transport.
+import { Screen } from '../../ui/screen.js';
+import { Transport } from '../../audio/transport.ts';
+import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
+import { Figure } from './figure.loose.js';
 
-/* sanketui.js — घोषदंड संकेत page: learn the 8 signals (शिका) and watch a full cycle with real sound (पूर्ण आवर्तन).
- * The figure comes from sanket.js; every sound comes from the app's own engine. */
-(function () {
-'use strict';
-const SK = window.Sanket;
+/** @param {import('../../ui/env.d.ts').AppEnv} env */
+function createGhoshdand(env) {
+const { tx, esc, dv, I18N, loadJSON, audio: A, player: PL } = env;
+const $ = env.q;   // like v1.1.0: null when the element is absent
+const SK = Figure;
 const LS = {
  mr: { k_open: 'घोषदंड संकेत', k_title: 'घोषदंड संकेत', k_stop: 'थांबवा', k_tabs: ['शिका', 'पूर्ण आवर्तन'], k_views: ['वादकांच्या नजरेतून', 'प्रमुखाच्या मागून'],
   k_rules: 'सर्व संकेतांसाठी नियम', k_when: 'केव्हा', k_does: 'परिणाम', k_page: p => `घोष परिचय पृ. ${p}`, k_play: '⏸ थांबवा', k_resume: '▶ चालवा', k_again: '↺ पुन्हा', k_slow: '½× हळू', k_close: '✕ बंद',
@@ -34,38 +41,38 @@ const LS = {
   k_pramukh: 'घोष प्रमुख', k_dal: 'Section leader', k_loading: 'Getting ready…', k_err: 'Could not open the rachana.' },
 };
 for (const l in LS) if (typeof I18N !== 'undefined' && I18N[l]) I18N[l].k_open = LS[l].k_open;
-const lang = () => (typeof LANG !== 'undefined' && LS[LANG]) ? LANG : 'mr';
+const lang = () => LS[env.lang()] ? env.lang() : 'mr';
 const tk = (k, ...a) => { const v = LS[lang()][k]; return typeof v === 'function' ? v(...a) : v; };
 const T = x => SK.T(x, lang());
-const n = x => (typeof dv === 'function' ? dv(x) : String(x));
+const n = x => dv(x);
 const LET = { mr: 'अबकडइ', hi: 'अबकडइ', en: 'abcde' };
 let tab = 0, view = 'front';
 try { const v = localStorage.getItem('ghosh.skView'); if (v) view = v; } catch (e) {}
 
 /* ---------- the engine: a list of timed sounds + a frame function, one at a time; the shared Transport does the scheduling ---------- */
 const E = { items: [], end: 0, playing: false, pos: 0, raf: 0, bus: null, frame: null, speed: 1 };
-const TR2 = new GhoshAudio.Transport(ENG, {
+const TR2 = new Transport(A.engine, {
   dispatch: (it, at) => { try { it.fn(at, bus()); } catch (e) {} },
   onEnd: () => { E.pos = E.end; halt(true); paint(); setBtn(); },
   onInterrupt: () => { halt(true); setBtn(); },          // a call or the lock screen took the sound: pause here
 });
-function bus() { audio(); if (!E.bus) { E.bus = ctx.createGain(); E.bus.gain.value = 1; E.bus.connect(master); } return E.bus; }
-function lat() { return typeof outLat === 'function' ? outLat() : 0; }
+function bus() { A.unlock(); if (!E.bus) { E.bus = A.ctx.createGain(); E.bus.gain.value = 1; E.bus.connect(A.master); } return E.bus; }
+function lat() { return A.outLat(); }
 function now() { return E.playing ? Math.max(0, TR2.position() - lat()) : E.pos; }
 function play(from = 0) {
-  halt(true); audio();
-  if (typeof announce === 'function') announce();
-  if (typeof S !== 'undefined' && S.playing && typeof stop === 'function') stop();
-  if (window.SoundLab && SoundLab.stopAll) SoundLab.stopAll();
+  halt(true); A.unlock();
+  A.announce();
+  if (PL.S.playing) PL.stop();
+  env.app().get('soundcheck').onStopAll();
   TR2.load(E.items, E.end); TR2.start({ from, lead: .1 });
-  E.playing = true; E.raf = requestAnimationFrame(loop); if (typeof wake === 'function') wake(true);
+  E.playing = true; E.raf = requestAnimationFrame(loop); env.wake(true);
   setBtn();
 }
 function loop() { if (!E.playing) return; paint(); E.raf = requestAnimationFrame(loop); }
 function halt(keep) {
   if (E.playing) E.pos = now();
   E.playing = false; TR2.halt(); cancelAnimationFrame(E.raf);
-  if (E.bus && ctx) { const o = E.bus; E.bus = null; o.gain.setTargetAtTime(0, ctx.currentTime, .015); setTimeout(() => { try { o.disconnect(); } catch (e) {} }, 300); }
+  if (E.bus && A.ctx) { const o = E.bus; E.bus = null; o.gain.setTargetAtTime(0, A.ctx.currentTime, .015); setTimeout(() => { try { o.disconnect(); } catch (e) {} }, 300); }
   if (!keep) E.pos = 0;
 }
 function paint() { if (E.frame) E.frame(Math.min(now(), E.end)); }
@@ -73,8 +80,8 @@ function setBtn() { const b = document.querySelector('#sk .sk-pp'); if (b) b.tex
 function stopAll() { halt(true); setBtn(); }
 
 /* app sounds */
-const tv = (at, o, v = .72) => { panav(at, v, o, .5); jhal(at, v, o, .5); trib(at, v, o, .5); };
-const dd = (at, o, d) => { panav(at, 1, o, .3); panav(at + Math.max(.16, d * .45), 1, o, .3); };
+const tv = (at, o, v = .72) => { A.panav(at, v, o, .5); A.jhal(at, v, o, .5); A.trib(at, v, o, .5); };
+const dd = (at, o, d) => { A.panav(at, 1, o, .3); A.panav(at + Math.max(.16, d * .45), 1, o, .3); };
 
 /* ---------- shared bits ---------- */
 const fig = (pose, label) => {
@@ -126,8 +133,8 @@ function openSignal(id, i, keepTime) {
   const items = [];
   for (let k = 1; k <= a.n; k++) {
     const at = tl.T[k], mm = k >= m[0] && k <= m[1], mus = a.music && k >= a.music[0] && k <= a.music[1];
-    if (mm) items.push({ t: at, fn: (x, o) => footfall(x, k % 2 ? 'L' : 'R', o) });
-    else items.push({ t: at, fn: (x, o) => click(x, .25, o) });
+    if (mm) items.push({ t: at, fn: (x, o) => A.footfall(x, k % 2 ? 'L' : 'R', o) });
+    else items.push({ t: at, fn: (x, o) => A.click(x, .25, o) });
     if (mus) items.push({ t: at, fn: (x, o) => tv(x, o, k % 2 ? .85 : .65) });
     if (a.dd && a.dd.includes(k)) items.push({ t: at + .001, fn: (x, o) => dd(x, o, tl.D[k]) });
   }
@@ -161,11 +168,11 @@ let CY = null;   // built cycle
 const PARTS = ['shankh', 'vanshi', 'anak', 'panav', 'jhallari', 'tribhuj', 'steps'];
 function soundOf(k, e) {
   if (e.type === 'rest' || e.type === 'hold') return null;
-  if (e.type === 'step') return (x, o) => footfall(x, e.foot, o);
+  if (e.type === 'step') return (x, o) => A.footfall(x, e.foot, o);
   const v = e.loud ? 1.75 : e.accent ? 1 : .72;
-  if (e.stroke === 'dhvam' || e.stroke === 'jham' || e.stroke === 'tam') { const ml = e.dur ? Math.max(.2, e.dur * 1.5) : 0; const f = e.stroke === 'dhvam' ? panav : e.stroke === 'jham' ? jhal : trib; return (x, o) => f(x, v, o, ml); }
-  if (e.type === 'stroke') return (x, o) => playStroke(e, x, o);
-  if (e.type === 'note') { const vs = voicesFor(k); return (x, o) => vs.forEach(vc => playNote({ ...e, pk: k }, x, o, vc)); }
+  if (e.stroke === 'dhvam' || e.stroke === 'jham' || e.stroke === 'tam') { const ml = e.dur ? Math.max(.2, e.dur * 1.5) : 0; const f = e.stroke === 'dhvam' ? A.panav : e.stroke === 'jham' ? A.jhal : A.trib; return (x, o) => f(x, v, o, ml); }
+  if (e.type === 'stroke') return (x, o) => A.playStroke(e, x, o);
+  if (e.type === 'note') { const vs = A.voicesFor(k); return (x, o) => vs.forEach(vc => A.playNote({ ...e, pk: k }, x, o, vc)); }
   return null;
 }
 function withOrder(p, perf) { return { ...p, rhythm: { ...p.rhythm, performance: perf } }; }
@@ -253,8 +260,8 @@ async function buildCycle(speed) {
     [[TS[k], t0S], [TK[k], t0K]].forEach(([tl, off]) => { if (!tl) return;
       tl.sounds.forEach(e => { const t = off + e.t; if (k === 'steps' && t > Tm[HALT] + .01) return; const fn = soundOf(k, e); if (fn) items.push({ t, fn }); }); });
   });
-  for (let k = 1; k < MARCH0; k++) items.push({ t: Tm[k], fn: (x, o) => click(x, .22, o) });
-  for (let k = HALT + 1; k <= N; k++) if (Tm[k] > endMusic - .01) items.push({ t: Tm[k], fn: (x, o) => click(x, .22, o) });
+  for (let k = 1; k < MARCH0; k++) items.push({ t: Tm[k], fn: (x, o) => A.click(x, .22, o) });
+  for (let k = HALT + 1; k <= N; k++) if (Tm[k] > endMusic - .01) items.push({ t: Tm[k], fn: (x, o) => A.click(x, .22, o) });
   ddAt.forEach(k => items.push({ t: Tm[k] + .002, fn: (x, o) => dd(x, o, md) }));
   items.sort((a, b) => a.t - b.t);
   // what the big number shows for each count
@@ -324,7 +331,7 @@ let from = null;
 function open(t) {
   from = !$('#player').hidden ? 'player' : 'list';
   if (!$('#sheet').hidden) $('#sheet').hidden = true;
-  if (typeof S !== 'undefined' && S.playing && typeof stop === 'function') stop();
+  if (PL.S.playing) PL.stop();
   if (t != null) tab = +t;
   $('#sk').hidden = false; render(); $('#skBody').scrollTop = 0;
 }
@@ -337,6 +344,15 @@ $('#skView').addEventListener('click', e => { const b = e.target.closest('[data-
 $('#skBody').addEventListener('click', e => { const b = e.target.closest('[data-skp]'); if (!b) return; const [id, i] = b.dataset.skp.split(':'); E.speed = E.speed || 1; openSignal(id, +i); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#sk').hidden) close(); });
 document.addEventListener('click', e => { const b = e.target.closest('[data-sanket]'); if (b) { e.preventDefault(); open(b.dataset.sanket || null); } });
-window.SanketUI = { open, close, stopAll, lang() { if (!$('#sk').hidden) { const p = E.playing; halt(true); render(); } }, _cycle: () => CY, _E: E };
-})();
 
+return { open, close, stopAll, lang() { if (!$('#sk').hidden) { const p = E.playing; halt(true); render(); } }, _cycle: () => CY, _E: E };
+}
+
+export class GhoshdandScreen extends Screen {
+  /** @param {import('../../ui/env.d.ts').AppEnv} env */
+  constructor(env) { super(env, '#sk'); this.page = createGhoshdand(env); }
+  open(arg) { return this.page.open(arg); }
+  close() { this.page.close(); }
+  onLang() { this.page.lang(); }
+  onStopAll() { this.page.stopAll(); }
+}

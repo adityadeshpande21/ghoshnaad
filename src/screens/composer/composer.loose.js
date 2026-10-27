@@ -1,8 +1,16 @@
+// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// Write a new rachana: grid of matras, ghosh keypad, आनक suggestions, checks, play, save on this device.
+import { Screen } from '../../ui/screen.js';
+import * as C from '../../core/composer.ts';
+import { compile3 } from '../../core/compile/ghosh3.ts';
+import talasJson from '../../../rules/talas.json';
 
-/* composer.js — write a new rachana: grid of matras, ghosh keypad, आनक suggestions, checks, play, save on this device. */
-(function () {
-'use strict';
-const C = window.Composer, TI = C.TALA_INFO;
+/** @param {import('../../ui/env.d.ts').AppEnv} env */
+function createComposer(env) {
+const { tx, esc, dv, L, I18N, applyStatic, fitRows, loadJSON, player: PL } = env;
+const $ = env.q;   // like v1.1.0: null when the element is absent
+const compile3x = src => compile3(src, { talas: talasJson });
+const TI = C.TALA_INFO;
 
 /* ---------- strings (मराठी / हिंदी / English) ---------- */
 const CS = {
@@ -82,18 +90,27 @@ const k2 = (k, i, ...a) => { const v = L()[k][i]; return typeof v === 'function'
 /* ---------- storage: this device only ---------- */
 let MINE = [], saveOk = true, DATA = null;
 function loadMine() { try { const v = JSON.parse(localStorage.getItem('ghosh.mine') || '[]'); MINE = Array.isArray(v) ? v.filter(r => r && r.blocks) : []; } catch (e) { MINE = []; } }
-let saveT = null;
+let saveT = null, saving = false, frozen = false;
+let flushNow = null;
 function saveMine(now) {
   clearTimeout(saveT);
-  const go = () => { try { localStorage.setItem('ghosh.mine', JSON.stringify(MINE)); saveOk = true; } catch (e) { saveOk = false; } if (!$('#ceditor').hidden) renderHead(); if (window.Library) Library.syncMine(); };
-  if (now) go(); else saveT = setTimeout(go, 300);
+  if (frozen) return;                       // a restore is replacing the list: nothing may write the old one over it
+  saving = true;
+  const go = () => {
+    saving = false; flushNow = null;
+    if (frozen) return;
+    try { localStorage.setItem('ghosh.mine', JSON.stringify(MINE)); saveOk = true; } catch (e) { saveOk = false; }
+    if (window.PlatformUI) window.PlatformUI.edit();
+    if (!$('#ceditor').hidden) renderHead(); if (window.Library) window.Library.syncMine();
+  };
+  if (now) go(); else { flushNow = go; saveT = setTimeout(go, 300); }
 }
 async function data() { if (!DATA) { try { DATA = await loadJSON('data/composer.json'); } catch (e) { DATA = { ragas: [], anak: {} }; } } return DATA; }
 
 /* ---------- views ---------- */
 let view = null, lastView = 'ceditor';
 function show(id) {
-  if (id !== 'ceditor' && S.custom) stopPlay();
+  if (id !== 'ceditor' && PL.S.custom) stopPlay();
   $('#list').hidden = true; $('#player').hidden = true;
   document.querySelectorAll('.cview').forEach(v => { v.hidden = v.id !== id; });
   view = id; if (id === 'ceditor' || id === 'ccheck') lastView = id;
@@ -103,7 +120,7 @@ function toList() { stopPlay(); document.querySelectorAll('.cview').forEach(v =>
 /* ---------- library tabs + my rachanas ---------- */
 let lib = 'book', menuFor = null, renaming = null, confirmDel = null;
 function setLib(l) {
-  lib = l; try { store.set('lib', l); } catch (e) {}
+  lib = l; try { env.store.set('lib', l); } catch (e) {}
   $('#bookWrap').hidden = l !== 'book'; $('#mineWrap').hidden = l !== 'mine';
   document.querySelectorAll('[data-lib]').forEach(b => b.setAttribute('aria-selected', b.dataset.lib === l));
   if (l === 'mine') renderMine();
@@ -112,12 +129,12 @@ const instrName = k => tx('parts')[k];
 const talaLabel = k => (L().romanNames ? TI[k].rom : TI[k].dev);
 function metaOf(r) {
   const d = new Date(r.updated || r.created || Date.now()), today = new Date().toDateString() === d.toDateString();
-  const when = today ? tx('c_today') + ' ' + dv(String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')) : d.toLocaleDateString(LANG === 'en' ? 'en-IN' : (LANG === 'hi' ? 'hi-IN' : 'mr-IN'), { day: 'numeric', month: 'short' });
-  return [instrName(r.instr), talaLabel(r.tala) + ' ' + dv(r.laya), r.raga && r.raga.name ? (L().romanNames ? (RAGA_ROM[r.raga.name] || r.raga.name) : r.raga.name) : '', when].filter(Boolean).join(' · ');
+  const when = today ? tx('c_today') + ' ' + dv(String(d.getHours()).padStart(2, '0') + ':' + String(d.getMinutes()).padStart(2, '0')) : d.toLocaleDateString(env.lang() === 'en' ? 'en-IN' : (env.lang() === 'hi' ? 'hi-IN' : 'mr-IN'), { day: 'numeric', month: 'short' });
+  return [instrName(r.instr), talaLabel(r.tala) + ' ' + dv(r.laya), r.raga && r.raga.name ? (L().romanNames ? (env.settings.RAGA_ROM[r.raga.name] || r.raga.name) : r.raga.name) : '', when].filter(Boolean).join(' · ');
 }
 const isReady = r => !C.check(r).some(x => x.sev === 'fix');
 function renderLibTabs() {
-  const nl = (window.LIBROWS || []).length; document.querySelectorAll('[data-lib="book"]').forEach(b => b.textContent = nl ? tx('l_tabAll', dv(LIST.length)) : tx('c_book', dv(LIST.length || 120)));
+  const nl = (window.LIBROWS || []).length; document.querySelectorAll('[data-lib="book"]').forEach(b => b.textContent = nl ? tx('l_tabAll', dv(PL.LIST.length)) : tx('c_book', dv(PL.LIST.length || 120)));
   document.querySelectorAll('[data-lib="mine"]').forEach(b => b.textContent = tx('c_mine'));
 }
 function renderMine() {
@@ -147,20 +164,20 @@ document.addEventListener('click', e => {
   const t = e.target.closest('[data-lib],[data-open],[data-play],[data-menu],[data-act],#mNew,#mImport'); if (!t || !t.closest('#list')) return;
   if (t.dataset.lib) { setLib(t.dataset.lib); return; }
   if (t.dataset.open) { openEditor(t.dataset.open); return; }
-  if (t.dataset.play) { audio(); playWhole(byId(t.dataset.play), {}); return; }
+  if (t.dataset.play) { env.audio.unlock(); playWhole(byId(t.dataset.play), {}); return; }
   if (t.dataset.menu) { menuFor = menuFor === t.dataset.menu ? null : t.dataset.menu; renaming = confirmDel = null; renderMine(); return; }
   if (t.id === 'mNew') { openNew(); return; }
   if (t.id === 'mImport') { $('#cImport').value = ''; $('#cImport').click(); return; }
   const r = byId(t.dataset.id), a = t.dataset.act;
   if (a === 'edit') openEditor(r.id);
   else if (a === 'export') openExport(r);
-  else if (a === 'lipi') { const pc = compileCur(r); if (pc) Swarlipi.open(pc); }
+  else if (a === 'lipi') { const pc = compileCur(r); if (pc) window.Swarlipi.open(pc); }
   else if (a === 'dup') { const c = dupOf(r); MINE.push(c); saveMine(true); menuFor = c.id; renderMine(); }
   else if (a === 'rename') { renaming = r.id; renderMine(); }
   else if (a === 'renameOk') { const v = ($('#mRename').value || '').trim(); if (v) { r.name = v; touch(r); } renaming = null; renderMine(); }
-  else if (a === 'player') { audio(); playWhole(r, {}); }
+  else if (a === 'player') { env.audio.unlock(); playWhole(r, {}); }
   else if (a === 'del') { confirmDel = r.id; renderMine(); }
-  else if (a === 'delOk') { MINE = MINE.filter(x => x.id !== t.dataset.id); saveMine(true); if (window.Library) Library.mineDeleted(t.dataset.id); menuFor = confirmDel = null; renderMine(); }
+  else if (a === 'delOk') { MINE = MINE.filter(x => x.id !== t.dataset.id); saveMine(true); if (window.Library) window.Library.mineDeleted(t.dataset.id); menuFor = confirmDel = null; renderMine(); }
   else if (a === 'delNo') { confirmDel = null; renderMine(); }
 });
 
@@ -170,11 +187,11 @@ async function openNew() {
   const D = await data();
   nf = { name: tx('c_defName', dv(MINE.length + 1)), instr: 'vanshi', tala: 'kerva', laya: TI.kerva.laya, raga: '' };
   $('#cName').value = nf.name; $('#cRaga').value = '';
-  $('#cRagaList').innerHTML = D.ragas.map(r => `<option value="${esc(r.name)}">${esc(RAGA_ROM[r.name] || '')}</option>`).join('');
+  $('#cRagaList').innerHTML = D.ragas.map(r => `<option value="${esc(r.name)}">${esc(env.settings.RAGA_ROM[r.name] || '')}</option>`).join('');
   show('cnew'); renderNew();
 }
 function ragaInfo(name) { const D = DATA || { ragas: [] }; const n = String(name || '').trim(); if (!n) return null;
-  return D.ragas.find(r => r.name === n || (RAGA_ROM[r.name] || '').toLowerCase() === n.toLowerCase()) || { name: n }; }
+  return D.ragas.find(r => r.name === n || (env.settings.RAGA_ROM[r.name] || '').toLowerCase() === n.toLowerCase()) || { name: n }; }
 function renderNew() {
   $('#cInstr').innerHTML = ['shankh', 'vanshi'].map(k => `<button data-instr="${k}" aria-pressed="${nf.instr === k}"><b>${esc(instrName(k))}</b><small>${esc(tx(k === 'shankh' ? 'c_shankhSub' : 'c_vanshiSub'))}</small></button>`).join('');
   $('#cTala').innerHTML = Object.keys(TI).map(k => `<button data-tala="${k}" aria-pressed="${nf.tala === k}">${esc(talaLabel(k))}<small>${esc(tx('c_matras', dv(TI[k].gan * (k === 'rupak' ? 1 : 2))))}</small></button>`).join('');
@@ -260,7 +277,7 @@ function tokHTML(t, isAnak) {
   return `<span class="${cls}">${esc(p.base)}</span>`;
 }
 function talCells(line, blockEnd) {
-  const T = (window.GhoshCompile && GhoshCompile.talas.talas[cur.tala]) || null;
+  const T = talasJson.talas[cur.tala] || null;
   const cyc = T ? T.cycle : TI[cur.tala].gan * 2, beats = T ? new Set(T.talVadya.variants[T.talVadya.default].beats) : null;
   const isStep = i => !beats || beats.has((i % cyc) + 1);
   // पणव on every step (also over आनक rests), not on +; on a चरण's last step: झल्लरी + त्रिभुज loud (झ) instead
@@ -410,8 +427,8 @@ $('#ceditor').addEventListener('click', e => {
   if (t.id === 'cTitle') { renameInline(); return; }
   if (t.id === 'cPlayLine') { playScope('line'); return; }
   if (t.id === 'cPlayBlock') { playScope('block'); return; }
-  if (t.id === 'cPlayAll') { audio(); playWhole(cur, { returnTo: 'composer' }); return; }
-  if (t.id === 'cTdown' || t.id === 'cTup') { snapshot(); cur.laya = Math.max(40, Math.min(600, cur.laya + (t.id === 'cTup' ? 1 : -1) * layaStep(cur.laya))); changed(); if (S.custom) playScope(playing, true); return; }
+  if (t.id === 'cPlayAll') { env.audio.unlock(); playWhole(cur, { returnTo: 'composer' }); return; }
+  if (t.id === 'cTdown' || t.id === 'cTup') { snapshot(); cur.laya = Math.max(40, Math.min(600, cur.laya + (t.id === 'cTup' ? 1 : -1) * layaStep(cur.laya))); changed(); if (PL.S.custom) playScope(playing, true); return; }
 });
 function renameInline() {
   const b = $('#cTitle'); const inp = document.createElement('input'); inp.value = cur.name; inp.maxLength = 60; inp.className = 'ctitle'; inp.setAttribute('aria-label', tx('c_rename'));
@@ -447,38 +464,38 @@ document.addEventListener('keydown', e => {
 let playing = null, lastCell = null;
 function compileCur(r) {
   if (!r.blocks.some(b => b.lines.some(l => l.mel.some(m => m.s.some(t => t !== 'ऽ' && t !== '–'))))) { toast(tx('c_fillFirst')); return null; }
-  try { const { piece } = GhoshCompile.compile3(C.toSource(r)); return piece; }
+  try { const { piece } = compile3x(C.toSource(r)); return piece; }
   catch (e) { toast(tx('c_compileErr') + ': ' + (e.message || e)); return null; }
 }
-function stopPlay() { if (S.custom) { stop(true); S.custom = null; } playing = null; if (lastCell) { lastCell.classList.remove('play'); lastCell = null; } setIco(); }
+function stopPlay() { if (PL.S.custom) { stop(true); PL.S.custom = null; } playing = null; if (lastCell) { lastCell.classList.remove('play'); lastCell = null; } setIco(); }
 function setIco() { const p = $('#cPlayIco'); if (p) p.setAttribute('d', playing === 'line' ? 'M7 5h4v14H7zM13 5h4v14h-4z' : 'M7 5v14l11-7z'); }
 function playScope(scope, restart) {
   if (playing === scope && !restart) { stopPlay(); return; }
-  audio(); const piece = compileCur(cur); if (!piece) return;
-  loadPiece(piece, 'printed'); renderPlayer(); build();
-  const cid = 'c' + (sel.bi + 1), lb = TL[LEAD].beats.filter(b => b.key && b.pass === 1 && b.key.startsWith(cid + '.b.'));
+  env.audio.unlock(); const piece = compileCur(cur); if (!piece) return;
+  PL.loadPiece(piece, 'printed'); env.renderPlayer(); PL.build();
+  const cid = 'c' + (sel.bi + 1), lb = PL.TL[PL.LEAD].beats.filter(b => b.key && b.pass === 1 && b.key.startsWith(cid + '.b.'));
   const inScope = b => scope === 'block' || Math.floor(+b.key.split('.')[2] / C.GANS_PER_LINE) === sel.li;
   const bs = lb.filter(inScope); if (!bs.length) return;
   const s = Math.min(...bs.map(b => b.t)), e = Math.max(...bs.map(b => b.t + b.dur));
-  S.custom = { s, e }; playing = scope; setIco(); start(s, false);
+  PL.S.custom = { s, e }; playing = scope; setIco(); PL.start(s, false);
 }
 window.onEnginePaint = t => {
-  if (view !== 'ceditor' || !S.custom) return;
-  const arr = TL[LEAD] && TL[LEAD].beats; if (!arr) return;
+  if (view !== 'ceditor' || !PL.S.custom) return;
+  const arr = PL.TL[PL.LEAD] && PL.TL[PL.LEAD].beats; if (!arr) return;
   let lo = 0, hi = arr.length - 1, a = -1; while (lo <= hi) { const m = (lo + hi) >> 1; if (arr[m].t <= t) { a = m; lo = m + 1; } else hi = m - 1; }
   const b = a >= 0 ? arr[a] : null; let el = null;
   if (b && b.key) { const p = b.key.split('.'); const bi = +p[0].slice(1) - 1, gi = +p[2], mi = +p[3];
     if (bi === sel.bi) { const li = Math.floor(gi / C.GANS_PER_LINE), i = (gi % C.GANS_PER_LINE) * TI[cur.tala].gan + mi; el = document.querySelector(`#cLines .cc[data-l="${li}"][data-r="mel"][data-i="${i}"]`); } }
   if (el !== lastCell) { if (lastCell) lastCell.classList.remove('play'); if (el) el.classList.add('play'); lastCell = el; }
 };
-function playWhole(r, o) { const piece = compileCur(r); if (!piece) return; stopPlay(); showPiece(piece, { play: !o.march, march: o.march, returnTo: view ? 'composer' : null }); }
+function playWhole(r, o) { const piece = compileCur(r); if (!piece) return; stopPlay(); PL.showPiece(piece, { play: !o.march, march: o.march, returnTo: view ? 'composer' : null }); }
 
 /* ---------- check ---------- */
 function where(at) { return tx('c_where', blockLabel(at.bi), dv(at.li + 1), dv(at.i + 1)); }
 function openCheck() { stopPlay(); show('ccheck'); renderCheck(); }
 function renderCheck() {
   const items = C.check(cur); let warn = [];
-  try { const src = C.toSource(cur); warn = (GhoshCompile.compile3(src).warnings || []).map(w => ({ sev: 'fix', k: 'compile', msg: (w.line ? '#' + w.line + ': ' : '') + w.msg, at: null })); } catch (e) { warn = [{ sev: 'fix', k: 'compile', msg: String(e.message || e), at: null }]; }
+  try { const src = C.toSource(cur); warn = (compile3x(src).warnings || []).map(w => ({ sev: 'fix', k: 'compile', msg: (w.line ? '#' + w.line + ': ' : '') + w.msg, at: null })); } catch (e) { warn = [{ sev: 'fix', k: 'compile', msg: String(e.message || e), at: null }]; }
   const all = items.concat(warn), fx = all.filter(x => x.sev === 'fix').length, tp = all.length - fx;
   $('#cchkSub').textContent = cur.name + ' · ' + metaOf(cur);
   let h = `<div class="cstat">${fx ? `<span class="f">${esc(tx('c_fixes', dv(fx)))}</span>` : ''}${tp ? `<span class="t">${esc(tx('c_tips', dv(tp)))}</span>` : ''}${!all.length ? `<span class="o">${esc(tx('c_allOk'))}</span>` : ''}</div>`;
@@ -495,8 +512,8 @@ $('#ccheck').addEventListener('click', e => {
   if (t.id === 'cchkBack') { show('ceditor'); render(); return; }
   if (t.dataset.go != null) { const x = $('#cchkBody')._all[+t.dataset.go]; openEditor(cur.id, { ...x.at }); tab = x.at.row === 'anak' ? 'anak' : 'swar'; render(); return; }
   if (t.dataset.keep) { cur.ignore = (cur.ignore || []).concat(t.dataset.keep); touch(cur); renderCheck(); return; }
-  if (t.id === 'cchkPlay') { audio(); playWhole(cur, { returnTo: 'composer' }); return; }
-  if (t.id === 'cchkMarch') { audio(); playWhole(cur, { march: true, returnTo: 'composer' }); return; }
+  if (t.id === 'cchkPlay') { env.audio.unlock(); playWhole(cur, { returnTo: 'composer' }); return; }
+  if (t.id === 'cchkMarch') { env.audio.unlock(); playWhole(cur, { march: true, returnTo: 'composer' }); return; }
 });
 
 /* ---------- export / import ---------- */
@@ -550,8 +567,16 @@ $('#cImport').addEventListener('change', () => {
 });
 
 /* ---------- hooks into the app ---------- */
-window.ComposerUI = {
+
+try { applyStatic(); } catch (e) {}
+return {
   all: () => MINE,
+  // true while a change is waiting to be written, or the browser refused to write it
+  unsaved: () => saving || !saveOk,
+  // write a waiting change now (before a backup is taken)
+  flush() { if (flushNow) { clearTimeout(saveT); flushNow(); } },
+  freeze() { clearTimeout(saveT); frozen = true; },
+  unfreeze() { frozen = false; },
   tabs: () => renderLibTabs(),
   // own compositions read from the रचना फोल्डर: new ones join, newer versions replace
   mergeFolder(arr) {
@@ -562,8 +587,12 @@ window.ComposerUI = {
   },
   back() { show(lastView || 'ceditor'); if (lastView === 'ccheck') renderCheck(); else render(); },
   lang() { renderLibTabs(); if (lib === 'mine') renderMine(); if (view === 'ceditor') render(); if (view === 'ccheck') renderCheck(); if (view === 'cnew') renderNew(); },
-  init() { loadMine(); applyStatic(); renderLibTabs(); let l = 'book'; try { l = store.get('lib', 'book'); } catch (e) {} setLib(l === 'mine' ? 'mine' : 'book'); }
+  init() { loadMine(); applyStatic(); renderLibTabs(); let l = 'book'; try { l = env.store.get('lib', 'book'); } catch (e) {} setLib(l === 'mine' ? 'mine' : 'book'); }
 };
-try { applyStatic(); } catch (e) {}
-})();
+}
 
+export class ComposerScreen extends Screen {
+  /** @param {import('../../ui/env.d.ts').AppEnv} env */
+  constructor(env) { super(env, '#list'); this.ui = createComposer(env); }
+  onLang() { this.ui.lang(); }
+}

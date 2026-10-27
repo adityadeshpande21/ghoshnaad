@@ -51,6 +51,13 @@ test('single-file check rejects every way of reaching outside', () => {
   for (const [what, html] of Object.entries(bad)) assert.notDeepEqual(checkSingleFile(html), [], what);
 });
 
+test('a listed website address may appear as text, any other address may not', () => {
+  const html = '<p>https://example.org/app/</p>';
+  assert.deepEqual(checkSingleFile(html, { shownAddresses: ['https://example.org/app/'] }), []);
+  assert.notDeepEqual(checkSingleFile(html), []);
+  assert.notDeepEqual(checkSingleFile('<p>https://evil.example/</p>', { shownAddresses: ['https://example.org/app/'] }), []);
+});
+
 test('only index.html may carry the install links', () => {
   const html = '<head><link rel="manifest" href="manifest.webmanifest"></head>';
   assert.deepEqual(checkSingleFile(html, { allowInstallLinks: true }), []);

@@ -16,7 +16,7 @@
     "golden:record": "node tests/golden/record.mjs",
     "legacy:verify": "node tools/legacy-split.mjs verify legacy/v1.1.0/index.html legacy/src/app && node tools/legacy-split.mjs verify legacy/tala-velresha.html legacy/src/tala-velresha",
     "test:dist": "node --test \"tests/dist/*.test.mjs\"",
-    "typecheck": "tsc -p ."
+    "typecheck": "tsc -p . && node tools/check-names.mjs"
   },
   "devDependencies": {
     "@fontsource/mukta": "^5.3.0",

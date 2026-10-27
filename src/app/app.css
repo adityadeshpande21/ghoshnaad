@@ -550,3 +550,7 @@ html[lang="en"] .brand h1{font-family:var(--f-ui);font-weight:700;font-size:28px
 @media (max-width:760px){.sk-player{grid-template-columns:1fr}.sk-big{font-size:42px}}
 @media (max-width:520px){.sk-cards{grid-template-columns:1fr 1fr}.sk-stage{grid-template-columns:1fr}.sk-stage svg.side{display:none}}
 
+
+#tala{position:fixed;inset:0;z-index:35;background:var(--bg);display:flex;flex-direction:column;padding-top:env(safe-area-inset-top,0px)}
+#tala[hidden]{display:none}
+#talaHost{flex:1;min-height:0;overflow:auto;-webkit-overflow-scrolling:touch}

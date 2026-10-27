@@ -1,14 +1,19 @@
+// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// रचना फोल्डर: the user's own folder of rachana files, and the store of corrections.
+//  - The app always opens with the built-in rachanas. A folder chosen by the user is read on top of them:
+//    book-notation sources (ghosh-notation/1), compiled files (ghosh/3), own compositions (composer files)
+//    and correction bundles (ghosh-fixes/1). Folder rachanas are listed next to the book ones (both shown).
+//  - Saving: where the browser can write to the folder (Chrome / Edge / Android Chrome), files are written
+//    straight into it. Elsewhere they wait in the browser ("not saved as files") until downloaded.
+import { compile3 } from '../../core/compile/ghosh3.ts';
+import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
+import talasJson from '../../../rules/talas.json';
 
-/* library.js — रचना फोल्डर: the user's own folder of rachana files.
- *  - The app always opens with the built-in rachanas. A folder chosen by the user is read on top of them:
- *    book-notation sources (ghosh-notation/1), compiled files (ghosh/3), own compositions (composer files)
- *    and correction bundles (ghosh-fixes/1). Folder rachanas are listed next to the book ones (both shown).
- *  - Saving: where the browser can write to the folder (Chrome / Edge / Android Chrome), files are written
- *    straight into it. Elsewhere they wait in the browser ("not saved as files") until downloaded —
- *    one file, or all as a zip — and the person is shown how to keep them in one folder.
- */
-(function () {
-'use strict';
+/** @param {import('../../ui/env.d.ts').AppEnv} env */
+export function createLibrary(env) {
+const { tx, esc, dv, L, I18N, APP, setLibRows } = env;
+const $ = env.q;   // like v1.1.0: null when the element is absent
+const GhoshCompile = { compile3: src => compile3(src, { talas: talasJson }) };
 const LS = {
  mr: { l_pick: 'फोल्डर निवडा', l_pickNote: 'तुमच्या रचना ठेवलेला फोल्डर निवडा — तो इथे जोडला जाईल.', l_count: (a, n) => `${a} · ${n} रचना`, l_rescan: 'पुन्हा वाचा', l_change: 'फोल्डर बदला', l_unlink: 'फोल्डर काढा',
   l_reconnect: 'पुन्हा जोडा', l_reNote: 'ब्राउझर पुन्हा परवानगी विचारेल', l_ro: 'फक्त वाचन', l_pending: n => `फाइल म्हणून जतन बाकी: ${n}`, l_writeAll: 'फोल्डरमध्ये जतन करा', l_zip: 'सर्व डाउनलोड (zip)',
@@ -102,7 +107,7 @@ async function ingest(list) {
   // own compositions from the folder join माझ्या रचना
   const arr = [...mine.values()].map(m => { FILED['m:' + m.r.id] = { at: m.r.updated, file: m.file }; return m.r; });
   saveFiled();
-  if (window.ComposerUI && ComposerUI.mergeFolder) ComposerUI.mergeFolder(arr);
+  if (window.ComposerUI && window.ComposerUI.mergeFolder) window.ComposerUI.mergeFolder(arr);
   refresh();
   return { n: files.size, m: mine.size };
 }
@@ -162,7 +167,7 @@ async function safeWrite(ent, wanted, text, ownId) {
   }
   return { ...(await writeFile(await freeName(wanted, ownId), text)), conflict: false };
 }
-const stamp = o => ({ ...o, app: 'Ghoshnaad ' + (window.APP ? APP.version : '') });
+const stamp = o => ({ ...o, app: 'Ghoshnaad ' + APP.version });
 const srcText = src => JSON.stringify(stamp(src), null, 1);
 async function saveSource(src) {
   src = clone(src); src.updated = now();
@@ -176,6 +181,7 @@ async function saveSource(src) {
     } catch (e) { /* fall back to the browser */ }
   }
   PEND[src.id] = { src, at: src.updated }; savePend(); refresh();
+  if (window.PlatformUI) window.PlatformUI.edit();
   return { written: false };
 }
 async function removeSource(id) {
@@ -190,7 +196,7 @@ async function removeSource(id) {
 
 /* own compositions: written to the folder as they change (or counted as waiting) */
 const mineText = r => JSON.stringify(stamp({ ...window.Composer.toSource(r), composer: r }), null, 1);
-const mineUnsaved = () => (window.ComposerUI && ComposerUI.all ? ComposerUI.all() : []).filter(r => { const f = FILED['m:' + r.id]; return !f || f.at !== r.updated; });
+const mineUnsaved = () => (window.ComposerUI && window.ComposerUI.all ? window.ComposerUI.all() : []).filter(r => { const f = FILED['m:' + r.id]; return !f || f.at !== r.updated; });
 let syncT = null, syncing = false;
 function syncMine() { clearTimeout(syncT); syncT = setTimeout(flushMine, 1500); refreshSoon(); }
 async function flushMine() {
@@ -234,11 +240,11 @@ async function downloadSource(src) {
   refresh(); if (r === 'download') guide();
 }
 async function downloadAll() {
-  const z = {}, enc = s => fflate.strToU8(s);
+  const z = {}, enc = s => window.fflate.strToU8(s);
   Object.values(PEND).forEach(p => { z[p.src.id + '.ghosh.json'] = enc(srcText(p.src)); });
   mineUnsaved().forEach(r => { let n = safeName(r.name) + '.ghosh.json'; while (z[n]) n = n.replace(/\.ghosh\.json$/, '') + ' ' + r.id + '.ghosh.json'; z[n] = enc(mineText(r)); });
   if (!Object.keys(z).length) return;
-  const blob = new Blob([fflate.zipSync(z, { level: 6 })], { type: 'application/zip' });
+  const blob = new Blob([window.fflate.zipSync(z, { level: 6 })], { type: 'application/zip' });
   const r = await saveAs('ghoshnaad-rachana-' + now().slice(0, 10) + '.zip', blob);
   if (r === 'cancel') return;
   Object.values(PEND).forEach(p => { p.dl = true; }); savePend();
@@ -324,7 +330,7 @@ document.addEventListener('click', e => {
 
 let rT = null;
 function refreshSoon() { clearTimeout(rT); rT = setTimeout(renderBar, 300); }
-function refresh() { COMP.clear(); if (window.setLibRows) setLibRows(rows()); renderBar(); }
+function refresh() { COMP.clear(); setLibRows(rows()); renderBar(); }
 
 /* ---------- start ---------- */
 async function init() {
@@ -338,7 +344,7 @@ async function init() {
   }
 }
 
-window.Library = { init, pick, rows, pieceOf, sourceOf, saveSource, removeSource, downloadSource, downloadAll, syncMine, mineDeleted, pendingCount,
-  isLib: id => FILES.has(id) || !!PEND[id], mode: () => mode, sheetHTML, renderBar, guide };
-})();
 
+return { init, pick, rows, pieceOf, sourceOf, saveSource, removeSource, downloadSource, downloadAll, syncMine, mineDeleted, pendingCount,
+  isLib: id => FILES.has(id) || !!PEND[id], mode: () => mode, sheetHTML, renderBar, guide };
+}

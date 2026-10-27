@@ -9,7 +9,7 @@ const rel = {
   title: /<title>घोषनाद v[^<]*<\/title>/,
   appObject: /const APP=\{name:'Ghoshnaad',version:'[^']*',date:'[^']*'\};/,
   appVer: /<span class="sh-ver" id="appVer">[^<]*<\/span>/,
-  swRegister: /navigator\.serviceWorker\.register\('sw\.js'/,
+  headerVer: /<span class="ver">v[^<]*<\/span>/,
 };
 
 function once(text, re, to, what) {
@@ -33,10 +33,10 @@ export function assemble({ partsDir, generated, release, fontCss, variant }) {
         : '', 'install links');
       text = text.replace('</head>', `<style id="fonts">${fontCss}</style>\n</head>`);
     }
+    if (m.file === 'raw-02.html') text = once(text, rel.headerVer, `<span class="ver">v${release.version}</span>`, 'header version');
     if (m.file === 'raw-02.html') text = once(text, rel.appVer, `<span class="sh-ver" id="appVer">घोषनाद v${release.version} · ${release.date}</span>`, 'version label');
     if (m.file === 'app.js') {
-      text = once(text, rel.appObject, `const APP={name:'Ghoshnaad',version:'${release.version}',date:'${release.date}',variant:'${variant}'};`, 'APP object');
-      text = once(text, rel.swRegister, `navigator.serviceWorker.register('sw.js'`, 'service worker registration');
+      text = once(text, rel.appObject, `const APP={name:'Ghoshnaad',version:'${release.version}',date:'${release.date}',variant:'${variant}',site:${JSON.stringify(release.site)},whatsNew:${JSON.stringify(release.whatsNew)}};`, 'APP object');
     }
     return m.kind === 'raw' ? text : `<${m.kind}>${text}</${m.kind}>`;
   }).join('');

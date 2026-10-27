@@ -29,7 +29,10 @@ Set the version and "what's new" in [release.json](release.json) before releasin
 | `books/` | the 120 rachanas in book notation (`ghosh-notation/1`); `books-unshipped/` holds two not in the app yet |
 | `rules/` | `talas.json` (the only place tala facts live), book order, composer data |
 | `src/core/` | music rules in TypeScript: tokenize, compile, timeline. Pure functions, no DOM or sound |
+| `src/data/`, `src/platform/` | the person's work and the app around it, in TypeScript: `UserLibrary`, `Settings`, backup and restore; `StorageGuard`, `UpdateManager`, `InstallGuide`. Storage keys and formats are v1.1.0's, unchanged |
+| `src/i18n/` | texts of the new data and platform screens in Marathi, Hindi, English |
 | `src/audio/` | the sound, in TypeScript: `AudioEngine` (the one audio context, iPhone unlock, interruptions), `Drums`, melodic voices, `Transport` (the scheduler) |
+| `src/ui/`, `src/screens/` | the screen structure (`Screen`, `App`) and the screens already migrated (notation guide; the Ghoshdand figure). See [docs/MIGRATION.md](docs/MIGRATION.md) |
 | `src/app/` | the page scripts (player, composer, sound check, Ghoshdand …), forked from v1.1.0; they are replaced screen by screen |
 | `src/browser/` | entry points that expose the core, timeline and audio to the page scripts |
 | `legacy/` | v1.1.0 exactly as released (`v1.1.0/`) and its parts (`src/`): the reference the tests compare against; the build does not use it |

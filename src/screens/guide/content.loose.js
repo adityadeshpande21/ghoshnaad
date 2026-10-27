@@ -1,46 +1,10 @@
+// @ts-nocheck — moved from v1.1.0; not fully typed yet. `npm run typecheck` still fails on any unresolved shared name (tools/check-names.mjs).
+// The notation guide's text: every sign, how it is written, what it means and how the app plays it, in three languages.
+// rows: [drawn sign (HTML), how it is written in files / editor, name, meaning, how the app plays it]
+// N(src) draws a sample exactly as the player draws it; T(text) shows a sign as plain text.
 
-/* guide.js — स्वरलिपी मार्गदर्शक: every notation sign and marking used in the app, for all instruments,
- * with the sign drawn exactly as the player draws it, how it is typed (editor / files), and how the app plays it. */
-(function () {
-'use strict';
-
-/* ---------- a tiny renderer for samples: uses the player's own slot / matra drawing ---------- */
-const STROKES = { 'त्र': 'roll', 'थ्र': 'thra', 'त': 'ta', 'थ': 'tha', '+': 'click', 'ध्व': 'dhvam', 'झ': 'jham', 'ट': 'tam' };
-const SW = { 'स': 'S', 'री': 'R', 'ग': 'G', 'म': 'M', 'प': 'P', 'ध': 'D', 'नि': 'N' };
-const SYMS = ['ध्व', 'त्र', 'थ्र', 'री', 'नि', 'स', 'ग', 'म', 'प', 'ध', 'त', 'थ', 'झ', 'ट', '+', 'ऽ', '–'];
-function readSym(s, i) {
-  for (const k of SYMS) if (s.startsWith(k, i)) {
-    i += k.length; let o;
-    if (SW[k]) { o = { type: 'note', dev: k, swara: SW[k], octave: 0 }; while (/[.'_]/.test(s[i] || '')) { if (s[i] === '.') o.octave--; else if (s[i] === "'") o.octave++; else o.vikrit = true; i++; } }
-    else if (k === 'ऽ') o = { type: 'hold' }; else if (k === '–') o = { type: 'rest' };
-    else o = { type: 'stroke', dev: k, stroke: STROKES[k] };
-    for (;;) { const c = s[i]; if (c === '^') o.accent = true; else if (c === '!') o.fermata = true; else if (c === '<') o.swell = 'grow'; else if (c === '>') o.swell = 'fade'; else break; i++; }
-    return [o, i];
-  }
-  return [null, i + 1];
-}
-function sample(src) {
-  const out = []; let i = 0, slurOn = false, lastSlot = null, group = null, grace = null;
-  const add = sl => { if (grace) { sl.grace = grace; grace = null; } if (slurOn) { sl.slur = lastSlot && lastSlot.slur ? 'mid' : 'start'; } lastSlot = sl; if (group) group.push(sl); else out.push({ m: { slots: [sl] } }); };
-  while (i < src.length) {
-    const c = src[i];
-    if (c === ' ') { i++; continue; }
-    if (c === '[') { group = []; i++; continue; }
-    if (c === ']') { out.push({ m: { slots: group, group: true } }); group = null; i++; continue; }
-    if (c === '(') { slurOn = true; lastSlot = null; i++; continue; }
-    if (c === ')') { if (lastSlot) lastSlot.slur = 'end'; slurOn = false; i++; continue; }
-    if (c === '|' || c === ',') { out.push({ bar: c }); i++; continue; }
-    if (c === '`') { const [o, j] = readSym(src, i + 1); grace = [o]; i = j; continue; }
-    const [o, j] = readSym(src, i); if (o) add(o); i = j;
-  }
-  return out.map(x => x.bar ? `<span class="gd-bar">${x.bar}</span>` : matraHTML(x.m)).join('');
-}
-const N = (src, cls = '') => `<span class="gd-n ${cls}">${sample(src)}</span>`;
-const T = s => `<span class="gd-t">${esc(s)}</span>`;          // a sign shown as plain text (bar lines, cues …)
-
-/* ---------- content ----------
- * rows: [drawn sign (HTML), how it is written in files / editor, name, meaning, how the app plays it] */
-const C = {
+/** @param {{ N: (src: string, cls?: string) => string, T: (text: string) => string }} h */
+export const buildContent = ({ N, T }) => ({
  mr: {
   title: 'स्वरलिपी मार्गदर्शक', intro: 'घोष ग्रंथांतील स्वरलिपीचे प्रत्येक चिन्ह — ते ॲपमध्ये कसे दिसते, संपादकात कसे लिहायचे आणि ॲप ते कसे वाजवते.',
   head: ['चिन्ह', 'लिहा', 'अर्थ', 'ॲप कसे वाजवते'],
@@ -254,43 +218,4 @@ const C = {
      [T('Santar / Nirantar'), '—', 'Note length', 'Santar: a small gap between swaras; Nirantar: full.', '—'],
      [T('B♭ … F♯'), '—', 'Key', 'Sa for the शंख and वंशी parts set separately.', '—']] }
   ] }
-};
-
-for (const l in C) if (I18N[l]) I18N[l].g_open = C[l].title;
-
-/* ---------- view ---------- */
-const g = () => C[LANG] || C.mr;
-function render(jump) {
-  const G = g();
-  $('#gdT').textContent = G.title;
-  $('#gdToc').innerHTML = G.s.map(s => `<button data-gd="${s.id}">${esc(s.t)}</button>`).join('');
-  let h = `<p class="gd-intro">${esc(G.intro)}</p>`;
-  G.s.forEach(s => {
-    h += `<section class="gd-sec" id="gd-${s.id}"><h3>${esc(s.t)}</h3>`;
-    (s.p || []).forEach(p => { h += `<p>${p}</p>`; });
-    if (s.ex) h += `<div class="gd-ex"><span class="gd-n big r-vanshi">${sample(s.ex[0].replace(/॥ॐ॥/, ''))}</span><small>${esc(s.ex[1])}</small></div>`;
-    if (s.rows) h += `<div class="gd-rows">${s.rows.map(r => `<div class="gd-row"><div class="gd-sym">${r[0]}</div><div class="gd-txt"><b>${esc(r[2])}</b>${r[1] && r[1] !== '—' ? ` <code>${esc(r[1])}</code>` : ''}<span>${esc(r[3])}</span>${r[4] && r[4] !== '—' ? `<em>▶ ${esc(r[4])}</em>` : ''}</div></div>`).join('')}</div>`;
-    if (s.table) h += `<div class="gd-tw"><table class="gd-tab"><thead><tr>${s.table.head.map(x => `<th>${esc(x)}</th>`).join('')}</tr></thead><tbody>${s.table.rows.map(r => `<tr>${r.map(x => `<td>${esc(x)}</td>`).join('')}</tr>`).join('')}</tbody></table></div>`;
-    if (s.note) h += `<p class="gd-note">${s.note}</p>`;
-    const lab = { swar: 0, anak: 1, tal: 2, steps: 3 }[s.id];
-    if (lab != null && window.SoundLab) h += `<p><button class="lb-btn main" data-labopen="${lab}">▶ ${esc(tx('s_open'))}</button></p>`;
-    h += '</section>';
-  });
-  $('#gdBody').innerHTML = h;
-  if (jump) setTimeout(() => go(jump), 30);
-}
-function go(id) { const el = $('#gd-' + id); if (el) $('#gdBody').scrollTop = el.offsetTop - $('#gdBody').offsetTop - 6; }
-let from = null;
-function open(section) {
-  from = !$('#player').hidden ? 'player' : !$('#fixer').hidden ? 'fixer' : 'list';
-  if (!$('#sheet').hidden) $('#sheet').hidden = true;
-  $('#guide').hidden = false; render(section); if (!section) $('#gdBody').scrollTop = 0;
-}
-function close() { $('#guide').hidden = true; }
-$('#gdBack').onclick = close;
-$('#gdToc').addEventListener('click', e => { const b = e.target.closest('[data-gd]'); if (b) go(b.dataset.gd); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#guide').hidden) close(); });
-document.addEventListener('click', e => { const b = e.target.closest('[data-guide]'); if (b) { e.preventDefault(); open(b.dataset.guide || null); } });
-window.Guide = { open, close, sample, lang() { if (!$('#guide').hidden) render(); } };
-})();
-
+});

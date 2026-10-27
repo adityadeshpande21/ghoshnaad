@@ -9,7 +9,8 @@ import path from 'node:path';
 const INSTALL_LINKS = [/^<link rel="manifest" href="manifest\.webmanifest">$/, /^<link rel="apple-touch-icon" href="icons\/apple-touch-icon\.png">$/];
 const NAMESPACES = ['http://www.w3.org/2000/svg', 'http://www.w3.org/1999/xlink', 'http://www.w3.org/1999/xhtml'];
 
-export function checkSingleFile(html, { allowInstallLinks = false } = {}) {
+// `shownAddresses`: web addresses that appear only as text for the person to read (the app's own website), never fetched.
+export function checkSingleFile(html, { allowInstallLinks = false, shownAddresses = [] } = {}) {
   const problems = [];
   // Embedded data (images, fonts, the rachana pack) is not code: blank it so only real references are scanned.
   const code = html
@@ -26,7 +27,7 @@ export function checkSingleFile(html, { allowInstallLinks = false } = {}) {
   for (const m of code.matchAll(/url\(\s*(?!["']?(data:|#))([^)]*)\)/g)) problems.push(`css url: ${m[0]}`);
   for (const m of code.matchAll(/(?<![\w-])(?:src|href|poster|action)\s*=\s*["'](?!data:|#|blob:|javascript:)([^"']+)["']/gi))
     if (!/^<link/.test(code.slice(Math.max(0, m.index - 6), m.index)) && !allowInstallLinks) problems.push(`reference: ${m[0]}`);
-  for (const m of code.matchAll(/https?:\/\/[^\s"'`)<>\\]+/g)) if (!NAMESPACES.includes(m[0])) problems.push(`address: ${m[0]}`);
+  for (const m of code.matchAll(/https?:\/\/[^\s"'`)<>\\]+/g)) if (!NAMESPACES.includes(m[0]) && !shownAddresses.includes(m[0])) problems.push(`address: ${m[0]}`);
   // A worker made from a Blob (the app's inline timer) is self-contained; any other worker or import is not.
   for (const m of code.matchAll(/\b(?:importScripts|new\s+Worker|new\s+SharedWorker)\s*\((?![^;]{0,80}createObjectURL)/g)) problems.push(`worker/import: ${m[0]}`);
   return [...new Set(problems)];
@@ -36,8 +37,9 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   const files = process.argv.slice(2);
   if (!files.length) { console.error('usage: check-single-file.mjs <html>...'); process.exit(2); }
   let bad = 0;
+  const shownAddresses = [JSON.parse(fs.readFileSync(new URL('../release.json', import.meta.url), 'utf8')).site].filter(Boolean);
   for (const f of files) {
-    const p = checkSingleFile(fs.readFileSync(f, 'utf8'), { allowInstallLinks: path.basename(f) === 'index.html' });
+    const p = checkSingleFile(fs.readFileSync(f, 'utf8'), { allowInstallLinks: path.basename(f) === 'index.html', shownAddresses });
     console.log(`${p.length ? '✗' : '✓'} ${f}${p.length ? '' : ' is self-contained'}`);
     p.forEach(x => console.log('    ' + x));
     if (p.length) bad++;

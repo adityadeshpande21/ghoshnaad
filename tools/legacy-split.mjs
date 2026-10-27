@@ -13,6 +13,11 @@ const GEN = [
   [/^\s*\/\* fflate /, 'fflate'],
   [/window\.GhoshCompile=\{/, 'compiler'],
   [/window\.GhoshAudio=/, 'audio'],
+  [/window\.GhoshPlatform=/, 'platformlib'],
+  [/window\.Composer=/, 'composercore'],
+  [/window\.ScoreView=/, 'scoreview'],
+  [/window\.I18n=/, 'i18n'],
+  [/ScreenApp:[\w$]+,Sanket:/, 'screens'],
 ];
 
 function segments(html) {

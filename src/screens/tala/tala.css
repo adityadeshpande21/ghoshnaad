@@ -1,0 +1,65 @@
+/* The tala timeline page's own styles (from the earlier standalone tala page). They live inside a shadow root, so nothing here touches the
+   rest of the app and nothing of the app's CSS touches this. The palette is the page's own; it follows the app's light/dark choice
+   through the data-dark attribute that the screen keeps up to date. */
+.tl{--bg:#F6F5F1;--panel:#FFFFFF;--fg:#1C1D20;--mut:#62666D;--line:#DAD8D0;--g0:#ECE8DD;--g1:#E1E7EE;--acc:#B5540E;--fl:#2F5E93;--fr:#2F7A3D;--hand:#7A3E8F;--grid:#D9D6CC;--chip:#FFFFFF;--on:#1C1D20;--onfg:#FFFFFF;
+ --disp:'Tiro Devanagari Marathi','Mukta',serif;--body:'Mukta','Noto Sans Devanagari',sans-serif;--lw:200px}
+.tl[data-dark]{--bg:#141517;--panel:#1C1E21;--fg:#ECECEA;--mut:#A3A7AD;--line:#33363B;--g0:#2C2A25;--g1:#232A32;--acc:#F0954A;--fl:#8DB4E8;--fr:#8FD39B;--hand:#D2A6E6;--grid:#33363B;--chip:#1C1E21;--on:#ECECEA;--onfg:#141517;color-scheme:dark}
+.tl{background:var(--bg);color:var(--fg);font:15px/1.5 var(--body)}
+.wrap{max-width:1240px;margin:0 auto;padding-block:24px 48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;gap:14px}
+h1{font:400 30px/1.15 var(--disp);margin:0}
+h1 small{display:block;font:600 12.5px var(--body);color:var(--acc);letter-spacing:.04em;margin-bottom:2px}
+.lede{margin:0;color:var(--mut);max-width:74ch}
+.filters{background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:10px 12px;display:flex;flex-direction:column;gap:8px}
+.fr0{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center}
+.fl0{font-size:12.5px;font-weight:700;color:var(--mut);min-width:3.6em}
+.chips{display:flex;flex-wrap:wrap;gap:5px}
+.chips button{height:34px;border-radius:17px;border:1px solid var(--line);background:var(--chip);color:var(--fg);font:600 14px var(--body);padding:0 12px;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.chips button[aria-pressed="true"]{background:var(--on);color:var(--onfg);border-color:var(--on)}
+.chips button:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.chips button .ic{width:16px;height:16px}
+.sep{width:1px;height:24px;background:var(--line);margin:0 4px}
+.chart{background:var(--panel);border:1px solid var(--line);border-radius:14px;overflow-x:auto}
+.grid{display:grid}
+.row,.grp{display:contents}
+.lab{position:sticky;left:0;background:var(--panel);z-index:1;border-right:1px solid var(--line);display:grid;grid-template-columns:1fr auto;column-gap:6px}
+.who{padding:8px 4px 6px 14px;display:flex;flex-direction:column;justify-content:center;line-height:1.25;min-width:0}
+.who b{font:400 19px var(--disp)}
+.who .lay{font-weight:700;color:var(--acc)}
+.who small{font-size:12px;color:var(--mut)}
+.icons{position:relative;width:22px;margin-right:6px}
+.icons svg{position:absolute;right:0;width:17px;height:17px}
+.grph{grid-column:1/-1;font-size:13px;font-weight:700;padding:12px 14px 4px;display:block;border-bottom:1px solid var(--line)}
+.axc{border-bottom:1px solid var(--line);display:flex;align-items:flex-end;padding-top:8px}
+svg{display:block;overflow:visible}
+.gq{stroke:var(--grid);stroke-width:.5;opacity:.5}.gh{stroke:var(--grid);stroke-width:1}.gm{stroke:var(--mut);stroke-width:1;opacity:.5}
+.gan.g0{fill:var(--g0)}.gan.g1{fill:var(--g1)}
+.gat{stroke:var(--mut);stroke-width:1.2;stroke-dasharray:2 2}
+.cyc{stroke:var(--fg);stroke-width:2.5}
+.hit{fill:transparent;cursor:default}
+.n{fill:var(--fg);text-anchor:middle;font-family:var(--body);font-weight:600}
+.n.dh{fill:var(--acc);font-weight:700}
+.dot{fill:var(--acc)}
+.tk{stroke:var(--fg);stroke-width:1.3}.atk{stroke:var(--mut);stroke-width:.9;opacity:.8}.tk.ac{stroke:var(--acc);stroke-width:2.2}
+.hd{font-family:var(--body);font-size:9.5px;font-weight:700;fill:var(--hand)}
+.ft{font-family:var(--body);font-size:12px;font-weight:700}.ft.L{fill:var(--fl)}.ft.R{fill:var(--fr)}
+.rep{opacity:.4}
+.ax{fill:var(--fg);font:600 12px var(--body)}.axh{fill:var(--mut);font:11px var(--body)}
+.ic{width:1.1em;height:1.1em;vertical-align:-.18em;display:inline-block;flex:none}
+.c-dh{color:var(--acc)}.c-hand{color:var(--hand)}.c-step{color:var(--fl)}.c-st{color:var(--fg)}
+.legend{display:flex;flex-wrap:wrap;gap:4px 18px;font-size:13px;color:var(--mut);align-items:center}
+.legend i{display:inline-block;vertical-align:middle;margin-right:5px}
+.empty{padding:28px;color:var(--mut);text-align:center}
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:10px 22px;font-size:14px;color:var(--mut)}
+.read p{margin:0}.read b{color:var(--fg)}
+footer{font-size:13px;color:var(--mut)}
+.pb{width:34px;height:34px;border-radius:17px;border:1px solid var(--line);background:var(--chip);color:var(--fg);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.pb svg{width:14px;height:14px}
+.pb[aria-pressed="true"]{background:var(--acc);border-color:var(--acc);color:#fff}
+.pb:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.who .top{display:flex;align-items:center;gap:8px}
+.now{font:700 22px/1 var(--body);color:var(--acc);min-width:1.4em;font-variant-numeric:tabular-nums}
+.cell{position:relative;padding:4px 0}
+.ph{position:absolute;top:0;bottom:0;width:2px;background:var(--acc);pointer-events:none;display:none;box-shadow:0 0 0 1px rgba(255,255,255,.4)}
+.cell.playing .ph{display:block}
+g.on .hit{fill:var(--acc);opacity:.22}
+@media (max-width:600px){.tl{--lw:122px}.who{padding-left:10px}.who b{font-size:16px}.who small+small{display:none}.who small{font-size:11px}.fl0{min-width:100%}}

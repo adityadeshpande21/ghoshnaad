@@ -1,0 +1,97 @@
+{
+ "pf_work": "Your work",
+ "pf_where_site": "Saved on this device",
+ "pf_where_file": "Saved on this device (file)",
+ "pf_file_note": "This is the downloaded file. Work done on the website does not show here, and the other way round — move it with a backup.",
+ "pf_counts": "{a} own rachanas · {b} corrections",
+ "pf_nothing": "Nothing saved yet.",
+ "pf_backup_never": "Not backed up yet",
+ "pf_backup_today": "Backed up today",
+ "pf_backup_ago": "Backed up {d} days ago",
+ "pf_persist_yes": "The browser will keep this",
+ "pf_persist_no": "The browser may clear this when space runs short — keep a backup",
+ "pf_usage": "Space used: {u} MB",
+ "pf_not_saved": "The browser refused to save — make a backup",
+ "pf_backup_btn": "Download backup",
+ "pf_restore_btn": "Restore from backup",
+ "pf_copy": "(backup)",
+ "pf_err_not-json": "This file is not a backup (it could not be read).",
+ "pf_err_not-a-backup": "This is not a Ghoshnaad backup file.",
+ "pf_err_newer-format": "This backup comes from a newer version — update the app first.",
+ "pf_err_too-big": "This file is too big.",
+ "pf_err_empty": "This backup holds nothing.",
+ "pf_r_title": "Check before restoring",
+ "pf_r_new": "New rachanas: {n}",
+ "pf_r_same": "Already here, unchanged: {n}",
+ "pf_r_copies": "Different, so added as a separate copy: {n}",
+ "pf_r_fix_new": "New corrections: {n}",
+ "pf_r_fix_newer": "Newer corrections from the backup: {n}",
+ "pf_r_fix_older": "Older corrections kept aside: {n}",
+ "pf_r_set": "Settings (not chosen yet here): {n}",
+ "pf_r_skipped": "Skipped, could not be read: {n}",
+ "pf_r_nochange": "Nothing new in this backup.",
+ "pf_r_note": "Nothing is erased. Rachanas that differ are added as separate copies.",
+ "pf_r_go": "Restore",
+ "pf_r_cancel": "Cancel",
+ "pf_r_done": "Done. The app is restarting…",
+ "pf_r_fail": "The browser refused to save; nothing was changed.",
+ "pf_older_have": "{n} older corrections are kept aside",
+ "pf_older_dl": "Download them",
+ "pf_ver": "Version",
+ "pf_whatsnew_btn": "What's new",
+ "pf_new_title": "What's new",
+ "pf_new_ok": "Got it",
+ "pf_upd_avail": "New version available: {v}",
+ "pf_upd_btn": "Update",
+ "pf_upd_busy": "You can update when playback stops or your work is saved.",
+ "pf_upd_check": "Check for update",
+ "pf_upd_none": "This is the newest version.",
+ "pf_upd_file": "When a new version comes, replace Ghoshnaad.html — keep the same name and folder so your work stays visible.",
+ "pf_bar_edits": "You have made many changes — make a backup.",
+ "pf_bar_days": "It is {d} days since your last backup — make a backup.",
+ "pf_bar_btn": "Back up",
+ "pf_first": "Do you have a backup from an earlier copy?",
+ "pf_first_btn": "Restore",
+ "pf_inst_title": "Keep it on your phone or computer",
+ "pf_inst_done": "Installed as an app.",
+ "pf_inst_btn": "Install",
+ "pf_inst_bar": "Keep it as an app — it works without internet.",
+ "pf_inst_show": "Show me how",
+ "pf_dismiss": "Dismiss",
+ "pf_steps": {
+  "ios-safari": [
+   "Tap the Share (↑) button at the bottom of Safari.",
+   "Choose 'Add to Home Screen'.",
+   "Tap 'Add'."
+  ],
+  "ios-other": [
+   "Open this page in Safari — this browser cannot add it to an iPhone or iPad.",
+   "In Safari: Share (↑) → 'Add to Home Screen' → 'Add'."
+  ],
+  "android-chrome": [
+   "Open the Chrome menu (⋮).",
+   "Choose 'Install app' (or 'Add to Home screen')."
+  ],
+  "android-samsung": [
+   "Open the Samsung Internet menu (≡).",
+   "Choose 'Add page to' → 'Home screen'."
+  ],
+  "android-firefox": [
+   "Open the Firefox menu (⋮).",
+   "Choose 'Install'."
+  ],
+  "desktop-chromium": [
+   "Click the install icon at the end of the address bar, or menu → 'Install Ghoshnaad'."
+  ],
+  "desktop-safari": [
+   "Choose File → 'Add to Dock'."
+  ],
+  "desktop-other": [
+   "This browser cannot install it; bookmark the page. To use it offline, use Chrome or Edge."
+  ],
+  "file": [
+   "This is the downloaded file. A file does not run on iPhone or iPad — open the website: {url}",
+   "Once added to the Home Screen from the website, it works without internet."
+  ]
+ }
+}

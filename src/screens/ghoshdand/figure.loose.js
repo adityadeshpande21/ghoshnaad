@@ -1,8 +1,7 @@
-
+// @ts-nocheck — moved from v1.1.0; not fully typed yet. `npm run typecheck` still fails on any unresolved shared name (tools/check-names.mjs).
 /* घोषदंड संकेत — the घोष प्रमुख figure (style C, in uniform) and the 8 signals of घोष परिचय pp. 28–36.
    Model frame (the प्रमुख's own): x = his right, y = up (ground 0), z = forward (towards the band). Units ≈ cm × 1.1.
    A pose gives hand targets; arms are solved with two-bone IK, the staff is placed from its grip. */
-(function () {
   const L = 150;                       // staff: about shoulder height (p. 27)
   const UA = 38, FA = 36;              // upper arm, forearm (+ hand)
   const SH = { r: [22, 150, 0], l: [-22, 150, 0] };
@@ -289,7 +288,5 @@
   const cache = {};
   const state = name => cache[name] || (cache[name] = solve(P[name]));
 
-  const api = { POSES: P, SIGNALS, RULES, PH, ANIM, FLAGS, T, svg, draw, solve, blend, swingLeft, state, timeline, frameAt };
-  if (typeof module !== 'undefined') module.exports = api; else window.Sanket = api;
-})();
-
+  export const Figure = { POSES: P, SIGNALS, RULES, PH, ANIM, FLAGS, T, svg, draw, solve, blend, swingLeft, state, timeline, frameAt };
+export { SIGNALS, RULES, PH, ANIM, FLAGS, T, svg, draw, solve, blend, swingLeft, state, timeline, frameAt, P as POSES };

@@ -45,6 +45,22 @@
  },
  {
   "kind": "script",
+  "gen": "i18n"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-i18n.html"
+ },
+ {
+  "kind": "script",
+  "gen": "scoreview"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-scoreview.html"
+ },
+ {
+  "kind": "script",
   "gen": "audio"
  },
  {
@@ -69,7 +85,7 @@
  },
  {
   "kind": "script",
-  "file": "composer-core.js"
+  "gen": "composercore"
  },
  {
   "kind": "raw",
@@ -77,39 +93,7 @@
  },
  {
   "kind": "script",
-  "file": "composer.js"
- },
- {
-  "kind": "raw",
-  "file": "raw-09.html"
- },
- {
-  "kind": "script",
-  "file": "export.js"
- },
- {
-  "kind": "raw",
-  "file": "raw-10.html"
- },
- {
-  "kind": "script",
-  "file": "fixer.js"
- },
- {
-  "kind": "raw",
-  "file": "raw-11.html"
- },
- {
-  "kind": "script",
-  "file": "library.js"
- },
- {
-  "kind": "raw",
-  "file": "raw-12.html"
- },
- {
-  "kind": "script",
-  "file": "guide.js"
+  "gen": "screens"
  },
  {
   "kind": "raw",
@@ -117,23 +101,15 @@
  },
  {
   "kind": "script",
-  "file": "soundlab.js"
+  "gen": "platformlib"
  },
  {
   "kind": "raw",
-  "file": "raw-14.html"
+  "file": "raw-platform.html"
  },
  {
   "kind": "script",
-  "file": "sanket.js"
- },
- {
-  "kind": "raw",
-  "file": "raw-15.html"
- },
- {
-  "kind": "script",
-  "file": "sanketui.js"
+  "file": "platform.js"
  },
  {
   "kind": "raw",

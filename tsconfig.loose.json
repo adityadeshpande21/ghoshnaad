@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "strict": false,
+    "noImplicitAny": false,
+    "checkJs": true,
+    "allowJs": true
+  },
+  "include": [
+    "src/ui/env.d.ts",
+    "src/**/*.loose.js",
+    "src/ui/assets.d.ts"
+  ],
+  "exclude": []
+}

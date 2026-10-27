@@ -1,9 +1,17 @@
+// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// दुरुस्ती: correct a book rachana by hand. Edits the book source (ghosh-notation/1), compiles it with the same compiler as the
+// 120 book files, plays it, and keeps the corrected version on this device. Corrections can be exported as files and imported.
+import { Screen } from '../../ui/screen.js';
+import { compile3 } from '../../core/compile/ghosh3.ts';
+import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
+import talasJson from '../../../rules/talas.json';
 
-/* fixer.js — दुरुस्ती: correct a book rachana by hand. Edits the book source (ghosh-notation/1), compiles it
- * with the same compiler as the 120 book files, plays it, and keeps the corrected version on this device.
- * Corrections can be exported as files and imported on another device. */
-(function () {
-'use strict';
+/** @param {import('../../ui/env.d.ts').AppEnv} env */
+function createCorrection(env) {
+const { tx, esc, dv, dvN, L, I18N, applyStatic, loadJSON, openPiece, player: PL } = env;
+const $ = env.q;   // like v1.1.0: null when the element is absent
+const Library = { saveSource: (...a) => window.Library.saveSource(...a), removeSource: (...a) => window.Library.removeSource(...a), downloadSource: (...a) => window.Library.downloadSource(...a), isLib: id => window.Library.isLib(id), sourceOf: id => window.Library.sourceOf(id), rows: () => window.Library.rows(), pieceOf: id => window.Library.pieceOf(id), mode: () => window.Library.mode() };
+const GhoshCompile = { compile3: src => compile3(src, { talas: talasJson }) };
 const FS = {
  mr: { f_draft: 'दुरुस्तीचा मसुदा', f_fromLib: 'तुमच्या फोल्डरमधील प्रत', f_later: 'नंतर', f_delete: 'ही प्रत हटवा', f_delQ: 'तुमची ही प्रत हटवायची? ग्रंथातील मूळ रचना तशीच राहील.', f_btn: 'दुरुस्त करा', f_title: n => `दुरुस्ती · ${n}`, f_orig: 'ग्रंथातील मूळ रचना', f_saved: 'दुरुस्त केलेली · या उपकरणावर जतन', f_dirty: 'जतन न केलेले बदल',
   f_changed: n => n === '१' ? '१ ओळ बदलली' : `${n} ओळी बदलल्या`, f_file: 'पूर्ण फाइल', f_tala: 'ताल', f_laya: 'लय', f_play: 'ऐका ▶', f_save: 'जतन करा', f_export: 'फाइल डाउनलोड',
@@ -58,8 +66,8 @@ const TR = [
   [/^Parts unroll to different lengths: (.*)/, { mr: 'भागांची लांबी वेगळी: $1 मात्रा', hi: 'भागों की लंबाई अलग: $1 मात्राएँ' }]
 ];
 function trMsg(m) {
-  const t = TR.find(([re]) => re.test(m)); if (!t || !t[1][LANG]) return m;
-  const [first, ...rest] = m.split('\n'); return [first.replace(t[0], t[1][LANG]).replace(/\d+/g, x => dv(x)), ...rest].join('\n');
+  const t = TR.find(([re]) => re.test(m)); if (!t || !t[1][env.lang()]) return m;
+  const [first, ...rest] = m.split('\n'); return [first.replace(t[0], t[1][env.lang()]).replace(/\d+/g, x => dv(x)), ...rest].join('\n');
 }
 const MEL = ['shankh', 'vanshi'];
 const lineT = l => (typeof l === 'string' ? l : (l && l.t) || '');
@@ -114,7 +122,7 @@ function show() {
   document.querySelectorAll('.cview').forEach(v => { v.hidden = v.id !== 'fixer'; });
 }
 async function open(key, line) {
-  const id = String(key).replace(/^f~/, ''), isBook = BOOK.some(r => r.id === id);
+  const id = String(key).replace(/^f~/, ''), isBook = PL.BOOK.some(r => r.id === id);
   let book = null; if (isBook) { try { book = await loadJSON('data/src/' + id + '.json'); } catch (e) {} }
   const lib = window.Library ? Library.sourceOf(id) : null;
   const orig = lib || book; if (!orig) { toast(tx('f_noSrc')); return; }
@@ -231,7 +239,7 @@ $('#fxPlay').onclick = () => {
   if (cur.jsonErr) { toast(tx('f_bad')); return; }
   cur.res = check(cur.draft); render2();
   if (!cur.res.piece) { toast(tx('f_bad')); return; }
-  audio(); showPiece(cur.res.piece, { play: true, returnTo: 'fixer' });
+  env.audio.unlock(); PL.showPiece(cur.res.piece, { play: true, returnTo: 'fixer' });
 };
 // back to the book text (as an unsaved change; saving it updates the folder copy)
 $('#fxRevert').onclick = () => ask(tx('f_revertQ'), [
@@ -246,8 +254,8 @@ function leave() {
   $('#fxAsk').hidden = true;
   document.querySelectorAll('.cview').forEach(v => { if (v.id === 'fixer') v.hidden = true; });
   const id = cur.id; if (!cur.dirty) cur = null;
-  const key = window.Library && Library.isLib(id) ? 'f~' + id : BOOK.some(r => r.id === id) ? id : null;
-  if (key) openPiece(key, false); else { $('#list').hidden = false; renderList(); }
+  const key = window.Library && Library.isLib(id) ? 'f~' + id : PL.BOOK.some(r => r.id === id) ? id : null;
+  if (key) openPiece(key, false); else { $('#list').hidden = false; env.renderList(); }
 }
 $('#fxBack').onclick = () => {
   if (!cur.dirty) { leave(); return; }
@@ -276,13 +284,15 @@ $('#fxImport').addEventListener('change', () => {
 function msg(t) { toast(t); }
 document.addEventListener('click', e => { const b = e.target.closest('[data-fx]'); if (!b) return; if (b.dataset.fx === 'import') $('#fxImport').click(); });
 
-/* ---------- hooks into the app ---------- */
-window.FixerUI = {
-  open,
-  back() { show(); render(); },
-  editing: () => cur && cur.id,
-  lang() { if (cur && !$('#fixer').hidden) render(); }
-};
-try { applyStatic(); } catch (e) {}
-})();
 
+try { applyStatic(); } catch (e) {}
+return { open, back() { show(); render(); }, editing: () => cur && cur.id, lang() { if (cur && !$('#fixer').hidden) render(); } };
+}
+
+export class CorrectionScreen extends Screen {
+  /** @param {import('../../ui/env.d.ts').AppEnv} env */
+  constructor(env) { super(env, '#fixer'); this.fx = createCorrection(env); }
+  open(arg) { return this.fx.open(arg); }
+  close() { this.root.hidden = true; }
+  onLang() { this.fx.lang(); }
+}

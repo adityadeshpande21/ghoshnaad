@@ -23,9 +23,9 @@ if (pack.warnings.length) console.warn(`${pack.warnings.length} compile warnings
 // The browser bundles come from the TypeScript core: one global each (GhoshCompile, buildTimeline3).
 const bundle = async entry => (await esbuild({
   entryPoints: [path.join(ROOT, entry)], bundle: true, minify: true, format: 'iife',
-  target: 'es2020', platform: 'browser', write: false, legalComments: 'none', charset: 'ascii',
+  target: 'es2020', platform: 'browser', write: false, legalComments: 'none', charset: 'ascii', loader: { '.css': 'text', '.html': 'text' },
 })).outputFiles[0].text;
-const [compiler, timeline, audio] = await Promise.all([bundle('src/browser/entry-compiler.ts'), bundle('src/browser/entry-timeline.ts'), bundle('src/browser/entry-audio.ts')]);
+const [compiler, timeline, audio, platformlib, composercore, screens, scoreview, i18nlib] = await Promise.all([bundle('src/browser/entry-compiler.ts'), bundle('src/browser/entry-timeline.ts'), bundle('src/browser/entry-audio.ts'), bundle('src/browser/entry-platform.ts'), bundle('src/browser/entry-composer.ts'), bundle('src/browser/entry-screens.js'), bundle('src/browser/entry-scoreview.js'), bundle('src/browser/entry-i18n.js')]);
 const fflate = fs.readFileSync(path.join(ROOT, 'node_modules/fflate/umd/index.js'), 'utf8');
 const generated = {
   pack: safe(`window.GHOSH_PACK="${pack.base64}";`, 'pack'),
@@ -33,6 +33,11 @@ const generated = {
   compiler: safe('\n' + compiler, 'compiler'),
   timeline: safe('\n' + timeline, 'timeline'),
   audio: safe('\n' + audio, 'audio'),
+  platformlib: safe('\n' + platformlib, 'platform'),
+  composercore: safe('\n' + composercore, 'composer model'),
+  screens: safe('\n' + screens, 'screens'),
+  scoreview: safe('\n' + scoreview, 'scoreview'),
+  i18n: safe('\n' + i18nlib, 'i18n'),
 };
 const fonts = await fontCss(ROOT);
 
@@ -58,7 +63,7 @@ fs.writeFileSync(path.join(DIST, '.nojekyll'), '');
 
 let bad = 0;
 for (const [name, html, allowInstallLinks] of [['Ghoshnaad.html', file, false], ['index.html', site, true]]) {
-  const problems = checkSingleFile(html, { allowInstallLinks });
+  const problems = checkSingleFile(html, { allowInstallLinks, shownAddresses: [release.site] });
   if (problems.length) { bad++; console.error(`✗ ${name} is not self-contained:\n  ` + problems.join('\n  ')); }
 }
 console.log(`built v${release.version}: ${pack.count} rachanas, pack ${kb(pack.gzBytes)} gz, fonts ${kb(fonts.length)}, Ghoshnaad.html ${kb(Buffer.byteLength(file))}, index.html ${kb(Buffer.byteLength(site))} (${Date.now() - t0} ms)`);

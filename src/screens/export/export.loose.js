@@ -1,8 +1,14 @@
+// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// स्वरलिपी export: the rachana in the book's notation, for the instruments the user picks.
+// Two outputs: a printable sheet (print / save as PDF) and plain text exactly as the books write it.
+import { Screen } from '../../ui/screen.js';
+import * as Composer from '../../core/composer.ts';
+import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 
-/* export.js — स्वरलिपी export: the rachana in the book's notation, for the instruments the user picks.
- * Two outputs: a printable sheet (print / save as PDF) and plain text exactly as the books write it. */
-(function () {
-'use strict';
+/** @param {import('../../ui/env.d.ts').AppEnv} env */
+function createExport(env) {
+const { tx, esc, dv, dvN, mmss, secName, applyStatic, fitRows, slotHTML, store, I18N } = env;
+const $ = env.q;   // like v1.1.0: null when the element is absent
 const XS = {
  mr: { x_style: 'स्वरूप', x_rich: 'सुधारित', x_plain: 'ग्रंथासारखे', x_layout: 'मांडणी', x_score: 'एकत्र स्कोअर', x_pages: 'प्रत्येक वाद्य स्वतंत्र', x_about: 'सुमारे', x_marks: 'चिन्हे', x_lowO: 'मंद्र सप्तक', x_highO: 'तार सप्तक', x_vk: 'कोमल / तीव्र', x_holdL: 'स्वर चालू', x_restL: 'विराम', x_grpL: 'एका मात्रेत', x_twiceL: 'दोनदा वाजवा', x_endL: 'पहिला / दुसरा अंत', x_setuL: 'सेतु: सर्व एकत्र', x_samL: 'सम', x_countL: 'मात्रा क्रमांक', x_btn: 'स्वरलिपी निर्यात', x_title: 'स्वरलिपी निर्यात', x_parts: 'कोणत्या वाद्यांची स्वरलिपी?', x_tal: 'ताल वाद्ये (पणव, झल्लरी, त्रिभुज)', x_steps: 'पावले (डावा / उजवा)',
   x_ranan: 'सुरुवातीचे रणन', x_print: 'प्रिंट / PDF', x_copy: 'मजकूर कॉपी करा', x_txt: 'मजकूर फाइल (.txt)', x_html: 'पान फाइल (.html)', x_preview: 'पूर्वदृश्य',
@@ -119,7 +125,7 @@ function fullText(piece, sel) {
 
 /* ---------- printable sheet, laid out like the book page ---------- */
 function noteSpan(t) {
-  const p = window.Composer ? Composer.parseToken(t) : null;
+  const p = Composer.parseToken(t);
   if (!p || p.kind !== 'note') return esc(t);
   let c = 's'; if (p.oct < 0) c += ' dot-b'; if (p.oct > 0) c += ' dot-t'; if (p.vikrit) c += ' vk';
   return `<span class="${c}">${esc(p.base)}</span>`;
@@ -197,7 +203,7 @@ function richHeader(piece, keys) {
   const m = piece.meta, R = piece.rhythm, rg = m.raga;
   let dur = '';
   try { const lead = piece.layout.lead, t = buildTimeline3(piece, lead, { order: R.performance ? 'performance' : 'printed' }); dur = tx('x_about') + ' ' + mmss(t.total - t.origin); } catch (e) {}
-  const sc = str => (window.Composer ? Composer.tokenize(str).map(noteSpan).join(' ') : esc(str));
+  const sc = str => Composer.tokenize(str).map(noteSpan).join(' ');
   return `<header class="rhead"><div class="rh1"><h1>${esc(m.title.dev)}</h1><div class="rparts">${keys.map(k => `<span class="rp p-${partKey(k)}">${BOOK_NAME[k]}</span>`).join('')}</div></div>
     <div class="rmeta"><span>${esc(secName(m.section))}</span><span>${esc(talaLaya(piece))}</span>${dur ? `<span>${esc(dur)}</span>` : ''}</div>
     ${rg && rg.aroha ? `<div class="rraga"><span><b>${esc(tx('raga'))} ${esc(rg.name || '')}</b></span><span><i>आरोहण</i> ${sc(rg.aroha)}</span><span><i>अवरोहण</i> ${sc(rg.avaroha || '')}</span></div>` : ''}
@@ -347,7 +353,7 @@ $('#xexport').addEventListener('click', async e => {
   if (b.id === 'xTxt') { saveFile(fullText(XP, sel), fname('txt'), 'text/plain'); return; }
   if (b.id === 'xHtml') {
     const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\n');
-    const doc = `<!doctype html><html lang="${LANG}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(XP.meta.title.dev)} — स्वरलिपी</title><style>${css}\nbody{background:#fff;margin:0;padding:16px}${SHEET_CSS}</style></head><body>${sheetHTML(XP, sel)}</body></html>`;
+    const doc = `<!doctype html><html lang="${env.lang()}"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>${esc(XP.meta.title.dev)} — स्वरलिपी</title><style>${css}\nbody{background:#fff;margin:0;padding:16px}${SHEET_CSS}</style></head><body>${sheetHTML(XP, sel)}</body></html>`;
     saveFile(doc, fname('html'), 'text/html'); return;
   }
 });
@@ -365,7 +371,15 @@ const st = document.createElement('style'); st.textContent = SHEET_CSS + `
 @media print{body>*:not(#printArea){display:none!important}#printArea{display:block!important}#printArea .sheet{max-width:none;padding:0}#printArea .rdoc+.rdoc{break-before:page;border-top:0;margin-top:0;padding-top:0}#printArea .rsheet{max-width:none;padding:0}#printArea .rblk.alt{-webkit-print-color-adjust:exact;print-color-adjust:exact}#printArea .bpage{break-after:page;border-top:0;margin:0}#printArea .bpage:last-child{break-after:auto}#printArea .bl{font-size:16px;min-height:36px}@page{margin:12mm}}`;
 document.head.appendChild(st);
 
-window.Swarlipi = { open: openExport2, text: fullText, sheet: sheetHTML, lang() { if (!$('#xexport').hidden) renderX(); } };
-try { applyStatic(); } catch (e) {}
-})();
 
+try { applyStatic(); } catch (e) {}
+return { open: openExport2, text: fullText, sheet: sheetHTML, lang() { if (!$('#xexport').hidden) renderX(); } };
+}
+
+export class ExportScreen extends Screen {
+  /** @param {import('../../ui/env.d.ts').AppEnv} env */
+  constructor(env) { super(env, '#xexport'); this.x = createExport(env); }
+  open(piece) { return this.x.open(piece); }
+  close() { this.root.hidden = true; }
+  onLang() { this.x.lang(); }
+}

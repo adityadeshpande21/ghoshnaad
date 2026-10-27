@@ -7,63 +7,13 @@ const esc=s=>String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;',
 const mmss=t=>{t=Math.max(0,Math.round(t));return dv(Math.floor(t/60)+':'+String(t%60).padStart(2,'0'))};
 const APP={name:'Ghoshnaad',version:'1.1.0',date:'2026-10-24'};window.APP=APP;
 const store={get(k,d){try{const v=localStorage.getItem('ghosh.'+k);return v==null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('ghosh.'+k,JSON.stringify(v))}catch(e){}}};
+const LSV=()=>window.ScreenApp.get('list');   // the rachana list (src/screens/list)
+// data: the embedded pack of rachanas (src/data/catalog.ts)
+const catalog=new GhoshCatalog.Catalog(window.GHOSH_PACK,window.fflate.gunzipSync);
+const loadJSON=path=>catalog.load(path);
 /* ================= भाषा / language ================= */
-// Notation (swaras, bols, ऽ –, ending/yati numbers) always stays as printed in the books.
-const I18N={
- mr:{lang:'मराठी',brand:'घोषनाद',tagline:'घोष रचना · वादन · लेखन',count:n=>`${n} रचना`,search:'रचना, राग किंवा ताल शोधा',searchA:'रचना शोधा',instF:'वाद्यानुसार',secA:'विभाग',listA:'रचना यादी',
-  all:'सर्व',prachalan:'प्रचलन',mand:'मंद गति',naimittik:'नैमित्तिक',recent:'अलीकडे',allR:'सर्व रचना',found:n=>`सापडल्या: ${n}`,
-  none:q=>`"${q}" साठी काही सापडले नाही. नाव, राग किंवा ताल वापरून पहा.`,raga:'राग',openErr:'ही रचना उघडता आली नाही. इंटरनेट तपासून पुन्हा प्रयत्न करा.',listErr:'यादी उघडता आली नाही. पान पुन्हा उघडा.',
-  playerA:'वादन',back:'यादीकडे परत',settings:'सेटिंग्ज',theme:'रंग: उजळ / गडद',chipsA:'कोणती वाद्ये ऐकायची',hint:'टॅप = फक्त ते वाद्य · दाबून ठेवा = जोडा / काढा',
-  blocksA:'चरणावर जा',goTo:x=>`${x} वर जा`,modesA:'वादन प्रकार',perf:'पूर्ण वादन',printed:'ग्रंथ क्रम',once:'एकदाच',anagat:'अनागत',playL:'वादन',pitchL:'वादनाची पट्टी (सा)',pitchN:'सर्व रचनांसाठी. सांतर/निरंतर आणि कण स्वरही इथेच.',artL:'सांतर / निरंतर',santar:'सांतर',santarS:'प्रत्येक सूर किंचित आधी थांबतो',nirantar:'निरंतर',nirantarS:'पूर्ण कालांश वाजतो',kanL:'कण स्वर (उदा. म्ग मधील म)',ms:n=>`${n} मि.से.`,onceA:'प्रत्येक चरण एकदाच',loop:'चरण',loopA:'हाच चरण पुन्हा पुन्हा',laya:'लय',slower:'लय कमी',faster:'लय जास्त',
-  march:'संचलन',marchA:'संचलन सराव',play:'वाजवा',stop:'थांबवा',marchClose:'संचलन बंद',left:'डावा',right:'उजवा',sam:'सम',step:n=>`पाऊल ${n}`,stepSnd:'पाऊल<br>आवाज',stepSndA:'पावलांचा आवाज',
-  mandchal:'मंदचाल',prev:'मागे',now:'आता',next:'पुढे',done:'पूर्ण',close:'बंद',
-  ranan:'रणन',prarambhik:'प्रारंभिक',setu:'सेतु',charan:n=>`चरण ${n}`,twice:'दोनदा',times:n=>`${n} वेळा`,tail:x=>`शेवटी ${x} पुन्हा, दोनदा`,rananAnak:'रणन · आनक',
-  bR:'र',bPr:'प्रा',bSe:'से',countIn:null,
-  parts:{shankh:'शंख',vanshi:'वंशी',anak:'आनक',panav:'पणव',jhallari:'झल्लरी',tribhuj:'त्रिभुज',steps:'पाऊल'},
-  groups:{shankh:'शंख भाग',vanshi:'वंशी भाग',anak:'आनक भाग',tal:'ताल वाद्य'},needOne:'किमान एक वाद्य निवडलेले असावे',
-  sheetP:'प्रत्येक भाग कोणती वाद्ये वाजवतील ते निवडा. सर्व रचनांसाठी लागू.',langL:'भाषा',instL:'वाद्य निवड',
-  latinDigits:false,romanNames:false},
- hi:{lang:'हिंदी',brand:'घोषनाद',tagline:'घोष रचना · वादन · लेखन',count:n=>`${n} रचनाएँ`,search:'रचना, राग या ताल खोजें',searchA:'रचना खोजें',instF:'वाद्य के अनुसार',secA:'विभाग',listA:'रचना सूची',
-  all:'सभी',prachalan:'प्रचलन',mand:'मंद गति',naimittik:'नैमित्तिक',recent:'हाल में',allR:'सभी रचनाएँ',found:n=>`मिलीं: ${n}`,
-  none:q=>`"${q}" के लिए कुछ नहीं मिला। नाम, राग या ताल से खोजें।`,raga:'राग',openErr:'यह रचना खुल नहीं सकी। इंटरनेट जाँचकर फिर कोशिश करें।',listErr:'सूची खुल नहीं सकी। पेज फिर से खोलें।',
-  playerA:'वादन',back:'सूची पर वापस',settings:'सेटिंग्स',theme:'रंग: हल्का / गहरा',chipsA:'कौन से वाद्य सुनें',hint:'टैप = केवल वह वाद्य · दबाकर रखें = जोड़ें / हटाएँ',
-  blocksA:'चरण पर जाएँ',goTo:x=>`${x} पर जाएँ`,modesA:'वादन क्रम',perf:'पूर्ण वादन',printed:'पुस्तक क्रम',once:'एक बार',anagat:'अनागत',playL:'वादन',pitchL:'वादन की पट्टी (सा)',pitchN:'सभी रचनाओं के लिए।',artL:'सांतर / निरंतर',santar:'सांतर',santarS:'हर स्वर थोड़ा पहले रुकता है',nirantar:'निरंतर',nirantarS:'पूरा कालांश बजता है',kanL:'कण स्वर (जैसे म्ग में म)',ms:n=>`${n} मि.से.`,onceA:'हर चरण एक बार',loop:'चरण',loopA:'यही चरण बार-बार',laya:'लय',slower:'लय कम',faster:'लय ज़्यादा',
-  march:'संचलन',marchA:'संचलन अभ्यास',play:'बजाएँ',stop:'रोकें',marchClose:'संचलन बंद करें',left:'बायाँ',right:'दायाँ',sam:'सम',step:n=>`कदम ${n}`,stepSnd:'कदम<br>ध्वनि',stepSndA:'कदमों की आवाज़',
-  mandchal:'मंद चाल',prev:'पिछला',now:'अभी',next:'अगला',done:'पूर्ण',close:'बंद करें',
-  ranan:'रणन',prarambhik:'प्रारंभिक',setu:'सेतु',charan:n=>`चरण ${n}`,twice:'दो बार',times:n=>`${n} बार`,tail:x=>`अंत में ${x} फिर से, दो बार`,rananAnak:'रणन · आनक',
-  bR:'र',bPr:'प्रा',bSe:'से',countIn:null,
-  parts:{shankh:'शंख',vanshi:'वंशी',anak:'आनक',panav:'पणव',jhallari:'झल्लरी',tribhuj:'त्रिभुज',steps:'कदम'},
-  groups:{shankh:'शंख भाग',vanshi:'वंशी भाग',anak:'आनक भाग',tal:'ताल वाद्य'},needOne:'कम से कम एक वाद्य चुना होना चाहिए',
-  sheetP:'हर भाग कौन से वाद्य बजाएँगे, चुनें। सभी रचनाओं पर लागू।',langL:'भाषा',instL:'वाद्य चयन',
-  latinDigits:true,romanNames:false},
- en:{lang:'English',brand:'Ghoshnaad',tagline:'Ghosh rachanas · play · write',count:n=>`${n} rachanas`,search:'Search rachana, raga or tala',searchA:'Search rachanas',instF:'Instrument',secA:'Section',listA:'Rachana list',
-  all:'All',prachalan:'Prachalan',mand:'Mand gati',naimittik:'Naimittik',recent:'Recent',allR:'All rachanas',found:n=>`Found: ${n}`,
-  none:q=>`Nothing found for "${q}". Try a name, raga or tala.`,raga:'Raga',openErr:"Couldn't open this rachana. Check your connection and try again.",listErr:"Couldn't load the list. Reopen the page.",
-  playerA:'Player',back:'Back to list',settings:'Settings',theme:'Theme: light / dark',chipsA:'Instruments to hear',hint:'Tap = only that instrument · Hold = add / remove',
-  blocksA:'Jump to charan',goTo:x=>`Go to ${x}`,modesA:'Play order',perf:'Performance',printed:'Book order',once:'Once',anagat:'Pickup (anagat)',playL:'Playing',pitchL:'Key (Sa)',pitchN:'For all rachanas.',artL:'Santar / Nirantar',santar:'Santar',santarS:'Each note stops a little early',nirantar:'Nirantar',nirantarS:'Each note plays its full length',kanL:'Grace note (e.g. म in म्ग)',ms:n=>`${n} ms`,onceA:'Each charan once',loop:'Loop',loopA:'Repeat this charan',laya:'Tempo',slower:'Slower',faster:'Faster',
-  march:'March',marchA:'March practice',play:'Play',stop:'Stop',marchClose:'Close march practice',left:'Left',right:'Right',sam:'Sam',step:n=>`Step ${n}`,stepSnd:'Step<br>sound',stepSndA:'Step sound',
-  mandchal:'slow march',prev:'Previous',now:'Now',next:'Next',done:'Done',close:'Close',
-  ranan:'Ranan',prarambhik:'Prarambhik',setu:'Setu',charan:n=>`Charan ${n}`,twice:'twice',times:n=>`${n}×`,tail:x=>`At the end, ${x} again, twice`,rananAnak:'Ranan · Anak',
-  bR:'R',bPr:'Pr',bSe:'Se',countIn:null,countWord:w=>({'एक':'1','दो':'2','तीन':'3'})[w]||w,
-  parts:{shankh:'Shankh',vanshi:'Vanshi',anak:'Anak',panav:'Panav',jhallari:'Jhallari',tribhuj:'Tribhuj',steps:'Steps'},
-  groups:{shankh:'Shankh part',vanshi:'Vanshi part',anak:'Anak part',tal:'Tal vadya'},needOne:'Keep at least one instrument',
-  sheetP:'Choose which instruments play each part. Applies to every rachana.',langL:'Language',instL:'Instruments',
-  latinDigits:true,romanNames:true}};
-const TALA_ROM={'केरवा':'Kerva','खेमटा':'Khemta','दादरा':'Dadra','एकताल':'Ektal','त्रिताल':'Tritaal','झपताल':'Jhaptal','रूपक':'Rupak'};
-const RAGA_ROM={'आसावरी':'Asavari','कलावती':'Kalavati','कलिंगड़ा':'Kalingada','कल्याण':'Kalyan','केदार':'Kedar','खमाज':'Khamaj','गौडमल्हार':'Gaud Malhar','तिलंग':'Tilang','तिलक श्याम':'Tilak Shyam','तिलककामोद':'Tilak Kamod','तोड़ी':'Todi','दुर्गा':'Durga','देश':'Desh','देशकार':'Deshkar','धानी':'Dhani','पहाड़ी':'Pahadi','पिलू':'Pilu','बहार':'Bahar','बागेश्री':'Bageshri','बागेश्री-२':'Bageshri-2','बिलावल':'Bilawal','भिन्नषड्ज':'Bhinna Shadja','भीमपलास':'Bhimpalas','भूप':'Bhoop','भैरवी':'Bhairavi','मांड':'Maand','मारवा':'Marwa','मिश्र काफी':'Mishra Kafi','मेचकल्याणी':'Mechakalyani','रंजनी':'Ranjani','रागेश्री':'Rageshri','रेवति':'Revati','शंकरा':'Shankara','शिवरंजनी':'Shivranjani','श्यामकल्याण':'Shyam Kalyan','सारंग':'Sarang','हंसध्वनि':'Hamsadhvani'};
-const INST_NAMES={bugle:['शंख','Bugle'],trumpet:['तूर्य','Trumpet'],flute:['वंशी','Flute'],venu:['वेणु','Bamboo flute'],clarinet:['स्वरद','Clarinet'],sax:['नागांग','Saxophone'],melodica:['मधुरिका','Melodica'],side:['आनक','Side drum'],bass:['पणव','Bass drum'],cym:['झल्लरी (झांज)','Cymbals'],tri:['त्रिभुज','Triangle']};
-let LANG=(()=>{const s=store.get('lang',null);if(s&&I18N[s])return s;const ls=(navigator.languages||[navigator.language||'']).map(x=>String(x).toLowerCase());
-  for(const l of ls){if(l.startsWith('mr'))return 'mr';if(l.startsWith('hi'))return 'hi'}return 'mr'})();
-const L=()=>I18N[LANG];
-function tx(k,...a){const v=L()[k];return typeof v==='function'?v(...a):v}
-const talaName=d=>L().romanNames?(TALA_ROM[d]||d):d;
-const ragaName=d=>L().romanNames?(RAGA_ROM[d]||d):d;
-function applyStatic(){document.documentElement.lang=LANG;
-  document.querySelectorAll('[data-t]').forEach(e=>{e.innerHTML=tx(e.dataset.t)});
-  document.querySelectorAll('[data-ta]').forEach(e=>e.setAttribute('aria-label',tx(e.dataset.ta)));
-  document.querySelectorAll('[data-tp]').forEach(e=>e.setAttribute('placeholder',tx(e.dataset.tp)))}
-
-const secName=k=>{if(k==='naimittik')return tx('naimittik');const [a,b]=k.split('-');return tx(a)+' · '+tx('parts')[b]};
+const i18n=I18n.createI18n(store);
+const {I18N,TALA_ROM,RAGA_ROM,INST_NAMES,L,tx,talaName,ragaName,applyStatic,secName}=i18n;
 const SEC_K=['all','prachalan','mand','naimittik'];
 const PART_C={shankh:'var(--shankh)',vanshi:'var(--mel)',anak:'var(--anak)',panav:'var(--tv)',jhallari:'var(--tv)',tribhuj:'var(--tv)',steps:'var(--dim)'};
 const PART=new Proxy({},{get:(o,k)=>PART_C[k]?{dv:tx('parts')[k],c:PART_C[k]}:undefined});
@@ -73,37 +23,6 @@ const PRINTED=['shankh','vanshi','anak'];
 (function(){const t=store.get('theme',null);if(t)document.documentElement.dataset.theme=t;
   $('#theme').onclick=()=>{const dark=document.documentElement.dataset.theme?document.documentElement.dataset.theme==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
     const n=dark?'light':'dark';document.documentElement.dataset.theme=n;store.set('theme',n)}})();
-
-/* ================= list ================= */
-let LIST=[], BOOK=[], LIBROWS=[], secF=store.get('sec','all'), insF=store.get('insF',null), srcF=null;
-// रचना फोल्डर: the person's own files are listed next to the book rachanas (keys "f~<id>")
-function setLibRows(rows){LIBROWS=rows||[];window.LIBROWS=LIBROWS;LIST=BOOK.concat(LIBROWS);if(!LIBROWS.length)srcF=null;
-  if(window.ComposerUI&&ComposerUI.tabs)ComposerUI.tabs();if(!$('#list').hidden)renderList()}
-const INS_K=['shankh','vanshi','anak'];if(!INS_K.includes(insF))insF=null;
-const inSec=r=>secF==='all'||r.sec.startsWith(secF), inIns=r=>!insF||r.parts.includes(insF), inSrc=r=>!srcF||(srcF==='lib'?!!r.lib:!r.lib);
-const norm=s=>String(s||'').toLowerCase().normalize('NFC');
-function rowMeta(r){return [secName(r.sec),r.talas.map(talaName).join('·')+' '+dv(r.laya),r.raga&&(tx('raga')+' '+ragaName(r.raga)),mmss(r.sec_s)].filter(Boolean).join(' · ')}
-const titleMain=r=>L().romanNames?r.rom:r.dev, titleSub=r=>L().romanNames?r.dev:r.rom;
-function badges(r){return r.parts.map(k=>`<span class="bd ${k}">${PART[k].dv}</span>`).join('')}
-function renderList(){
-  const q=norm($('#q').value.trim());
-  const rows=LIST.filter(r=>inSec(r)&&inIns(r)&&inSrc(r)&&(!q||norm([r.dev,r.rom,r.alt.join(' '),r.raga,RAGA_ROM[r.raga]||'',r.talas.join(' '),r.talas.map(x=>TALA_ROM[x]||'').join(' '),secName(r.sec)].join(' ')).includes(q)));
-  $('#rowsLbl').textContent=q?tx('found',dv(rows.length)):[secF==='all'&&!insF?tx('allR'):secF==='all'?'':tx(secF),insF?tx('parts')[insF]:''].filter(Boolean).join(' · ');
-  $('#rows').innerHTML=rows.length?rows.map(r=>`<button class="row" data-id="${r.id}"><span class="t"><span class="n"><b>${esc(titleMain(r))}</b><i>${esc(titleSub(r))}</i>${r.lib?`<i class="tag fx${r.lib==='pending'?' pend':''}">${esc(tx(r.lib==='pending'?'l_tagPending':'l_tagFolder'))}</i>`:''}</span><span class="m num">${esc(rowMeta(r))}</span></span><span class="badges">${badges(r)}</span></button>`).join('')
-    :`<p class="empty">${esc(tx('none',$('#q').value))}</p>`;
-  $('#secs').innerHTML=SEC_K.map(k=>{const l=tx(k);const n=LIST.filter(r=>inIns(r)&&inSrc(r)&&(k==='all'||r.sec.startsWith(k))).length;return `<button class="chip" data-s="${k}" aria-pressed="${secF===k}">${l} <span class="num">${dv(n)}</span></button>`}).join('');
-  $('#insts').innerHTML=INS_K.map(k=>`<button class="chip" data-ins="${k}" aria-pressed="${insF===k}"><span class="dot" style="background:${PART_C[k]}"></span>${tx('parts')[k]} <span class="num">${dv(LIST.filter(r=>inSec(r)&&inSrc(r)&&r.parts.includes(k)).length)}</span></button>`).join('');
-  $('#srcs').hidden=!LIBROWS.length;
-  $('#srcs').innerHTML=LIBROWS.length?[['book',tx('l_srcBook'),BOOK.length],['lib',tx('l_srcLib'),LIBROWS.length]].map(([k,l,n])=>`<button class="chip" data-src="${k}" aria-pressed="${srcF===k}">${esc(l)} <span class="num">${dv(n)}</span></button>`).join(''):'';
-  const rec=store.get('recent',[]).map(id=>LIST.find(r=>r.id===id)).filter(Boolean);
-  $('#recentWrap').hidden=!rec.length||!!q;
-  $('#recent').innerHTML=rec.map(r=>`<button data-id="${r.id}"><b>${esc(titleMain(r))}</b><small>${esc(r.talas.map(talaName).join('·'))} · ${mmss(r.sec_s)}</small></button>`).join('');
-}
-$('#q').addEventListener('input',renderList);
-$('#srcs').addEventListener('click',e=>{const b=e.target.closest('[data-src]');if(!b)return;srcF=srcF===b.dataset.src?null:b.dataset.src;renderList()});
-$('#insts').addEventListener('click',e=>{const b=e.target.closest('[data-ins]');if(!b)return;insF=insF===b.dataset.ins?null:b.dataset.ins;store.set('insF',insF);renderList()});
-$('#secs').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;secF=b.dataset.s;store.set('sec',secF);renderList()});
-document.addEventListener('click',e=>{const b=e.target.closest('#rows [data-id],#recent [data-id]');if(b)openPiece(b.dataset.id,true)});
 
 /* ================= audio ================= */
 // The sound itself lives in src/audio (AudioEngine, Drums, melodic voices, Transport). These names stay because the
@@ -201,28 +120,13 @@ $('#fixBtn').onclick=()=>{if(!P||!window.FixerUI)return;if(returnTo==='fixer'){c
 function closePlayer(){stop(true);wake(false);$('#player').hidden=true;P=null;
   if(returnTo==='composer'&&window.ComposerUI){returnTo=null;ComposerUI.back();return}
   if(returnTo==='fixer'&&window.FixerUI){returnTo=null;FixerUI.back();return}
-  $('#list').hidden=false;renderList()}
+  $('#list').hidden=false;LSV().renderList()}
 $('#back').onclick=()=>{if(returnTo){closePlayer();return}try{if(history.state&&history.state.id){history.back();return}}catch(e){}closePlayer()};
-addEventListener('popstate',()=>{const id=decodeURIComponent(location.hash.slice(1));if(id&&LIST.some(r=>r.id===id))openPiece(id,false);else if(P)closePlayer()});
+addEventListener('popstate',()=>{const id=decodeURIComponent(location.hash.slice(1));if(id&&LSV().LIST.some(r=>r.id===id))openPiece(id,false);else if(P)closePlayer()});
 function alert1(msg){$('#rows').insertAdjacentHTML('afterbegin',`<p class="empty" role="alert">${esc(msg)}</p>`)}
 
 /* ---------- notation ---------- */
-function slotHTML(s){
-  let cls='s',inner=s.dev||(s.type==='hold'?'ऽ':s.type==='rest'?'–':'');
-  if(s.type==='hold')cls+=' hold';if(s.type==='rest')cls+=' rest';
-  if(s.type==='note'){if(s.octave<0)cls+=' dot-b';if(s.octave>0)cls+=' dot-t';if(s.vikrit)cls+=' vk'}
-  if(s.slur==='start')cls+=' sls';else if(s.slur==='mid')cls+=' slm';else if(s.slur==='end')cls+=' sle';
-  const pre=s.grace?s.grace.map(g=>`<span class="gr">${esc(g.dev)}</span>`).join(''):'';
-  const mk=[];if(s.accent)mk.push('^');if(s.fermata)mk.push('→');if(s.swell==='grow')mk.push('<');if(s.swell==='fade')mk.push('>');
-  return `<span class="${cls}">${mk.length?`<span class="ac">${mk.join('')}</span>`:''}${pre}${esc(inner)}</span>`}
-function matraHTML(m){if(m.cue)return `<span class="cue">${esc(m.cue)}</span>`;
-  const grp=m.group||(m.slots&&m.slots.length>1);return `<span class="mt${grp?' grp':''}">${(m.slots||[]).map(slotHTML).join('')}</span>`}
-function ganHTML(g,k){
-  // पहिला / दुसरा अंत: a bracket over the ending's गण, its number at the start
-  const ve=g.seg&&g.seg[0]==='e',ve0=ve&&/\.0$/.test(g.addr),endMark=ve0?`<span class="end">${dvN(g.seg.slice(1))}</span>`:'';
-  const vc=ve?` ve${ve0?' ve0':''}`:'';
-  if(g.yati)return `<span class="g${vc}" data-a="${g.addr}">${endMark}<span class="yati">यति ${dvN(g.yati)}</span></span>`;
-  return `<span class="g${vc}" data-a="${g.addr}">${endMark}${g.gats.map(gt=>`<span class="gat">${gt.matras.map(matraHTML).join('')}</span>`).join('')}</span>`}
+const {slotHTML,matraHTML,ganHTML,fitRows}=ScoreView.makeScoreView({esc,dvN,$});
 function charanLabel(c){
   if(c.type==='ranan')return tx('ranan');
   if(c.type==='prarambhik')return tx('prarambhik');
@@ -237,7 +141,7 @@ function renderPlayer(){
   const ttl=L().romanNames&&P.meta.title.rom?P.meta.title.rom:P.meta.title.dev;$('#ptitle').textContent=ttl;$('#mtitle').textContent=ttl;
   const talas=[...new Set(R.charans.map(c=>talaName(R.talas[c.tala].name.dev)+' '+dv(c.laya)))].join(' → ');
   $('#psub').textContent=[secName(P.meta.section),talas,P.meta.raga&&P.meta.raga.name&&(tx('raga')+' '+ragaName(P.meta.raga.name)),returnTo==='fixer'&&tx('f_draft'),curKey&&curKey.startsWith('f~')&&tx('l_tagFolder')].filter(Boolean).join(' · ');
-  $('#fixBtn').hidden=!(window.FixerUI&&(returnTo==='fixer'||(curKey&&LIST.some(r=>r.id===curKey))));
+  $('#fixBtn').hidden=!(window.FixerUI&&(returnTo==='fixer'||(curKey&&LSV().LIST.some(r=>r.id===curKey))));
   renderModes();
   $('#marchBtn').disabled=!P.parts.steps;$('#marchBtn').style.opacity=P.parts.steps?1:.4;
   renderChips();renderScore();
@@ -253,9 +157,6 @@ function renderChips(){
   $('#pchips').innerHTML=`<button class="chip" data-k="all" aria-pressed="${all}">${tx('all')}</button>`+
     keys.map(k=>`<button class="chip" data-k="${k}" aria-pressed="${on(k)&&!all}"><span class="dot" style="background:${PART[k].c}"></span>${chipName(k)}</button>`).join('');
 }
-function fitRows(root){(root||$('#score')).querySelectorAll('.pr').forEach(p=>{p.style.fontSize='';
-  let size=parseFloat(getComputedStyle(p).fontSize);const over=()=>p.scrollWidth>p.clientWidth+1||[...p.children].some(g=>g.scrollWidth>g.clientWidth+1);
-  while(size>9&&over()){size-=1;p.style.fontSize=size+'px'}})}
 let fitT=null;addEventListener('resize',()=>{clearTimeout(fitT);fitT=setTimeout(()=>{if(P&&!$('#player').hidden){fitRows();if(marchOn)paintMarchLines()}},150)});
 if(document.fonts&&document.fonts.ready)document.fonts.ready.then(()=>{if(P)fitRows()});
 function renderScore(){
@@ -333,8 +234,8 @@ function curPos(){return TR.position()}
 function blockAt(t){const B=EV.blocks;let i=B.findIndex(b=>t>=b.s-EPS&&t<b.e-EPS);if(i<0)i=t<(B[0]?B[0].s:0)?0:B.length-1;return i}
 /* Only one copy of the app plays at a time: when this one starts, any other open copy (tab, window, home-screen app) stops. */
 const COPY_ID=Math.random().toString(36).slice(2);let chan=null;try{chan=new BroadcastChannel('ghoshnaad')}catch(e){}
-function announce(){try{chan&&chan.postMessage({play:COPY_ID})}catch(e){}try{localStorage.setItem('ghosh.playing',COPY_ID+':'+Date.now())}catch(e){}}
-function otherPlays(id){if(!id||id===COPY_ID)return;if(S.playing)stop();if(window.SoundLab&&SoundLab.stopAll)SoundLab.stopAll();if(window.SanketUI)SanketUI.stopAll()}
+function announce(){try{const tl=window.ScreenApp&&ScreenApp.get('tala');if(tl)tl.onStopAll()}catch(e){}try{chan&&chan.postMessage({play:COPY_ID})}catch(e){}try{localStorage.setItem('ghosh.playing',COPY_ID+':'+Date.now())}catch(e){}}
+function otherPlays(id){if(!id||id===COPY_ID)return;if(S.playing)stop();if(window.ScreenApp)ScreenApp.stopAll()}
 if(chan)chan.onmessage=e=>{if(e.data&&e.data.play)otherPlays(e.data.play)};
 addEventListener('storage',e=>{if(e.key==='ghosh.playing'&&e.newValue)otherPlays(e.newValue.split(':')[0])});
 function start(from=0,countIn=marchOn){
@@ -421,7 +322,8 @@ function renderSheet(){
   <div class="igrp"><b>${tx('artL')}</b><div class="opts">${['santar','nirantar'].map(a=>`<button class="opt" data-art="${a}" ${sel(a===artic)}><span>${tx(a)}</span><small>${tx(a+'S')}</small></button>`).join('')}</div></div>
   <div class="igrp"><b>${tx('kanL')}</b><div class="opts">${[30,45,60,80,100,130].map(m=>`<button class="opt key" data-kan="${m}" ${sel(m===kanMs)}><span>${dv(m)}</span></button>`).join('')}</div><span class="note">${tx('ms','')}</span></div>`;
   $('#libOpts').innerHTML=window.Library?Library.sheetHTML():'';
-  $('#langs').innerHTML=Object.keys(I18N).map(k=>`<button class="opt lang" data-lang="${k}" aria-pressed="${k===LANG}" lang="${k}"><span>${I18N[k].lang}</span></button>`).join('')}
+  if(window.PlatformUI)PlatformUI.render();
+  $('#langs').innerHTML=Object.keys(I18N).map(k=>`<button class="opt lang" data-lang="${k}" aria-pressed="${k===i18n.LANG}" lang="${k}"><span>${I18N[k].lang}</span></button>`).join('')}
 $('#instBtn').onclick=$('#instBtn2').onclick=()=>{renderSheet();$('#sheet').hidden=false};
 $('#sheetX').onclick=()=>{$('#sheet').hidden=true};
 $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet'){$('#sheet').hidden=true;return}
@@ -440,7 +342,20 @@ function previewSa(pk){if(S.playing)return;audio();const t=ctx.currentTime+.05,v
 function previewKan(){if(S.playing)return;audio();const t=ctx.currentTime+.05,v=voicesFor('vanshi')[0];
   playNote({swara:'G',octave:0,dur:.5,grace:[{type:'note',swara:'M',octave:0}]},t,master,v);playNote({swara:'R',octave:0,dur:.5},t+.5,master,v)}
 
-function setLang(l){if(!I18N[l]||l===LANG)return;LANG=l;store.set('lang',l);applyStatic();renderSheet();renderList();$('#count1').textContent=tx('count',dv(LIST.length));if(window.ComposerUI)ComposerUI.lang();if(window.FixerUI)FixerUI.lang();if(window.Library)Library.renderBar();if(window.Guide)Guide.lang();if(window.SoundLab)SoundLab.lang();if(window.SanketUI)SanketUI.lang();if(window.Swarlipi)Swarlipi.lang();
+// the services the migrated screens (src/screens) receive instead of reaching for globals
+window.AppEnv={q:s=>document.querySelector(s),$:s=>{const e=document.querySelector(s);if(!e)throw new Error('missing element '+s);return e},tx,esc,dv,I18N,lang:()=>i18n.LANG,L,matraHTML,slotHTML,
+  PART,PART_C,SEC_K,TALA_ROM,setLibRows:r=>LSV().setLibRows(r),renderList:()=>LSV().renderList(),hasSoundLab:()=>!!(window.ScreenApp&&ScreenApp.get('soundcheck')),app:()=>window.ScreenApp,store,dvN,mmss,secName,applyStatic,fitRows,renderPlayer:()=>renderPlayer(),APP,openPiece,ragaName,loadJSON,talaName,wake:v=>wake(v),sample:src=>ScreenApp.get('guide').sample(src),
+  // sound: the engine's context and the shared drum and voice functions (the context is replaced when sound is switched on, so these are getters)
+  audio:{get engine(){return ENG},unlock:()=>audio(),announce:()=>announce(),outLat:()=>outLat(),get ctx(){return ctx},get master(){return master},get gains(){return gains},
+    hz:s=>hz(s),playNote:(e,t,o,v)=>playNote(e,t,o,v),playStroke:(e,t,o)=>playStroke(e,t,o),footfall:(t,f,o)=>footfall(t,f,o),
+    panav:(t,v,o,m)=>panav(t,v,o,m),jhal:(t,v,o,m)=>jhal(t,v,o,m),trib:(t,v,o,m)=>trib(t,v,o,m),click:(t,v,o)=>click(t,v,o),
+    mixOf:k=>mixOf(k),on:k=>on(k),voicesFor:k=>voicesFor(k)},
+  // the player, which the sound check borrows to listen to a whole rachana
+  player:{get LATE(){return LATE},get LIST(){return LSV().LIST},get LEAD(){return LEAD},get TL(){return TL},get P(){return P},set P(v){P=v},S,get curKey(){return curKey},get BOOK(){return LSV().BOOK},get SEL(){return SEL},set SEL(v){SEL=v},get MIX(){return MIX},set MIX(v){MIX=v},
+    loadPiece:(p,o)=>loadPiece(p,o),build:()=>build(),start:(a,b)=>start(a,b),stop:s=>stop(s),showPiece:(p,o)=>showPiece(p,o)},
+  settings:{get artic(){return artic},set artic(v){artic=v},get kanMs(){return kanMs},set kanMs(v){kanMs=v},get saKeys(){return saKeys},setSaKey:(k,v)=>setSaKey(k,v),
+    SA_KEYS,SA_DEF,VOICE_OF,INST_NAMES,RAGA_ROM}};
+function setLang(l){if(!I18N[l]||l===i18n.LANG)return;i18n.setLang(l);store.set('lang',l);applyStatic();renderSheet();LSV().renderList();$('#count1').textContent=tx('count',dv(LSV().LIST.length));if(window.ScreenApp)ScreenApp.setLang();if(window.PlatformUI)PlatformUI.lang();
   if(P){renderPlayer();renderBlocks();$('#tend').textContent=mmss(EV.end);const base=(R.charans.find(c=>c.type!=='prarambhik')||R.charans[0]).laya;$('#tval').textContent=$('#mtval').textContent=dv(Math.round(base*tempo));
     lastBlock=-1;lastStep=-2;setPlayIcon(S.playing);if(marchOn){$('#msub').textContent=tx('marchA')+' · '+(P.meta.performance.mode==='mandchal'?tx('mandchal'):tx('prachalan'));paintMarchLines()}paintAt(curPos())}}
 
@@ -451,30 +366,12 @@ async function wake(want){try{if(want&&!lock&&'wakeLock' in navigator&&document.
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&P)wake(true)});
 document.addEventListener('keydown',e=>{if(!P||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||document.querySelector('.cview:not([hidden])'))return;if(e.code==='Space'){e.preventDefault();$('#play').click()}});
 
-/* ---------- data loading ----------
-   Over http(s) the JSON files are fetched. A page opened straight from disk (file://) cannot fetch,
-   so it loads the same data from the matching .js file, which hands it to window.GHOSH_DATA. */
-const JS_WAIT={};
-window.GHOSH_DATA=(path,data)=>{const w=JS_WAIT[path];if(w){delete JS_WAIT[path];w(data)}};
-function loadJS(path){return new Promise((ok,no)=>{JS_WAIT[path]=ok;const s=document.createElement('script');s.src=path.replace(/\.json$/,'.js');
-  s.onerror=()=>{delete JS_WAIT[path];no(new Error('missing '+path))};s.onload=()=>s.remove();document.head.appendChild(s)})}
-// Single-file build: every data file is packed (gzip + base64) into window.GHOSH_PACK.
-let PACK=null;
-// Unpacked with the bundled fflate (works on every Safari / iOS version, unlike DecompressionStream).
-async function unpack(){if(!PACK){const s=atob(window.GHOSH_PACK),bin=new Uint8Array(s.length);for(let i=0;i<s.length;i++)bin[i]=s.charCodeAt(i);
-  PACK=JSON.parse(new TextDecoder().decode(window.fflate.gunzipSync(bin)))}return PACK}
-async function loadJSON(path){
-  if(window.GHOSH_PACK){const p=await unpack();if(p[path])return p[path];throw new Error('missing '+path)}
-  if(location.protocol!=='file:'){try{const r=await fetch(path);if(r.ok)return await r.json()}catch(e){}}
-  return loadJS(path)}
-
 /* ---------- boot ---------- */
 (async()=>{
   applyStatic();
-  try{LIST=await loadJSON('data/index.json')}catch(e){$('#rows').innerHTML=`<p class="empty">${esc(tx('listErr'))}<br><small>${esc(e&&e.message||e)}</small></p>`;return}
+  let INDEX;try{INDEX=await loadJSON('data/index.json')}catch(e){$('#rows').innerHTML=`<p class="empty">${esc(tx('listErr'))}<br><small>${esc(e&&e.message||e)}</small></p>`;return}
   if(document.readyState==='loading')await new Promise(r=>addEventListener('DOMContentLoaded',r,{once:true}));   // composer, editor and folder scripts come later in the page
-  BOOK=LIST;$('#count1').textContent=tx('count',dv(BOOK.length));renderList();if(window.ComposerUI)ComposerUI.init();
+  LSV().LIST=INDEX;LSV().BOOK=INDEX;$('#count1').textContent=tx('count',dv(LSV().BOOK.length));LSV().renderList();if(window.ComposerUI)ComposerUI.init();
   if(window.Library)try{await Library.init()}catch(e){}
-  const id=decodeURIComponent(location.hash.slice(1));if(id&&LIST.some(r=>r.id===id))openPiece(id,false);
-  if('serviceWorker' in navigator&&(location.protocol==='https:'||location.hostname==='localhost')&&!/claude/.test(location.hostname))navigator.serviceWorker.register('sw.js').catch(()=>{});
+  const id=decodeURIComponent(location.hash.slice(1));if(id&&LSV().LIST.some(r=>r.id===id))openPiece(id,false);
 })();
