@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0-alpha.1",
+  "date": "2026-10-27",
+  "whatsNew": {
+    "mr": [
+      "iPhone वर फोनचा मूक (silent) मोड चालू असला तरी आता आवाज येतो.",
+      "कॉल किंवा लॉक स्क्रीनमुळे वादन थांबले, तर ▶ दाबताच तिथूनच पुन्हा सुरू होते."
+    ],
+    "hi": [
+      "iPhone पर फ़ोन का साइलेंट मोड चालू होने पर भी अब आवाज़ आती है।",
+      "कॉल या लॉक स्क्रीन से वादन रुक जाए तो ▶ दबाते ही वहीं से फिर शुरू होता है।"
+    ],
+    "en": [
+      "On iPhone the app now plays even when the phone's silent switch is on.",
+      "If a call or the lock screen stops playback, tapping ▶ continues from the same place."
+    ]
+  }
+}

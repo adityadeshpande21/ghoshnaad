@@ -1,0 +1,134 @@
+[
+ {
+  "kind": "raw",
+  "file": "raw-00.html"
+ },
+ {
+  "kind": "style",
+  "file": "reset.css"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-01.html"
+ },
+ {
+  "kind": "style",
+  "file": "app.css"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-02.html"
+ },
+ {
+  "kind": "script",
+  "gen": "pack"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-03.html"
+ },
+ {
+  "kind": "script",
+  "gen": "fflate"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-04.html"
+ },
+ {
+  "kind": "script",
+  "file": "timeline3.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-05.html"
+ },
+ {
+  "kind": "script",
+  "file": "app.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-06.html"
+ },
+ {
+  "kind": "script",
+  "gen": "compiler"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-07.html"
+ },
+ {
+  "kind": "script",
+  "file": "composer-core.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-08.html"
+ },
+ {
+  "kind": "script",
+  "file": "composer.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-09.html"
+ },
+ {
+  "kind": "script",
+  "file": "export.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-10.html"
+ },
+ {
+  "kind": "script",
+  "file": "fixer.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-11.html"
+ },
+ {
+  "kind": "script",
+  "file": "library.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-12.html"
+ },
+ {
+  "kind": "script",
+  "file": "guide.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-13.html"
+ },
+ {
+  "kind": "script",
+  "file": "soundlab.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-14.html"
+ },
+ {
+  "kind": "script",
+  "file": "sanket.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-15.html"
+ },
+ {
+  "kind": "script",
+  "file": "sanketui.js"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-16.html"
+ }
+]

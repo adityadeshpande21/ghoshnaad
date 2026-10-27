@@ -1,0 +1,52 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "malayaprabha",
+  "kind": "rachana",
+  "title": {
+    "dev": "मलयप्रभा",
+    "rom": "Malayaprabha"
+  },
+  "section": "mand-shankh",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 31,
+        "pdfPage": 50,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 180,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स ऽ ग | स ऽ [ऽ–] | प ऽ ग | स [सग] प |",
+        "| प. प. प. | स ऽ ग | प. – प. | स ऽ [ऽ–] :॥",
+        "॥ ग प [सग] | प ऽ [ऽ–] | प प प | प ऽ प |",
+        "| ग प [सग] | प ऽ [ऽ–] | प. प. [प.प.] | स ऽ [ऽ–] :॥",
+        "॥ [(पग)] [सप.] [सग] | प – – | प ऽ [सग] | प – – |",
+        "| [(पग)] [सप.] [सग] | प – – | प. [सग] [पग] | स ऽ [ऽ–] :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 79,
+        "pdfPage": 100,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 180,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ त त्र त | त्र ऽ ऽ | त त्र त | त [तत] त |",
+        "| त त त | त्र ऽ त | त त्र त | त – – :॥",
+        "॥ त त [तत] | त्र ऽ ऽ | त त त | त त्र त |",
+        "| त त [तत] | त्र ऽ ऽ | त त [तत्र] | त – – :॥",
+        "॥ [तत्र] [तत्र] [तत] | त – – | त्र ऽ [तत] | त – – |",
+        "| [तत्र] [तत्र] [तत] | त – – | त [तत्र] [तत] | त – – :॥"
+      ]
+    }
+  }
+}

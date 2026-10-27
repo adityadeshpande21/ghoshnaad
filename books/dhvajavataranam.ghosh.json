@@ -1,0 +1,35 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "dhvajavataranam",
+  "kind": "udghosh",
+  "title": {
+    "dev": "ध्वजावतरणम्",
+    "rom": "Dhvajavataranam"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 39,
+        "pdfPage": 58,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 100,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स^ ऽ | [ऽ–] – ॥",
+        "॥ ग [पग] | स [ऽप.] | [सऽगस] [गस] | प. [ऽ–] |",
+        "| [गप] [सग] | [प.स] ग | प ग | स! [ऽ–] |",
+        "| ग [पग] | स [ऽप.] | [सऽगस] [गस] | [प.–] [स–] |",
+        "| [पऽऽग] [सप.] | स [पग] | [सप.] स | प ग ॥",
+        "॥ स [–प.] | स [सस] | प. प. | प.! [ऽ–] |",
+        "| ग प | स ग | [प.स] [ऽग] | प [ऽ–] |",
+        "| स [–प.] | स [सस] | प. प. | प.! [ऽ–] |",
+        "| [गग] प | [सस] ग | [प.स] – | स^! [ऽ–] ॥"
+      ]
+    }
+  }
+}

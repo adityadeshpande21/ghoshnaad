@@ -1,0 +1,27 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "karyakram-samapti",
+  "kind": "udghosh",
+  "title": {
+    "dev": "कार्यक्रम समाप्ति",
+    "rom": "Karyakram Samapti"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 36,
+        "pdfPage": 55,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स ग प | स! ऽ – :॥"
+      ]
+    }
+  }
+}

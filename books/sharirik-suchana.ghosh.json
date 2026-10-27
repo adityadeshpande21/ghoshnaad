@@ -1,0 +1,28 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "sharirik-suchana",
+  "kind": "udghosh",
+  "title": {
+    "dev": "शारीरिक सूचना",
+    "rom": "Sharirik Suchana"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 36,
+        "pdfPage": 55,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ [प.ऽऽस] [प.–] | [सऽऽग] [सस] | [गऽऽप] [ग–] | [सग] [प–] |",
+        "| [गऽऽप] [ग–] | [सऽऽग] [सस] | [प.ऽऽस] [प.–] | [सस] [स–] :॥"
+      ]
+    }
+  }
+}

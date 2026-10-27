@@ -1,0 +1,55 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "tunga",
+  "kind": "rachana",
+  "title": {
+    "dev": "तुंगा",
+    "rom": "Tunga"
+  },
+  "section": "mand-vanshi",
+  "raga": {
+    "name": "रंजनी"
+  },
+  "parts": {
+    "vanshi": {
+      "source": {
+        "book": "vanshi",
+        "page": 73,
+        "pdfPage": 93,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स री ग_ | स ऽ स | नि. ध. ध. | स ऽ ऽ |",
+        "| स री ग_ | म_ ध म_ | ग_ स ध. | स ऽ [ऽ–] :॥",
+        "॥ री ग_ म_ | ध म_ ग_ | म_ ध ध | स' ऽ ऽ |",
+        "| स' नि ध | नि ध म_ | ध म_ ग_ | स ऽ [ऽ–] :॥",
+        "॥ स' री' ग_' | स' नि ध | नि ध म_ | ग_ म_ ध |",
+        "| स' ऽ नि | ध म_ ग_ | ध म_ ग_ | स ऽ [ऽ–] :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 88,
+        "pdfPage": 109,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ त त त | त्र ऽ त | त त त | त्र ऽ ऽ |",
+        "| त त त | – त त | त त त | त्र ऽ त :॥",
+        "॥ त्र त त | त त्र त | त त त | त – – |",
+        "| त्र त त | त त त | त त्र त | त्र ऽ त :॥",
+        "॥ त त्र त | त त्र त | त त त | त त्र त |",
+        "| त्र ऽ त | त त्र त | त्र ऽ ऽ | त – – :॥"
+      ]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "varada",
+  "kind": "rachana",
+  "title": {
+    "dev": "वरदा",
+    "rom": "Varada"
+  },
+  "section": "mand-shankh",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 31,
+        "pdfPage": 50,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स ऽ स | प. ऽ प. | ग ऽ ग | स ऽ – |",
+        "| ग ऽ ग | प ऽ ग | स ऽ प. | स ऽ – :॥",
+        "॥ ग [गप] [सग] | प. ऽ प. | स [सग] [प.स] | ग ऽ ग |",
+        "| ग [गप] ग | स [सग] स | प. प. प. | स ऽ – :॥",
+        "॥ प ऽ [गस] | प. ऽ प. | ग ऽ [सग] | स ऽ – |",
+        "| [सग] [गप] [गस] | प [सग] प | प. प. प. | स ऽ – :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 77,
+        "pdfPage": 98,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ त्र ऽ त | त [तत] त | त्र ऽ त | त [तत] त |",
+        "| त त्र त | त [तत] त | त्र ऽ ऽ | त – – :॥",
+        "॥ त [तत] [तत] | त्र ऽ त | त [तत] [तत] | त्र ऽ त |",
+        "| त [तत] [तत] | त [तत] [तत] | त्र ऽ ऽ | त – – :॥",
+        "॥ त्र ऽ [तत] | त [तत] त | त त्र त | त – – |",
+        "| [तत] [तत्र] [तत] | त त त | त्र ऽ ऽ | त – – :॥"
+      ]
+    }
+  }
+}

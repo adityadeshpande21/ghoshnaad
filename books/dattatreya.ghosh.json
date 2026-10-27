@@ -1,0 +1,60 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "dattatreya",
+  "kind": "rachana",
+  "title": {
+    "dev": "दत्तात्रेय",
+    "rom": "Dattatreya"
+  },
+  "section": "mand-shankh",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 32,
+        "pdfPage": 51,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ – – स ॥", "pickup": true
+        },
+        "॥ प. ऽ प. | ग ऽ ग | प – – | प [सग] प |",
+        "| प. ऽ प. | ग ऽ ग | प प प | प – स |",
+        "| प. ऽ प. | ग ऽ ग | प – – | प [सग] प |",
+        "| प. ऽ प. | ग ऽ ग | स ऽ ऽ | ऽ – – :॥",
+        { "t": "– – प. ॥", "pickup": true
+        },
+        "॥ स ऽ ऽ | ग स प. | स. ऽ स. | स. ऽ प. |",
+        "| स ऽ ऽ | ग स प. | स ऽ ग | प – प. |",
+        "| स ऽ ऽ | ग स प. | स. ऽ स. | स. – प. |",
+        "| स – प. | ग – प. | स – स | स – – :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 79,
+        "pdfPage": 100,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ – त त | – त त | त्र ऽ ऽ | त [तत] त |",
+        "| – त त | – त त | त्र ऽ ऽ | त [तत] त |",
+        "| – त त | – त त | त्र ऽ ऽ | त [तत] त |",
+        "| – त त | – त त | त्र ऽ ऽ | त – – :॥",
+        "॥ त्र ऽ ऽ | त त त | त [तत] [तत] | त त त |",
+        "| त्र ऽ ऽ | त त त | त [तत] [तत] | त [तत] त |",
+        "| त्र ऽ ऽ | त त त | त [तत] [तत] | त त त |",
+        "| [तत] त्र [तत] | [तत] त्र [तत] | [तत] त्र [तत] | त – – :॥"
+      ]
+    }
+  }
+}

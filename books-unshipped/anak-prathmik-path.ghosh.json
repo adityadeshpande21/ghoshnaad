@@ -1,0 +1,21 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "anak-prathmik-path-kerva",
+  "kind": "lesson",
+  "title": { "dev": "आनक प्राथमिक पाठ - केरवा ताल", "rom": "Anak basic lesson - Kerva" },
+  "section": "lessons",
+  "parts": {
+    "anak": {
+      "source": { "book": "anak", "page": 17, "pdfPage": 17, "edition": 6, "excerpt": "exercises 1-5" },
+      "tala": "केरवा", "laya": 120,
+      "status": "draft",
+      "lines": [
+        { "t": "॥ त – | – – | त – | – – ॥ #1", "hands": "R . . . L . . ." },
+        { "t": "॥ त – | त – | त – | त – ॥ #2", "hands": "R . L . R . L ." },
+        { "t": "॥ त त | त त | त त | त – ॥ #3", "hands": "R L R L R L R ." },
+        { "t": "॥ त त | त – | [तत] [तत] | [तत] त ॥ #4", "hands": "R L R . R L R L R L R" },
+        { "t": "॥ [तत] [तत] | [तत] त | [तत] [तत] | [तत] त ॥ #5", "hands": "R L R L R L R R L R L R L R" }
+      ]
+    }
+  }
+}

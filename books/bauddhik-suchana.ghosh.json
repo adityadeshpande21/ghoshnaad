@@ -1,0 +1,30 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "bauddhik-suchana",
+  "kind": "udghosh",
+  "title": {
+    "dev": "बौद्धिक सूचना",
+    "rom": "Bauddhik Suchana"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 36,
+        "pdfPage": 55,
+        "edition": 6
+      },
+      "tala": "खेमटा",
+      "laya": 360,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ , ––प. ॥", "pickup": true
+        },
+        "॥ पऽप , गऽग | सऽस , प.ऽप. | प.प.प. , सऽस | गऽग , सऽऽ |",
+        "| ऽऽऽ , ऽ–– | प.ऽप. , सऽस | गऽग , स!ऽऽ | ऽऽऽ , ऽ–– ॥"
+      ]
+    }
+  }
+}

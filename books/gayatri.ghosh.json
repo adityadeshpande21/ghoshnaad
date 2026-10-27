@@ -1,0 +1,56 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "gayatri",
+  "kind": "rachana",
+  "title": {
+    "dev": "गायत्री",
+    "rom": "Gayatri"
+  },
+  "section": "prachalan-shankh",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 3,
+        "pdfPage": 22,
+        "edition": 6
+      },
+      "tala": "खेमटा",
+      "laya": 360,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ , ––स ॥", "pickup": true
+        },
+        "॥ प.ऽप. , सऽस | गऽग , सऽस | प.ऽप. , सऽस | गऽ– , ––स |",
+        "| प.ऽप. , सऽस | गऽग , सऽस | प.ऽप. , प.ऽप. | सऽ– , ––– :॥",
+        { "t": ", ––प. ॥", "pickup": true
+        },
+        "॥ सऽस , सऽस | सऽ– , गऽ– | सऽस , सऽस | प.ऽ– , ––प. |",
+        "| सऽस , सऽस | सऽ– , गऽ– | प.ऽप. , प.ऽप. | सऽऽ , ऽ–– :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 3,
+        "pdfPage": 24,
+        "edition": 6
+      },
+      "tala": "खेमटा",
+      "laya": 360,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ | , ––त्र ॥", "pickup": true
+        },
+        "॥ त–त , त–त | त–त्र , त–त्र | त–त , त–त | त–– , ततत |",
+        "| त–त , त–त | त–त्र , त–त्र | त–त , त–त | त–– , ––– :॥",
+        { "t": ", ––त्र ॥", "pickup": true
+        },
+        "॥ त–त्र , त–त | त्रऽऽ , ऽऽऽ | त–त , त–त्र | त–– , ततत |",
+        "| त–त्र , त–त | त्रऽऽ , ऽऽऽ | त–त , त–त्र | त–– , ––– :॥"
+      ]
+    }
+  }
+}

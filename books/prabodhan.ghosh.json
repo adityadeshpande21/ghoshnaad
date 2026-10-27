@@ -1,0 +1,55 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "prabodhan",
+  "kind": "udghosh",
+  "title": {
+    "dev": "प्रबोधन",
+    "rom": "Prabodhan"
+  },
+  "section": "naimittik",
+  "notes": [
+    "Superscript १०० before the ध्रुवपद and charan 1 is read as laya 100 for those charans.",
+    "The book writes the ध्रुवपद once; in practice it is played after every charan (see the guide)."
+  ],
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 35,
+        "pdfPage": 54,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "form": [
+        "ध्रुवपद",
+        "1",
+        "ध्रुवपद",
+        "2",
+        "ध्रुवपद",
+        "3",
+        "ध्रुवपद"
+      ],
+      "lines": [
+        "॥ॐ॥ @laya=100 [स(स] [ग)–] | स ऽ | [(ऽप.)] – | – – |",
+        "| [(सग)] [ऽ–] | स ऽ | [(ऽप.] [स.)–] | – – ॥ #ध्रुवपद",
+        { "t": "[–प.] ॥", "pickup": true
+        },
+        "॥ @laya=100 स ऽ | स [ऽस] | प. ऽ | प. [ऽप.] |",
+        "| स ऽ | ग [ऽग] | स [ऽ–] | स! [ऽ–] ॥ #1",
+        { "t": "[–प.] ॥", "pickup": true
+        },
+        "॥ स [सऽऽस] | स प. | ग [गऽऽग] | ग [ऽ–] |",
+        "| [गप] [गस] | [गप] [गस] | प. [प.ऽऽप.] | प. [ऽप.] |",
+        "| स [सऽऽस] | स प. | ग [गऽऽग] | ग [ऽ–] |",
+        "| प ग | स प. | स [सऽऽस] | स! [ऽ–] ॥ #2",
+        { "t": "[–प.] ॥", "pickup": true
+        },
+        "॥ स [गप] | [गस] प. | प [पप] | प [–प.] |",
+        "| स [गप] | [गस] प. | स [सस] | स! [ऽ–] ॥ #3"
+      ],
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20"
+    }
+  }
+}

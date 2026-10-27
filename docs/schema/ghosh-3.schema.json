@@ -1,0 +1,146 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ghosh/3",
+  "title": "Ghosh notation v3: one standalone file per rachana",
+  "description": "Compiled by src/compile3.js from an authoring file. Needs nothing else: talas, derived parts (ताल वाद्य, कदम), book layout and provenance are inside. Parts line up by गण address (<charan>.<b|e1|e2>.<index>), the same in every part. A matra lasts 60/laya seconds (× span) and is shared by its slots by weight w.",
+  "type": "object",
+  "required": ["format", "id", "meta", "rhythm", "parts", "layout"],
+  "additionalProperties": false,
+  "properties": {
+    "format": { "const": "ghosh/3" },
+    "id": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "generated": { "type": "object", "properties": { "by": { "type": "string" }, "at": { "type": "string" } } },
+    "meta": { "$ref": "#/$defs/meta" },
+    "rhythm": { "$ref": "#/$defs/rhythm" },
+    "parts": {
+      "type": "object", "minProperties": 1,
+      "propertyNames": { "enum": ["shankh", "vanshi", "anak", "panav", "kharjanak", "jhallari", "tribhuj", "steps"] },
+      "additionalProperties": { "$ref": "#/$defs/part" }
+    },
+    "layout": { "$ref": "#/$defs/layout" },
+    "provenance": { "type": "object", "description": "Book, page, status per printed part. Kept for checking; never displayed." },
+    "media": { "type": "array", "items": { "type": "object", "required": ["type", "url"], "properties": { "type": { "enum": ["video", "audio"] }, "url": { "type": "string" }, "title": { "type": "string" }, "channel": { "type": "string" }, "parts": { "type": "array", "items": { "type": "string" } }, "start": { "type": "number" }, "note": { "type": "string" } } } },
+    "tuning": { "type": "object", "properties": { "sa": { "type": "string" } } }
+  },
+  "$defs": {
+    "i18n": { "type": "object", "properties": { "mr": { "type": "string" }, "hi": { "type": "string" }, "en": { "type": "string" } } },
+    "meta": {
+      "type": "object", "required": ["title", "section", "performance"],
+      "properties": {
+        "title": { "type": "object", "required": ["dev"], "properties": { "dev": { "type": "string" }, "rom": { "type": "string" }, "alt": { "type": "array", "items": { "type": "string" } } } },
+        "kind": { "enum": ["rachana", "udghosh", "lesson", "exercise"] },
+        "section": { "enum": ["prachalan-shankh", "prachalan-vanshi", "mand-shankh", "mand-vanshi", "naimittik", "lessons"] },
+        "complete": { "type": "boolean" },
+        "raga": { "type": "object", "anyOf": [{ "required": ["name"] }, { "required": ["aroha"] }], "description": "name is omitted when the book prints only the आरोह/अवरोह", "properties": { "name": { "type": "string" }, "aroha": { "type": "string" }, "avaroha": { "type": "string" }, "arohaNotes": { "type": "array" }, "avarohaNotes": { "type": "array" } } },
+        "verse": { "type": "array", "items": { "type": "string" }, "description": "Verse printed above the notation, as printed" },
+        "usage": { "type": "array", "items": { "type": "string" }, "description": "Usage rule printed with the rachana, as printed" },
+        "performance": { "type": "object", "required": ["mode"], "properties": { "mode": { "enum": ["march", "mandchal", "standing"] } } },
+        "tags": { "type": "array", "items": { "type": "string" } },
+        "notes": { "type": "array", "items": { "type": "string" }, "description": "Transcriber notes" }
+      }
+    },
+    "talaDef": {
+      "type": "object", "required": ["name", "cycle", "ganSize", "talVadya", "explain"],
+      "properties": {
+        "name": { "type": "object", "required": ["dev"] },
+        "cycle": { "type": "integer" }, "ganSize": { "type": "integer" },
+        "gats": { "type": ["array", "null"], "items": { "type": "integer" } },
+        "count": { "type": "string", "description": "How to count one cycle aloud" },
+        "roll": { "type": "object", "properties": { "strokesPerMatra": { "type": "integer" }, "pattern": { "type": "string" }, "confidence": { "$ref": "#/$defs/confidence" } } },
+        "steps": { "type": ["object", "null"], "properties": { "matrasPerStep": { "type": "integer" }, "gait": { "enum": ["march", "mandchal"] }, "confidence": { "$ref": "#/$defs/confidence" } } },
+        "talVadya": { "type": "object", "required": ["default", "variants"], "properties": { "default": { "type": "string" }, "use": { "type": "string" },
+          "variants": { "type": "object", "additionalProperties": { "type": "object", "required": ["beats"], "properties": { "beats": { "type": "array", "items": { "type": "integer" } }, "label": { "type": "string" }, "confidence": { "$ref": "#/$defs/confidence" } } } } } },
+        "explain": { "$ref": "#/$defs/i18n" }
+      }
+    },
+    "confidence": { "enum": ["book", "derived", "assumed"] },
+    "rhythm": {
+      "type": "object", "required": ["talas", "tala", "laya", "charans", "form"],
+      "properties": {
+        "talas": { "type": "object", "additionalProperties": { "$ref": "#/$defs/talaDef" } },
+        "tala": { "type": "string" }, "laya": { "type": "number" },
+        "charans": { "type": "array", "items": { "$ref": "#/$defs/charan" } },
+        "form": { "type": "array", "items": { "type": "string" }, "description": "Play order by charan id" },
+        "performance": { "type": "array", "description": "Full-performance play order (पूर्ण रचना वादन): रणन, प्रारंभिक, every charan as printed, then the first charan twice. Items: {id, times, closing?}; id 'r' is the रणन in rhythm.prelude.", "items": { "type": "object", "required": ["id", "times"], "properties": { "id": { "type": "string" }, "times": { "type": "integer", "minimum": 1 }, "closing": { "type": "boolean" } } } },
+        "prelude": { "type": "object", "description": "रणन played before a full performance; gans per part (anak, steps), every other part rests", "required": ["id", "tala", "laya", "parts"], "properties": { "id": { "const": "r" }, "label": { "type": "string" }, "type": { "const": "ranan" }, "tala": { "type": "string" }, "laya": { "type": "number" }, "source": { "type": "string" }, "note": { "type": "string" }, "confidence": { "type": "string" }, "parts": { "type": "object" } } },
+        "countIn": { "type": "object", "properties": { "count": { "type": "integer" }, "words": { "type": "array", "items": { "type": "string" } }, "matras": { "type": "integer" }, "on": { "type": "string" }, "note": { "type": "string" } } }
+      }
+    },
+    "charan": {
+      "type": "object", "required": ["id", "n", "repeat", "tala", "laya", "segments"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^c[0-9]+$" }, "n": { "type": "integer" },
+        "label": { "type": "string" }, "type": { "enum": ["prastav", "prarambhik", "dhruv", "setu", "normal"] },
+        "role": { "enum": ["closing-tag"], "description": "A charan that is only a short closing गण" },
+        "no": { "type": "integer", "description": "Charan number as a player counts it: प्रारंभिक, सेतु and closing tags are not numbered" },
+        "repeat": { "type": "integer", "minimum": 1 },
+        "tala": { "type": "string" }, "laya": { "type": "number" },
+        "players": { "type": "string" }, "notes": { "type": "array", "items": { "type": "string" } },
+        "segments": { "type": "array", "items": { "type": "string", "pattern": "^(b|e[0-9]+)$" }, "description": "b = body; e1, e2 = क्रमभेद endings. Pass n plays b then e<n> (or the last ending)." }
+      }
+    },
+    "part": {
+      "type": "object", "required": ["instrument", "role", "kind", "gans"],
+      "properties": {
+        "instrument": { "type": "string" },
+        "role": { "enum": ["melody", "anak", "tal-vadya", "steps"] },
+        "kind": { "enum": ["printed", "derived"] },
+        "rule": { "type": "object", "description": "For derived parts: the rule the notes were written out from" },
+        "pickups": { "type": "array", "items": { "type": "object", "required": ["charan", "matras"], "properties": { "charan": { "type": "string" }, "matras": { "type": "array", "items": { "allOf": [{ "$ref": "#/$defs/matra" }, { "required": ["at"] }] } } } } },
+        "gans": { "type": "array", "items": { "$ref": "#/$defs/gan" } }
+      }
+    },
+    "gan": {
+      "type": "object", "required": ["addr", "charan", "seg"],
+      "properties": {
+        "addr": { "type": "string", "pattern": "^c[0-9]+\\.(b|e[0-9]+)\\.[0-9]+$" },
+        "charan": { "type": "string" }, "seg": { "type": "string" },
+        "line": { "type": "integer", "description": "Printed line number in the book (this part)" },
+        "short": { "type": "boolean", "description": "Closing tag shorter than a गण" },
+        "yati": { "type": "integer", "description": "दीर्घ यति: rest for this many गण" }, "span": { "type": "integer" },
+        "gats": { "type": "array", "items": { "type": "object", "required": ["matras"], "properties": { "matras": { "type": "array", "items": { "$ref": "#/$defs/matra" } } } } }
+      },
+      "oneOf": [{ "required": ["gats"] }, { "required": ["yati", "span"] }]
+    },
+    "matra": {
+      "type": "object", "required": ["slots"],
+      "properties": {
+        "at": { "type": "integer", "maximum": -1, "description": "Pickups only: matras before the charan's सम" },
+        "beat": { "type": ["integer", "null"] }, "group": { "type": "boolean" }, "span": { "type": "integer" },
+        "cue": { "type": "string" }, "lyric": { "type": "string" },
+        "charanEnd": { "type": "boolean", "description": "ताल वाद्य: last step of a charan (or रणन step 4/8) — पणव silent, झल्लरी + त्रिभुज loud" },
+        "step": { "type": "object", "properties": { "foot": { "enum": ["L", "R"] }, "matras": { "type": "integer" } } },
+        "slots": { "type": "array", "items": { "$ref": "#/$defs/slot" } }
+      }
+    },
+    "slot": {
+      "type": "object", "required": ["type"],
+      "properties": {
+        "type": { "enum": ["note", "stroke", "hold", "rest", "step"] },
+        "dev": { "type": "string" },
+        "swara": { "enum": ["S", "R", "G", "M", "P", "D", "N"] }, "octave": { "type": "integer", "minimum": -2, "maximum": 2 }, "vikrit": { "type": "boolean" },
+        "stroke": { "enum": ["ta", "tha", "thra", "roll", "click", "dhvam", "dham", "tam", "jham"] },
+        "foot": { "enum": ["L", "R"] },
+        "w": { "type": "number", "exclusiveMinimum": 0 },
+        "accent": { "type": "boolean" }, "fermata": { "type": "boolean" },
+        "loud": { "type": "boolean", "description": "ताल वाद्य: the loud झल्लरी / त्रिभुज stroke at a charan end" },
+        "swell": { "enum": ["grow", "fade", "swell"] }, "slur": { "enum": ["start", "mid", "end", "single"] },
+        "grace": { "type": "array", "items": { "type": "object" } }, "hand": { "type": "string" }, "uncertain": { "type": "boolean" }
+      }
+    },
+    "layout": {
+      "type": "object", "required": ["lead", "parts"],
+      "properties": {
+        "lead": { "type": "string", "description": "Part whose printed lines the band score follows" },
+        "header": { "type": "object", "properties": { "left": { "type": "string" }, "center": { "type": "string" }, "right": { "type": "string" } } },
+        "pickupPlacement": { "enum": ["above-line-end"] },
+        "band": { "type": "object", "description": "Lines for the band score: the lead part's printed lines, with a pickup line wherever any part has a pickup", "required": ["lines"] },
+        "parts": { "type": "object", "additionalProperties": { "type": "object", "required": ["lines"], "properties": {
+          "lines": { "type": "array", "items": { "type": "object", "required": ["gans"], "properties": {
+            "gans": { "type": "array", "items": { "type": "string" } },
+            "pickup": { "type": "string", "description": "This line holds only the pickup of that charan" },
+            "src": { "type": "string", "description": "The authoring text of the line(s)" } } } } } } }
+      }
+    }
+  }
+}

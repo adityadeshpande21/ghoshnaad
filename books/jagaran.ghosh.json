@@ -1,0 +1,32 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "jagaran",
+  "kind": "udghosh",
+  "title": {
+    "dev": "जागरण",
+    "rom": "Jagaran"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 37,
+        "pdfPage": 56,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ प. [ऽस] | [गस] [गस] | प. ग | ऽ [ऽ–] |",
+        "| स [ऽग] | [पग] [पग] | स प | ऽ [ऽ–] |",
+        "| [पऽपप] [प–] | [गऽगग] [ग–] | [सऽसस] [स–] | [प.ऽप.प.] [प.–] ॥",
+        "॥ [प.ऽसस] [प.स] | [–स] [–स] | [सग] [ऽस] | [गग] [प–] |",
+        "| [गऽगग] [पग] | [–ग] [–ग] | [गस] [ऽग] | [सस] [प.–] :॥",
+        "॥ प. ऽ | स ऽ | ग ऽ | प^! ऽ ॥"
+      ]
+    }
+  }
+}

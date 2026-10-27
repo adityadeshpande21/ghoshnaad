@@ -1,0 +1,124 @@
+{
+  "format": "ghosh-talas/1",
+  "description": "Shared tala library. The v3 compiler copies the entries a rachana uses into that rachana's file, so each compiled file stands alone. confidence: book = stated in घोष परिचय / घोष शिक्षण विधि, derived = follows from a stated rule, assumed = not in the books; check with a शिक्षक.",
+  "talas": {
+    "kerva": {
+      "name": { "dev": "केरवा", "rom": "Kerva" },
+      "cycle": 4, "ganSize": 2, "gats": null,
+      "count": "१ २ | ३ ४",
+      "roll": { "strokesPerMatra": 4, "pattern": "tankar+anutankar", "confidence": "book" },
+      "steps": { "matrasPerStep": 1, "gait": "march", "confidence": "book" },
+      "talVadya": {
+        "default": "step",
+        "variants": {
+          "step": { "beats": [1, 2, 3, 4], "label": "every step", "confidence": "assumed" },
+          "gan": { "beats": [1, 3], "label": "every गण (left foot)", "confidence": "assumed" }
+        }
+      },
+      "explain": {
+        "mr": "केरवा ४ मात्रांचा ताल आहे: २ मात्रांचा एक गण, आणि दोन गणांचे एक आवर्तन.",
+        "hi": "केरवा ४ मात्राओं का ताल है: २ मात्राओं का एक गण, और दो गणों का एक आवर्तन।",
+        "en": "Kerva has 4 matras: a गण of 2 matras, two गण to a cycle."
+      }
+    },
+    "khemta": {
+      "name": { "dev": "खेमटा", "rom": "Khemta" },
+      "cycle": 12, "ganSize": 6, "gats": [3, 3],
+      "count": "१ २ ३ , ४ ५ ६ | ७ ८ ९ , १० ११ १२",
+      "roll": { "strokesPerMatra": 3, "pattern": "tankar+2 anutankar", "confidence": "book" },
+      "steps": { "matrasPerStep": 3, "gait": "march", "confidence": "book" },
+      "talVadya": {
+        "default": "gat",
+        "variants": { "gat": { "beats": [1, 4, 7, 10], "label": "every गट (every step)", "confidence": "derived" } }
+      },
+      "explain": {
+        "mr": "खेमटा १२ मात्रांचा ताल आहे: ३ मात्रांचा एक गट, दोन गटांचा एक गण (६ मात्रा), आणि दोन गणांचे एक आवर्तन.",
+        "hi": "खेमटा १२ मात्राओं का ताल है: ३ मात्राओं का एक गट, दो गटों का एक गण (६ मात्राएँ), और दो गणों का एक आवर्तन।",
+        "en": "Khemta has 12 matras: a गट of 3, two गट to a गण, two गण to a cycle."
+      }
+    },
+    "dadra": {
+      "name": { "dev": "दादरा", "rom": "Dadra" },
+      "cycle": 6, "ganSize": 3, "gats": null,
+      "count": "१ २ ३ | ४ ५ ६",
+      "roll": { "strokesPerMatra": 4, "pattern": "tankar+anutankar", "confidence": "book" },
+      "steps": { "matrasPerStep": 3, "gait": "mandchal", "confidence": "book" },
+      "talVadya": {
+        "default": "gan",
+        "variants": { "gan": { "beats": [1, 4], "label": "every गण (every step)", "confidence": "book" } }
+      },
+      "explain": {
+        "mr": "दादरा ६ मात्रांचा ताल आहे: ३ मात्रांचा एक गण, आणि दोन गणांचे एक आवर्तन.",
+        "hi": "दादरा ६ मात्राओं का ताल है: ३ मात्राओं का एक गण, और दो गणों का एक आवर्तन।",
+        "en": "Dadra has 6 matras: a गण of 3, two गण to a cycle."
+      }
+    },
+    "jhaptal": {
+      "name": { "dev": "झपताल", "rom": "Jhaptal" },
+      "cycle": 10, "ganSize": 5, "gats": [2, 3],
+      "count": "१ २ , ३ ४ ५ | ६ ७ , ८ ९ १०",
+      "roll": { "strokesPerMatra": 4, "pattern": "tankar+anutankar", "confidence": "book" },
+      "steps": null,
+      "talVadya": {
+        "default": "gat",
+        "variants": { "gat": { "beats": [1, 3, 6, 8], "label": "every गट", "confidence": "book" } }
+      },
+      "explain": {
+        "mr": "झपताल १० मात्रांचा ताल आहे: एका गणात २ + ३ मात्रांचे दोन गट, आणि दोन गणांचे एक आवर्तन.",
+        "hi": "झपताल १० मात्राओं का ताल है: एक गण में २ + ३ मात्राओं के दो गट, और दो गणों का एक आवर्तन।",
+        "en": "Jhaptal has 10 matras: a गण of 2 + 3, two गण to a cycle."
+      }
+    },
+    "rupak": {
+      "name": { "dev": "रूपक", "rom": "Rupak" },
+      "cycle": 7, "ganSize": 7, "gats": [3, 2, 2],
+      "count": "१ २ ३ , ४ ५ , ६ ७",
+      "roll": { "strokesPerMatra": 4, "pattern": "tankar+anutankar", "confidence": "book" },
+      "steps": null,
+      "talVadya": {
+        "default": "gat",
+        "variants": { "gat": { "beats": [1, 4, 6], "label": "every गट", "confidence": "book" } }
+      },
+      "explain": {
+        "mr": "रूपक ७ मात्रांचा ताल आहे: एका गणात ३ + २ + २ मात्रांचे तीन गट, आणि एक गण म्हणजेच एक आवर्तन.",
+        "hi": "रूपक ७ मात्राओं का ताल है: एक गण में ३ + २ + २ मात्राओं के तीन गट, और एक गण ही एक आवर्तन है।",
+        "en": "Rupak has 7 matras: one गण of 3 + 2 + 2, which is the whole cycle."
+      }
+    },
+    "ektal": {
+      "name": { "dev": "एकताल", "rom": "Ektal" },
+      "cycle": 12, "ganSize": 2, "gats": null,
+      "count": "१ २ | ३ ४ | ५ ६ | ७ ८ | ९ १० | ११ १२",
+      "roll": { "strokesPerMatra": 4, "pattern": "tankar+anutankar", "confidence": "book" },
+      "steps": { "matrasPerStep": 1, "gait": "march", "confidence": "assumed" },
+      "talVadya": {
+        "default": "step",
+        "variants": {
+          "step": { "beats": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], "label": "every step", "confidence": "assumed" },
+          "gan": { "beats": [1, 3, 5, 7, 9, 11], "label": "every गण", "confidence": "assumed" }
+        }
+      },
+      "explain": {
+        "mr": "एकताल १२ मात्रांचा ताल आहे: २ मात्रांचे सहा गण.",
+        "hi": "एकताल १२ मात्राओं का ताल है: २ मात्राओं के छह गण।",
+        "en": "Ektal has 12 matras: six गण of 2."
+      }
+    },
+    "tritaal": {
+      "name": { "dev": "त्रिताल", "rom": "Tritaal" },
+      "cycle": 16, "ganSize": 4, "gats": null,
+      "count": "१ २ ३ ४ | ५ ६ ७ ८ | ९ १० ११ १२ | १३ १४ १५ १६",
+      "roll": { "strokesPerMatra": 4, "pattern": "tankar+anutankar", "confidence": "book" },
+      "steps": { "matrasPerStep": 2, "gait": "mandchal", "confidence": "assumed" },
+      "talVadya": {
+        "default": "step",
+        "variants": { "step": { "beats": [1, 3, 5, 7, 9, 11, 13, 15], "label": "every step", "confidence": "assumed" } }
+      },
+      "explain": {
+        "mr": "त्रिताल १६ मात्रांचा ताल आहे: ४ मात्रांचे चार गण.",
+        "hi": "त्रिताल १६ मात्राओं का ताल है: ४ मात्राओं के चार गण।",
+        "en": "Tritaal has 16 matras: four गण of 4."
+      }
+    }
+  }
+}

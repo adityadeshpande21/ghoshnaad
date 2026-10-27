@@ -1,0 +1,50 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "uday",
+  "kind": "rachana",
+  "title": {
+    "dev": "उदय",
+    "rom": "Uday"
+  },
+  "section": "prachalan-shankh",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 1,
+        "pdfPage": 20,
+        "edition": 6
+      },
+      "tala": "खेमटा",
+      "laya": 360,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ प.ऽऽ , ऽऽस | गऽग , गऽग | प.ऽ– , ससस | सऽ– , ––– ॥",
+        "॥ प.ऽप. , सऽस | प.ऽप. , सऽस | प.ऽऽ , गऽऽ | सऽऽ , प.ऽ– |",
+        "| प.ऽप. , सऽस | प.ऽप. , सऽस | प.ऽऽ , गऽग | सऽऽ , ऽ–– :॥",
+        "॥ सप.स , गऽग | सगस , प.ऽ– | गऽग , गगऽ | प.प.प. , प.ऽ– |",
+        "| सप.स , गऽग | सगस , प.ऽ– | गऽग , गगऽ | सऽऽ , ऽ–– :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 1,
+        "pdfPage": 22,
+        "edition": 6
+      },
+      "tala": "खेमटा",
+      "laya": 360,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ त्रऽऽ , ऽऽऽ | त–त , त–त | त–– , ततत | त–– , ––– ॥",
+        "॥ त–त , त–त | त–त , त–त | त्रऽऽ , ऽऽऽ | त–– , त–– |",
+        "| त–त , त–त | त–त , त–त | त्रऽऽ , त–त | त–– , ––– :॥",
+        "॥ त्रऽऽ , त–त | ततत , त–– | त–त , तत– | ततत , त–– |",
+        "| त्रऽऽ , त–त | ततत , त–– | त–त , तत– | त–– , ––– :॥"
+      ]
+    }
+  }
+}

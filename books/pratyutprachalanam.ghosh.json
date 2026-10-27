@@ -1,0 +1,47 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "pratyutprachalanam",
+  "kind": "rachana",
+  "title": {
+    "dev": "प्रत्युत्प्रचलनम्",
+    "rom": "Pratyutprachalanam",
+    "alt": [
+      "प्रत्युतप्रचलनं"
+    ]
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 33,
+        "pdfPage": 52,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "lines": [
+        "॥ॐ॥ [पग] ग | [गस] स | [प.ऽप.प.] [प.प.] | स ग |",
+        "| [पग] ग | [गस] स | [प.ऽप.प.] [प.प.] | [स–] – ॥"
+      ],
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20"
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 102,
+        "pdfPage": 123,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "lines": [
+        "॥ॐ॥ [तत] [तत्र] | [तत] [तत्र] | [तत्र] [तत] | त्र [तत्र] |",
+        "| [तत] [तत्र] | [तत] [तत्र] | [तत्र] [तत] | त्र त ॥"
+      ],
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20"
+    }
+  }
+}

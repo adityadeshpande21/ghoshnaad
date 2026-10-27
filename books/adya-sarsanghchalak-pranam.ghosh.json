@@ -1,0 +1,50 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "adya-sarsanghchalak-pranam",
+  "kind": "rachana",
+  "title": {
+    "dev": "आद्यसरसंघचालकप्रणाम",
+    "rom": "Adya Sarsanghchalak Pranam"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 34,
+        "pdfPage": 53,
+        "edition": 6
+      },
+      "tala": "झपताल",
+      "laya": 240,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ प. ऽ , स ग स | प. ऽ , स ऽ स | प. ऽ , स ग स | प. ऽ , ग ऽ ग |",
+        "| प ऽ , प ग प | प ऽ , ऽ ऽ – | ग ऽ , ग स ग | ग ऽ , ऽ ऽ – |",
+        "| प. ऽ , स ग स | प. ऽ , स ऽ स | प. ऽ , स ग स | प. ऽ , ग ऽ ग |",
+        "| प [पप] , प ग स | ग [गग] , ग स प. | स ऽ , ग प ग | स ऽ , ऽ ऽ – ॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 103,
+        "pdfPage": 124,
+        "edition": 6
+      },
+      "tala": "झपताल",
+      "laya": 240,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ , – – त ॥", "pickup": true
+        },
+        "॥ त्र ऽ , त त त | त्र ऽ , ऽ ऽ त | त्र ऽ , त त त | त्र ऽ , ऽ ऽ त |",
+        "| त्र ऽ , ऽ ऽ ऽ | ऽ ऽ , ऽ ऽ त | त्र ऽ , ऽ ऽ ऽ | ऽ ऽ , ऽ ऽ त |",
+        "| त्र ऽ , त त त | त्र ऽ , ऽ ऽ त | त्र ऽ , त त त | त्र ऽ , ऽ ऽ त |",
+        "| त [तत] , त्र ऽ त | त [तत] , त्र ऽ त | त [तत] , त्र ऽ त | त – , – – – ॥"
+      ]
+    }
+  }
+}

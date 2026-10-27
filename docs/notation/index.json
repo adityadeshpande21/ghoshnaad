@@ -1,0 +1,4443 @@
+{
+ "format": "ghosh-index/1",
+ "generated": "2026-10-20",
+ "title": "घोष रचना — आनक, शंख, वंशी (6th edition)",
+ "counts": {
+  "prachalan-shankh": 34,
+  "prachalan-vanshi": 42,
+  "mand-shankh": 5,
+  "mand-vanshi": 20,
+  "naimittik": 19
+ },
+ "total": 121,
+ "checked": 120,
+ "items": [
+  {
+   "id": "shriram",
+   "title": {
+    "dev": "श्रीराम",
+    "rom": "Shriram"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 1,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 1,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 1,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/shriram.ghosh.json",
+   "file": "json/shriram.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "uday",
+   "title": {
+    "dev": "उदय",
+    "rom": "Uday"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 2,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 1,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 1,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 36,
+   "notes": 0,
+   "source": "sources/uday.ghosh.json",
+   "file": "json/uday.json",
+   "prarambhik": true,
+   "charans": 2,
+   "performanceSeconds": 56,
+   "ranan": true
+  },
+  {
+   "id": "sonbhadra",
+   "title": {
+    "dev": "सोनभद्र",
+    "rom": "Sonbhadra"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 3,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 2,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 2,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/sonbhadra.ghosh.json",
+   "file": "json/sonbhadra.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "kiran",
+   "title": {
+    "dev": "किरण",
+    "rom": "Kiran"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 4,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 3,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 3,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 36,
+   "notes": 0,
+   "source": "sources/kiran.ghosh.json",
+   "file": "json/kiran.json",
+   "prarambhik": true,
+   "charans": 2,
+   "performanceSeconds": 56,
+   "ranan": true
+  },
+  {
+   "id": "gayatri",
+   "title": {
+    "dev": "गायत्री",
+    "rom": "Gayatri"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 5,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 3,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 3,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 32,
+   "notes": 0,
+   "source": "sources/gayatri.ghosh.json",
+   "file": "json/gayatri.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 52,
+   "ranan": true
+  },
+  {
+   "id": "marudhar",
+   "title": {
+    "dev": "मरुधर",
+    "rom": "Marudhar"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 6,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 4,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 4,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/marudhar.ghosh.json",
+   "file": "json/marudhar.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "mewad",
+   "title": {
+    "dev": "मेवाड़",
+    "rom": "Mewad"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 7,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 4,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 4,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/mewad.ghosh.json",
+   "file": "json/mewad.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "chetak",
+   "title": {
+    "dev": "चेतक",
+    "rom": "Chetak"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 8,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 5,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 5,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 1,
+   "source": "sources/chetak.ghosh.json",
+   "file": "json/chetak.json",
+   "prarambhik": true,
+   "charans": 2,
+   "performanceSeconds": 68,
+   "ranan": true
+  },
+  {
+   "id": "ajey",
+   "title": {
+    "dev": "अजेय",
+    "rom": "Ajey"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 9,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 6,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 6,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/ajey.ghosh.json",
+   "file": "json/ajey.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "dashmesh",
+   "title": {
+    "dev": "दशमेश",
+    "rom": "Dashmesh"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 10,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 6,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 7,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/dashmesh.ghosh.json",
+   "file": "json/dashmesh.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "deep",
+   "title": {
+    "dev": "दीप",
+    "rom": "Deep"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 11,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 7,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 8,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/deep.ghosh.json",
+   "file": "json/deep.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "tarang",
+   "title": {
+    "dev": "तरंग",
+    "rom": "Tarang"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 12,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 8,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 9,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/tarang.ghosh.json",
+   "file": "json/tarang.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "mangala",
+   "title": {
+    "dev": "मंगला",
+    "rom": "Mangala"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 13,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 9,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 10,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/mangala.ghosh.json",
+   "file": "json/mangala.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "vinayak",
+   "title": {
+    "dev": "विनायक",
+    "rom": "Vinayak"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 14,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 10,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 11,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/vinayak.ghosh.json",
+   "file": "json/vinayak.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 120,
+   "ranan": true
+  },
+  {
+   "id": "shrinivas",
+   "title": {
+    "dev": "श्रीनिवास",
+    "rom": "Shrinivas"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 15,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 11,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 12,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/shrinivas.ghosh.json",
+   "file": "json/shrinivas.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "paramarth",
+   "title": {
+    "dev": "परमार्थ",
+    "rom": "Paramarth"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 16,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 12,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 13,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/paramarth.ghosh.json",
+   "file": "json/paramarth.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "pratidhvani",
+   "title": {
+    "dev": "प्रतिध्वनि",
+    "rom": "Pratidhvani"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 17,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 12,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 14,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/pratidhvani.ghosh.json",
+   "file": "json/pratidhvani.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 68,
+   "ranan": true
+  },
+  {
+   "id": "vikram",
+   "title": {
+    "dev": "विक्रम",
+    "rom": "Vikram"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 18,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 13,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 15,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/vikram.ghosh.json",
+   "file": "json/vikram.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "ranjit",
+   "title": {
+    "dev": "रणजित",
+    "rom": "Ranjit"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 19,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 14,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 16,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/ranjit.ghosh.json",
+   "file": "json/ranjit.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "jagannath",
+   "title": {
+    "dev": "जगन्नाथ",
+    "rom": "Jagannath"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 20,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 15,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 17,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/jagannath.ghosh.json",
+   "file": "json/jagannath.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "saket",
+   "title": {
+    "dev": "साकेत",
+    "rom": "Saket"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 21,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-१२० खेमटा-३६०",
+     "page": 16,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-१२० खेमटा-३६०",
+     "page": 18,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 72,
+   "notes": 0,
+   "source": "sources/saket.ghosh.json",
+   "file": "json/saket.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 92,
+   "ranan": true
+  },
+  {
+   "id": "yadav",
+   "title": {
+    "dev": "यादव",
+    "rom": "Yadav"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 22,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 17,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 19,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 68,
+   "notes": 0,
+   "source": "sources/yadav.ghosh.json",
+   "file": "json/yadav.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 88,
+   "ranan": true
+  },
+  {
+   "id": "sudhir",
+   "title": {
+    "dev": "सुधीर",
+    "rom": "Sudhir"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 23,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 18,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 20,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 92,
+   "notes": 0,
+   "source": "sources/sudhir.ghosh.json",
+   "file": "json/sudhir.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 120,
+   "ranan": true
+  },
+  {
+   "id": "bajrang",
+   "title": {
+    "dev": "बजरंग",
+    "rom": "Bajrang"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 24,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 19,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 21,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/bajrang.ghosh.json",
+   "file": "json/bajrang.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "sagar",
+   "title": {
+    "dev": "सागर",
+    "rom": "Sagar"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 25,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 20,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 22,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 92,
+   "notes": 0,
+   "source": "sources/sagar.ghosh.json",
+   "file": "json/sagar.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 128,
+   "ranan": true
+  },
+  {
+   "id": "virashri",
+   "title": {
+    "dev": "वीरश्री",
+    "rom": "Virashri"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 26,
+   "parts": {
+    "shankh": {
+     "tala": "एकताल-120",
+     "page": 21,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "एकताल-120",
+     "page": 23,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 51,
+   "notes": 0,
+   "source": "sources/virashri.ghosh.json",
+   "file": "json/virashri.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 63,
+   "ranan": false
+  },
+  {
+   "id": "bharat",
+   "title": {
+    "dev": "भरत",
+    "rom": "Bharat"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 27,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 22,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 24,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 92,
+   "notes": 0,
+   "source": "sources/bharat.ghosh.json",
+   "file": "json/bharat.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 112,
+   "ranan": true
+  },
+  {
+   "id": "bhaskar",
+   "title": {
+    "dev": "भास्कर",
+    "rom": "Bhaskar"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 28,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 23,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 25,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/bhaskar.ghosh.json",
+   "file": "json/bhaskar.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "neelkanth",
+   "title": {
+    "dev": "नीलकंठ",
+    "rom": "Neelkanth"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 29,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 24,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 26,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 100,
+   "notes": 0,
+   "source": "sources/neelkanth.ghosh.json",
+   "file": "json/neelkanth.json",
+   "prarambhik": true,
+   "charans": 6,
+   "performanceSeconds": 120,
+   "ranan": true
+  },
+  {
+   "id": "ninad",
+   "title": {
+    "dev": "निनाद",
+    "rom": "Ninad"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 30,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 25,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 27,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/ninad.ghosh.json",
+   "file": "json/ninad.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "trihut",
+   "title": {
+    "dev": "त्रिहुत",
+    "rom": "Trihut"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 31,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-१२० खेमटा-३६०",
+     "page": 26,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-१२० खेमटा-३६०",
+     "page": 28,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 94,
+   "notes": 0,
+   "source": "sources/trihut.ghosh.json",
+   "file": "json/trihut.json",
+   "prarambhik": true,
+   "charans": 6,
+   "performanceSeconds": 114,
+   "ranan": true
+  },
+  {
+   "id": "vasant",
+   "title": {
+    "dev": "वसंत",
+    "rom": "Vasant"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 32,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 27,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 29,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 108,
+   "notes": 0,
+   "source": "sources/vasant.ghosh.json",
+   "file": "json/vasant.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 128,
+   "ranan": true
+  },
+  {
+   "id": "pratap",
+   "title": {
+    "dev": "प्रताप",
+    "rom": "Pratap"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 33,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 28,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 30,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 56,
+   "notes": 0,
+   "source": "sources/pratap.ghosh.json",
+   "file": "json/pratap.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 76,
+   "ranan": true
+  },
+  {
+   "id": "panchajanya",
+   "title": {
+    "dev": "पाञ्चजन्य",
+    "rom": "Panchajanya"
+   },
+   "section": "prachalan-shankh",
+   "sectionDev": "प्रचलन – शंख",
+   "kind": "rachana",
+   "bookOrder": 34,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 29,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 31,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/panchajanya.ghosh.json",
+   "file": "json/panchajanya.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "bhoop",
+   "title": {
+    "dev": "भूप",
+    "rom": "Bhoop"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 1,
+   "raga": "भूप",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 1,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 33,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/bhoop.ghosh.json",
+   "file": "json/bhoop.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 68,
+   "ranan": true
+  },
+  {
+   "id": "kedar",
+   "title": {
+    "dev": "केदार",
+    "rom": "Kedar"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 2,
+   "raga": "केदार",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 3,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 33,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/kedar.ghosh.json",
+   "file": "json/kedar.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 68,
+   "ranan": true
+  },
+  {
+   "id": "meera",
+   "title": {
+    "dev": "मीरा",
+    "rom": "Meera"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 3,
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 2,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 34,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/meera.ghosh.json",
+   "file": "json/meera.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "tilak-kamod",
+   "title": {
+    "dev": "तिलककामोद",
+    "rom": "Tilak Kamod"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 4,
+   "raga": "तिलककामोद",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 4,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 35,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/tilak-kamod.ghosh.json",
+   "file": "json/tilak-kamod.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "tilang",
+   "title": {
+    "dev": "तिलंग",
+    "rom": "Tilang"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 5,
+   "raga": "तिलंग",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 5,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/tilang.ghosh.json",
+   "file": "json/tilang.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "pahadi",
+   "title": {
+    "dev": "पहाड़ी",
+    "rom": "Pahadi"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 6,
+   "raga": "पहाड़ी",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 6,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/pahadi.ghosh.json",
+   "file": "json/pahadi.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "shivranjani",
+   "title": {
+    "dev": "शिवरंजनी",
+    "rom": "Shivranjani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 7,
+   "raga": "शिवरंजनी",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 7,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 37,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 64,
+   "notes": 0,
+   "source": "sources/shivranjani.ghosh.json",
+   "file": "json/shivranjani.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 84,
+   "ranan": true
+  },
+  {
+   "id": "durga",
+   "title": {
+    "dev": "दुर्गा",
+    "rom": "Durga"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 8,
+   "raga": "दुर्गा",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 8,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 38,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 136,
+   "notes": 0,
+   "source": "sources/durga.ghosh.json",
+   "file": "json/durga.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 156,
+   "ranan": true
+  },
+  {
+   "id": "valachi",
+   "title": {
+    "dev": "वलचि",
+    "rom": "Valachi"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 9,
+   "raga": "कलावती",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 12,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 39,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/valachi.ghosh.json",
+   "file": "json/valachi.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 68,
+   "ranan": true
+  },
+  {
+   "id": "bharatam",
+   "title": {
+    "dev": "भारतम्",
+    "rom": "Bharatam"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 10,
+   "raga": "देशकार",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 10,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 40,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 128,
+   "notes": 1,
+   "source": "sources/bharatam.ghosh.json",
+   "file": "json/bharatam.json",
+   "prarambhik": true,
+   "charans": 6,
+   "performanceSeconds": 148,
+   "ranan": true
+  },
+  {
+   "id": "surabhi",
+   "title": {
+    "dev": "सुरभि",
+    "rom": "Surabhi"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 11,
+   "raga": "बागेश्री",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 13,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 41,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/surabhi.ghosh.json",
+   "file": "json/surabhi.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 68,
+   "ranan": true
+  },
+  {
+   "id": "hamsadhvani",
+   "title": {
+    "dev": "हंसध्वनि",
+    "rom": "Hamsadhvani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 12,
+   "raga": "हंसध्वनि",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 14,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 42,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 84,
+   "notes": 0,
+   "source": "sources/hamsadhvani.ghosh.json",
+   "file": "json/hamsadhvani.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "hamsavahini",
+   "title": {
+    "dev": "हंसवाहिनी",
+    "rom": "Hamsavahini"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 13,
+   "raga": "हंसध्वनि",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 15,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 43,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 64,
+   "notes": 0,
+   "source": "sources/hamsavahini.ghosh.json",
+   "file": "json/hamsavahini.json",
+   "prarambhik": false,
+   "charans": 8,
+   "performanceSeconds": 76,
+   "ranan": true
+  },
+  {
+   "id": "hararanjani",
+   "title": {
+    "dev": "हररंजनी",
+    "rom": "Hararanjani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 14,
+   "raga": "शिवरंजनी",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 16,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 44,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 64,
+   "notes": 0,
+   "source": "sources/hararanjani.ghosh.json",
+   "file": "json/hararanjani.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 84,
+   "ranan": true
+  },
+  {
+   "id": "sharavati",
+   "title": {
+    "dev": "शरावती",
+    "rom": "Sharavati"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 15,
+   "raga": "मांड",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 17,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 45,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 64,
+   "notes": 0,
+   "source": "sources/sharavati.ghosh.json",
+   "file": "json/sharavati.json",
+   "prarambhik": false,
+   "charans": 6,
+   "performanceSeconds": 76,
+   "ranan": true
+  },
+  {
+   "id": "deshkar",
+   "title": {
+    "dev": "देशकार",
+    "rom": "Deshkar"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 16,
+   "raga": "देशकार",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 18,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 46,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 80,
+   "notes": 0,
+   "source": "sources/deshkar.ghosh.json",
+   "file": "json/deshkar.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 100,
+   "ranan": true
+  },
+  {
+   "id": "shripad",
+   "title": {
+    "dev": "श्रीपाद",
+    "rom": "Shripad"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 17,
+   "raga": "मांड",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 19,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 47,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 72,
+   "notes": 0,
+   "source": "sources/shripad.ghosh.json",
+   "file": "json/shripad.json",
+   "prarambhik": true,
+   "charans": 2,
+   "performanceSeconds": 108,
+   "ranan": true
+  },
+  {
+   "id": "kalyani",
+   "title": {
+    "dev": "कल्याणी",
+    "rom": "Kalyani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 18,
+   "raga": "मेचकल्याणी",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 20,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 48,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 56,
+   "notes": 0,
+   "source": "sources/kalyani.ghosh.json",
+   "file": "json/kalyani.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 76,
+   "ranan": true
+  },
+  {
+   "id": "prasad",
+   "title": {
+    "dev": "प्रसाद",
+    "rom": "Prasad"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 19,
+   "raga": "भिन्नषड्ज",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 21,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 49,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 80,
+   "notes": 0,
+   "source": "sources/prasad.ghosh.json",
+   "file": "json/prasad.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 100,
+   "ranan": true
+  },
+  {
+   "id": "shankara",
+   "title": {
+    "dev": "शंकरा",
+    "rom": "Shankara"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 20,
+   "raga": "शंकरा",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 22,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 50,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 118,
+   "notes": 0,
+   "source": "sources/shankara.ghosh.json",
+   "file": "json/shankara.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 138,
+   "ranan": true
+  },
+  {
+   "id": "rajashri",
+   "title": {
+    "dev": "राजश्री",
+    "rom": "Rajashri"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 21,
+   "raga": "हंसध्वनि",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 24,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 51,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 112,
+   "notes": 0,
+   "source": "sources/rajashri.ghosh.json",
+   "file": "json/rajashri.json",
+   "prarambhik": false,
+   "charans": 5,
+   "performanceSeconds": 132,
+   "ranan": true
+  },
+  {
+   "id": "khamaj",
+   "title": {
+    "dev": "खमाज",
+    "rom": "Khamaj"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 22,
+   "raga": "खमाज",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 26,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 52,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 92,
+   "notes": 0,
+   "source": "sources/khamaj.ghosh.json",
+   "file": "json/khamaj.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 112,
+   "ranan": true
+  },
+  {
+   "id": "kairali",
+   "title": {
+    "dev": "कैरलि",
+    "rom": "Kairali"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 23,
+   "raga": "रेवति",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 28,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 53,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 64,
+   "notes": 0,
+   "source": "sources/kairali.ghosh.json",
+   "file": "json/kairali.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 84,
+   "ranan": true
+  },
+  {
+   "id": "badari",
+   "title": {
+    "dev": "बदरी",
+    "rom": "Badari"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 24,
+   "raga": "केदार",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 30,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 54,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 120,
+   "notes": 0,
+   "source": "sources/badari.ghosh.json",
+   "file": "json/badari.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 140,
+   "ranan": true
+  },
+  {
+   "id": "bangashri",
+   "title": {
+    "dev": "बंगश्री",
+    "rom": "Bangashri"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 25,
+   "raga": "शिवरंजनी",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 59,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 55,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 40,
+   "notes": 0,
+   "source": "sources/bangashri.ghosh.json",
+   "file": "json/bangashri.json",
+   "prarambhik": true,
+   "charans": 2,
+   "performanceSeconds": 60,
+   "ranan": true
+  },
+  {
+   "id": "kekavali",
+   "title": {
+    "dev": "केकावली",
+    "rom": "Kekavali"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 26,
+   "raga": "देश",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 32,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 56,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 136,
+   "notes": 0,
+   "source": "sources/kekavali.ghosh.json",
+   "file": "json/kekavali.json",
+   "prarambhik": false,
+   "charans": 5,
+   "performanceSeconds": 156,
+   "ranan": true
+  },
+  {
+   "id": "janani",
+   "title": {
+    "dev": "जननी",
+    "rom": "Janani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 27,
+   "raga": "बहार",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 58,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 57,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/janani.ghosh.json",
+   "file": "json/janani.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "harikambhoji",
+   "title": {
+    "dev": "हरिकांबोजी",
+    "rom": "Harikambhoji"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 28,
+   "raga": "खमाज",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 29,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 58,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 80,
+   "notes": 0,
+   "source": "sources/harikambhoji.ghosh.json",
+   "file": "json/harikambhoji.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 100,
+   "ranan": true
+  },
+  {
+   "id": "gaud-malhar",
+   "title": {
+    "dev": "गौडमल्हार",
+    "rom": "Gaud Malhar"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 29,
+   "raga": "गौडमल्हार",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 34,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 59,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 96,
+   "notes": 0,
+   "source": "sources/gaud-malhar.ghosh.json",
+   "file": "json/gaud-malhar.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 116,
+   "ranan": true
+  },
+  {
+   "id": "ramaranjani",
+   "title": {
+    "dev": "रामरंजनी",
+    "rom": "Ramaranjani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 30,
+   "raga": "कलावती",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 36,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 60,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 100,
+   "notes": 0,
+   "source": "sources/ramaranjani.ghosh.json",
+   "file": "json/ramaranjani.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 120,
+   "ranan": true
+  },
+  {
+   "id": "madhukar",
+   "title": {
+    "dev": "मधुकर",
+    "rom": "Madhukar"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 31,
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 38,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 61,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 76,
+   "notes": 0,
+   "source": "sources/madhukar.ghosh.json",
+   "file": "json/madhukar.json",
+   "prarambhik": false,
+   "charans": 5,
+   "performanceSeconds": 104,
+   "ranan": true
+  },
+  {
+   "id": "vijaya",
+   "title": {
+    "dev": "विजया",
+    "rom": "Vijaya"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 32,
+   "raga": "आसावरी",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 40,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 62,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 156,
+   "notes": 0,
+   "source": "sources/vijaya.ghosh.json",
+   "file": "json/vijaya.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 192,
+   "ranan": true
+  },
+  {
+   "id": "dhani",
+   "title": {
+    "dev": "धानी",
+    "rom": "Dhani"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 33,
+   "raga": "धानी",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 39,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 64,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 72,
+   "notes": 0,
+   "source": "sources/dhani.ghosh.json",
+   "file": "json/dhani.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 92,
+   "ranan": true
+  },
+  {
+   "id": "gunavant",
+   "title": {
+    "dev": "गुणवंत",
+    "rom": "Gunavant"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 34,
+   "raga": "पिलू",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 46,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 65,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 104,
+   "notes": 0,
+   "source": "sources/gunavant.ghosh.json",
+   "file": "json/gunavant.json",
+   "prarambhik": true,
+   "charans": 2,
+   "performanceSeconds": 140,
+   "ranan": true
+  },
+  {
+   "id": "ganesh",
+   "title": {
+    "dev": "गणेश",
+    "rom": "Ganesh"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 35,
+   "raga": "सारंग",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 42,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 66,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 140,
+   "notes": 1,
+   "source": "sources/ganesh.ghosh.json",
+   "file": "json/ganesh.json",
+   "prarambhik": true,
+   "charans": 6,
+   "performanceSeconds": 160,
+   "ranan": true
+  },
+  {
+   "id": "govardhan",
+   "title": {
+    "dev": "गोवर्द्धन",
+    "rom": "Govardhan"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 36,
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 60,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 67,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 52,
+   "notes": 0,
+   "source": "sources/govardhan.ghosh.json",
+   "file": "json/govardhan.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "parijatam",
+   "title": {
+    "dev": "पारिजातम्",
+    "rom": "Parijatam"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 37,
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 44,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 68,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 0,
+   "source": "sources/parijatam.ghosh.json",
+   "file": "json/parijatam.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 164,
+   "ranan": true
+  },
+  {
+   "id": "vishnupadi",
+   "title": {
+    "dev": "विष्णुपदी",
+    "rom": "Vishnupadi"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 38,
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 50,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-३६० केरवा-१२०",
+     "page": 70,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 164,
+   "notes": 1,
+   "source": "sources/vishnupadi.ghosh.json",
+   "file": "json/vishnupadi.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 200,
+   "ranan": true
+  },
+  {
+   "id": "kalagati",
+   "title": {
+    "dev": "कालगति",
+    "rom": "Kalagati"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 39,
+   "raga": "कलावती",
+   "parts": {
+    "vanshi": {
+     "tala": "खेमटा-360",
+     "page": 48,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "खेमटा-360",
+     "page": 72,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 92,
+   "notes": 1,
+   "source": "sources/kalagati.ghosh.json",
+   "file": "json/kalagati.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 112,
+   "ranan": true
+  },
+  {
+   "id": "vandemataram",
+   "title": {
+    "dev": "वन्देमातरम्",
+    "rom": "Vandemataram"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 40,
+   "raga": "मिश्र काफी",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 54,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 73,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 60,
+   "notes": 0,
+   "source": "sources/vandemataram.ghosh.json",
+   "file": "json/vandemataram.json",
+   "prarambhik": true,
+   "charans": 7,
+   "performanceSeconds": 72,
+   "ranan": true
+  },
+  {
+   "id": "madhavanitya",
+   "title": {
+    "dev": "माधवनित्या",
+    "rom": "Madhavanitya"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 41,
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 56,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 74,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 0,
+   "source": "sources/madhavanitya.ghosh.json",
+   "file": "json/madhavanitya.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 172,
+   "ranan": true
+  },
+  {
+   "id": "bhimpalas",
+   "title": {
+    "dev": "भीमपलास",
+    "rom": "Bhimpalas"
+   },
+   "section": "prachalan-vanshi",
+   "sectionDev": "प्रचलन – वंशी",
+   "kind": "rachana",
+   "bookOrder": 42,
+   "raga": "भीमपलास",
+   "parts": {
+    "vanshi": {
+     "tala": "केरवा-120",
+     "page": 52,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 76,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 108,
+   "notes": 0,
+   "source": "sources/bhimpalas.ghosh.json",
+   "file": "json/bhimpalas.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 128,
+   "ranan": true
+  },
+  {
+   "id": "kaveri",
+   "title": {
+    "dev": "कावेरी",
+    "rom": "Kaveri"
+   },
+   "section": "mand-shankh",
+   "sectionDev": "मंद गति – शंख",
+   "kind": "rachana",
+   "bookOrder": 1,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-120",
+     "page": 30,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 77,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/kaveri.ghosh.json",
+   "file": "json/kaveri.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 72,
+   "ranan": false
+  },
+  {
+   "id": "varada",
+   "title": {
+    "dev": "वरदा",
+    "rom": "Varada"
+   },
+   "section": "mand-shankh",
+   "sectionDev": "मंद गति – शंख",
+   "kind": "rachana",
+   "bookOrder": 2,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-120",
+     "page": 31,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 77,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 72,
+   "notes": 0,
+   "source": "sources/varada.ghosh.json",
+   "file": "json/varada.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 96,
+   "ranan": false
+  },
+  {
+   "id": "niranjan",
+   "title": {
+    "dev": "निरंजन",
+    "rom": "Niranjan"
+   },
+   "section": "mand-shankh",
+   "sectionDev": "मंद गति – शंख",
+   "kind": "rachana",
+   "bookOrder": 3,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-120",
+     "page": 30,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 78,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 120,
+   "notes": 0,
+   "source": "sources/niranjan.ghosh.json",
+   "file": "json/niranjan.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 168,
+   "ranan": false
+  },
+  {
+   "id": "dattatreya",
+   "title": {
+    "dev": "दत्तात्रेय",
+    "rom": "Dattatreya"
+   },
+   "section": "mand-shankh",
+   "sectionDev": "मंद गति – शंख",
+   "kind": "rachana",
+   "bookOrder": 4,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-120",
+     "page": 32,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 79,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 96,
+   "notes": 0,
+   "source": "sources/dattatreya.ghosh.json",
+   "file": "json/dattatreya.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 145.5,
+   "ranan": false
+  },
+  {
+   "id": "malayaprabha",
+   "title": {
+    "dev": "मलयप्रभा",
+    "rom": "Malayaprabha"
+   },
+   "section": "mand-shankh",
+   "sectionDev": "मंद गति – शंख",
+   "kind": "rachana",
+   "bookOrder": 5,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-180",
+     "page": 31,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-180",
+     "page": 79,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 48,
+   "notes": 0,
+   "source": "sources/malayaprabha.ghosh.json",
+   "file": "json/malayaprabha.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 64,
+   "ranan": false
+  },
+  {
+   "id": "karnataki",
+   "title": {
+    "dev": "कर्नाटकी",
+    "rom": "Karnataki"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 1,
+   "raga": "शिवरंजनी",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 63,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 80,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 96,
+   "notes": 0,
+   "source": "sources/karnataki.ghosh.json",
+   "file": "json/karnataki.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 144,
+   "ranan": false
+  },
+  {
+   "id": "velavali",
+   "title": {
+    "dev": "वेलावली",
+    "rom": "Velavali",
+    "alt": [
+     "वेलावलि"
+    ]
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 2,
+   "raga": "बिलावल",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 66,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 81,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 96,
+   "notes": 0,
+   "source": "sources/velavali.ghosh.json",
+   "file": "json/velavali.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 144,
+   "ranan": false
+  },
+  {
+   "id": "shivaraj",
+   "title": {
+    "dev": "शिवराजः",
+    "rom": "Shivaraj"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 3,
+   "raga": "भूप",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 64,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 82,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 198,
+   "notes": 0,
+   "source": "sources/shivaraj.ghosh.json",
+   "file": "json/shivaraj.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 246,
+   "ranan": false
+  },
+  {
+   "id": "kalingada",
+   "title": {
+    "dev": "कलिंगड़ा",
+    "rom": "Kalingada"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 4,
+   "raga": "कलिंगड़ा",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 69,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 83,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 96,
+   "notes": 0,
+   "source": "sources/kalingada.ghosh.json",
+   "file": "json/kalingada.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 144,
+   "ranan": false
+  },
+  {
+   "id": "prashanti",
+   "title": {
+    "dev": "प्रशांति",
+    "rom": "Prashanti",
+    "alt": [
+     "प्रशान्ति"
+    ]
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 5,
+   "raga": "तिलककामोद",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 67,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 84,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 0,
+   "source": "sources/prashanti.ghosh.json",
+   "file": "json/prashanti.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 192,
+   "ranan": false
+  },
+  {
+   "id": "sharada",
+   "title": {
+    "dev": "शारदा",
+    "rom": "Sharada"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 6,
+   "raga": "दुर्गा",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 68,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 85,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 150,
+   "notes": 0,
+   "source": "sources/sharada.ghosh.json",
+   "file": "json/sharada.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 198,
+   "ranan": false
+  },
+  {
+   "id": "devadatta",
+   "title": {
+    "dev": "देवदत्त",
+    "rom": "Devadatta"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 7,
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 70,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 86,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 102,
+   "notes": 2,
+   "source": "sources/devadatta.ghosh.json",
+   "file": "json/devadatta.json",
+   "prarambhik": true,
+   "charans": 4,
+   "performanceSeconds": 150,
+   "ranan": false
+  },
+  {
+   "id": "indraprastha",
+   "title": {
+    "dev": "इंद्रप्रस्थ",
+    "rom": "Indraprastha"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 8,
+   "raga": "श्यामकल्याण",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 72,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 87,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 1,
+   "source": "sources/indraprastha.ghosh.json",
+   "file": "json/indraprastha.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 192,
+   "ranan": false
+  },
+  {
+   "id": "tunga",
+   "title": {
+    "dev": "तुंगा",
+    "rom": "Tunga"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 9,
+   "raga": "रंजनी",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 73,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 88,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 72,
+   "notes": 0,
+   "source": "sources/tunga.ghosh.json",
+   "file": "json/tunga.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 96,
+   "ranan": false
+  },
+  {
+   "id": "marva",
+   "title": {
+    "dev": "मारवा",
+    "rom": "Marva"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 10,
+   "raga": "मारवा",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 74,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 89,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 192,
+   "notes": 0,
+   "source": "sources/marva.ghosh.json",
+   "file": "json/marva.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 240,
+   "ranan": false
+  },
+  {
+   "id": "todi",
+   "title": {
+    "dev": "तोड़ी",
+    "rom": "Todi"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 11,
+   "raga": "तोड़ी",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 76,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 90,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 1,
+   "source": "sources/todi.ghosh.json",
+   "file": "json/todi.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 192,
+   "ranan": false
+  },
+  {
+   "id": "bageshri",
+   "title": {
+    "dev": "बागेश्री",
+    "rom": "Bageshri"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 12,
+   "raga": "बागेश्री",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 77,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 91,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 96,
+   "notes": 0,
+   "source": "sources/bageshri.ghosh.json",
+   "file": "json/bageshri.json",
+   "prarambhik": false,
+   "charans": 2,
+   "performanceSeconds": 144,
+   "ranan": false
+  },
+  {
+   "id": "kalyan",
+   "title": {
+    "dev": "कल्याण",
+    "rom": "Kalyan"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 13,
+   "raga": "कल्याण",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 78,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 92,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 156,
+   "notes": 0,
+   "source": "sources/kalyan.ghosh.json",
+   "file": "json/kalyan.json",
+   "prarambhik": true,
+   "charans": 3,
+   "performanceSeconds": 204,
+   "ranan": false
+  },
+  {
+   "id": "ketaki",
+   "title": {
+    "dev": "केतकी",
+    "rom": "Ketaki"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 14,
+   "raga": "तिलक श्याम",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 79,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 93,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 120,
+   "notes": 0,
+   "source": "sources/ketaki.ghosh.json",
+   "file": "json/ketaki.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 168,
+   "ranan": false
+  },
+  {
+   "id": "keshavashri",
+   "title": {
+    "dev": "केशवश्री",
+    "rom": "Keshavashri"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 15,
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 82,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 94,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 192,
+   "notes": 1,
+   "source": "sources/keshavashri.ghosh.json",
+   "file": "json/keshavashri.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 228,
+   "ranan": false
+  },
+  {
+   "id": "kalavati",
+   "title": {
+    "dev": "कलावती",
+    "rom": "Kalavati"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 16,
+   "raga": "कलावती",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 80,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 96,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 0,
+   "source": "sources/kalavati.ghosh.json",
+   "file": "json/kalavati.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 192,
+   "ranan": false
+  },
+  {
+   "id": "asavari",
+   "title": {
+    "dev": "आसावरी",
+    "rom": "Asavari"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 17,
+   "raga": "आसावरी",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 85,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 97,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 150,
+   "notes": 0,
+   "source": "sources/asavari.ghosh.json",
+   "file": "json/asavari.json",
+   "prarambhik": false,
+   "charans": 4,
+   "performanceSeconds": 198,
+   "ranan": false
+  },
+  {
+   "id": "aruni",
+   "title": {
+    "dev": "आरुणी",
+    "rom": "Aruni"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 18,
+   "raga": "भैरवी",
+   "parts": {
+    "vanshi": {
+     "tala": "त्रिताल-120",
+     "page": 86,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "त्रिताल-120",
+     "page": 98,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 372,
+   "notes": 3,
+   "source": "sources/aruni.ghosh.json",
+   "file": "json/aruni.json",
+   "prarambhik": true,
+   "charans": 7,
+   "performanceSeconds": 428,
+   "ranan": false
+  },
+  {
+   "id": "samarpan",
+   "title": {
+    "dev": "समर्पण",
+    "rom": "Samarpan"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 19,
+   "raga": "बागेश्री-२",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 89,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 99,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 144,
+   "notes": 0,
+   "source": "sources/samarpan.ghosh.json",
+   "file": "json/samarpan.json",
+   "prarambhik": false,
+   "charans": 3,
+   "performanceSeconds": 192,
+   "ranan": false
+  },
+  {
+   "id": "keshav",
+   "title": {
+    "dev": "केशवः",
+    "rom": "Keshav"
+   },
+   "section": "mand-vanshi",
+   "sectionDev": "मंद गति – वंशी",
+   "kind": "rachana",
+   "bookOrder": 20,
+   "raga": "भैरवी",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 90,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 100,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 105,
+   "notes": 2,
+   "source": "sources/keshav.ghosh.json",
+   "file": "json/keshav.json",
+   "prarambhik": true,
+   "charans": 5,
+   "performanceSeconds": 141,
+   "ranan": false
+  },
+  {
+   "id": "dhvajaropanam",
+   "title": {
+    "dev": "ध्वजारोपणम्",
+    "rom": "Dhvajaropanam"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "rachana",
+   "bookOrder": 1,
+   "raga": "रागेश्री",
+   "parts": {
+    "vanshi": {
+     "tala": "दादरा-120",
+     "page": 62,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "दादरा-120",
+     "page": 101,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj"
+   ],
+   "seconds": 54,
+   "notes": 1,
+   "source": "sources/dhvajaropanam.ghosh.json",
+   "file": "json/dhvajaropanam.json",
+   "prarambhik": false,
+   "charans": 5
+  },
+  {
+   "id": "swagat-pranam",
+   "title": {
+    "dev": "स्वागतप्रणाम",
+    "rom": "Swagat Pranam"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "rachana",
+   "bookOrder": 2,
+   "parts": {
+    "shankh": {
+     "tala": "रूपक-120",
+     "page": 33,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "रूपक-120",
+     "page": 102,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj"
+   ],
+   "seconds": 19,
+   "notes": 3,
+   "source": "sources/swagat-pranam.ghosh.json",
+   "file": "json/swagat-pranam.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "dhvajapranam",
+   "title": {
+    "dev": "ध्वजप्रणाम",
+    "rom": "Dhvajapranam"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "rachana",
+   "bookOrder": 3,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 33,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 101,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 8,
+   "notes": 0,
+   "source": "sources/dhvajapranam.ghosh.json",
+   "file": "json/dhvajapranam.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "pratyutprachalanam",
+   "title": {
+    "dev": "प्रत्युत्प्रचलनम्",
+    "rom": "Pratyutprachalanam",
+    "alt": [
+     "प्रत्युतप्रचलनं"
+    ]
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "rachana",
+   "bookOrder": 4,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 33,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 102,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 8,
+   "notes": 0,
+   "source": "sources/pratyutprachalanam.ghosh.json",
+   "file": "json/pratyutprachalanam.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "adya-sarsanghchalak-pranam",
+   "title": {
+    "dev": "आद्यसरसंघचालकप्रणाम",
+    "rom": "Adya Sarsanghchalak Pranam"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "rachana",
+   "bookOrder": 5,
+   "parts": {
+    "shankh": {
+     "tala": "झपताल-240",
+     "page": 34,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "झपताल-240",
+     "page": 103,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj"
+   ],
+   "seconds": 20,
+   "notes": 0,
+   "source": "sources/adya-sarsanghchalak-pranam.ghosh.json",
+   "file": "json/adya-sarsanghchalak-pranam.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "sarsanghchalak-pranam",
+   "title": {
+    "dev": "सरसंघचालकप्रणाम",
+    "rom": "Sarsanghchalak Pranam"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "rachana",
+   "bookOrder": 6,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 34,
+     "status": "checked"
+    },
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 103,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 16,
+   "notes": 0,
+   "source": "sources/sarsanghchalak-pranam.ghosh.json",
+   "file": "json/sarsanghchalak-pranam.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "prabodhan",
+   "title": {
+    "dev": "प्रबोधन",
+    "rom": "Prabodhan"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 7,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 35,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 72,
+   "notes": 2,
+   "source": "sources/prabodhan.ghosh.json",
+   "file": "json/prabodhan.json",
+   "prarambhik": false,
+   "charans": 4
+  },
+  {
+   "id": "sanghosh",
+   "title": {
+    "dev": "संघोष",
+    "rom": "Sanghosh"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 8,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 3,
+   "notes": 0,
+   "source": "sources/sanghosh.ghosh.json",
+   "file": "json/sanghosh.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "sharirik-suchana",
+   "title": {
+    "dev": "शारीरिक सूचना",
+    "rom": "Sharirik Suchana"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 9,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 16,
+   "notes": 0,
+   "source": "sources/sharirik-suchana.ghosh.json",
+   "file": "json/sharirik-suchana.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "bauddhik-suchana",
+   "title": {
+    "dev": "बौद्धिक सूचना",
+    "rom": "Bauddhik Suchana"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 10,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 8,
+   "notes": 0,
+   "source": "sources/bauddhik-suchana.ghosh.json",
+   "file": "json/bauddhik-suchana.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "karyakram-prarambh",
+   "title": {
+    "dev": "कार्यक्रम प्रारंभ",
+    "rom": "Karyakram Prarambh"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 11,
+   "parts": {
+    "shankh": {
+     "tala": "खेमटा-360",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 4,
+   "notes": 0,
+   "source": "sources/karyakram-prarambh.ghosh.json",
+   "file": "json/karyakram-prarambh.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "parivartan",
+   "title": {
+    "dev": "परिवर्तन",
+    "rom": "Parivartan"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 12,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 2,
+   "notes": 0,
+   "source": "sources/parivartan.ghosh.json",
+   "file": "json/parivartan.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "karyakram-samapti",
+   "title": {
+    "dev": "कार्यक्रम समाप्ति",
+    "rom": "Karyakram Samapti"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 13,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-120",
+     "page": 36,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 6,
+   "notes": 0,
+   "source": "sources/karyakram-samapti.ghosh.json",
+   "file": "json/karyakram-samapti.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "bhojan-suchana",
+   "title": {
+    "dev": "भोजन सूचना",
+    "rom": "Bhojan Suchana"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 14,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-160",
+     "page": 37,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 15,
+   "notes": 0,
+   "source": "sources/bhojan-suchana.ghosh.json",
+   "file": "json/bhojan-suchana.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "jagaran",
+   "title": {
+    "dev": "जागरण",
+    "rom": "Jagaran"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 15,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 37,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 32,
+   "notes": 0,
+   "source": "sources/jagaran.ghosh.json",
+   "file": "json/jagaran.json",
+   "prarambhik": false,
+   "charans": 3
+  },
+  {
+   "id": "deepnirvan-suchana",
+   "title": {
+    "dev": "दीपनिर्वाण सूचना",
+    "rom": "Deepnirvan Suchana"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 16,
+   "parts": {
+    "shankh": {
+     "tala": "झपताल-120",
+     "page": 38,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj"
+   ],
+   "seconds": 41.5,
+   "notes": 0,
+   "source": "sources/deepnirvan-suchana.ghosh.json",
+   "file": "json/deepnirvan-suchana.json",
+   "prarambhik": false,
+   "charans": 4
+  },
+  {
+   "id": "deepnirvan",
+   "title": {
+    "dev": "दीपनिर्वाण",
+    "rom": "Deepnirvan"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 17,
+   "parts": {
+    "shankh": {
+     "tala": "दादरा-120",
+     "page": 38,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 9,
+   "notes": 0,
+   "source": "sources/deepnirvan.ghosh.json",
+   "file": "json/deepnirvan.json",
+   "prarambhik": false,
+   "charans": 1
+  },
+  {
+   "id": "sankat-suchana",
+   "title": {
+    "dev": "संकट सूचना",
+    "rom": "Sankat Suchana"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 18,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-120",
+     "page": 39,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 12,
+   "notes": 0,
+   "source": "sources/sankat-suchana.ghosh.json",
+   "file": "json/sankat-suchana.json",
+   "prarambhik": true,
+   "charans": 1
+  },
+  {
+   "id": "dhvajavataranam",
+   "title": {
+    "dev": "ध्वजावतरणम्",
+    "rom": "Dhvajavataranam"
+   },
+   "section": "naimittik",
+   "sectionDev": "नैमित्तिक",
+   "kind": "udghosh",
+   "bookOrder": 19,
+   "parts": {
+    "shankh": {
+     "tala": "केरवा-100",
+     "page": 39,
+     "status": "checked"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 40.8,
+   "notes": 0,
+   "source": "sources/dhvajavataranam.ghosh.json",
+   "file": "json/dhvajavataranam.json",
+   "prarambhik": true,
+   "charans": 2
+  },
+  {
+   "id": "anak-prathmik-path-kerva",
+   "title": {
+    "dev": "आनक प्राथमिक पाठ - केरवा ताल",
+    "rom": "Anak basic lesson - Kerva"
+   },
+   "section": "lessons",
+   "sectionDev": "lessons",
+   "kind": "lesson",
+   "bookOrder": null,
+   "parts": {
+    "anak": {
+     "tala": "केरवा-120",
+     "page": 17,
+     "status": "draft"
+    }
+   },
+   "generatedParts": [
+    "panav",
+    "jhallari",
+    "tribhuj",
+    "steps"
+   ],
+   "seconds": 20,
+   "notes": 0,
+   "source": "sources/anak-prathmik-path.ghosh.json",
+   "file": "json/anak-prathmik-path-kerva.json",
+   "prarambhik": true,
+   "charans": 4
+  }
+ ]
+}

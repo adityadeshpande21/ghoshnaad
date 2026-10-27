@@ -1,0 +1,48 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "kaveri",
+  "kind": "rachana",
+  "title": {
+    "dev": "कावेरी",
+    "rom": "Kaveri"
+  },
+  "section": "mand-shankh",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 30,
+        "pdfPage": 49,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ प. स ग | प ग स | प [पप] प | प ऽ [ऽ–] |",
+        "| प ग स | प. स ग | प. [प.प.] प. | प. ऽ [ऽ–] :॥",
+        "॥ स प. स | ग [गग] [ग–] | प ग स | प [पप] [प–] |",
+        "| [पप] [पप] [प–] | [गग] [गग] [ग–] | प. प. प. | स ऽ [ऽ–] :॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 77,
+        "pdfPage": 98,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ – त त | – त त | त [तत] त | त्र ऽ त |",
+        "| त त्र त | त त्र त | त [तत] त्र | त – – :॥",
+        "॥ त्र ऽ ऽ | त [तत] त | त्र ऽ ऽ | त [तत] त |",
+        "| [तत्र] [तत्र] त | [तत्र] [तत्र] त | त्र ऽ ऽ | त – – :॥"
+      ]
+    }
+  }
+}

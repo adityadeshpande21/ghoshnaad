@@ -1,0 +1,46 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "dhvajapranam",
+  "kind": "rachana",
+  "title": {
+    "dev": "ध्वजप्रणाम",
+    "rom": "Dhvajapranam"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 33,
+        "pdfPage": 52,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ प. ॥", "pickup": true
+        },
+        "॥ [पऽपप] [गऽगग] | [सऽसस] [प.ऽप.प.] | स. [प.प.] | स [–स] |",
+        "| [प.ऽप.प.] [सऽसग] | स [–स] | [प.ऽप.प.] [सऽसग] | स – ॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 101,
+        "pdfPage": 122,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ [त–तत] [तत] | त त्र | [तत] [तत] | त त्र |",
+        "| [त–तत] [तत] | त त्र | [तत] [तत] | त – ॥"
+      ]
+    }
+  }
+}

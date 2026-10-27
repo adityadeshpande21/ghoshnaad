@@ -1,0 +1,18 @@
+[
+ {
+  "kind": "raw",
+  "file": "raw-00.html"
+ },
+ {
+  "kind": "style",
+  "file": "app.css"
+ },
+ {
+  "kind": "raw",
+  "file": "raw-01.html"
+ },
+ {
+  "kind": "script",
+  "file": "tala.js"
+ }
+]

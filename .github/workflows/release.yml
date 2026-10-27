@@ -1,0 +1,102 @@
+# Every push and pull request: test, build, and run the browser tests on the built app.
+# Push to release/production: the same, then publish dist/ to main (Pages serves main). A failing step leaves the live site untouched.
+# Tag v*: also keep that version as a GitHub release (Ghoshnaad.html + the site files).
+name: release
+
+on:
+  push:
+    branches: ['epic/**', 'release/**']
+    tags: ['v*']
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - run: npm run typecheck
+      - name: Golden output, unit tests and the v1.1.0 reassembly proof
+        run: |
+          npm test
+          npm run legacy:verify
+      - run: npm run build
+      - name: The HTML needs nothing outside itself
+        run: npm run check
+      - name: The build equals v1.1.0 except for the intended changes
+        run: npm run test:dist
+      - uses: actions/upload-artifact@v4
+        with: { name: dist, path: dist, if-no-files-found: error }
+
+  browser:
+    needs: build
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 24, cache: npm }
+      - run: npm ci
+      - uses: actions/download-artifact@v4
+        with: { name: dist, path: dist }
+      - run: npx playwright install --with-deps ${{ matrix.browser }}
+      - run: npx playwright test --project=${{ matrix.browser }}
+        env: { GHOSH_TARGET: dist, CI: 'true' }
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-${{ matrix.browser }}
+          path: test-results
+
+  # main holds only the built site (index.html, Ghoshnaad.html, sw.js, manifest, icons, version.json) and GitHub Pages
+  # serves it from there. Pushing to release/production publishes: this job replaces the contents of main with dist/.
+  # A failing test or browser run stops before this job, so the live site stays as it was.
+  publish:
+    if: github.ref == 'refs/heads/release/production' && github.event_name == 'push'
+    needs: [build, browser]
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: dist, path: dist }
+      - uses: actions/checkout@v4
+        with: { ref: main, path: site, fetch-depth: 1 }
+      - name: Replace main with the new build
+        run: |
+          VERSION=$(node -p "require('./dist/version.json').version")
+          find site -mindepth 1 -maxdepth 1 ! -name .git -exec rm -rf {} +
+          cp -a dist/. site/
+          cd site
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          if git diff --cached --quiet; then echo "main already has this build"; exit 0; fi
+          git commit -m "Release v${VERSION} (built from ${GITHUB_SHA::7})"
+          git push origin HEAD:main
+
+  github-release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [build, browser]
+    runs-on: ubuntu-latest
+    permissions: { contents: write }
+    steps:
+      - uses: actions/download-artifact@v4
+        with: { name: dist, path: dist }
+      - name: Create the release
+        env: { GH_TOKEN: '${{ github.token }}' }
+        run: |
+          (cd dist && zip -qr ../ghoshnaad-site-${GITHUB_REF_NAME}.zip .)
+          gh release create "$GITHUB_REF_NAME" --repo "$GITHUB_REPOSITORY" --title "$GITHUB_REF_NAME" --generate-notes \
+            dist/Ghoshnaad.html "ghoshnaad-site-${GITHUB_REF_NAME}.zip"

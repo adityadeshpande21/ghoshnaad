@@ -1,0 +1,31 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "bhojan-suchana",
+  "kind": "udghosh",
+  "title": {
+    "dev": "भोजन सूचना",
+    "rom": "Bhojan Suchana"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 37,
+        "pdfPage": 56,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 160,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स स | स स | प. [प.प.] | स [ऽ–] |",
+        "| [प.स] प. | [सग] स | [सग] [पग] | स [ऽ–] |",
+        "| स स | स स | प. [प.प.] | स [ऽ–] |",
+        "| [सग] [प.स] | [गप] [सग] | [पग] [पग] | स स |",
+        "| स स | स स | प. [प.प.] | स! [ऽ–] ॥"
+      ]
+    }
+  }
+}

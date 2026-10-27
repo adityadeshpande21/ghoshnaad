@@ -1,0 +1,57 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "bhoop",
+  "kind": "rachana",
+  "title": {
+    "dev": "भूप",
+    "rom": "Bhoop"
+  },
+  "section": "prachalan-vanshi",
+  "raga": {
+    "name": "भूप",
+    "aroha": "स री ग प ध स'",
+    "avaroha": "स' ध प ग री स"
+  },
+  "parts": {
+    "vanshi": {
+      "source": {
+        "book": "vanshi",
+        "page": 1,
+        "pdfPage": 21,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "lines": [
+        "॥ॐ॥ [धस'] [धप] | [गरी] स | ध. [सरी] | [गरी] [गप] |",
+        "| [धस'] [धप] | [गरी] स | ध. [सरी] | ग [ऽ–] :॥",
+        "॥ [गरी] [गप] | [धप] ध | [गप] [धस'] | [धप] ग |",
+        "| स' [धप] | [गरी] स | [ध.प] [गरी] | स [ऽ–] :॥",
+        "॥ [स'ध] स' | [पध] ग | [रीप] [गध] | [पस'] [धरी'] |",
+        "| [स'ध] स' | [पध] ग | [धप] [गरी] | स [ऽ–] :॥"
+      ],
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20"
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 33,
+        "pdfPage": 54,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "lines": [
+        "॥ॐ॥ थ त्र | [तत] [तत्र] | [तत्र] [तत] | [थत] [थत] |",
+        "| थ त्र | [तत] [तत्र] | [तत्र] [तत] | त्र त :॥",
+        "॥ त्र [तत] | त्र [तत] | त्र [तत] | [तततत] [तततत] |",
+        "| [त––त] [तत] | [तत्र] [तत] | [–त] [तत] | त्र त :॥",
+        "॥ त्र त | [++] + | त्र त | [तत] त |",
+        "| त्र त | [++] + | त्र ऽ | त – :॥"
+      ],
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20"
+    }
+  }
+}

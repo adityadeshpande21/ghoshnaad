@@ -1,0 +1,2781 @@
+{
+ "format": "ghosh/3",
+ "id": "swagat-pranam",
+ "generated": {
+  "by": "compile3",
+  "at": "2026-10-20T05:53:29.784Z"
+ },
+ "meta": {
+  "title": {
+   "dev": "स्वागतप्रणाम",
+   "rom": "Swagat Pranam"
+  },
+  "kind": "rachana",
+  "section": "naimittik",
+  "verse": [],
+  "usage": [],
+  "performance": {
+   "mode": "standing"
+  },
+  "notes": [
+   "Rupak: 7 matras per गण, गट of 3+2+2.",
+   "The closing ॥ स ऽ – ॥ / ॥ त–– ॥ is a 3-matra tag after the last गण.",
+   "The Anak starts one matra early (pickup त) so both parts meet on the first सम."
+  ]
+ },
+ "rhythm": {
+  "talas": {
+   "rupak": {
+    "name": {
+     "dev": "रूपक",
+     "rom": "Rupak"
+    },
+    "cycle": 7,
+    "ganSize": 7,
+    "gats": [
+     3,
+     2,
+     2
+    ],
+    "count": "१ २ ३ , ४ ५ , ६ ७",
+    "roll": {
+     "strokesPerMatra": 3,
+     "pattern": "tankar+2 anutankar",
+     "confidence": "assumed"
+    },
+    "steps": null,
+    "talVadya": {
+     "default": "gat",
+     "variants": {
+      "gat": {
+       "beats": [
+        1,
+        4,
+        6
+       ],
+       "label": "every गट",
+       "confidence": "book"
+      }
+     },
+     "use": "gat"
+    },
+    "explain": {
+     "mr": "रूपक ७ मात्रांचा ताल आहे: एका गणात ३ + २ + २ मात्रांचे तीन गट, आणि एक गण म्हणजेच एक आवर्तन.",
+     "hi": "रूपक ७ मात्राओं का ताल है: एक गण में ३ + २ + २ मात्राओं के तीन गट, और एक गण ही एक आवर्तन है।",
+     "en": "Rupak has 7 matras: one गण of 3 + 2 + 2, which is the whole cycle."
+    }
+   }
+  },
+  "tala": "rupak",
+  "laya": 120,
+  "charans": [
+   {
+    "id": "c1",
+    "n": 1,
+    "repeat": 1,
+    "tala": "rupak",
+    "laya": 120,
+    "segments": [
+     "b"
+    ]
+   },
+   {
+    "id": "c2",
+    "n": 2,
+    "repeat": 1,
+    "tala": "rupak",
+    "laya": 120,
+    "segments": [
+     "b"
+    ],
+    "role": "closing-tag"
+   }
+  ],
+  "form": [
+   "c1",
+   "c2"
+  ],
+  "countIn": {
+   "count": 2,
+   "words": [
+    "एक",
+    "दो"
+   ],
+   "matras": 2,
+   "on": "panav",
+   "note": "ध्वंकार-द्वय"
+  }
+ },
+ "parts": {
+  "shankh": {
+   "instrument": "shankh",
+   "role": "melody",
+   "kind": "printed",
+   "gans": [
+    {
+     "addr": "c1.b.0",
+     "charan": "c1",
+     "seg": "b",
+     "line": 1,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          },
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.1",
+     "charan": "c1",
+     "seg": "b",
+     "line": 2,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "rest",
+           "dev": "–"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.2",
+     "charan": "c1",
+     "seg": "b",
+     "line": 3,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          },
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.3",
+     "charan": "c1",
+     "seg": "b",
+     "line": 4,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "rest",
+           "dev": "–"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.4",
+     "charan": "c1",
+     "seg": "b",
+     "line": 5,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          },
+          {
+           "type": "note",
+           "dev": "ग",
+           "swara": "G",
+           "octave": 0
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": 0
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "प",
+           "swara": "P",
+           "octave": -1
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c2.b.0",
+     "charan": "c2",
+     "seg": "b",
+     "line": 6,
+     "short": true,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "note",
+           "dev": "स",
+           "swara": "S",
+           "octave": 0
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "rest",
+           "dev": "–"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "anak": {
+   "instrument": "anak",
+   "role": "anak",
+   "kind": "printed",
+   "pickups": [
+    {
+     "charan": "c1",
+     "matras": [
+      {
+       "at": -1,
+       "slots": [
+        {
+         "type": "stroke",
+         "dev": "त",
+         "stroke": "ta"
+        }
+       ],
+       "beat": 7
+      }
+     ]
+    }
+   ],
+   "gans": [
+    {
+     "addr": "c1.b.0",
+     "charan": "c1",
+     "seg": "b",
+     "line": 2,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.1",
+     "charan": "c1",
+     "seg": "b",
+     "line": 3,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.2",
+     "charan": "c1",
+     "seg": "b",
+     "line": 4,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.3",
+     "charan": "c1",
+     "seg": "b",
+     "line": 5,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "group": true,
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          },
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.4",
+     "charan": "c1",
+     "seg": "b",
+     "line": 6,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "hold",
+           "dev": "ऽ"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 4
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 5
+        }
+       ]
+      },
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 6
+        },
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त्र",
+           "stroke": "roll"
+          }
+         ],
+         "beat": 7
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c2.b.0",
+     "charan": "c2",
+     "seg": "b",
+     "line": 7,
+     "short": true,
+     "gats": [
+      {
+       "matras": [
+        {
+         "slots": [
+          {
+           "type": "stroke",
+           "dev": "त",
+           "stroke": "ta"
+          }
+         ],
+         "beat": 1
+        },
+        {
+         "slots": [
+          {
+           "type": "rest",
+           "dev": "–"
+          }
+         ],
+         "beat": 2
+        },
+        {
+         "slots": [
+          {
+           "type": "rest",
+           "dev": "–"
+          }
+         ],
+         "beat": 3
+        }
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  "panav": {
+   "instrument": "panav",
+   "role": "tal-vadya",
+   "kind": "derived",
+   "rule": {
+    "from": "tala.talVadya",
+    "talas": {
+     "rupak": {
+      "variant": "gat",
+      "beats": [
+       1,
+       4,
+       6
+      ],
+      "confidence": "book"
+     }
+    }
+   },
+   "pickups": [
+    {
+     "charan": "c1",
+     "matras": [
+      {
+       "at": -1,
+       "beat": 7,
+       "slots": [
+        {
+         "type": "hold"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "gans": [
+    {
+     "addr": "c1.b.0",
+     "charan": "c1",
+     "seg": "b",
+     "line": 1,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.1",
+     "charan": "c1",
+     "seg": "b",
+     "line": 2,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.2",
+     "charan": "c1",
+     "seg": "b",
+     "line": 3,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.3",
+     "charan": "c1",
+     "seg": "b",
+     "line": 4,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.4",
+     "charan": "c1",
+     "seg": "b",
+     "line": 5,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c2.b.0",
+     "charan": "c2",
+     "seg": "b",
+     "line": 6,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "dhvam",
+           "dev": "ध्व",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "short": true
+    }
+   ]
+  },
+  "jhallari": {
+   "instrument": "jhallari",
+   "role": "tal-vadya",
+   "kind": "derived",
+   "rule": {
+    "from": "tala.talVadya",
+    "talas": {
+     "rupak": {
+      "variant": "gat",
+      "beats": [
+       1,
+       4,
+       6
+      ],
+      "confidence": "book"
+     }
+    }
+   },
+   "pickups": [
+    {
+     "charan": "c1",
+     "matras": [
+      {
+       "at": -1,
+       "beat": 7,
+       "slots": [
+        {
+         "type": "hold"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "gans": [
+    {
+     "addr": "c1.b.0",
+     "charan": "c1",
+     "seg": "b",
+     "line": 1,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.1",
+     "charan": "c1",
+     "seg": "b",
+     "line": 2,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.2",
+     "charan": "c1",
+     "seg": "b",
+     "line": 3,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.3",
+     "charan": "c1",
+     "seg": "b",
+     "line": 4,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.4",
+     "charan": "c1",
+     "seg": "b",
+     "line": 5,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c2.b.0",
+     "charan": "c2",
+     "seg": "b",
+     "line": 6,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "jham",
+           "dev": "झ",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "short": true
+    }
+   ]
+  },
+  "tribhuj": {
+   "instrument": "tribhuj",
+   "role": "tal-vadya",
+   "kind": "derived",
+   "rule": {
+    "from": "tala.talVadya",
+    "talas": {
+     "rupak": {
+      "variant": "gat",
+      "beats": [
+       1,
+       4,
+       6
+      ],
+      "confidence": "book"
+     }
+    }
+   },
+   "pickups": [
+    {
+     "charan": "c1",
+     "matras": [
+      {
+       "at": -1,
+       "beat": 7,
+       "slots": [
+        {
+         "type": "hold"
+        }
+       ]
+      }
+     ]
+    }
+   ],
+   "gans": [
+    {
+     "addr": "c1.b.0",
+     "charan": "c1",
+     "seg": "b",
+     "line": 1,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.1",
+     "charan": "c1",
+     "seg": "b",
+     "line": 2,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.2",
+     "charan": "c1",
+     "seg": "b",
+     "line": 3,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.3",
+     "charan": "c1",
+     "seg": "b",
+     "line": 4,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c1.b.4",
+     "charan": "c1",
+     "seg": "b",
+     "line": 5,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 4,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 5,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 6,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट"
+          }
+         ]
+        },
+        {
+         "beat": 7,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "addr": "c2.b.0",
+     "charan": "c2",
+     "seg": "b",
+     "line": 6,
+     "gats": [
+      {
+       "matras": [
+        {
+         "beat": 1,
+         "slots": [
+          {
+           "type": "stroke",
+           "stroke": "tam",
+           "dev": "ट",
+           "accent": true
+          }
+         ]
+        },
+        {
+         "beat": 2,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        },
+        {
+         "beat": 3,
+         "slots": [
+          {
+           "type": "hold"
+          }
+         ]
+        }
+       ]
+      }
+     ],
+     "short": true
+    }
+   ]
+  }
+ },
+ "layout": {
+  "lead": "shankh",
+  "header": {
+   "left": "instruments",
+   "center": "title",
+   "right": "tala"
+  },
+  "pickupPlacement": "above-line-end",
+  "parts": {
+   "shankh": {
+    "lines": [
+     {
+      "gans": [
+       "c1.b.0"
+      ],
+      "src": "॥ॐ॥ स ऽ प. , [सग] [प.स] , [गप] [सग] |"
+     },
+     {
+      "gans": [
+       "c1.b.1"
+      ],
+      "src": "| प ऽ – , प [गस] , प. [सग] |"
+     },
+     {
+      "gans": [
+       "c1.b.2"
+      ],
+      "src": "| स ऽ प. , [सग] [प.स] , [गप] [सग] |"
+     },
+     {
+      "gans": [
+       "c1.b.3"
+      ],
+      "src": "| प ऽ – , प [पप] , ग [गग] |"
+     },
+     {
+      "gans": [
+       "c1.b.4",
+       "c2.b.0"
+      ],
+      "src": "| स ऽ ग , प. [सग] , प प. ॥  ॥ स ऽ – ॥"
+     }
+    ]
+   },
+   "anak": {
+    "lines": [
+     {
+      "pickup": "c1",
+      "gans": []
+     },
+     {
+      "gans": [
+       "c1.b.0"
+      ],
+      "src": "॥ त्र ऽ त , त [तत] , त [तत] |"
+     },
+     {
+      "gans": [
+       "c1.b.1"
+      ],
+      "src": "| त्र ऽ त , त [तत] , त [तत] |"
+     },
+     {
+      "gans": [
+       "c1.b.2"
+      ],
+      "src": "| त्र ऽ त , त [तत] , त [तत] |"
+     },
+     {
+      "gans": [
+       "c1.b.3"
+      ],
+      "src": "| त्र ऽ त , त [तत] , त [तत] |"
+     },
+     {
+      "gans": [
+       "c1.b.4",
+       "c2.b.0"
+      ],
+      "src": "| त्र ऽ त , त त्र , त त्र ॥  ॥ त–– ॥"
+     }
+    ]
+   }
+  },
+  "band": {
+   "lines": [
+    {
+     "pickup": "c1",
+     "gans": []
+    },
+    {
+     "gans": [
+      "c1.b.0"
+     ],
+     "src": "॥ॐ॥ स ऽ प. , [सग] [प.स] , [गप] [सग] |"
+    },
+    {
+     "gans": [
+      "c1.b.1"
+     ],
+     "src": "| प ऽ – , प [गस] , प. [सग] |"
+    },
+    {
+     "gans": [
+      "c1.b.2"
+     ],
+     "src": "| स ऽ प. , [सग] [प.स] , [गप] [सग] |"
+    },
+    {
+     "gans": [
+      "c1.b.3"
+     ],
+     "src": "| प ऽ – , प [पप] , ग [गग] |"
+    },
+    {
+     "gans": [
+      "c1.b.4",
+      "c2.b.0"
+     ],
+     "src": "| स ऽ ग , प. [सग] , प प. ॥  ॥ स ऽ – ॥"
+    }
+   ]
+  }
+ },
+ "provenance": {
+  "shankh": {
+   "book": "shankh",
+   "page": 33,
+   "pdfPage": 52,
+   "edition": 6,
+   "status": "draft"
+  },
+  "anak": {
+   "book": "anak",
+   "page": 102,
+   "pdfPage": 123,
+   "edition": 6,
+   "status": "draft"
+  },
+  "derived": {
+   "rules": "घोष परिचय p. 50–54 (steps, पणव); assumed where marked",
+   "compiledFrom": "ghosh-notation/1"
+  }
+ }
+}

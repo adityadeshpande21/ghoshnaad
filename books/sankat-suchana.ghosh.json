@@ -1,0 +1,28 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "sankat-suchana",
+  "kind": "udghosh",
+  "title": {
+    "dev": "संकट सूचना",
+    "rom": "Sankat Suchana"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 39,
+        "pdfPage": 58,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ [प.प.प.–] [ससस–] | [गसगस] ग | [ससस–] [गगग–] | [पगपग] स ॥",
+        "॥ [प.सगस] [प.सगस] | [गपऽऽ] [ऽ!–] | [प.सगस] [प.सगस] | [गपऽऽ] [ऽ!–] :॥"
+      ]
+    }
+  }
+}

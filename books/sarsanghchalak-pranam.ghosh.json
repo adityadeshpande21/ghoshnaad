@@ -1,0 +1,50 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "sarsanghchalak-pranam",
+  "kind": "rachana",
+  "title": {
+    "dev": "सरसंघचालकप्रणाम",
+    "rom": "Sarsanghchalak Pranam"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 34,
+        "pdfPage": 53,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        { "t": "॥ॐ॥ प. ॥", "pickup": true
+        },
+        "॥ स [प.ऽऽस] | ग [सऽऽग] | प [गऽऽस] | [गप] [गस] |",
+        "| प. [सऽस] | [गऽग] [गसग] | प [पऽऽप] | प प. |",
+        "| स [प.ऽऽस] | ग [सऽऽग] | प [गऽऽस] | [गप] [गस] |",
+        "| प. [सऽऽग] | [प–] प. | स [ससस] | स – ॥"
+      ]
+    },
+    "anak": {
+      "source": {
+        "book": "anak",
+        "page": 103,
+        "pdfPage": 124,
+        "edition": 6
+      },
+      "tala": "केरवा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ त [त––त] | त – | त [त––त] | त – |",
+        "| त [त––त] | त [त––त] | त [त––त] | त – |",
+        "| त [त––त] | त – | त [त––त] | त – |",
+        "| थ त्र | थ त्र | त [त––त] | त – ॥"
+      ]
+    }
+  }
+}

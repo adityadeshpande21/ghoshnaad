@@ -1,0 +1,28 @@
+{
+  "format": "ghosh-notation/1",
+  "id": "deepnirvan",
+  "kind": "udghosh",
+  "title": {
+    "dev": "दीपनिर्वाण",
+    "rom": "Deepnirvan"
+  },
+  "section": "naimittik",
+  "parts": {
+    "shankh": {
+      "source": {
+        "book": "shankh",
+        "page": 38,
+        "pdfPage": 57,
+        "edition": 6
+      },
+      "tala": "दादरा",
+      "laya": 120,
+      "status": "checked",
+      "checkedBy": "Claude: line-by-line comparison with the page image, 2026-10-20",
+      "lines": [
+        "॥ॐ॥ स ऽ ऽ | स ऽ प. | स ऽ प. | स ऽ ऽ |",
+        "| [गस!] ऽ^ ऽ | ऽ – – ॥"
+      ]
+    }
+  }
+}
