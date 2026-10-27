@@ -6,19 +6,15 @@ import { createTalaTimeline } from './tala.loose.js';
 import css from './tala.css';
 import html from './tala.html';
 
-/** @type {Record<string, string>} */
-const NAMES = { mr: 'ताल वेळरेषा', hi: 'ताल समयरेखा', en: 'Tala timeline' };
-
 export class TalaTimelineScreen extends Screen {
   /** @param {import('../../ui/env.d.ts').AppEnv} env */
   constructor(env) {
     super(env, '#tala');
-    for (const l in NAMES) if (env.I18N[l]) env.I18N[l].tl_open = NAMES[l];
-    env.applyStatic();
     /** @type {any} */
     this.page = null;
     this.shadow = env.$('#talaHost').attachShadow({ mode: 'open' });
     this.shadow.innerHTML = `<style>${css}</style>${html}`;
+    env.i18n.apply(this.shadow);                    // the static texts of the page
     // the page's palette follows the app's light / dark choice
     const sync = () => {
       const t = document.documentElement.dataset.theme;
@@ -47,5 +43,7 @@ export class TalaTimelineScreen extends Screen {
   close() { this.stopPlaying(); super.close(); }
   stopPlaying() { if (this.page) this.page.stopPlay(); }
   onStopAll() { this.stopPlaying(); }
-  onLang() { /* the page's own text is Marathi for now */ }
+  isBusy() { return !!(this.page && this.page.isPlaying()); }
+  /** a new language: the page's static texts and everything drawn from them */
+  onLang() { this.env.i18n.apply(this.shadow); if (this.page) this.page.render(); }
 }

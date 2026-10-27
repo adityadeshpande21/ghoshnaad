@@ -31,7 +31,8 @@ test.describe('drawing', () => {
       }
       const read = () => page.evaluate(inApp => {
         const r = inApp ? document.querySelector('#talaHost').shadowRoot : document;
-        return { filters: r.getElementById('filters').innerHTML, legend: r.getElementById('legend').innerHTML, grid: r.getElementById('grid').innerHTML, cols: r.getElementById('grid').style.gridTemplateColumns };
+        // the legend's colours moved from style attributes into the stylesheet (the texts are translated now, and a text cannot carry a style; two classes on the legend lines tell the stylesheet which colours to use)
+        return { filters: r.getElementById('filters').innerHTML, legend: r.getElementById('legend').innerHTML.replace(/ style="color:var\(--(?:hand|fl|fr)\)"/g, '').replace(/ class="lg-(?:tr|step)"/g, ''), grid: r.getElementById('grid').innerHTML, cols: r.getElementById('grid').style.gridTemplateColumns };
       }, inApp);
       const out = [await read()];
       for (const sel of STEPS) {
@@ -44,6 +45,32 @@ test.describe('drawing', () => {
     const [was, now] = [await grab(STANDALONE, false), await grab(DIST, true)];
     expect(now.length).toBe(STEPS.length + 1);
     now.forEach((s, i) => { expect(s.grid.length, `step ${i}`).toBeGreaterThan(100); expect(s, `step ${i} ${STEPS[i - 1] || 'start'}`).toEqual(was[i]); });
+  });
+});
+
+test.describe('language', () => {
+  test.skip(() => !fs.existsSync(DIST), 'no dist build');
+  const texts = (page) => page.evaluate(() => { const r = document.querySelector('#talaHost').shadowRoot; return { title: r.querySelector('h1').textContent, legend: r.getElementById('legend').textContent, grid: r.getElementById('grid').textContent, filters: r.getElementById('filters').textContent, all: r.textContent, firstRow: r.querySelector('.row b').textContent.trim(), play: r.querySelector('.pb').getAttribute('aria-label') }; });
+
+  test('follows the language of the app: Marathi as before, and now Hindi and English, in the digits of each', async ({ page }) => {
+    await page.goto('file://' + DIST);
+    await page.waitForSelector('#rows .row', { state: 'attached' });
+    await expect.poll(() => page.evaluate(() => !!window.ScreenApp)).toBeTruthy();
+    await page.evaluate(() => ScreenApp.get('tala').open());
+    const mr = await texts(page);
+    expect(mr.title).toContain('ताल वेळरेषा'); expect(mr.firstRow).toBe('केरवा १२०'); expect(mr.play).toBe('केरवा १२० वाजवा');
+    // the language changes while the page is open: it is redrawn at once
+    await page.evaluate(() => setLang('hi'));
+    const hi = await texts(page);
+    expect(hi.title).toContain('ताल समय-रेखा'); expect(hi.firstRow).toBe('केरवा 120'); expect(hi.play).toBe('केरवा 120 बजाएँ'); expect(hi.filters).toContain('दिखाएँ');
+    expect(hi.all).not.toContain('वेळ');                           // no Marathi word is left
+    await page.evaluate(() => setLang('en'));
+    const en = await texts(page);
+    expect(en.title).toContain('Tala timeline'); expect(en.firstRow).toBe('Kerva 120'); expect(en.play).toBe('Play Kerva 120'); expect(en.legend).toContain('Gan');
+    expect(en.grid).toContain('4 counts'); expect(en.grid).toContain('s'); expect(en.filters).toContain('Khemta');
+    expect(en.all.replace(/[॥ॐ]/g, '')).not.toMatch(/[\u0900-\u097F]/);        // English page: no Devanagari at all, but the signs of the notation
+    await page.evaluate(() => setLang('mr'));
+    expect((await texts(page)).title).toContain('ताल वेळरेषा');
   });
 });
 

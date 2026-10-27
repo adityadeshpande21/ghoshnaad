@@ -70,6 +70,8 @@ export class AudioEngine {
       this.unmuteIOS();
     }
     const c = this.ctx as AudioContext;
+    // iOS 16.4: after a call the silent element is left paused and the silent switch mutes the app again, so start it again
+    if (this.iosKeepAlive && this.iosKeepAlive.paused) void this.iosKeepAlive.play().catch(() => { /* the next tap tries again */ });
     if (c.state === 'suspended' || (c.state as string) === 'interrupted') void c.resume();
     return c;
   }
@@ -139,7 +141,7 @@ export class AudioEngine {
     a.hidden = true;
     document.body.appendChild(a);                                   // attached, so the page keeps it alive
     this.iosKeepAlive = a;
-    void a.play().catch(() => { a.remove(); this.iosKeepAlive = null; });
+    void a.play().catch(() => { /* refused (no tap yet): the element stays, and the next unlock() tries again */ });
   }
 }
 

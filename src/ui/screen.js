@@ -31,6 +31,8 @@ export class Screen {
   onLang() { if (this.isOpen) this.render(); }
   /** All sound must stop (another copy of the app started playing, or a different screen took the sound). */
   onStopAll() {}
+  /** True while the screen is playing sound or holds work that is not saved yet: the page must not reload now (an update, a restore). */
+  isBusy() { return false; }
 
   /** Add an event listener that is removed again by `dispose()`.
    *  @param {EventTarget} target @param {string} type @param {(e: Event) => void} handler @param {AddEventListenerOptions} [options] */
@@ -47,14 +49,18 @@ export class App {
     this.env = env;
     /** @type {Map<string, any>} */
     this.screens = new Map();
+    // one subscription for the whole app: a language change reaches every screen, in the order they were registered
+    this.stopListening = env.i18n.onChange(() => this.setLang());
   }
   /** A screen, or a service with the same hooks (onLang, onStopAll, dispose).
    *  @template {any} S @param {string} name @param {S} screen @returns {S} */
   register(name, screen) { this.screens.set(name, screen); return screen; }
   /** @param {string} name */
   get(name) { return this.screens.get(name); }
-  /** Tell every screen the language changed. */
+  /** Tell every screen the language changed (called by the language core; screens redraw in `onLang`). */
   setLang() { this.screens.forEach(s => s.onLang && s.onLang()); }
   stopAll() { this.screens.forEach(s => s.onStopAll && s.onStopAll()); }
-  dispose() { this.screens.forEach(s => s.dispose && s.dispose()); this.screens.clear(); }
+  /** Does any screen, or service with `isBusy`, hold sound or unsaved work? */
+  isBusy() { return [...this.screens.values()].some(s => s.isBusy && s.isBusy()); }
+  dispose() { this.stopListening(); this.screens.forEach(s => s.dispose && s.dispose()); this.screens.clear(); }
 }

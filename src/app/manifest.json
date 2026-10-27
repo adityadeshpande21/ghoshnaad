@@ -37,7 +37,7 @@
  },
  {
   "kind": "script",
-  "file": "timeline3.js"
+  "gen": "timeline"
  },
  {
   "kind": "raw",

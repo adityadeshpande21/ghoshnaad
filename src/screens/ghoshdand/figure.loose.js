@@ -2,6 +2,7 @@
 /* घोषदंड संकेत — the घोष प्रमुख figure (style C, in uniform) and the 8 signals of घोष परिचय pp. 28–36.
    Model frame (the प्रमुख's own): x = his right, y = up (ground 0), z = forward (towards the band). Units ≈ cm × 1.1.
    A pose gives hand targets; arms are solved with two-bone IK, the staff is placed from its grip. */
+import { newSlot } from '../../content/keyed.ts';
   const L = 150;                       // staff: about shoulder height (p. 27)
   const UA = 38, FA = 36;              // upper arm, forearm (+ hand)
   const SH = { r: [22, 150, 0], l: [-22, 150, 0] };
@@ -126,62 +127,62 @@
 
   /* ---------- the 8 signals (घोष परिचय pp. 28–36) ----------
      Text: { mr, hi, en }. The book's own words (book) stay in Hindi in every language. */
-  const tr = (mr, hi, en) => ({ mr, hi, en });
-  const PH = { pre: tr('पूर्वसूचना', 'पूर्वसूचना', 'Advance notice'), s: tr('सूचना', 'सूचना', 'Notice'), do: tr('पालनार्थ', 'पालनार्थ', 'Execute'), base: tr('स्थिती', 'स्थिति', 'Position') };
+  const tr = newSlot;                 // an empty text: src/content/<lang>/ghoshdand.md fills it (texts.js)
+  const PH = { pre: tr(), s: tr(), do: tr(), base: tr() };
   const SIGNALS = [
-    { id: 'daksh', n: 0, name: tr('दक्ष (घोषदंडासह)', 'दक्ष (घोषदंड सहित)', 'दक्ष — attention, with the staff'), page: 28,
+    { id: 'daksh', n: 0, name: tr(), page: 28,
       steps: [{ pose: 'daksh', ph: 'base', book: 'घोषदंड दाहिने हाथ में, दाहिना प्रकोष्ठ जमीन से समानांतर, दाहिनी कोहनी में समकोण … शेषपुच्छ दाहिनी पादांगुलि के पास जमीन पर।' }],
-      does: tr('सर्व संकेतांची मूळ स्थिती.', 'सब संकेतों की मूल स्थिति।', 'The starting position for every signal.') },
-    { id: 'vadananta', n: 1, name: tr('वादनान्त', 'वादनान्त', 'वादनान्त — stop playing'), page: 30, steps: [
+      does: tr() },
+    { id: 'vadananta', n: 1, name: tr(), page: 30, steps: [
       { pose: 'vadananta1', ph: 's', book: 'शेषपुच्छ दाहिने हाथ में, तर्जनी घोषदंड पर कलश की ओर, हाथ कर्णरेखा में सीधा ऊपर, कलश आकाश की ओर।' },
       { pose: 'vadananta2', ph: 'do', book: 'दाहिना हाथ नीचे लाना, प्रकोष्ठ जमीन से समानांतर, भुजा शरीर से सटी हुई, घोषदंड जमीन से लंबरूप।' }],
-      when: tr('पालनार्थ: सामान्यतः चरणाच्या शेवटच्या गणाच्या सुरुवातीला.', 'पालनार्थ: सामान्यतः चरण के अंतिम गण के आरंभ में।', 'Execute: normally at the start of the charan’s last gan.'),
-      does: tr('चरण संपल्यावर वादन थांबते; चालताना संचलन सुरू राहते.', 'चरण समाप्त होने पर वादन रुकता है; चलते समय संचलन जारी रहता है।', 'Playing stops at the end of the charan; marching goes on.') },
-    { id: 'nirdesh', n: 2, name: tr('वाद्यनिर्देश', 'वाद्यनिर्देश', 'वाद्यनिर्देश — instrument'), page: 31, steps: [
-      { pose: 'anak', ph: 'pre', label: tr('आनक', 'आनक', 'आनक (drum)'), book: 'घोषदंड दोनों हाथों में जमीन से समानांतर; हाथ सीधे नीचे।' },
-      { pose: 'vanshi', ph: 'pre', label: tr('वंशी', 'वंशी', 'वंशी (flute)'), book: 'घोषदंड कंधों के सामने जमीन से समानांतर; हाथ कोहनी में पूर्णतः मुड़े हुए।' },
-      { pose: 'shankh', ph: 'pre', label: tr('शंख', 'शंख', 'शंख (bugle)'), book: 'हाथ कर्णरेखा में सीधे ऊपर, घोषदंड जमीन से समानांतर।' },
-      { pose: 'shring', ph: 'pre', label: tr('शृंग', 'शृंग', 'शृंग (horn)'), book: 'बायां हाथ कंधे की सीध में सामने; घोषदंड जमीन से लगभग 45°, दाहिना हाथ सीधा सामने से ऊपर तिरछा।' }],
-      does: tr('फक्त पूर्वसूचना — पुढे कोणते वाद्य वाजणार ते सांगते.', 'केवल पूर्वसूचना — आगे कौन सा वाद्य बजेगा यह बताती है।', 'Advance notice only — which instrument plays next.') },
-    { id: 'nirdeshVadananta', n: 3, name: tr('वाद्यनिर्देश सहित वादनान्त', 'वाद्यनिर्देश सहित वादनान्त', 'वाद्यनिर्देश सहित वादनान्त — change instrument'), page: 32, seq: [
-      { pose: 'shankh', count: '१–८', ph: 'pre', label: tr('वाद्यनिर्देश (उदा. शंख)', 'वाद्यनिर्देश (उदा. शंख)', 'Instrument (e.g. शंख)') }, { pose: null, count: '९–१०', label: tr('हात बदलणे', 'हाथ बदलना', 'Change hands') },
-      { pose: 'vadananta1', count: '११–१४', ph: 's', label: tr('वादनान्त सूचना', 'वादनान्त सूचना', 'Stop: notice') }, { pose: 'vadananta2', count: '१५', ph: 'do', label: tr('पालनार्थ', 'पालनार्थ', 'Execute') }, { pose: null, count: '१६', label: tr('अंतर', 'अंतर', 'Gap') }],
-      does: tr('मग रणन, आणि सांगितलेल्या वाद्यावर पूर्वघोषित रचना.', 'फिर रणन, और निर्दिष्ट वाद्य पर पूर्वघोषित रचना।', 'Then the रणन, and the announced rachana on the named instrument.') },
-    { id: 'chal', n: 4, name: tr('चल — प्रचल / मंदचल', 'चल — प्रचल / मंदचल', 'चल — march (प्रचल / मंदचल)'), page: 33, steps: [
-      { pose: 'prachal1', ph: 'pre', label: tr('प्रचल', 'प्रचल', 'प्रचल'), book: 'शेषपुच्छ आकाश की ओर, दाहिना हाथ कर्णरेखा में सीधा ऊपर, कलश कंधे के ऊपर किन्तु दूर।' },
-      { pose: 'prachal2', ph: 'do', label: tr('प्रचल', 'प्रचल', 'प्रचल'), book: 'दाहिना हाथ कोहनी में मोड़कर कलश कंधे के निकट सामने की ओर, घोषदंड लंबरूप।' },
-      { pose: 'mandchal1', ph: 's', label: tr('मंदचल', 'मंदचल', 'मंदचल'), book: 'प्रचल ‘1’ जैसी पकड़; घोषदंड सहित सीधा दाहिना हाथ दाहिनी ओर तिरछा, करीब 135°।' },
-      { pose: 'mandchal2', ph: 'do', label: tr('मंदचल', 'मंदचल', 'मंदचल'), book: 'घोषदंड की स्थिति वही; दाहिना हाथ कोहनी में मोड़कर, कलश सीने के सामने।' }],
-      when: tr('उजव्या पायावर पूर्ण झाल्यास पुढच्या डाव्या पायाने चालणे; डाव्यावर पूर्ण झाल्यास एक उजवा सोडून पुढच्या डाव्याने.', 'दाहिने पैर पर पूर्ण हो तो अगले बाएं पैर से; बाएं पर पूर्ण हो तो एक दाहिना छोड़कर अगले बाएं से।', 'Completed on a right foot: step off with the next left. On a left foot: skip one right, then the next left.'),
-      does: tr('संचलन सुरू होते.', 'संचलन प्रारंभ होता है।', 'The band moves off.') },
-    { id: 'stambh', n: 5, name: tr('स्तभ्', 'स्तभ्', 'स्तभ् — halt'), page: 34, steps: [
+      when: tr(),
+      does: tr() },
+    { id: 'nirdesh', n: 2, name: tr(), page: 31, steps: [
+      { pose: 'anak', ph: 'pre', label: tr(), book: 'घोषदंड दोनों हाथों में जमीन से समानांतर; हाथ सीधे नीचे।' },
+      { pose: 'vanshi', ph: 'pre', label: tr(), book: 'घोषदंड कंधों के सामने जमीन से समानांतर; हाथ कोहनी में पूर्णतः मुड़े हुए।' },
+      { pose: 'shankh', ph: 'pre', label: tr(), book: 'हाथ कर्णरेखा में सीधे ऊपर, घोषदंड जमीन से समानांतर।' },
+      { pose: 'shring', ph: 'pre', label: tr(), book: 'बायां हाथ कंधे की सीध में सामने; घोषदंड जमीन से लगभग 45°, दाहिना हाथ सीधा सामने से ऊपर तिरछा।' }],
+      does: tr() },
+    { id: 'nirdeshVadananta', n: 3, name: tr(), page: 32, seq: [
+      { pose: 'shankh', count: '१–८', ph: 'pre', label: tr() }, { pose: null, count: '९–१०', label: tr() },
+      { pose: 'vadananta1', count: '११–१४', ph: 's', label: tr() }, { pose: 'vadananta2', count: '१५', ph: 'do', label: tr() }, { pose: null, count: '१६', label: tr() }],
+      does: tr() },
+    { id: 'chal', n: 4, name: tr(), page: 33, steps: [
+      { pose: 'prachal1', ph: 'pre', label: tr(), book: 'शेषपुच्छ आकाश की ओर, दाहिना हाथ कर्णरेखा में सीधा ऊपर, कलश कंधे के ऊपर किन्तु दूर।' },
+      { pose: 'prachal2', ph: 'do', label: tr(), book: 'दाहिना हाथ कोहनी में मोड़कर कलश कंधे के निकट सामने की ओर, घोषदंड लंबरूप।' },
+      { pose: 'mandchal1', ph: 's', label: tr(), book: 'प्रचल ‘1’ जैसी पकड़; घोषदंड सहित सीधा दाहिना हाथ दाहिनी ओर तिरछा, करीब 135°।' },
+      { pose: 'mandchal2', ph: 'do', label: tr(), book: 'घोषदंड की स्थिति वही; दाहिना हाथ कोहनी में मोड़कर, कलश सीने के सामने।' }],
+      when: tr(),
+      does: tr() },
+    { id: 'stambh', n: 5, name: tr(), page: 34, steps: [
       { pose: 'stambh1', ph: 's', book: 'शेषपुच्छ पकड़कर हाथ सीधा बाजू में तिरछा, शरीर से लगभग 110°; कलश सिर पर आवे इस प्रकार घोषदंड तिरछा।' },
       { pose: 'stambh2', ph: 'do', book: 'कलश उसी बिंदु पर; दाहिना पैर आगे लाते समय दाहिना हाथ और शेषपुच्छ सीने के सामने — प्रणाम जैसी स्थिति।' }],
-      when: tr('मग त्याच तालात डावा पाय पुढे, उजवा त्याला जोडणे.', 'फिर उसी ताल में बायां पैर आगे, दाहिना उससे मिलाना।', 'Then, in time, left foot forward and the right joins it.'),
-      does: tr('संचलन थांबते; वादन चालू राहते.', 'संचलन रुकता है; वादन जारी रहता है।', 'Marching stops; playing goes on.') },
-    { id: 'vadanantaStambh', n: 6, name: tr('वादनान्त सहित स्तभ्', 'वादनान्त सहित स्तभ्', 'वादनान्त सहित स्तभ् — stop and halt'), page: 34, seq: [
-      { pose: 'vadananta1', ph: 's', label: tr('वादनान्त सूचना', 'वादनान्त सूचना', 'Stop: notice') }, { pose: 'stambh1', ph: 's', label: tr('थेट स्तभ् सूचना', 'सीधे स्तभ् सूचना', 'Straight to halt notice') }, { pose: 'stambh2', ph: 'do', label: tr('स्तभ् पालनार्थ', 'स्तभ् पालनार्थ', 'Halt: execute') }],
-      when: tr('वादनान्त-सूचनेतून हात खाली न आणता थेट स्तभ्-सूचनेकडे.', 'वादनान्त-सूचना से हाथ नीचे लाए बिना सीधे स्तभ्-सूचना।', 'From the stop notice go straight to the halt notice, without lowering the hand.'),
-      does: tr('वादन आणि संचलन एकत्र थांबतात.', 'वादन और संचलन एक साथ रुकते हैं।', 'Playing and marching stop together.') },
-    { id: 'bhram', n: 7, name: tr('भ्रम — दक्षिण / वाम / प्रति', 'भ्रम — दक्षिण / वाम / प्रति', 'भ्रम — wheel right / left / countermarch'), page: 35, steps: [
-      { pose: 'dakshinBhram', ph: 's', label: tr('दक्षिण भ्रम', 'दक्षिण भ्रम', 'दक्षिण (right)'), book: 'घोषदंड सीने के समीप समानांतर, दाहिना हाथ प्रणाम जैसा, कलश दाहिने कंधे के सामने; बायां हाथ बायीं ओर सीधा तना, हथेली सामने, शेष अंगूठे-तर्जनी के बीच।' },
-      { pose: 'vamBhram', ph: 's', label: tr('वाम भ्रम', 'वाम भ्रम', 'वाम (left)'), book: 'हाथ और घोषदंड की दिशा बदलकर दक्षिण भ्रम जैसी क्रिया।' },
-      { pose: 'daksh', ph: 's', label: tr('प्रति भ्रम', 'प्रति भ्रम', 'प्रति (countermarch)'), book: 'संचलन करते समय घोष प्रमुख स्तभ् कर ‘दक्ष’ स्थिति में खड़ा रहेगा — यही संकेत।' }],
-      when: tr('घोष प्रमुखासोबत वळणे सुरू; पहिल्या दोन तती वळल्यावर घोषदंड पूर्वस्थितीत.', 'घोष प्रमुख के साथ भ्रमण आरंभ; प्रथम दो ततियाँ घूमने पर घोषदंड पूर्व स्थिति में।', 'The turn starts with the प्रमुख; after the first two ranks have turned, the staff comes back.'),
-      does: tr('घोष वळतो.', 'घोष घूमता है।', 'The band turns.') },
-    { id: 'gatyantar', n: 8, name: tr('गत्यंतर', 'गत्यंतर', 'गत्यंतर — change speed'), page: 35, steps: [
+      when: tr(),
+      does: tr() },
+    { id: 'vadanantaStambh', n: 6, name: tr(), page: 34, seq: [
+      { pose: 'vadananta1', ph: 's', label: tr() }, { pose: 'stambh1', ph: 's', label: tr() }, { pose: 'stambh2', ph: 'do', label: tr() }],
+      when: tr(),
+      does: tr() },
+    { id: 'bhram', n: 7, name: tr(), page: 35, steps: [
+      { pose: 'dakshinBhram', ph: 's', label: tr(), book: 'घोषदंड सीने के समीप समानांतर, दाहिना हाथ प्रणाम जैसा, कलश दाहिने कंधे के सामने; बायां हाथ बायीं ओर सीधा तना, हथेली सामने, शेष अंगूठे-तर्जनी के बीच।' },
+      { pose: 'vamBhram', ph: 's', label: tr(), book: 'हाथ और घोषदंड की दिशा बदलकर दक्षिण भ्रम जैसी क्रिया।' },
+      { pose: 'daksh', ph: 's', label: tr(), book: 'संचलन करते समय घोष प्रमुख स्तभ् कर ‘दक्ष’ स्थिति में खड़ा रहेगा — यही संकेत।' }],
+      when: tr(),
+      does: tr() },
+    { id: 'gatyantar', n: 8, name: tr(), page: 35, steps: [
       { pose: 'gatyantar1', ph: 'pre', book: 'शेषपुच्छ से थोड़ा ऊपर पकड़, तर्जनी घोषदंड की दिशा में; हाथ और घोषदंड एक सीध में, शरीर से लगभग 135°, शेषपुच्छ प्रकोष्ठ पर।' },
       { pose: 'gatyantar2', ph: 'do', book: 'घोषदंड की दिशा तथा कोण वही; दाहिना हाथ सीने के पास, कोहनी प्रणाम जैसी मुड़ी।' }],
-      does: tr('वादनाची (आणि संचलनाची) गती बदलते.', 'वादन (और संचलन) की गति बदलती है।', 'The speed of playing (and marching) changes.') },
+      does: tr() },
   ];
   /* poses where the book's words leave room — shown as a note on the card */
   const FLAGS = {
-    anak: tr('कलश कोणत्या बाजूला? पुस्तक “दाहिने हाथ की पकड़ दक्ष जैसी” म्हणते — म्हणून कलश प्रमुखाच्या उजवीकडे घेतला आहे.', 'कलश किस ओर? पुस्तक “दाहिने हाथ की पकड़ दक्ष जैसी” कहती है — इसलिए कलश प्रमुख के दाहिनी ओर रखा है।', 'Which side is the कलश? The book says the right hand grips “as in दक्ष”, so the कलश is on the प्रमुख’s right.'),
-    shring: tr('घोषदंडाचा ४५° तिरकस नेमका कोणत्या दिशेने (समोरून वर की बाजूने) ते वर्णनावरून स्पष्ट नाही.', 'घोषदंड का ४५° झुकाव किस दिशा में (सामने से ऊपर या बगल से) — वर्णन से स्पष्ट नहीं।', 'The book does not say whether the 45° slant runs forward-up or across the body.'),
-    prachal1: tr('“शेषपुच्छ आकाश की ओर” — घोषदंड उलटा (कलश खाली, हाताजवळ) असा वाचला आहे.', '“शेषपुच्छ आकाश की ओर” — घोषदंड उलटा (कलश नीचे, हाथ के पास) माना है।', '“शेषपुच्छ towards the sky” is read as the staff upside down, कलश low near the hand.'),
-    mandchal1: tr('प्रचल १ सारखी पकड (उलटा घोषदंड), हात आणि घोषदंड एका रेषेत असा वाचला आहे.', 'प्रचल १ जैसी पकड़ (उलटा घोषदंड), हाथ और घोषदंड एक रेखा में माना है।', 'Read as the प्रचल 1 grip (staff upside down), arm and staff in one line.'),
-    stambh2: tr('कलश “उसी बिंदु पर” — म्हणून हात छातीसमोर आला तरी कलश डोक्यावरच ठेवला आहे.', 'कलश “उसी बिंदु पर” — इसलिए हाथ सीने के सामने आने पर भी कलश सिर पर ही रखा है।', 'कलश “at the same point”: it stays over the head while the hand comes to the chest.'),
-    vamBhram: tr('दक्षिण भ्रमाचा आरसा: घोषदंड डाव्या हातात, उजवा हात बाजूला.', 'दक्षिण भ्रम का दर्पण: घोषदंड बाएं हाथ में, दाहिना हाथ बगल में।', 'A mirror of दक्षिण भ्रम: staff in the left hand, right arm out.'),
+    anak: tr(),
+    shring: tr(),
+    prachal1: tr(),
+    mandchal1: tr(),
+    stambh2: tr(),
+    vamBhram: tr(),
   };
 
   /* ---------- animations: counts (one per foot), poses landing on counts ----------
@@ -189,38 +190,38 @@
      march: [first, last] counts on which a foot lands (odd = डावा, even = उजवा). tempo: [[count, steps per minute]].
      music: [first, last] counts while वादन is heard. dd: counts with the पणव ध्वंकार-द्वय. notes: [count, caption]. */
   const ANIM = {
-    vadananta: [{ label: tr('वादनान्त (चालताना)', 'वादनान्त (चलते हुए)', 'Stop playing, on the march'), n: 12, bpm: 120, march: [1, 12], music: [1, 8], dd: [2],
+    vadananta: [{ label: tr(), n: 12, bpm: 120, march: [1, 12], music: [1, 8], dd: [2],
       pose: [[1, 'daksh'], [3, 'vadananta1'], [7, 'vadananta2']],
-      notes: [[1, tr('प्रचल, वादन चालू', 'प्रचल, वादन जारी', 'Marching, playing')], [2, tr('पणवावर ध्वंकार-द्वय', 'पणव पर ध्वंकार-द्वय', 'पणव double stroke: look up')], [3, tr('सूचना — किमान ४ अंक धरा', 'सूचना — कम से कम ४ अंक', 'Notice — hold at least 4 counts')], [7, tr('पालनार्थ — चरणाच्या शेवटच्या गणाच्या सुरुवातीला', 'पालनार्थ — चरण के अंतिम गण के आरंभ में', 'Execute — at the start of the last gan')], [9, tr('चरण संपला: वादन थांबले, संचलन चालू', 'चरण समाप्त: वादन रुका, संचलन जारी', 'Charan ends: playing stops, marching goes on')]] }],
-    nirdesh: [{ label: tr('चारही वाद्यनिर्देश', 'चारों वाद्यनिर्देश', 'All four instruments'), n: 18, bpm: 120, march: [1, 18],
+      notes: [[1, tr()], [2, tr()], [3, tr()], [7, tr()], [9, tr()]] }],
+    nirdesh: [{ label: tr(), n: 18, bpm: 120, march: [1, 18],
       pose: [[1, 'daksh'], [2, 'anak'], [6, 'vanshi'], [10, 'shankh'], [14, 'shring'], [18, 'daksh']],
-      notes: [[1, tr('प्रचल', 'प्रचल', 'Marching')], [2, tr('आनक', 'आनक', 'आनक')], [6, tr('वंशी', 'वंशी', 'वंशी')], [10, tr('शंख', 'शंख', 'शंख')], [14, tr('शृंग', 'शृंग', 'शृंग')], [18, tr('दक्ष', 'दक्ष', 'दक्ष')]] }],
-    nirdeshVadananta: [{ label: tr('१६ अंक (शंख)', '१६ अंक (शंख)', '16 counts (शंख)'), n: 18, bpm: 120, march: [1, 18], music: [1, 16],
+      notes: [[1, tr()], [2, tr()], [6, tr()], [10, tr()], [14, tr()], [18, tr()]] }],
+    nirdeshVadananta: [{ label: tr(), n: 18, bpm: 120, march: [1, 18], music: [1, 16],
       pose: [[1, 'shankh', .6], [11, 'vadananta1', 2], [15, 'vadananta2'], [17, 'daksh', .6]],
-      notes: [[1, tr('१–८: वाद्यनिर्देश (शंख) — पूर्वसूचना', '१–८: वाद्यनिर्देश (शंख) — पूर्वसूचना', '1–8: instrument (शंख) — advance notice')], [9, tr('९–१०: हात बदलणे', '९–१०: हाथ बदलना', '9–10: change hands')], [11, tr('११–१४: वादनान्त सूचना', '११–१४: वादनान्त सूचना', '11–14: stop — notice')], [15, tr('१५: पालनार्थ', '१५: पालनार्थ', '15: execute')], [16, tr('१६: अंतर', '१६: अंतर', '16: gap')], [17, tr('आता रणन, मग शंखावर रचना', 'अब रणन, फिर शंख पर रचना', 'Now the रणन, then the शंख rachana')]] }],
+      notes: [[1, tr()], [9, tr()], [11, tr()], [15, tr()], [16, tr()], [17, tr()]] }],
     chal: [
-      { label: tr('प्रचल (स्थिर स्थितीतून)', 'प्रचल (स्थिर से)', 'प्रचल from standing'), n: 14, bpm: 120, march: [7, 14],
+      { label: tr(), n: 14, bpm: 120, march: [7, 14],
         pose: [[1, 'daksh'], [2, 'prachal1', .6], [6, 'prachal2'], [9, 'daksh', .6]],
-        notes: [[1, tr('स्थिर, दक्ष', 'स्थिर, दक्ष', 'Standing, दक्ष')], [2, tr('पूर्वसूचना — किमान ४ अंक', 'पूर्वसूचना — कम से कम ४ अंक', 'Advance notice — at least 4 counts')], [6, tr('पालनार्थ उजव्या पायाच्या अंकावर', 'पालनार्थ दाहिने पैर के अंक पर', 'Execute on a right-foot count')], [7, tr('पुढच्या डाव्या पायाने प्रचल सुरू', 'अगले बाएं पैर से प्रचल', 'Step off with the next left foot')]] },
-      { label: tr('प्रचलातून मंदचल', 'प्रचल से मंदचल', 'प्रचल to मंदचल'), n: 14, bpm: 120, tempo: [[10, 60]], march: [1, 14],
+        notes: [[1, tr()], [2, tr()], [6, tr()], [7, tr()]] },
+      { label: tr(), n: 14, bpm: 120, tempo: [[10, 60]], march: [1, 14],
         pose: [[1, 'daksh'], [3, 'mandchal1'], [7, 'mandchal2'], [11, 'daksh', .6]],
-        notes: [[1, tr('प्रचल', 'प्रचल', 'Marching')], [3, tr('सूचना', 'सूचना', 'Notice')], [7, tr('पालनार्थ डाव्या पायावर', 'पालनार्थ बाएं पैर पर', 'Execute on the left foot')], [8, tr('उजवा, डावा — अजून प्रचलाच्या गतीने', 'दाहिना, बायां — अभी प्रचल की गति से', 'Right, left — still at प्रचल speed')], [10, tr('उजवा पाय मंदचलाच्या गतीने', 'दाहिना पैर मंदचल की गति से', 'Right foot at मंदचल speed')]] }],
-    stambh: [{ label: tr('स्तभ् (प्रचलातून)', 'स्तभ् (प्रचल से)', 'Halt from the march'), n: 12, bpm: 120, march: [1, 10], music: [1, 12], dd: [2],
+        notes: [[1, tr()], [3, tr()], [7, tr()], [8, tr()], [10, tr()]] }],
+    stambh: [{ label: tr(), n: 12, bpm: 120, march: [1, 10], music: [1, 12], dd: [2],
       pose: [[1, 'daksh'], [3, 'stambh1'], [8, 'stambh2'], [11, 'daksh', .6]],
-      notes: [[1, tr('प्रचल, वादन चालू', 'प्रचल, वादन जारी', 'Marching, playing')], [3, tr('सूचना', 'सूचना', 'Notice')], [8, tr('पालनार्थ — उजवा पाय पुढे येताना', 'पालनार्थ — दाहिना पैर आगे आते समय', 'Execute — as the right foot comes forward')], [9, tr('डावा पाय पुढे', 'बायां पैर आगे', 'Left foot forward')], [10, tr('उजवा जोडला — स्तभ्', 'दाहिना मिलाया — स्तभ्', 'Right joins — halted')], [11, tr('वादन चालूच', 'वादन जारी', 'Playing goes on')]] }],
-    vadanantaStambh: [{ label: tr('वादन आणि संचलन एकत्र थांबवणे', 'वादन और संचलन एक साथ रोकना', 'Stop and halt together'), n: 12, bpm: 120, march: [1, 10], music: [1, 10], dd: [2],
+      notes: [[1, tr()], [3, tr()], [8, tr()], [9, tr()], [10, tr()], [11, tr()]] }],
+    vadanantaStambh: [{ label: tr(), n: 12, bpm: 120, march: [1, 10], music: [1, 10], dd: [2],
       pose: [[1, 'daksh'], [3, 'vadananta1'], [7, 'stambh1'], [8, 'stambh2'], [11, 'daksh', .6]],
-      notes: [[1, tr('प्रचल, वादन चालू', 'प्रचल, वादन जारी', 'Marching, playing')], [3, tr('वादनान्त सूचना', 'वादनान्त सूचना', 'Stop — notice')], [7, tr('हात खाली न आणता थेट स्तभ् सूचना', 'हाथ नीचे लाए बिना सीधे स्तभ् सूचना', 'Straight to the halt notice')], [8, tr('पालनार्थ — उजवा पाय', 'पालनार्थ — दाहिना पैर', 'Execute — right foot')], [10, tr('वादन आणि संचलन एकत्र थांबले', 'वादन और संचलन एक साथ रुके', 'Playing and marching stop together')]] }],
+      notes: [[1, tr()], [3, tr()], [7, tr()], [8, tr()], [10, tr()]] }],
     bhram: [
-      { label: tr('दक्षिण भ्रम', 'दक्षिण भ्रम', 'दक्षिण भ्रम'), n: 14, bpm: 120, march: [1, 14], pose: [[1, 'daksh'], [3, 'dakshinBhram'], [11, 'daksh', .6]],
-        notes: [[1, tr('प्रचल', 'प्रचल', 'Marching')], [3, tr('दक्षिण भ्रम सूचना — प्रमुखासोबत वळणे सुरू', 'दक्षिण भ्रम सूचना — प्रमुख के साथ भ्रमण', 'Notice — the turn starts with the प्रमुख')], [9, tr('पहिल्या दोन तती वळल्या', 'प्रथम दो ततियाँ घूम गईं', 'The first two ranks have turned')], [11, tr('घोषदंड पूर्वस्थितीत', 'घोषदंड पूर्व स्थिति में', 'Staff back')]] },
-      { label: tr('वाम भ्रम', 'वाम भ्रम', 'वाम भ्रम'), n: 14, bpm: 120, march: [1, 14], pose: [[1, 'daksh'], [3, 'vamBhram'], [11, 'daksh', .6]],
-        notes: [[1, tr('प्रचल', 'प्रचल', 'Marching')], [3, tr('वाम भ्रम सूचना', 'वाम भ्रम सूचना', 'Notice')], [9, tr('पहिल्या दोन तती वळल्या', 'प्रथम दो ततियाँ घूम गईं', 'The first two ranks have turned')], [11, tr('घोषदंड पूर्वस्थितीत', 'घोषदंड पूर्व स्थिति में', 'Staff back')]] },
-      { label: tr('प्रति भ्रम', 'प्रति भ्रम', 'प्रति भ्रम'), n: 10, bpm: 120, march: [1, 6], pose: [[1, 'daksh'], [6, 'daksh', .6]],
-        notes: [[1, tr('प्रचल', 'प्रचल', 'Marching')], [6, tr('प्रमुख स्तभ् करून दक्ष — हाच प्रतिभ्रम संकेत', 'प्रमुख स्तभ् कर दक्ष — यही प्रतिभ्रम संकेत', 'The प्रमुख halts in दक्ष — that is the signal')], [7, tr('घोष पुढे जाऊन मागे वळतो', 'घोष आगे जाकर पीछे घूमता है', 'The band passes him and turns back')]] }],
-    gatyantar: [{ label: tr('गत्यंतर (उदा. १२० → १००)', 'गत्यंतर (उदा. १२० → १००)', 'Speed change (e.g. 120 → 100)'), n: 14, bpm: 120, tempo: [[8, 100]], march: [1, 14], dd: [2],
+      { label: tr(), n: 14, bpm: 120, march: [1, 14], pose: [[1, 'daksh'], [3, 'dakshinBhram'], [11, 'daksh', .6]],
+        notes: [[1, tr()], [3, tr()], [9, tr()], [11, tr()]] },
+      { label: tr(), n: 14, bpm: 120, march: [1, 14], pose: [[1, 'daksh'], [3, 'vamBhram'], [11, 'daksh', .6]],
+        notes: [[1, tr()], [3, tr()], [9, tr()], [11, tr()]] },
+      { label: tr(), n: 10, bpm: 120, march: [1, 6], pose: [[1, 'daksh'], [6, 'daksh', .6]],
+        notes: [[1, tr()], [6, tr()], [7, tr()]] }],
+    gatyantar: [{ label: tr(), n: 14, bpm: 120, tempo: [[8, 100]], march: [1, 14], dd: [2],
       pose: [[1, 'daksh'], [3, 'gatyantar1'], [7, 'gatyantar2'], [10, 'daksh', .6]],
-      notes: [[1, tr('प्रचल १२०', 'प्रचल १२०', 'Marching at 120')], [3, tr('पूर्वसूचना', 'पूर्वसूचना', 'Advance notice')], [7, tr('पालनार्थ', 'पालनार्थ', 'Execute')], [8, tr('नवी गती: १००', 'नई गति: १००', 'New speed: 100')]] }],
+      notes: [[1, tr()], [3, tr()], [7, tr()], [8, tr()]] }],
   };
   // while the feet are moving the staff is carried clear of the ground
   Object.values(ANIM).flat().forEach(a => { const m = a.march || [0, -1]; a.pose.forEach(p => { if (p[1] === 'daksh' && p[0] >= m[0] && p[0] < m[1]) p[1] = 'carry'; }); });
@@ -255,12 +256,13 @@
   }
 
   const RULES = [
-    tr('पालनार्थ संकेतापूर्वी घोषदंड किमान ४ अंक त्याच स्थितीत ठेवावा.', 'पालनार्थ संकेत से पहले घोषदंड कम से कम ४ अंक उसी स्थिति में रखें।', 'Hold the staff still for at least 4 counts before the execute move.'),
-    tr('लक्ष वेधण्यासाठी पणवावर ध्वंकार-द्वय.', 'ध्यान खींचने के लिए पणव पर ध्वंकार-द्वय।', 'A पणव double stroke (ध्वंकार-द्वय) calls the players to look up.'),
-    tr('पूर्वसूचना / सूचनेनंतर एका चरणात पालनार्थ न आल्यास संकेत रद्द.', 'पूर्वसूचना / सूचना के बाद एक चरण तक पालनार्थ न हो तो संकेत निरस्त।', 'No execute move within one charan after a notice: the signal is cancelled.'),
-    tr('डाव्या हाताने दिलेल्या संकेतांचा अर्थ तोच.', 'बाएं हाथ से दिए संकेतों का अर्थ वही।', 'Signals given with the left hand mean the same.'),
+    tr(),
+    tr(),
+    tr(),
+    tr(),
   ];
-  const T = (x, lang) => x == null ? '' : typeof x === 'string' ? x : (x[lang] || x.mr);
+  // a text in a language, or in the first of a list of languages (the language and its fallbacks) that has it; Marathi is the last resort
+  const T = (x, lang) => x == null ? '' : typeof x === 'string' ? x : ([].concat(lang).map(l => x[l]).find(Boolean) || x.mr);
   /* ---------- animation helpers ---------- */
   const lerp = (a, b, t) => a.map((v, i) => v + (b[i] - v) * t);
   function slerp(a, b, t) {
@@ -289,4 +291,6 @@
   const state = name => cache[name] || (cache[name] = solve(P[name]));
 
   export const Figure = { POSES: P, SIGNALS, RULES, PH, ANIM, FLAGS, T, svg, draw, solve, blend, swingLeft, state, timeline, frameAt };
+/** the data that holds texts, for textSlots() */
+export const textRoots = () => ({ phases: PH, signals: SIGNALS.map(({ anim, ...s }) => s), anim: ANIM, flags: FLAGS, rules: RULES });
 export { SIGNALS, RULES, PH, ANIM, FLAGS, T, svg, draw, solve, blend, swingLeft, state, timeline, frameAt, P as POSES };

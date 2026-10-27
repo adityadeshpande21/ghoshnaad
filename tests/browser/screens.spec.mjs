@@ -2,6 +2,9 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
+import { stripI18n } from '../support/strip-i18n.mjs';
+import { I18n } from '../../src/i18n/i18n.ts';
+import { legacyTables } from '../support/legacy-tables.ts';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const LEGACY = path.join(ROOT, 'legacy/v1.1.0/Ghoshnaad.html');
@@ -45,7 +48,7 @@ test.describe('composer screens', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     for (const k of Object.keys(was)) { expect(JSON.stringify(now[k]).length, k).toBeGreaterThan(300); expect(now[k], k).toEqual(was[k]); }
   });
 });
@@ -99,10 +102,45 @@ test.describe('export screen', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     const keys = Object.keys(was);
     expect(keys.length).toBeGreaterThan(40);
     for (const k of keys) { expect(now[k].text.length, k).toBeGreaterThan(50); expect(now[k], k).toEqual(was[k]); }
+  });
+});
+
+test.describe('busy', () => {
+  test.skip(() => (process.env.GHOSH_TARGET || 'legacy') === 'legacy', 'v2 structure');
+  test('the App says busy while the player, tala page, Ghoshdand page or sound check plays, and not otherwise', async ({ page }) => {
+    await page.goto('./'); await page.waitForSelector('#rows .row', { state: 'attached' });
+    await expect.poll(() => page.evaluate(() => !!window.ScreenApp)).toBeTruthy();
+    const busy = () => page.evaluate(() => ScreenApp.isBusy());
+    expect(await busy()).toBe(false);
+    // player
+    await page.evaluate(() => openPiece('shriram', true));
+    await expect.poll(busy).toBe(true);
+    await page.evaluate(() => stop());
+    await expect.poll(busy).toBe(false);
+    await page.locator('#back').click();                                   // back to the list, so later screens are not under the player
+    // tala page
+    await page.evaluate(() => ScreenApp.get('tala').open());
+    await page.locator('#talaHost [data-play]').first().click();
+    await expect.poll(busy).toBe(true);
+    await page.evaluate(() => ScreenApp.get('tala').close());
+    await expect.poll(busy).toBe(false);
+    // Ghoshdand page, full cycle
+    await page.evaluate(() => SanketUI.open());
+    await page.locator('#sk button', { hasText: 'पूर्ण आवर्तन' }).first().click();
+    await page.locator('#sk .sk-pp').click();
+    await expect.poll(busy).toBe(true);
+    await page.evaluate(() => { ScreenApp.stopAll(); SanketUI.close(); });
+    await expect.poll(busy).toBe(false);
+    // sound check, whole-rachana mix
+    await page.evaluate(() => SoundLab.open(4));
+    await page.locator('#lab [data-lmixplay]').click();
+    await expect.poll(busy, { timeout: 8000 }).toBe(true);
+    await page.evaluate(() => SoundLab.close());
+    await expect.poll(busy).toBe(false);
   });
 });
 
@@ -117,7 +155,7 @@ test.describe('export behaviour', () => {
     if (test.info().project.name === 'webkit') await page.locator('#xTxt').click();      // WebKit shares files instead of downloading, as v1.1.0 did
     else {
       const [dl] = await Promise.all([page.waitForEvent('download'), page.locator('#xTxt').click()]);
-      expect(dl.suggestedFilename()).toMatch(/\.txt$/);
+      expect(dl.suggestedFilename()).toBe('Shriram - swarlipi.txt');
       expect(fs.readFileSync(await dl.path(), 'utf8').length).toBeGreaterThan(100);
     }
     await page.locator('#xX').click();
@@ -150,7 +188,7 @@ test.describe('rachana list', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     expect(Object.keys(now).length).toBe(45);
     for (const k of Object.keys(was)) { expect(now[k].length, k).toBeGreaterThan(200); expect(now[k], k).toBe(was[k]); }
   });
@@ -182,23 +220,57 @@ test.describe('services', () => {
 });
 
 test.describe('language core', () => {
-  test('every text of every language, the helpers, and the static page text are what v1.1.0 had', async ({ browser }) => {
+  // v1.1.0 kept its texts in tables (I18N[lang][key], some of them functions). The new app keeps them in src/i18n/*.json under new keys;
+  // tests/fixtures/legacy-keys.json says where each old key went, and tests/support/legacy-tables.ts rebuilds the old table shape from the new messages.
+  const readJSON = f => JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8'));
+  const digitsOf = (l, n) => (l === 'mr' ? String(n).replace(/\d/g, d => '०१२३४५६७८९'[d]) : String(n));   // what dv() gives in that language
+  // the screens hand these functions every argument, already in the language's digits; a short list would only show "undefined" against "{blank}"
+  const argSets = l => [[3, 12, 5, 7, 2].map(n => digitsOf(l, n)), [1, 0, 2, 4, 9].map(n => digitsOf(l, n)), ['x', 'y', 'z', 'w', 'v'], [{ dev: 'क', rom: 'k' }, digitsOf(l, 2), digitsOf(l, 3), digitsOf(l, 4)]];
+  const call = (f, sets) => sets.map(a => { try { return String(f(...a)); } catch (e) { return 'threw'; } });
+  const dump = (o, sets) => JSON.parse(JSON.stringify(o, (k, v) => (typeof v === 'function' ? { fn: call(v, sets) } : v)));
+
+  test('every text of every language is what v1.1.0 had', async ({ browser }) => {
+    const core = new I18n({ languages: readJSON('src/i18n/languages.json'), messages: { mr: readJSON('src/i18n/mr.json'), hi: readJSON('src/i18n/hi.json'), en: readJSON('src/i18n/en.json') }, defaultLanguage: 'mr', warn: () => {} });
+    const now = legacyTables(core, readJSON('tests/fixtures/legacy-keys.json'));
+    const ctx = await browser.newContext(), page = await ctx.newPage();
+    await openFile(page, LEGACY);
+    const was = await page.evaluate(sets => {
+      const call = (f, a) => a.map(x => { try { return String(f(...x)); } catch (e) { return 'threw'; } });
+      const out = {};
+      for (const l of Object.keys(I18N)) out[l] = JSON.parse(JSON.stringify(I18N[l], (k, v) => (typeof v === 'function' ? { fn: call(v, sets[l]) } : v)));
+      return out;
+    }, Object.fromEntries(LANGS.map(l => [l, argSets(l)])));
+    await ctx.close();
+    expect(Object.keys(was).sort()).toEqual(['en', 'hi', 'mr']);
+    for (const l of LANGS) {
+      const n = dump(now[l], argSets(l));
+      // the legend's link is a text of its own now (a message may not hold an <a>); the screen puts it back, so together they are the old text
+      n.f_legend = `${n.f_legend} · <a href="#" data-guide="swar">${n.f_legendGuide}</a>`;
+      for (const k of Object.keys(was[l])) expect(n[k], `${l}.${k}`).toEqual(was[l][k]);
+    }
+  });
+
+  test('the helpers and the static page text are what v1.1.0 had', async ({ browser }) => {
     test.skip(!fs.existsSync(DIST), 'no dist build');
     const grab = async file => {
       const ctx = await browser.newContext(), page = await ctx.newPage();
       await openFile(page, file);
       const out = await page.evaluate(async langs => {
-        // functions are compared by what they return, not by their (minified) source
-        const call = f => { const r = []; for (const a of [[3], [12, 5], ['x', 'y'], [{ dev: 'क', rom: 'k' }]]) { try { r.push(JSON.stringify(f(...a))); } catch (e) { r.push('threw'); } } return r; };
-        const dump = o => JSON.stringify(o, (k, v) => (typeof v === 'function' ? { fn: call(v) } : v), 1);
-        const res = { tables: {}, helpers: {}, page: {} };
-        for (const l of Object.keys(I18N)) res.tables[l] = dump(I18N[l]);
+        const fresh = typeof i18n !== 'undefined';           // the new page has the language core; v1.1.0 has the tables
+        const count = n => (fresh ? i18n.t('list.count', { count: dv(n) }) : tx('count', dv(n)));
+        const parts = () => (fresh ? Object.fromEntries(['shankh', 'vanshi', 'anak', 'panav', 'jhallari', 'tribhuj', 'steps'].map(k => [k, i18n.t('common.parts.' + k)])) : tx('parts'));
+        const sorted = o => Object.fromEntries(Object.keys(o).sort().map(k => [k, o[k]]));
+        const pageTexts = () => fresh
+          ? [...document.querySelectorAll('[data-i18n]')].map(e => e.innerHTML).concat([...document.querySelectorAll('[data-i18n-html]')].map(e => e.innerHTML),
+              [...document.querySelectorAll('[data-i18n-attr]')].flatMap(e => e.getAttribute('data-i18n-attr').split(';').map(p => e.getAttribute(p.split(':')[0].trim()))))
+          : [...document.querySelectorAll('[data-t]')].map(e => e.innerHTML).concat([...document.querySelectorAll('[data-ta]')].map(e => e.getAttribute('aria-label')), [...document.querySelectorAll('[data-tp]')].map(e => e.getAttribute('placeholder')));
+        const res = { helpers: {}, page: {} };
         const idx = await loadJSON('data/index.json');
         for (const l of langs) {
           setLang(l);
           res.helpers[l] = { sec: [...new Set(idx.map(r => r.sec))].map(secName), tala: [...new Set(idx.flatMap(r => r.talas))].map(talaName), raga: [...new Set(idx.map(r => r.raga).filter(Boolean))].map(ragaName),
-            dv: [dv(7), dv(120), mmss(95)], count: tx('count', dv(idx.length)), parts: tx('parts'), htmlLang: document.documentElement.lang };
-          res.page[l] = [...document.querySelectorAll('[data-t]')].map(e => e.innerHTML).concat([...document.querySelectorAll('[data-ta]')].map(e => e.getAttribute('aria-label')), [...document.querySelectorAll('[data-tp]')].map(e => e.getAttribute('placeholder')));
+            dv: [dv(7), dv(120), mmss(95)], count: count(idx.length), parts: sorted(parts()), htmlLang: document.documentElement.lang };
+          res.page[l] = pageTexts();
         }
         return res;
       }, LANGS);
@@ -206,11 +278,7 @@ test.describe('language core', () => {
       return out;
     };
     const [was, now] = [await grab(LEGACY), await grab(DIST)];
-    expect(Object.keys(now.tables).sort()).toEqual(['en', 'hi', 'mr']);
     for (const l of LANGS) {
-      // the new version has more texts (data, platform and tala screens add theirs); everything v1.1.0 had must be unchanged
-      const w = JSON.parse(was.tables[l]), n = JSON.parse(now.tables[l]);
-      for (const k of Object.keys(w)) expect(n[k], `${l}.${k}`).toEqual(w[k]);
       expect(now.helpers[l], l).toEqual(was.helpers[l]);
       expect(now.page[l].length, l).toBeGreaterThan(40);
       for (const t of was.page[l]) expect(now.page[l], `${l}: static text ${t}`).toContain(t);          // every static text v1.1.0 showed is still shown
@@ -239,7 +307,7 @@ test.describe('score drawing', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     expect(now.n).toBeGreaterThan(20000);
     expect(now).toEqual(was);
   });
@@ -258,7 +326,7 @@ test.describe('guide screen', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     for (const l of LANGS) {
       expect(now[l].open, l).toBe(true);
       expect(now[l].title, l).toBe(was[l].title);
@@ -283,7 +351,7 @@ test.describe('sound check screen', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     for (const k of Object.keys(was)) {
       expect(now[k].title, k).toBe(was[k].title);
       expect(now[k].tabs, k).toBe(was[k].tabs);
@@ -316,7 +384,7 @@ test.describe('Ghoshdand screen', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     for (const k of Object.keys(was)) { expect(now[k].length, k).toBeGreaterThan(1000); expect(now[k], k).toBe(was[k]); }
     // the two tabs are really different pages
     expect(was['en/0/front']).not.toBe(was['en/1/front']);
@@ -419,6 +487,19 @@ test.describe('guide screen behaviour', () => {
 
   test('screens are registered with the app', async ({ page }) => {
     await open(page);
-    expect((await page.evaluate(() => [...ScreenApp.screens.keys()])).sort()).toEqual(['composer', 'correction', 'export', 'ghoshdand', 'guide', 'library', 'list', 'player', 'soundcheck', 'tala']);
+    expect((await page.evaluate(() => [...ScreenApp.screens.keys()])).sort()).toEqual(['composer', 'correction', 'export', 'ghoshdand', 'guide', 'library', 'list', 'platform', 'player', 'soundcheck', 'tala']);
+  });
+
+  test('a change made on the language core alone reaches the page, the list, the settings sheet and the stored choice', async ({ page }) => {
+    await open(page);
+    await page.evaluate(() => i18n.setLang('en'));                // not the page's setLang(): the core tells the app
+    expect(await page.evaluate(() => document.documentElement.lang)).toBe('en');
+    expect(await page.evaluate(() => document.querySelector('#count1').textContent)).toMatch(/rachanas/);
+    expect(await page.evaluate(() => document.querySelector('#secs .chip').textContent)).toContain('All');
+    expect(await page.evaluate(() => localStorage.getItem('ghosh.lang'))).toBe('"en"');
+    await page.locator('#instBtn2').click();
+    await expect(page.locator('#sheet')).toContainText('Download backup');                           // the platform group of the sheet is in English too
+    await page.evaluate(() => i18n.setLang('mr'));
+    expect(await page.evaluate(() => document.querySelector('#count1').textContent)).toMatch(/रचना/);
   });
 });

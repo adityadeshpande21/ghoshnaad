@@ -105,3 +105,31 @@ test('site: works offline after the first visit', async ({ page, context }) => {
   await expectLibrary(page);
   await playFirstPiece(page);
 });
+
+test('site: on a weak signal the installed app opens from its cache within 4 s (new page still arrives for next time)', async ({ page, request }) => {
+  test.skip(isLegacy, 'v2 service worker');
+  await page.goto('./');
+  await expectLibrary(page);
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await expect.poll(() => page.evaluate(() => caches.keys().then(k => k.length))).toBeGreaterThan(0);
+  await request.get('/__delay?ms=10000');                         // the page now takes 10 s to arrive
+  try {
+    const t0 = Date.now();
+    await page.goto('./');
+    await expectLibrary(page);
+    expect(Date.now() - t0).toBeLessThan(4500);
+  } finally { await request.get('/__delay?ms=0'); }
+});
+
+test('site: the page is cached once, as index.html, and straight from the server (not the browser\'s HTTP cache)', async ({ page }) => {
+  test.skip(isLegacy, 'v2 service worker');
+  await page.goto('./');
+  await expectLibrary(page);
+  await page.evaluate(() => navigator.serviceWorker.ready);
+  await expect.poll(() => page.evaluate(() => caches.keys().then(k => k.length))).toBeGreaterThan(0);
+  const keys = await page.evaluate(async () => { const c = await caches.open((await caches.keys())[0]); return (await c.keys()).map(r => new URL(r.url).pathname.replace(/^\//, '')); });
+  expect(keys.sort()).toEqual(['icons/apple-touch-icon.png', 'icons/favicon-64.png', 'icons/icon-192.png', 'icons/icon-512.png', 'index.html', 'manifest.webmanifest']);
+  const sw = await (await page.request.get('/sw.js')).text();
+  expect(sw).toContain("cache: 'reload'");
+  expect(sw).not.toContain("'./'");
+});

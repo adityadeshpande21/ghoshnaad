@@ -3,6 +3,7 @@
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
 import path from 'node:path';
+import { stripI18n } from '../support/strip-i18n.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const LEGACY = path.join(ROOT, 'legacy/v1.1.0/Ghoshnaad.html');
@@ -47,7 +48,7 @@ test.describe('library and correction screens', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     expect(now.en.rows.length).toBeGreaterThan(0);
     expect(now).toEqual(was);
   });
@@ -62,7 +63,7 @@ test.describe('library and correction screens', () => {
       await ctx.close();
       return out;
     };
-    const [was, now] = [await grab(LEGACY), await grab(DIST)];
+    const [was, now] = [await grab(LEGACY), await grab(DIST)].map(stripI18n);
     for (const k of Object.keys(was)) { expect(now[k].length, k).toBeGreaterThan(500); expect(now[k], k).toBe(was[k]); }
   });
 

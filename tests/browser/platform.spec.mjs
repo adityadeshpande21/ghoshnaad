@@ -152,6 +152,26 @@ test.describe('updates', () => {
     await Promise.all([page.waitForEvent('load', { timeout: 10_000 }), page.evaluate(() => { setTimeout(() => PlatformUI._update().apply(), 0); })]);
   });
 
+  test('it is refused while a correction draft is unsaved, while the sound check plays, and for a restore too', async ({ page }) => {
+    await serve(page, '9.9.9');
+    await boot(page, { entries: settled });
+    const tryApply = () => page.evaluate(() => PlatformUI._update().apply());
+    expect(await page.evaluate(() => ScreenApp.isBusy())).toBe(false);
+    // a correction draft with a change that is not saved
+    await page.evaluate(async () => { await FixerUI.open('shriram'); const ta = document.querySelector('#fxText'); ta.value = ta.value + ' '; ta.dispatchEvent(new Event('input')); });
+    expect(await page.evaluate(() => ScreenApp.get('correction').isBusy())).toBe(true);
+    expect(await tryApply()).toBe(false);
+    await page.evaluate(() => { document.querySelector('#fixer').hidden = true; });
+    expect(await tryApply()).toBe(false);                                         // closed but still unsaved
+    // restore is refused for the same reason, with a message
+    await page.evaluate(() => { renderSheet(); $('#sheet').hidden = false; });
+    const backup = JSON.stringify({ format: 'ghoshnaad-backup/1', app: 't', created: '', mine: [], fixes: {}, settings: { xlay: 'pages' } });          // a setting this device has not chosen yet, so there is something to restore
+    await page.waitForTimeout(250);
+    await page.locator('[data-pf-file]').setInputFiles({ name: 'b.json', mimeType: 'application/json', buffer: Buffer.from(backup) });
+    await page.locator('[data-pf="restore-go"]').click();
+    await expect(page.locator('#pfWork')).toContainText('Stop the playback or save');
+  });
+
   test('the same or an older version offers nothing', async ({ page }) => {
     await serve(page, '1.0.0');
     await boot(page, { entries: settled });

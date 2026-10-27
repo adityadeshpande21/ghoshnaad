@@ -1,0 +1,38 @@
+[
+  {
+    "code": "mr",
+    "name": "मराठी",
+    "script": "Deva",
+    "digits": "deva",
+    "fallback": [
+      "hi",
+      "en"
+    ],
+    "fonts": "'Mukta', 'Noto Sans Devanagari', 'Kohinoor Devanagari', system-ui, sans-serif",
+    "status": "complete",
+    "names": "native"
+  },
+  {
+    "code": "hi",
+    "name": "हिंदी",
+    "script": "Deva",
+    "digits": "latn",
+    "fallback": [
+      "mr",
+      "en"
+    ],
+    "fonts": "'Mukta', 'Noto Sans Devanagari', 'Kohinoor Devanagari', system-ui, sans-serif",
+    "status": "complete",
+    "names": "native"
+  },
+  {
+    "code": "en",
+    "name": "English",
+    "script": "Latn",
+    "digits": "latn",
+    "fallback": [],
+    "fonts": "'Mukta', system-ui, sans-serif",
+    "status": "complete",
+    "names": "roman"
+  }
+]

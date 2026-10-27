@@ -53,6 +53,21 @@ test.describe('iPhone', () => {
   });
 });
 
+test.describe('iPhone after a call', () => {
+  test.use({ userAgent: IPHONE_UA });
+  test('the silent element that a call paused is started again on the next tap', async ({ page }) => {
+    await page.goto('./');
+    await expect(page.locator('#rows .row')).toHaveCount(120, { timeout: 20_000 });
+    await page.locator('#rows .row[data-id="shriram"]').click();
+    await expect(page.locator('audio')).toHaveCount(1);
+    await expect.poll(() => page.evaluate(() => !document.querySelector('audio').paused)).toBe(true);
+    await page.evaluate(() => document.querySelector('audio').pause());                 // what iOS does when a call takes the audio
+    expect(await page.evaluate(() => document.querySelector('audio').paused)).toBe(true);
+    await page.evaluate(() => AppEnv.audio.unlock());                                   // the next tap on play calls this
+    await expect.poll(() => page.evaluate(() => !document.querySelector('audio').paused)).toBe(true);
+  });
+});
+
 test.describe('other devices', () => {
   test('no hidden audio element (it could show lock-screen controls)', async ({ page }) => {
     await openAndPlay(page);

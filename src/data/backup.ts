@@ -83,6 +83,10 @@ export interface RestorePlan {
 }
 
 const same = (a: unknown, b: unknown): boolean => JSON.stringify(a) === JSON.stringify(b);
+/** A composition without its identity: two with the same content are the same work, whatever they are called or numbered. */
+const canon = (v: unknown): unknown => Array.isArray(v) ? v.map(canon)
+  : v && typeof v === 'object' ? Object.fromEntries(Object.keys(v).sort().map(k => [k, canon((v as Record<string, unknown>)[k])])) : v;
+const contentKey = (r: Composition): string => { const { id, name, ...rest } = r; return JSON.stringify(canon(rest)); };
 const newId = (): string => 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 /** Work out what restoring would do. Writes nothing. */
@@ -97,16 +101,17 @@ export function planRestore(kv: Kv, backup: BackupFile, checks: Checks, o: { cop
 
   const have = new Map(lib.compositions().map(r => [r.id, r]));
   const takenIds = new Set(have.keys());
+  const seen = new Set([...have.values()].map(contentKey));            // content already here, under any id or name
   for (const r of backup.mine) {
     if (!isComposition(r)) { plan.problems.push({ kind: 'composition', id: String((r as { id?: unknown } | null)?.id ?? '?'), message: 'not a composition' }); continue; }
     const bad = checks.composition(r);
     if (bad) { plan.problems.push({ kind: 'composition', id: r.id, message: bad }); continue; }
     const local = have.get(r.id);
-    if (!local) { plan.compositions.add.push(r); takenIds.add(r.id); }
-    else if (same(local, r)) plan.compositions.same++;
+    if (!local) { plan.compositions.add.push(r); takenIds.add(r.id); seen.add(contentKey(r)); }
+    else if (same(local, r) || seen.has(contentKey(r))) plan.compositions.same++;   // already here, or already kept as a copy by an earlier restore
     else {
       let id = makeId(); while (takenIds.has(id)) id = makeId();
-      takenIds.add(id);
+      takenIds.add(id); seen.add(contentKey(r));
       plan.compositions.copies.push({ ...r, id, name: `${r.name} ${o.copyLabel}` });
     }
   }

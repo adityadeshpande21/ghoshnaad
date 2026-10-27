@@ -7,16 +7,19 @@
     "node": ">=20"
   },
   "scripts": {
-    "test": "node --test \"tests/unit/*.test.mjs\" \"tests/golden/*.test.mjs\"",
+    "test": "node tools/run-tests.mjs \"tests/unit/*.test.mjs\" \"tests/golden/*.test.mjs\"",
     "build": "node build/build.mjs",
     "check": "node build/check-single-file.mjs dist/Ghoshnaad.html dist/index.html",
     "test:browser": "GHOSH_TARGET=dist playwright test",
     "test:browser:legacy": "GHOSH_TARGET=legacy playwright test",
-    "verify": "npm run typecheck && npm test && npm run build && npm run check && npm run test:dist && npm run test:browser",
+    "verify": "npm run typecheck && npm run i18n:check && npm test && npm run build && npm run check && npm run test:dist && npm run test:browser",
     "golden:record": "node tests/golden/record.mjs",
     "legacy:verify": "node tools/legacy-split.mjs verify legacy/v1.1.0/index.html legacy/src/app && node tools/legacy-split.mjs verify legacy/tala-velresha.html legacy/src/tala-velresha",
-    "test:dist": "node --test \"tests/dist/*.test.mjs\"",
-    "typecheck": "tsc -p . && node tools/check-names.mjs"
+    "test:dist": "node tools/run-tests.mjs \"tests/dist/*.test.mjs\"",
+    "typecheck": "tsc -p . && node tools/check-names.mjs",
+    "i18n:check": "node tools/i18n-check.mjs",
+    "i18n:export": "node tools/i18n-xlsx.mjs export",
+    "i18n:import": "node tools/i18n-xlsx.mjs import"
   },
   "devDependencies": {
     "@fontsource/mukta": "^5.3.0",

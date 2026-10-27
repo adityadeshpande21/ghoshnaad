@@ -24,7 +24,6 @@ export function assemble({ partsDir, generated, release, fontCss, variant }) {
   const out = manifest.map(m => {
     let text = m.gen ? generated[m.gen] : fs.readFileSync(path.join(partsDir, m.file), 'utf8');
     if (text === undefined) throw new Error(`no generated text for "${m.gen}"`);
-    if (m.file === 'timeline3.js') text = generated.timeline;       // v1's inline copy is replaced by the TypeScript core
     if (m.file === 'raw-01.html') {
       text = once(text, rel.googleFonts, '', 'drop Google Fonts');
       text = once(text, rel.title, `<title>घोषनाद v${release.version}</title>`, 'title');

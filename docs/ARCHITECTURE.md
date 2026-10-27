@@ -16,7 +16,7 @@ The proposed plan is right about the method: lock today's output as golden fixtu
 2. **One build, two outputs.** The same self-contained `Ghoshnaad.html` is served as the website's page and also offered as a download for people who prefer a file on desktop or Android.
 3. **The website adds three small companions** that a hosted, installable app needs: an offline-cache script, an install manifest and icons. The HTML itself still needs nothing else to run.
 4. **User work** is stored by the website's address, so it survives updates. Backup files remain the guarantee.
-5. **Code** reorganised into readable modules and a handful of classes, migrated in five phases with a golden-output check after every step. Each push to the repository builds, tests and publishes automatically.
+5. **Code** reorganised into readable modules and a handful of classes, migrated in five phases with a golden-output check after every step. Every push builds and tests; a push to `release/production` publishes (see Hosting).
 
 ## Real-world constraints
 
@@ -85,80 +85,48 @@ Arrows point to what a layer uses. Screens never touch music rules directly, and
 5. **User data is portable.** Everything a user makes can leave as a file and come back.
 6. **Behaviour changes need a fixture change.** Any diff in golden output must be approved, never accidental.
 
-**Repository layout**
+**Repository layout** (as built; `docs/MIGRATION.md` tracks what is still being moved)
 
 ```
 ghoshnaad/
-  README.md              how to build, test, release (one page)
+  README.md                how to build, test, release (one page)
+  release.json             version, date, "what's new", the website address
   .github/workflows/
-    release.yml          on push to main: test, build, publish to GitHub Pages
+    release.yml            every push: typecheck, tests, build, one-file check, browser tests on 3 engines;
+                           push to release/production: replace main with dist/
   build/
-    build.mjs            esbuild bundle + CSS + data + fonts -> dist/
+    build.mjs              esbuild bundles + data pack + fonts + service worker -> dist/
     check-single-file.mjs  fails if the HTML fetches or links anything external
-    pack-books.mjs       book sources -> compressed data pack
-  books/                 the 120 rachanas in book notation (ghosh-notation/1)
-  rules/talas.json       tala definitions: gans, gats, tal vadya, steps, roll
-  web/                   website companions (not needed by the HTML itself)
-    sw.template.js       offline cache + update check
-    manifest.webmanifest
-    icons/
+    lib/                   pack, catalog, fonts, assemble
+  books/                   the 120 rachanas in book notation (ghosh-notation/1); books-unshipped/ holds two kept out
+  rules/                   talas.json (the only place tala facts live), catalog-order.json, composer.json
+  web/                     website companions: sw.template.js, manifest.webmanifest, icons/
   src/
-    main.js              starts the App
-    core/                pure music rules (TypeScript)
-      notation/          tokenize, parse, format
-      compile/           book notation -> rachana model
-      timeline/          rachana -> timed events
-      tala.ts            tala lookups
-    audio/               AudioEngine, Transport, voices, clips
-    data/                Catalog, UserLibrary, Backup, FolderSync, Settings, I18n
-    platform/            UpdateManager, InstallGuide, StorageGuard
-    screens/             one folder per screen: Library, Player, Composer,
-                         Correction, Export, Guide, SoundCheck, Ghoshdand, TalaTimeline
-    ui/                  shared pieces: Sheet, Tabs, Chips, ScoreView, Figure
-    i18n/                mr.json, hi.json, en.json
-    styles/              base, score, print
+    core/                  pure music rules (TypeScript): notation, compile, timeline, tala, composer model
+    audio/                 AudioEngine, Drums, melodic voices, Transport, tala sounds
+    data/                  Catalog, UserLibrary, Settings, Backup (+ kv, schema)
+    platform/              UpdateManager, InstallGuide, StorageGuard
+    screens/               one folder per screen: guide, soundcheck, ghoshdand, export, correction, library, composer,
+                           list, player, tala (files named *.loose.js were moved from v1.1.0 and are not fully typed yet)
+    ui/                    Screen and App, i18n, score drawing
+    i18n/                  mr.json, hi.json, en.json (texts of the data and platform screens)
+    browser/               entry points that expose the bundles to the page
+    app/                   what is left of the v1.1.0 page scripts, and the page's markup and CSS
   tests/
-    golden/              120 compiled rachanas + timelines, recorded from v1.1.0
-    unit/                core rules
-    browser/             Playwright: file open, website open, offline after install,
-                         update flow, play, save, restore
-  dist/                  build output, published by Actions (not committed)
-    index.html           the app
-    Ghoshnaad.html       the same file, for download
-    sw.js  manifest.webmanifest  icons/  version.json
+    golden/                120 compiled rachanas + timelines, recorded from v1.1.0
+    unit/                  core rules, composer model, figure, data, platform, catalog, timeline vs v1.1.0
+    dist/                  the build equals v1.1.0 except for the named changes
+    browser/               Playwright, on Chromium, Firefox and WebKit
+    fixtures/              a real v1.1.0 storage dump
+  legacy/                  v1.1.0 as released and its parts: the reference the tests compare against; band-score-tool/ kept as received
+  tools/                   legacy-split.mjs, check-names.mjs, run-tests.mjs
+  docs/                    this file, MIGRATION.md, the notation notes and schema
+  dist/                    build output (not committed): index.html, Ghoshnaad.html, sw.js, manifest, icons, version.json
 ```
-
-**Key classes**
-
-| Class | Owns | Used by |
-| --- | --- | --- |
-| `App` | Start-up, screen switching, back button, language and theme | `main.js` |
-| `AudioEngine` | The one audio context, iPhone unlock, interruption and resume, master volume, pre-rendered drum clips, offline rendering (later: MP3) | `Transport`, sound check, Ghoshdand, tala timeline |
-| `Transport` | Play, pause, seek, loop, tempo, count-in, position events over one timeline | Player, Composer preview, Ghoshdand cycle |
-| `Voice` (one per instrument family) | How a swara or stroke sounds: shankh, vanshi, melodica, anak, panav, jhallari, tribhuj, steps | `AudioEngine` |
-| `Catalog` | The 120 book rachanas, unpacked on demand, plus the user's | Library, Player |
-| `UserLibrary` | Compositions, corrections and folder rachanas; save status | Composer, Correction, Library |
-| `Backup` | One-file backup and restore, with validation and "keep both" merge | Settings, Library |
-| `FolderSync` | Folder read and write where the browser allows; file picker and download elsewhere | `UserLibrary` |
-| `Settings` | Instrument, pitch, articulation, view choices | All screens |
-| `I18n` | Marathi, Hindi, English strings and digits | All screens |
-| `Screen` (base) and nine screens | Its own DOM, events, and clean-up when left | `App` |
-| `ScoreView` | Drawing notation lines, endings, pickups, highlight | Player, Correction, Composer |
-| `Figure` | The Ghoshdand figure and poses | Ghoshdand screen |
-
-Added for hosting:
-
-| Class | Owns | Used by |
-| --- | --- | --- |
-| `UpdateManager` | Registers the offline cache, checks `version.json`, shows "new version", waits until nothing is playing or unsaved | `App` |
-| `InstallGuide` | Detects device and browser, shows the right install steps once | Library screen, settings |
-| `StorageGuard` | Asks the browser to keep storage, reports used space, triggers the backup reminder | `UserLibrary`, settings |
-
-Pure modules, not classes: `tokenize`, `parse`, `compile`, `buildTimeline`, `formatNotation`, tala lookups, pose geometry.
 
 ## Hosting on GitHub Pages
 
-A push to the repository's `main` branch builds, tests and publishes the app; installed apps pick up the new version the next time they are online, and never mid-performance.
+`main` holds only the built website, never source, and GitHub Pages serves it from there. A push to `release/production` runs every check in GitHub Actions and, only if all pass, replaces the contents of `main` with `dist/`. Every other push and pull request runs the same checks and publishes nothing. Installed apps pick up the new version the next time they are online, and never mid-performance.
 
 **What the website contains**
 
@@ -230,7 +198,7 @@ No phase starts until the previous gate is met. MP3 export waits until the audio
 1. **Golden output.** The 120 compiled rachanas and their timelines at tempos 60%, 100% and 140%, recorded from v1.1.0. Any difference fails the build until approved.
 2. **One-file check.** The build fails if the HTML references any other file, URL, font or worker script outside itself.
 3. **Browser tests in GitHub Actions** with Chromium, Firefox and WebKit, both ways: opening `Ghoshnaad.html` as a file with the network blocked, and opening the built website, installing the offline cache, going offline, reopening. Each run: 120 rachanas listed, a piece plays, a composition saves, a backup restores, an update is offered and applied.
-4. **Preview before release.** Each pull request publishes to a test address first; `main` only goes live after it passes.
+4. **No preview address.** A preview under the same address would share the website's storage and be intercepted by its offline-cache worker. Each pull request is checked by the same jobs and its built site is kept as a downloadable artifact instead; `main` only changes when `release/production` passes.
 5. **Real-device checklist** at the end of each phase: iPhone (Add to Home Screen, offline, silent switch), Android Chrome (low-end and recent phone), Windows Chrome or Edge, macOS Safari, Firefox desktop. Each tick records device, browser version and date.
 6. **One change at a time.** A structural move never also changes a music rule.
 

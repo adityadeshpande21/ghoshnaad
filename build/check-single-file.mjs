@@ -25,8 +25,9 @@ export function checkSingleFile(html, { allowInstallLinks = false, shownAddresse
   }
   for (const m of code.matchAll(/@import\b[^;]*;/g)) problems.push(`css import: ${m[0]}`);
   for (const m of code.matchAll(/url\(\s*(?!["']?(data:|#))([^)]*)\)/g)) problems.push(`css url: ${m[0]}`);
-  for (const m of code.matchAll(/(?<![\w-])(?:src|href|poster|action)\s*=\s*["'](?!data:|#|blob:|javascript:)([^"']+)["']/gi))
-    if (!/^<link/.test(code.slice(Math.max(0, m.index - 6), m.index)) && !allowInstallLinks) problems.push(`reference: ${m[0]}`);
+  // every <link> was judged above (only the two install links of index.html pass); everything else with a src / href is checked here, for both files
+  const withoutLinks = code.replace(/<link\b[^>]*>/gi, '');
+  for (const m of withoutLinks.matchAll(/(?<![\w-])(?:src|href|poster|action)\s*=\s*["'](?!data:|#|blob:|javascript:)([^"']+)["']/gi)) problems.push(`reference: ${m[0]}`);
   for (const m of code.matchAll(/https?:\/\/[^\s"'`)<>\\]+/g)) if (!NAMESPACES.includes(m[0]) && !shownAddresses.includes(m[0])) problems.push(`address: ${m[0]}`);
   // A worker made from a Blob (the app's inline timer) is self-contained; any other worker or import is not.
   for (const m of code.matchAll(/\b(?:importScripts|new\s+Worker|new\s+SharedWorker)\s*\((?![^;]{0,80}createObjectURL)/g)) problems.push(`worker/import: ${m[0]}`);

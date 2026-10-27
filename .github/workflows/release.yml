@@ -19,12 +19,14 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with: { node-version: 24, cache: npm }
       - run: npm ci
       - run: npm run typecheck
+      - run: npm run i18n:check
       - name: Golden output, unit tests and the v1.1.0 reassembly proof
         run: |
           npm test
@@ -35,11 +37,12 @@ jobs:
       - name: The build equals v1.1.0 except for the intended changes
         run: npm run test:dist
       - uses: actions/upload-artifact@v4
-        with: { name: dist, path: dist, if-no-files-found: error }
+        with: { name: dist, path: dist, if-no-files-found: error, include-hidden-files: true }
 
   browser:
     needs: build
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
       fail-fast: false
       matrix:
@@ -67,6 +70,7 @@ jobs:
     if: github.ref == 'refs/heads/release/production' && github.event_name == 'push'
     needs: [build, browser]
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions: { contents: write }
     steps:
       - uses: actions/download-artifact@v4
@@ -90,6 +94,7 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: [build, browser]
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     permissions: { contents: write }
     steps:
       - uses: actions/download-artifact@v4

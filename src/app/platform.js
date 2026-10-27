@@ -3,12 +3,10 @@
 (function () {
 'use strict';
 const P = window.GhoshPlatform;
-for (const l in P.strings) Object.assign(I18N[l], P.strings[l]);
 
 const kv = new P.LocalKv();
 const guard = new P.StorageGuard(kv, { storage: navigator.storage });
 const lib = new P.UserLibrary(kv);
-const fmt = (k, v = {}) => String(tx(k)).replace(/\{(\w+)\}/g, (_, n) => (n in v ? v[n] : ''));
 const clone = o => JSON.parse(JSON.stringify(o));
 const appName = () => 'Ghoshnaad ' + APP.version;
 const isSite = location.protocol !== 'file:';
@@ -47,16 +45,17 @@ function doBackup() {
 async function readRestoreFile(file) {
   message = ''; restoring = null;
   const parsed = P.parseBackup(await file.text());
-  if (!parsed.ok) { message = tx('pf_err_' + parsed.error); render(); return; }
+  if (!parsed.ok) { message = i18n.t('platform.err_' + parsed.error); render(); return; }
   if (window.ComposerUI && ComposerUI.flush) ComposerUI.flush();
-  restoring = { plan: P.planRestore(kv, parsed.backup, checks, { copyLabel: tx('pf_copy') }) };
+  restoring = { plan: P.planRestore(kv, parsed.backup, checks, { copyLabel: i18n.t('platform.copy') }) };
   openSheet(); render();
 }
 function applyRestoreNow() {
+  if (ScreenApp.isBusy()) { message = i18n.t('platform.r_busy'); render(); return; }          // the page reloads after a restore: not while sound plays or work is unsaved
   const plan = restoring.plan; restoring = null;
   if (window.ComposerUI && ComposerUI.freeze) ComposerUI.freeze();   // a pending save must not write the old list over the restored one
   const ok = P.applyRestore(kv, plan);
-  message = ok ? tx('pf_r_done') : tx('pf_r_fail');
+  message = ok ? i18n.t('platform.r_done') : i18n.t('platform.r_fail');
   if (!ok && window.ComposerUI && ComposerUI.unfreeze) ComposerUI.unfreeze();
   render(); if (ok) setTimeout(() => location.reload(), 900);
 }
@@ -65,54 +64,55 @@ function openSheet() { if (typeof renderSheet === 'function') renderSheet(); $('
 /* ---------- the group in the settings sheet ---------- */
 const li = a => a.map(s => `<li>${esc(s)}</li>`).join('');
 function restoreHTML() {
-  const p = restoring.plan, n = (k, v) => `<li>${esc(fmt(k, { n: dv(v) }))}</li>`;
+  const p = restoring.plan, n = (k, v) => `<li>${esc(i18n.t('platform.' + k, { n: dv(v) }))}</li>`;
   const rows = [];
-  if (p.compositions.add.length) rows.push(n('pf_r_new', p.compositions.add.length));
-  if (p.compositions.same) rows.push(n('pf_r_same', p.compositions.same + p.corrections.same));
-  if (p.compositions.copies.length) rows.push(n('pf_r_copies', p.compositions.copies.length));
-  if (Object.keys(p.corrections.add).length) rows.push(n('pf_r_fix_new', Object.keys(p.corrections.add).length));
-  if (Object.keys(p.corrections.newer).length) rows.push(n('pf_r_fix_newer', Object.keys(p.corrections.newer).length));
-  if (p.corrections.older.length) rows.push(n('pf_r_fix_older', p.corrections.older.length));
-  if (Object.keys(p.settings.add).length) rows.push(n('pf_r_set', Object.keys(p.settings.add).length));
+  if (p.compositions.add.length) rows.push(n('r_new', p.compositions.add.length));
+  if (p.compositions.same) rows.push(n('r_same', p.compositions.same + p.corrections.same));
+  if (p.compositions.copies.length) rows.push(n('r_copies', p.compositions.copies.length));
+  if (Object.keys(p.corrections.add).length) rows.push(n('r_fix_new', Object.keys(p.corrections.add).length));
+  if (Object.keys(p.corrections.newer).length) rows.push(n('r_fix_newer', Object.keys(p.corrections.newer).length));
+  if (p.corrections.older.length) rows.push(n('r_fix_older', p.corrections.older.length));
+  if (Object.keys(p.settings.add).length) rows.push(n('r_set', Object.keys(p.settings.add).length));
   const problems = p.problems.map(x => `<li>${esc(x.id)} — ${esc(x.message)}</li>`).join('');
   const nothing = P.planIsEmpty(p);
-  return `<div class="pf-box" data-pf-box><b>${esc(tx('pf_r_title'))}</b>
-    ${rows.length ? `<ul>${rows.join('')}</ul>` : ''}${nothing ? `<p class="note">${esc(tx('pf_r_nochange'))}</p>` : `<p class="note">${esc(tx('pf_r_note'))}</p>`}
-    ${problems ? `<p class="note">${esc(fmt('pf_r_skipped', { n: dv(p.problems.length) }))}</p><ul class="pf-bad">${problems}</ul>` : ''}
-    <div class="opts">${nothing ? '' : `<button class="lb-btn main" data-pf="restore-go">${esc(tx('pf_r_go'))}</button>`}<button class="lb-btn" data-pf="restore-cancel">${esc(tx('pf_r_cancel'))}</button></div></div>`;
+  return `<div class="pf-box" data-pf-box><b>${esc(i18n.t('platform.r_title'))}</b>
+    ${rows.length ? `<ul>${rows.join('')}</ul>` : ''}${nothing ? `<p class="note">${esc(i18n.t('platform.r_nochange'))}</p>` : `<p class="note">${esc(i18n.t('platform.r_note'))}</p>`}
+    ${problems ? `<p class="note">${esc(i18n.t('platform.r_skipped', { n: dv(p.problems.length) }))}</p><ul class="pf-bad">${problems}</ul>` : ''}
+    <div class="opts">${nothing ? '' : `<button class="lb-btn main" data-pf="restore-go">${esc(i18n.t('platform.r_go'))}</button>`}<button class="lb-btn" data-pf="restore-cancel">${esc(i18n.t('platform.r_cancel'))}</button></div></div>`;
 }
 function sheetHTML() {
   const adv = advice(), c = lib.counts(), d = guard.daysSinceBackup();
-  const where = adv.where === 'file' ? tx('pf_where_file') : tx('pf_where_site');
-  const backupLine = d === null ? tx('pf_backup_never') : d === 0 ? tx('pf_backup_today') : fmt('pf_backup_ago', { d: dv(d) });
-  const persist = storageInfo.persisted === true ? tx('pf_persist_yes') : storageInfo.persisted === false ? tx('pf_persist_no') : '';
-  const usage = storageInfo.usage != null ? fmt('pf_usage', { u: dv((storageInfo.usage / 1048576).toFixed(1)) }) : '';
-  const work = c.compositions + c.corrections === 0 ? tx('pf_nothing') : fmt('pf_counts', { a: dv(c.compositions), b: dv(c.corrections) });
-  let h = `<div class="igrp" id="pfWork"><b>${esc(tx('pf_work'))}</b>
+  const where = adv.where === 'file' ? i18n.t('platform.where_file') : i18n.t('platform.where_site');
+  const backupLine = d === null ? i18n.t('platform.backup_never') : d === 0 ? i18n.t('platform.backup_today') : i18n.t('platform.backup_ago', { days: dv(d) });
+  const persist = storageInfo.persisted === true ? i18n.t('platform.persist_yes') : storageInfo.persisted === false ? i18n.t('platform.persist_no') : '';
+  const usage = storageInfo.usage != null ? i18n.t('platform.usage', { mb: dv((storageInfo.usage / 1048576).toFixed(1)) }) : '';
+  const work = c.compositions + c.corrections === 0 ? i18n.t('platform.nothing') : i18n.t('platform.counts', { own: dv(c.compositions), corrections: dv(c.corrections) });
+  let h = `<div class="igrp" id="pfWork"><b>${esc(i18n.t('platform.work'))}</b>
     <p class="sh-p">${esc(where)} · ${esc(work)}</p>
-    ${adv.where === 'file' ? `<p class="note">${esc(tx('pf_file_note'))}</p>` : ''}
+    ${adv.where === 'file' ? `<p class="note">${esc(i18n.t('platform.file_note'))}</p>` : ''}
     <p class="note" data-pf-status="backup">${esc(backupLine)}</p>
     ${persist || usage ? `<p class="note">${esc([persist, usage].filter(Boolean).join(' · '))}</p>` : ''}
-    <div class="opts"><button class="lb-btn main" data-pf="backup">${esc(tx('pf_backup_btn'))}</button>
-      <label class="lb-btn" style="cursor:pointer">${esc(tx('pf_restore_btn'))}<input type="file" accept=".json,application/json" data-pf-file hidden></label></div>
+    <div class="opts"><button class="lb-btn main" data-pf="backup">${esc(i18n.t('platform.backup_btn'))}</button>
+      <label class="lb-btn" style="cursor:pointer">${esc(i18n.t('platform.restore_btn'))}<input type="file" accept=".json,application/json" data-pf-file hidden></label></div>
     ${restoring ? restoreHTML() : ''}
-    ${c.olderCopies ? `<p class="note">${esc(fmt('pf_older_have', { n: dv(c.olderCopies) }))} <button class="lb-btn" data-pf="older-dl">${esc(tx('pf_older_dl'))}</button></p>` : ''}
+    ${c.olderCopies ? `<p class="note">${esc(i18n.t('platform.older_have', { n: dv(c.olderCopies) }))} <button class="lb-btn" data-pf="older-dl">${esc(i18n.t('platform.older_dl'))}</button></p>` : ''}
     ${message ? `<p class="note pf-msg" role="status">${esc(message)}</p>` : ''}</div>`;
   // version and updates
   const st = update ? update.state : { kind: 'none' };
-  h += `<div class="igrp" id="pfVersion"><b>${esc(tx('pf_ver'))}</b>
+  h += `<div class="igrp" id="pfVersion"><b>${esc(i18n.t('platform.ver'))}</b>
     <p class="sh-p">v${esc(APP.version)} · ${esc(APP.date)}</p>
-    ${st.kind !== 'none' ? `<p class="sh-p pf-upd">${esc(fmt('pf_upd_avail', { v: st.info.version }))}</p>` : (update ? `<p class="note">${esc(tx('pf_upd_none'))}</p>` : `<p class="note">${esc(tx('pf_upd_file'))}</p>`)}
-    <div class="opts"><button class="lb-btn" data-pf="whatsnew">${esc(tx('pf_whatsnew_btn'))}</button>
-      ${update ? `<button class="lb-btn" data-pf="upd-check">${esc(tx('pf_upd_check'))}</button>` : ''}
-      ${st.kind !== 'none' ? `<button class="lb-btn main" data-pf="upd-apply">${esc(tx('pf_upd_btn'))}</button>` : ''}</div></div>`;
+    ${st.kind !== 'none' ? `<p class="sh-p pf-upd">${esc(i18n.t('platform.upd_avail', { version: st.info.version }))}</p>` : (update ? `<p class="note">${esc(i18n.t('platform.upd_none'))}</p>` : `<p class="note">${esc(i18n.t('platform.upd_file'))}</p>`)}
+    <div class="opts"><button class="lb-btn" data-pf="whatsnew">${esc(i18n.t('platform.whatsnew_btn'))}</button>
+      ${update ? `<button class="lb-btn" data-pf="upd-check">${esc(i18n.t('platform.upd_check'))}</button>` : ''}
+      ${st.kind !== 'none' ? `<button class="lb-btn main" data-pf="upd-apply">${esc(i18n.t('platform.upd_btn'))}</button>` : ''}</div></div>`;
   // install
-  h += `<div class="igrp" id="pfInstall"><b>${esc(tx('pf_inst_title'))}</b>`;
-  if (adv.where === 'installed') h += `<p class="sh-p">${esc(tx('pf_inst_done'))}</p>`;
+  h += `<div class="igrp" id="pfInstall"><b>${esc(i18n.t('platform.inst_title'))}</b>`;
+  if (adv.where === 'installed') h += `<p class="sh-p">${esc(i18n.t('platform.inst_done'))}</p>`;
   else {
-    const steps = (tx('pf_steps') || {})[adv.steps] || [];
-    h += `<ol class="pf-steps">${steps.map(s => `<li>${esc(s.replace('{url}', APP.site || ''))}</li>`).join('')}</ol>`;
-    if (adv.canPrompt) h += `<div class="opts"><button class="lb-btn main" data-pf="install">${esc(tx('pf_inst_btn'))}</button></div>`;
+    const steps = [];
+    for (let i = 0; i18n.has(`platform.steps.${adv.steps}.${i}`); i++) steps.push(i18n.t(`platform.steps.${adv.steps}.${i}`, { url: APP.site || '' }));
+    h += `<ol class="pf-steps">${steps.map(s => `<li>${esc(s)}</li>`).join('')}</ol>`;
+    if (adv.canPrompt) h += `<div class="opts"><button class="lb-btn main" data-pf="install">${esc(i18n.t('platform.inst_btn'))}</button></div>`;
   }
   return h + '</div>';
 }
@@ -126,13 +126,13 @@ function barEl() {
 }
 function wanted() {
   const st = update ? update.state : { kind: 'none' };
-  if (st.kind !== 'none' && !barDismissed.has('update')) return { id: 'update', text: fmt('pf_upd_avail', { v: st.info.version }), btn: tx('pf_upd_btn'), act: 'bar-update' };
+  if (st.kind !== 'none' && !barDismissed.has('update')) return { id: 'update', text: i18n.t('platform.upd_avail', { version: st.info.version }), btn: i18n.t('platform.upd_btn'), act: 'bar-update' };
   const due = guard.due();
-  if (due.due && !barDismissed.has('backup')) return { id: 'backup', text: due.reason === 'edits' ? tx('pf_bar_edits') : fmt('pf_bar_days', { d: dv(due.days ?? 0) }), btn: tx('pf_bar_btn'), act: 'bar-backup' };
-  if (firstRun && !kv.get('firstRunSeen') && !barDismissed.has('first')) return { id: 'first', text: tx('pf_first'), btn: tx('pf_first_btn'), act: 'bar-restore' };
+  if (due.due && !barDismissed.has('backup')) return { id: 'backup', text: due.reason === 'edits' ? i18n.t('platform.bar_edits') : i18n.t('platform.bar_days', { days: dv(due.days ?? 0) }), btn: i18n.t('platform.bar_btn'), act: 'bar-backup' };
+  if (firstRun && !kv.get('firstRunSeen') && !barDismissed.has('first')) return { id: 'first', text: i18n.t('platform.first'), btn: i18n.t('platform.first_btn'), act: 'bar-restore' };
   const a = advice();
   if (isSite && a.where === 'website' && a.steps && !kv.get('installSeen') && !barDismissed.has('install') && !firstRun)
-    return { id: 'install', text: tx('pf_inst_bar'), btn: a.canPrompt ? tx('pf_inst_btn') : tx('pf_inst_show'), act: a.canPrompt ? 'install' : 'bar-install' };
+    return { id: 'install', text: i18n.t('platform.inst_bar'), btn: a.canPrompt ? i18n.t('platform.inst_btn') : i18n.t('platform.inst_show'), act: a.canPrompt ? 'install' : 'bar-install' };
   return null;
 }
 function renderBar() {
@@ -140,7 +140,7 @@ function renderBar() {
   const onList = !$('#list').hidden;
   if (!w || !onList) { el.hidden = true; el.dataset.id = ''; return; }
   el.dataset.id = w.id; el.hidden = false;
-  el.innerHTML = `<span>${esc(w.text)}</span><button class="lb-btn main" data-pf="${w.act}">${esc(w.btn)}</button><button class="pf-x" data-pf="bar-x" aria-label="${esc(tx('pf_dismiss'))}">×</button>`;
+  el.innerHTML = `<span>${esc(w.text)}</span><button class="lb-btn main" data-pf="${w.act}">${esc(w.btn)}</button><button class="pf-x" data-pf="bar-x" aria-label="${esc(i18n.t('platform.dismiss'))}">×</button>`;
 }
 new MutationObserver(renderBar).observe($('#list'), { attributes: true, attributeFilter: ['hidden'] });
 
@@ -152,7 +152,7 @@ function showNew(info) {
   let m = $('#pfNew');
   if (!m) { m = document.createElement('div'); m.id = 'pfNew'; m.setAttribute('role', 'dialog'); m.setAttribute('aria-modal', 'true'); document.body.appendChild(m); }
   m.hidden = false;
-  m.innerHTML = `<div class="pf-card"><b>${esc(tx('pf_new_title'))} · v${esc((info && info.version) || APP.version)}</b><ul>${li(items)}</ul><button class="lb-btn main" data-pf="new-ok">${esc(tx('pf_new_ok'))}</button></div>`;
+  m.innerHTML = `<div class="pf-card"><b>${esc(i18n.t('platform.new_title'))} · v${esc((info && info.version) || APP.version)}</b><ul>${li(items)}</ul><button class="lb-btn main" data-pf="new-ok">${esc(i18n.t('platform.new_ok'))}</button></div>`;
 }
 
 /* ---------- updates ---------- */
@@ -164,13 +164,13 @@ if (isSite) {
     fetchVersion: async () => { const r = await fetch('version.json?_=' + Date.now(), { cache: 'no-store' }); return r.ok ? r.json() : null; },
     sw: swOk ? navigator.serviceWorker : undefined,
     reload: () => location.reload(),
-    busy: () => S.playing || !!(window.ComposerUI && ComposerUI.unsaved && ComposerUI.unsaved()),
+    busy: () => ScreenApp.isBusy(),
   });
   update.onChange(() => { renderBar(); if (!$('#sheet').hidden) render(); });
 }
 function tryUpdate() {
   if (!update) return;
-  if (!update.apply()) { message = tx('pf_upd_busy'); render(); const el = barEl(); if (!el.hidden && el.dataset.id === 'update') el.querySelector('span').textContent = tx('pf_upd_busy'); }
+  if (!update.apply()) { message = i18n.t('platform.upd_busy'); render(); const el = barEl(); if (!el.hidden && el.dataset.id === 'update') el.querySelector('span').textContent = i18n.t('platform.upd_busy'); }
 }
 
 /* ---------- clicks ---------- */
@@ -183,7 +183,7 @@ document.addEventListener('click', e => {
     case 'older-dl': download('ghoshnaad-older-corrections.json', P.olderCopiesFile(kv, appName())); break;
     case 'whatsnew': { const st = update && update.state; showNew(st && st.kind !== 'none' ? st.info : null); break; }
     case 'new-ok': $('#pfNew').hidden = true; break;
-    case 'upd-check': if (update) update.check().then(() => { message = update.state.kind === 'none' ? tx('pf_upd_none') : ''; render(); }); break;
+    case 'upd-check': if (update) update.check().then(() => { message = update.state.kind === 'none' ? i18n.t('platform.upd_none') : ''; render(); }); break;
     case 'upd-apply': case 'bar-update': tryUpdate(); break;
     case 'install': if (deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; renderBar(); render(); } break;
     case 'bar-backup': openSheet(); render(); $('#pfWork').scrollIntoView({ block: 'start' }); break;
@@ -205,7 +205,6 @@ document.addEventListener('change', e => {
 let lastEdit = 0, asked = false;
 window.PlatformUI = {
   sheetHTML, render() { render(); void refreshStorage(); },
-  lang() { render(); renderBar(); },
   // a save of the person's own work; counted at most once a minute, so a stretch of typing is one edit
   edit() {
     const t = Date.now();
@@ -214,6 +213,8 @@ window.PlatformUI = {
   },
   _guard: guard, _update: () => update,
 };
+// the work, version and install group of the settings sheet, and the bottom bar, follow the language
+ScreenApp.register('platform', { onLang() { render(); renderBar(); } });
 
 /* ---------- start-up ---------- */
 const seen = kv.get('seenVersion');

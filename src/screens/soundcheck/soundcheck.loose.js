@@ -9,41 +9,8 @@ import talasJson from '../../../rules/talas.json';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createSoundCheck(env) {
-const { tx, esc, dv, L, I18N, slotHTML, loadJSON, talaName, audio: A, player: PL, settings: ST } = env;
+const { i18n, esc, dv, slotHTML, loadJSON, talaName, audio: A, player: PL, settings: ST } = env;
 const $ = env.q;   // like v1.1.0: null when the element is absent
-const LS = {
- mr: { s_open: 'ध्वनी तपासणी', s_title: 'ध्वनी तपासणी', s_stop: 'थांबवा', s_loop: '⟲ पुन्हा पुन्हा', s_laya: 'लय',
-  s_tabs: ['स्वर वाद्ये', 'आनक', 'ताल वाद्ये', 'पावले', 'एकत्र'], s_inst: 'वाद्य', s_key: p => `पट्टी (सा) — ${p}`, s_keep: 'हीच पट्टी ठेवा', s_kept: 'सेटिंग्जमध्ये ठेवली',
-  s_oct: ['मंद्र सप्तक', 'मध्य सप्तक', 'तार सप्तक'], s_shankhNote: 'शंख (बिगुल) फक्त ठळक स्वर वाजवतो; इतर स्वर तुलनेसाठी.', s_var: 'प्रकार', s_art: ['सांतर', 'निरंतर'], s_acc: '^ आघात', s_join: '( ) निरंतर',
-  s_kan: 'कण स्वर', s_kanO: ['नाही', 'वरचा स्वर', 'खालचा स्वर'], s_swell: 'आवाज', s_swellO: ['सम', '< वाढ', '> घट'], s_len: 'लांबी', s_lenO: n => `${n} मात्रा`, s_ms: n => `${n} मि.से.`,
-  s_seq: 'क्रम', s_saptak: 'सप्तक चढ-उतार', s_three: 'तीनही सप्तक', s_raga: 'राग: आरोह-अवरोह', s_ragaPick: 'राग निवडा', s_ab: 'तुलना (A → B)', s_none: 'नाही',
-  s_tala: 'ताल', s_x4: '×४', s_ranan: 'रणन (८ पावले)', s_bols: { ta: 'तंकार', acc: 'आघात', flam: 'पूर्व-आघात', roll: 'त्र — रोल', trt: 'त्र + त', tha: 'दोन काठ्या', thra: 'दोन काठ्या + उसळी', click: 'काठी-ठोका' },
-  s_tv: { pan: 'पणव', panS: 'पणव — सम', jh: 'झल्लरी', jhL: 'झल्लरी — मोठी', tr: 'त्रिभुज', trL: 'त्रिभुज — मोठा', count: 'अंक-ताल मोजणी', end: 'चरण-शेवट' },
-  s_cycle: 'तालाचे आवर्तन', s_cycleP: 'दोन आवर्तने; खालील वाद्ये चालू / बंद करा.', s_steps: 'पावले', s_left: 'डावा', s_right: 'उजवा', s_march: 'संचलन (८ पावले)',
-  s_mixP: 'एखादी रचना निवडून सर्व भाग एकत्र ऐका आणि भागांचा आवाज कमी-जास्त करून तोल तपासा. हे फक्त तपासणीसाठी — रचनांच्या वादनात बदल होत नाही.', s_mixPlay: 'रचना वाजवा ▶', s_mel: 'शंख / वंशी',
-  s_parts: { anak: 'आनक', panav: 'पणव', jhallari: 'झल्लरी', tribhuj: 'त्रिभुज', steps: 'पावले' }, s_ios: 'आवाज येत नसल्यास फोनचा silent (मूक) मोड बंद करा.', s_dev: (k, l, n) => `ध्वनी यंत्र: ${k} kHz · स्पीकर विलंब ${l} मि.से. · उशिरा म्हणून सोडलेले आवाज: ${n}` },
- hi: { s_open: 'ध्वनि जाँच', s_title: 'ध्वनि जाँच', s_stop: 'रोकें', s_loop: '⟲ बार-बार', s_laya: 'लय',
-  s_tabs: ['स्वर वाद्य', 'आनक', 'ताल वाद्य', 'कदम', 'एक साथ'], s_inst: 'वाद्य', s_key: p => `पट्टी (सा) — ${p}`, s_keep: 'यही पट्टी रखें', s_kept: 'सेटिंग्स में रखी',
-  s_oct: ['मंद्र सप्तक', 'मध्य सप्तक', 'तार सप्तक'], s_shankhNote: 'शंख (बिगुल) केवल गाढ़े स्वर बजाता है; अन्य स्वर तुलना के लिए।', s_var: 'प्रकार', s_art: ['सांतर', 'निरंतर'], s_acc: '^ आघात', s_join: '( ) निरंतर',
-  s_kan: 'कण स्वर', s_kanO: ['नहीं', 'ऊपर का स्वर', 'नीचे का स्वर'], s_swell: 'आवाज़', s_swellO: ['सम', '< बढ़ना', '> घटना'], s_len: 'लंबाई', s_lenO: n => `${n} मात्रा`, s_ms: n => `${n} मि.से.`,
-  s_seq: 'क्रम', s_saptak: 'सप्तक आरोह-अवरोह', s_three: 'तीनों सप्तक', s_raga: 'राग: आरोह-अवरोह', s_ragaPick: 'राग चुनें', s_ab: 'तुलना (A → B)', s_none: 'नहीं',
-  s_tala: 'ताल', s_x4: '×4', s_ranan: 'रणन (8 कदम)', s_bols: { ta: 'तंकार', acc: 'आघात', flam: 'पूर्व-आघात', roll: 'त्र — रोल', trt: 'त्र + त', tha: 'दो छड़ियाँ', thra: 'दो छड़ियाँ + उछाल', click: 'छड़ी-ठोका' },
-  s_tv: { pan: 'पणव', panS: 'पणव — सम', jh: 'झल्लरी', jhL: 'झल्लरी — ज़ोर से', tr: 'त्रिभुज', trL: 'त्रिभुज — ज़ोर से', count: 'अंक-ताल गिनती', end: 'चरण-अंत' },
-  s_cycle: 'ताल का आवर्तन', s_cycleP: 'दो आवर्तन; नीचे वाद्य चालू / बंद करें।', s_steps: 'कदम', s_left: 'बायाँ', s_right: 'दायाँ', s_march: 'संचलन (8 कदम)',
-  s_mixP: 'कोई रचना चुनकर सभी भाग एक साथ सुनें और भागों की आवाज़ घटा-बढ़ाकर संतुलन जाँचें। यह केवल जाँच के लिए है — रचनाओं के वादन में बदलाव नहीं होता।', s_mixPlay: 'रचना बजाएँ ▶', s_mel: 'शंख / वंशी',
-  s_parts: { anak: 'आनक', panav: 'पणव', jhallari: 'झल्लरी', tribhuj: 'त्रिभुज', steps: 'कदम' }, s_ios: 'आवाज़ न आए तो फ़ोन का silent मोड बंद करें।', s_dev: (k, l, n) => `ध्वनि यंत्र: ${k} kHz · स्पीकर विलंब ${l} मि.से. · देर से होने के कारण छोड़ी आवाज़ें: ${n}` },
- en: { s_open: 'Sound check', s_title: 'Sound check', s_stop: 'Stop', s_loop: '⟲ Loop', s_laya: 'tempo',
-  s_tabs: ['Melody', 'आनक', 'Tala instruments', 'Steps', 'Together'], s_inst: 'Instrument', s_key: p => `Key (Sa) — ${p}`, s_keep: 'Keep this key', s_kept: 'Saved in settings',
-  s_oct: ['Lower octave', 'Middle octave', 'Upper octave'], s_shankhNote: 'The शंख (bugle) plays only the bold swaras; the rest are for comparison.', s_var: 'Variations', s_art: ['Santar', 'Nirantar'], s_acc: '^ Accent', s_join: '( ) Nirantar',
-  s_kan: 'Grace note', s_kanO: ['None', 'Swara above', 'Swara below'], s_swell: 'Volume', s_swellO: ['Even', '< Grow', '> Fade'], s_len: 'Length', s_lenO: n => `${n} matra`, s_ms: n => `${n} ms`,
-  s_seq: 'Sequences', s_saptak: 'Up and down the saptak', s_three: 'All three octaves', s_raga: 'Raga: aroha-avaroha', s_ragaPick: 'Choose a raga', s_ab: 'Compare (A → B)', s_none: 'None',
-  s_tala: 'Tala', s_x4: '×4', s_ranan: 'Ranan (8 steps)', s_bols: { ta: 'Tankar', acc: 'Accent', flam: 'Flam', roll: 'त्र — roll', trt: 'त्र + त', tha: 'Both sticks', thra: 'Both sticks + rebound', click: 'Stick click' },
-  s_tv: { pan: 'पणव', panS: 'पणव — sam', jh: 'झल्लरी', jhL: 'झल्लरी — loud', tr: 'त्रिभुज', trL: 'त्रिभुज — loud', count: 'Count-in (अंक-ताल)', end: 'Charan end' },
-  s_cycle: 'One tala cycle', s_cycleP: 'Two cycles; switch instruments on / off below.', s_steps: 'Steps', s_left: 'Left', s_right: 'Right', s_march: 'March (8 steps)',
-  s_mixP: 'Pick a rachana, hear all parts together and move each part\'s volume to check the balance. For testing only — rachana playback is not changed.', s_mixPlay: 'Play rachana ▶', s_mel: 'शंख / वंशी',
-  s_parts: { anak: 'आनक', panav: 'पणव', jhallari: 'झल्लरी', tribhuj: 'त्रिभुज', steps: 'Steps' }, s_ios: 'No sound? Turn off the phone\'s silent mode.', s_dev: (k, l, n) => `Audio device: ${k} kHz · speaker delay ${l} ms · sounds skipped as late: ${n}` }
-};
-for (const l in LS) Object.assign(I18N[l], LS[l]);
 
 /* ---------- state ---------- */
 const MEL_INST = { shankh: ['bugle', 'trumpet', 'melodica'], vanshi: ['flute', 'venu', 'clarinet', 'sax', 'melodica'] };
@@ -190,67 +157,67 @@ const SM = src => `<span class="gd-n">${env.sample(src)}</span>`;
 function westName(f) { const m = 69 + 12 * Math.log2(f / 440), r = Math.round(m); return ST.SA_KEYS[((r % 12) + 12) % 12] + (Math.floor(r / 12) - 1); }
 const chips = (items, cur, attr) => `<div class="lab-chips">${items.map(([v, l]) => `<button data-${attr}="${v}" aria-pressed="${String(v) === String(cur)}">${l}</button>`).join('')}</div>`;
 function render() {
-  $('#labT').textContent = tx('s_title'); $('#labStopT').textContent = tx('s_stop'); $('#labLayaL').textContent = tx('s_laya');
-  $('#labLoop').textContent = tx('s_loop'); $('#labLoop').setAttribute('aria-pressed', loopOn); $('#labLaya').textContent = dv(laya);
-  $('#labTabs').innerHTML = L().s_tabs.map((t, i) => `<button role="tab" data-ltab="${i}" aria-selected="${st.tab === i}">${esc(t)}</button>`).join('');
-  $('#labSub').textContent = st.tab === 0 ? `${tx('groups')[st.pk]} · ${ST.SA_KEYS[st.keys[st.pk]]}${ST.SA_DEF[st.pk].oct}` : '';
+  $('#labT').textContent = i18n.t('soundcheck.title'); $('#labStopT').textContent = i18n.t('soundcheck.stop'); $('#labLayaL').textContent = i18n.t('soundcheck.laya');
+  $('#labLoop').textContent = i18n.t('soundcheck.loop'); $('#labLoop').setAttribute('aria-pressed', loopOn); $('#labLaya').textContent = dv(laya);
+  $('#labTabs').innerHTML = [0, 1, 2, 3, 4].map(i => `<button role="tab" data-ltab="${i}" aria-selected="${st.tab === i}">${esc(i18n.t('soundcheck.tabs.' + i))}</button>`).join('');
+  $('#labSub').textContent = st.tab === 0 ? `${i18n.t('common.groups.' + st.pk)} · ${ST.SA_KEYS[st.keys[st.pk]]}${ST.SA_DEF[st.pk].oct}` : '';
   $('#labBody').innerHTML = [melody, anak, talv, steps, mix][st.tab]();
   devLine();
 }
 function melody() {
-  const nm = id => ST.INST_NAMES[id][L().romanNames ? 1 : 0];
-  const instChips = ['shankh', 'vanshi'].map(pk => `<span class="note">${esc(tx('groups')[pk])}</span>` + chips(MEL_INST[pk].map(id => [pk + ':' + id, esc(nm(id))]), st.pk + ':' + st.inst, 'linst')).join('');
+  const nm = id => i18n.name(...ST.INST_NAMES[id]);
+  const instChips = ['shankh', 'vanshi'].map(pk => `<span class="note">${esc(i18n.t('common.groups.' + pk))}</span>` + chips(MEL_INST[pk].map(id => [pk + ':' + id, esc(nm(id))]), st.pk + ':' + st.inst, 'linst')).join('');
   const saHz = labSa();
-  const kb = [-1, 0, 1].map((oct, oi) => `<div class="lab-oct"><span>${esc(L().s_oct[oi])}</span><div class="lab-kb ${st.pk}">${KB.map(([sw, vk, dev]) => {
+  const kb = [-1, 0, 1].map((oct, oi) => `<div class="lab-oct"><span>${esc(i18n.t('soundcheck.oct.' + oi))}</span><div class="lab-kb ${st.pk}">${KB.map(([sw, vk, dev]) => {
     const f = A.hz({ swara: sw, vikrit: !!vk, octave: oct, saHz }) * Math.pow(2, (VOICES[voice(st.inst)] || {}).oct || 0), k = `${oct}:${sw}:${vk}`;
     const cls = [vk ? 'vk' : '', st.pk === 'shankh' ? (SHANKH_OK.has(k) ? 'ok' : 'dim') : ''].join(' ');
     return `<button class="${cls}" data-k="${k}">${NOTE(dev, oct, vk)}<small>${westName(f)}</small><small>${Math.round(f)}</small></button>`; }).join('')}</div></div>`).join('');
-  const rg = (ragas || []).map(r => `<option value="${esc(r.name)}" ${r.name === st.raga ? 'selected' : ''}>${esc(L().romanNames ? (ST.RAGA_ROM[r.name] || r.name) : r.name)}</option>`).join('');
-  return `<div class="lab-grp"><b>${esc(tx('s_inst'))}</b>${instChips}</div>
-  <div class="lab-grp"><b>${esc(tx('s_key', tx('groups')[st.pk]))}</b><div class="lab-keys">${ST.SA_KEYS.map((k, i) => `<button data-lkey="${i}" aria-pressed="${i === st.keys[st.pk]}">${k}</button>`).join('')}</div>
-    ${st.keys[st.pk] !== ST.saKeys[st.pk] ? `<div class="lab-row"><button class="lb-btn main" id="labKeep">${esc(tx('s_keep'))}</button></div>` : ''}</div>
+  const rg = (ragas || []).map(r => `<option value="${esc(r.name)}" ${r.name === st.raga ? 'selected' : ''}>${esc(i18n.name(r.name, ST.RAGA_ROM[r.name]))}</option>`).join('');
+  return `<div class="lab-grp"><b>${esc(i18n.t('soundcheck.inst'))}</b>${instChips}</div>
+  <div class="lab-grp"><b>${esc(i18n.t('soundcheck.key', { note: i18n.t('common.groups.' + st.pk) }))}</b><div class="lab-keys">${ST.SA_KEYS.map((k, i) => `<button data-lkey="${i}" aria-pressed="${i === st.keys[st.pk]}">${k}</button>`).join('')}</div>
+    ${st.keys[st.pk] !== ST.saKeys[st.pk] ? `<div class="lab-row"><button class="lb-btn main" id="labKeep">${esc(i18n.t('soundcheck.keep'))}</button></div>` : ''}</div>
   ${kb}
-  ${st.pk === 'shankh' ? `<span class="lab-hint">${esc(tx('s_shankhNote'))}</span>` : ''}
-  <div class="lab-grp"><b>${esc(tx('s_var'))}</b>
-    ${chips([['santar', esc(L().s_art[0])], ['nirantar', esc(L().s_art[1])]], st.art, 'lart')}
-    <div class="lab-chips"><button data-ltog="acc" aria-pressed="${st.acc}">${esc(tx('s_acc'))}</button><button data-ltog="join" aria-pressed="${st.join}">${esc(tx('s_join'))}</button></div>
-    <span class="note">${esc(tx('s_kan'))}</span>${chips(L().s_kanO.map((l, i) => [i, esc(l)]), st.kan, 'lkan')}
-    <div class="lab-row"><input type="range" id="labKanMs" min="20" max="160" step="5" value="${st.kanMs}" aria-label="${esc(tx('s_kan'))}"><span class="num" id="labKanV">${esc(tx('s_ms', dv(st.kanMs)))}</span></div>
-    <span class="note">${esc(tx('s_swell'))}</span>${chips(L().s_swellO.map((l, i) => [i, esc(l)]), st.swell, 'lsw')}
-    <span class="note">${esc(tx('s_len'))}</span>${chips([1, 2, 4].map(n => [n, esc(tx('s_lenO', dv(n)))]), st.len, 'llen')}</div>
-  <div class="lab-grp"><b>${esc(tx('s_seq'))}</b>
-    <div class="lab-seq"><button class="cbig sm" data-lseq="saptak">${esc(tx('s_saptak'))}</button><button class="cbig sm alt" data-lseq="three">${esc(tx('s_three'))}</button></div>
-    <div class="lab-row"><select id="labRaga" aria-label="${esc(tx('s_ragaPick'))}"><option value="">${esc(tx('s_ragaPick'))}</option>${rg}</select><button class="cbig sm alt" data-lseq="raga" ${st.raga ? '' : 'disabled'}>${esc(tx('s_raga'))}</button></div>
-    <span class="note">${esc(tx('s_ab'))}</span>${chips([['', esc(tx('s_none'))]].concat(MEL_INST[st.pk].filter(i => i !== st.inst).map(id => [id, 'B: ' + esc(nm(id))])), st.instB || '', 'lab')}</div>
-  <span class="lab-hint">${esc(tx('s_ios'))}</span>`;
+  ${st.pk === 'shankh' ? `<span class="lab-hint">${esc(i18n.t('soundcheck.shankhNote'))}</span>` : ''}
+  <div class="lab-grp"><b>${esc(i18n.t('soundcheck.var'))}</b>
+    ${chips([['santar', esc(i18n.t('soundcheck.art.0'))], ['nirantar', esc(i18n.t('soundcheck.art.1'))]], st.art, 'lart')}
+    <div class="lab-chips"><button data-ltog="acc" aria-pressed="${st.acc}">${esc(i18n.t('soundcheck.acc'))}</button><button data-ltog="join" aria-pressed="${st.join}">${esc(i18n.t('soundcheck.join'))}</button></div>
+    <span class="note">${esc(i18n.t('soundcheck.kan'))}</span>${chips([0, 1, 2].map(i => [i, esc(i18n.t('soundcheck.kanO.' + i))]), st.kan, 'lkan')}
+    <div class="lab-row"><input type="range" id="labKanMs" min="20" max="160" step="5" value="${st.kanMs}" aria-label="${esc(i18n.t('soundcheck.kan'))}"><span class="num" id="labKanV">${esc(i18n.t('soundcheck.ms', { ms: dv(st.kanMs) }))}</span></div>
+    <span class="note">${esc(i18n.t('soundcheck.swell'))}</span>${chips([0, 1, 2].map(i => [i, esc(i18n.t('soundcheck.swellO.' + i))]), st.swell, 'lsw')}
+    <span class="note">${esc(i18n.t('soundcheck.len'))}</span>${chips([1, 2, 4].map(n => [n, esc(i18n.t('soundcheck.lenO', { matras: dv(n) }))]), st.len, 'llen')}</div>
+  <div class="lab-grp"><b>${esc(i18n.t('soundcheck.seq'))}</b>
+    <div class="lab-seq"><button class="cbig sm" data-lseq="saptak">${esc(i18n.t('soundcheck.saptak'))}</button><button class="cbig sm alt" data-lseq="three">${esc(i18n.t('soundcheck.three'))}</button></div>
+    <div class="lab-row"><select id="labRaga" aria-label="${esc(i18n.t('soundcheck.ragaPick'))}"><option value="">${esc(i18n.t('soundcheck.ragaPick'))}</option>${rg}</select><button class="cbig sm alt" data-lseq="raga" ${st.raga ? '' : 'disabled'}>${esc(i18n.t('soundcheck.raga'))}</button></div>
+    <span class="note">${esc(i18n.t('soundcheck.ab'))}</span>${chips([['', esc(i18n.t('soundcheck.none'))]].concat(MEL_INST[st.pk].filter(i => i !== st.inst).map(id => [id, 'B: ' + esc(nm(id))])), st.instB || '', 'lab')}</div>
+  <span class="lab-hint">${esc(i18n.t('soundcheck.ios'))}</span>`;
 }
 function anak() {
-  const T = id => { const a = ANAK.find(x => x[0] === id); return `<div class="lab-tile" role="button" tabindex="0" data-lbol="${id}">${SM(a[1])}<small>${esc(L().s_bols[id])}</small><button class="x4" data-lx4="${id}">${esc(tx('s_x4'))}</button></div>`; };
-  return `<div class="lab-grp"><b>${esc(tx('s_tala'))}</b>${chips([['kerva', 'केरवा'], ['khemta', 'खेमटा']], st.tala, 'ltala')}</div>
-  <div class="lab-tiles">${ANAK.map(a => T(a[0])).join('')}<div class="lab-tile" role="button" tabindex="0" data-lranan="1">${SM('त्र ऽ त –')}<small>${esc(tx('s_ranan'))}</small></div></div>`;
+  const T = id => { const a = ANAK.find(x => x[0] === id); return `<div class="lab-tile" role="button" tabindex="0" data-lbol="${id}">${SM(a[1])}<small>${esc(i18n.t('soundcheck.bols.' + id))}</small><button class="x4" data-lx4="${id}">${esc(i18n.t('soundcheck.x4'))}</button></div>`; };
+  return `<div class="lab-grp"><b>${esc(i18n.t('soundcheck.tala'))}</b>${chips([['kerva', 'केरवा'], ['khemta', 'खेमटा']], st.tala, 'ltala')}</div>
+  <div class="lab-tiles">${ANAK.map(a => T(a[0])).join('')}<div class="lab-tile" role="button" tabindex="0" data-lranan="1">${SM('त्र ऽ त –')}<small>${esc(i18n.t('soundcheck.ranan'))}</small></div></div>`;
 }
 function talv() {
-  const T = talaDef(st.cyc), TT = (id, sym) => `<div class="lab-tile" role="button" tabindex="0" data-ltv="${id}">${sym}<small>${esc(L().s_tv[id])}</small></div>`;
+  const T = talaDef(st.cyc), TT = (id, sym) => `<div class="lab-tile" role="button" tabindex="0" data-ltv="${id}">${sym}<small>${esc(i18n.t('soundcheck.tv.' + id))}</small></div>`;
   const tv = s => `<span class="gd-n tv">${env.sample(s)}</span>`;
   const talas = ['kerva', 'khemta', 'dadra', 'jhaptal', 'rupak', 'ektal', 'tritaal'].filter(talaDef).map(k => [k, esc(talaName(talaDef(k).name.dev))]);
   const beats = T ? new Set(T.talVadya.variants[T.talVadya.default].beats) : new Set();
   return `<div class="lab-tiles">${TT('pan', tv('ध्व'))}${TT('panS', tv('ध्व^'))}${TT('jh', tv('झ'))}${TT('jhL', tv('झ^'))}${TT('tr', tv('ट'))}${TT('trL', tv('ट^'))}${TT('count', `<span class="gd-t">${st.tala === 'dadra' ? 'एक दो तीन · एक दो तीन' : 'एक दो · एक दो'}</span>`)}${TT('end', tv('ध्व ध्व ध्व झ^'))}</div>
-  <div class="lab-grp"><b>${esc(tx('s_cycle'))}</b><span class="note">${esc(tx('s_cycleP'))}</span>${chips(talas, st.cyc, 'lcyc')}
+  <div class="lab-grp"><b>${esc(i18n.t('soundcheck.cycle'))}</b><span class="note">${esc(i18n.t('soundcheck.cycleP'))}</span>${chips(talas, st.cyc, 'lcyc')}
     ${T ? `<div class="lab-kb" style="grid-template-columns:repeat(${Math.min(T.cycle, 12)},minmax(0,1fr))">${Array.from({ length: T.cycle }, (_, i) => `<button data-beat="${i + 1}" style="min-height:44px;color:var(--tv)">${beats.has(i + 1) ? tv(i === 0 ? 'ध्व^' : 'ध्व') : `<span class="gd-n" style="color:var(--dim)">ऽ</span>`}<small>${dv(i + 1)}</small></button>`).join('')}</div>` : ''}
-    <div class="lab-chips">${['panav', 'jhallari', 'tribhuj', 'steps'].map(k => `<button data-lmute="${k}" aria-pressed="${!st.mute[k]}">${esc(L().s_parts[k])}</button>`).join('')}</div>
-    <div class="lab-seq"><button class="cbig sm" data-lcycplay="1">▶ ${esc(tx('s_cycle'))}</button></div></div>`;
+    <div class="lab-chips">${['panav', 'jhallari', 'tribhuj', 'steps'].map(k => `<button data-lmute="${k}" aria-pressed="${!st.mute[k]}">${esc(i18n.t('soundcheck.parts.' + k))}</button>`).join('')}</div>
+    <div class="lab-seq"><button class="cbig sm" data-lcycplay="1">▶ ${esc(i18n.t('soundcheck.cycle'))}</button></div></div>`;
 }
 function steps() {
-  return `<div class="lab-feet"><div class="foot" id="labFL">${esc(tx('s_left'))}</div><div class="foot" id="labFR">${esc(tx('s_right'))}</div></div>
-  <div class="lab-tiles"><div class="lab-tile" role="button" tabindex="0" data-lfoot="L"><span class="gd-t">${esc(tx('s_left'))}</span></div><div class="lab-tile" role="button" tabindex="0" data-lfoot="R"><span class="gd-t">${esc(tx('s_right'))}</span></div>
-  <div class="lab-tile" role="button" tabindex="0" data-lmarch="1"><span class="gd-t">${esc(tx('s_march'))}</span></div></div>`;
+  return `<div class="lab-feet"><div class="foot" id="labFL">${esc(i18n.t('soundcheck.left'))}</div><div class="foot" id="labFR">${esc(i18n.t('soundcheck.right'))}</div></div>
+  <div class="lab-tiles"><div class="lab-tile" role="button" tabindex="0" data-lfoot="L"><span class="gd-t">${esc(i18n.t('soundcheck.left'))}</span></div><div class="lab-tile" role="button" tabindex="0" data-lfoot="R"><span class="gd-t">${esc(i18n.t('soundcheck.right'))}</span></div>
+  <div class="lab-tile" role="button" tabindex="0" data-lmarch="1"><span class="gd-t">${esc(i18n.t('soundcheck.march'))}</span></div></div>`;
 }
 function mix() {
-  const opts = (PL.BOOK || []).map(r => `<option value="${r.id}" ${r.id === st.mixId ? 'selected' : ''}>${esc(L().romanNames ? r.rom : r.dev)}</option>`).join('');
+  const opts = (PL.BOOK || []).map(r => `<option value="${r.id}" ${r.id === st.mixId ? 'selected' : ''}>${esc(i18n.name(r.dev, r.rom))}</option>`).join('');
   const row = (k, l) => `<span>${esc(l)}</span><input type="range" min="0" max="1.5" step="0.05" value="${st.mix[k]}" data-lmix="${k}"><span class="num" id="labMix_${k}">${Math.round(st.mix[k] * 100)}%</span>`;
-  return `<p class="lab-hint">${esc(tx('s_mixP'))}</p>
-  <div class="lab-row"><select id="labMixR">${opts}</select><button class="cbig sm" data-lmixplay="1">${esc(tx('s_mixPlay'))}</button></div>
-  <div class="lab-mix">${row('mel', tx('s_mel'))}${['anak', 'panav', 'jhallari', 'tribhuj', 'steps'].map(k => row(k, L().s_parts[k])).join('')}</div>`;
+  return `<p class="lab-hint">${esc(i18n.t('soundcheck.mixP'))}</p>
+  <div class="lab-row"><select id="labMixR">${opts}</select><button class="cbig sm" data-lmixplay="1">${esc(i18n.t('soundcheck.mixPlay'))}</button></div>
+  <div class="lab-mix">${row('mel', i18n.t('soundcheck.mel'))}${['anak', 'panav', 'jhallari', 'tribhuj', 'steps'].map(k => row(k, i18n.t('soundcheck.parts.' + k))).join('')}</div>`;
 }
 
 /* device check: sample rate, the speaker's delay, and sounds skipped because they would have been late */
@@ -259,7 +226,7 @@ function devLine() {
   const el = $('#labDev'); if (!el) return;
   if (!A.ctx) { el.textContent = ''; return; }
   const lat = Math.round(((A.ctx.outputLatency || 0) + (A.ctx.baseLatency || 0)) * 1000);
-  el.textContent = tx('s_dev', dv(Math.round(A.ctx.sampleRate / 100) / 10), dv(lat), dv(PL.LATE));
+  el.textContent = i18n.t('soundcheck.dev', { rate: dv(Math.round(A.ctx.sampleRate / 100) / 10), latency: dv(lat), late: dv(PL.LATE) });
 }
 
 /* ---------- events ---------- */
@@ -269,7 +236,7 @@ $('#labLoop').onclick = () => { loopOn = !loopOn; if (!loopOn) clearTimeout(loop
 function setLaya(d) { laya = Math.max(40, Math.min(600, laya + d * (laya >= 300 ? 15 : 5))); $('#labLaya').textContent = dv(laya); }
 $('#labLd').onclick = () => setLaya(-1); $('#labLu').onclick = () => setLaya(1);
 $('#labBody').addEventListener('input', e => {
-  if (e.target.id === 'labKanMs') { st.kanMs = +e.target.value; $('#labKanV').textContent = tx('s_ms', dv(st.kanMs)); }
+  if (e.target.id === 'labKanMs') { st.kanMs = +e.target.value; $('#labKanV').textContent = i18n.t('soundcheck.ms', { ms: dv(st.kanMs) }); }
   if (e.target.dataset.lmix) { const k = e.target.dataset.lmix; st.mix[k] = +e.target.value; $('#labMix_' + k).textContent = Math.round(st.mix[k] * 100) + '%'; if (ens) applyMix(); }
 });
 $('#labBody').addEventListener('change', e => {
@@ -322,7 +289,7 @@ $('#labBack').onclick = close;
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#lab').hidden) close(); });
 document.addEventListener('click', e => { const b = e.target.closest('[data-labopen]'); if (b) { e.preventDefault(); open(b.dataset.labopen === '' ? null : +b.dataset.labopen); } });
 
-return { open, close, stopAll, lang() { if (!$('#lab').hidden) render(); } };
+return { open, close, stopAll, busy: () => !!ens || loopT !== null, lang() { if (!$('#lab').hidden) render(); } };
 }
 
 export class SoundCheckScreen extends Screen {
@@ -332,4 +299,5 @@ export class SoundCheckScreen extends Screen {
   close() { this.lab.close(); }
   onLang() { this.lab.lang(); }
   onStopAll() { this.lab.stopAll(); }
+  isBusy() { return this.lab.busy(); }
 }

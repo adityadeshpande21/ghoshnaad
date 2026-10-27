@@ -58,6 +58,16 @@ test('a listed website address may appear as text, any other address may not', (
   assert.notDeepEqual(checkSingleFile('<p>https://evil.example/</p>', { shownAddresses: ['https://example.org/app/'] }), []);
 });
 
+test('index.html gets no exemption except the two install links', () => {
+  const links = '<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/apple-touch-icon.png">';
+  assert.deepEqual(checkSingleFile(`<head>${links}</head><body></body>`, { allowInstallLinks: true }), []);
+  assert.notDeepEqual(checkSingleFile(`<head>${links}</head><img src="x.png">`, { allowInstallLinks: true }), []);
+  assert.notDeepEqual(checkSingleFile(`<head>${links}</head><a href="page.html">x</a>`, { allowInstallLinks: true }), []);
+  assert.notDeepEqual(checkSingleFile(`<head>${links}<link rel="stylesheet" href="a.css"></head>`, { allowInstallLinks: true }), []);
+  assert.notDeepEqual(checkSingleFile(`<head><link rel="manifest" href="other.webmanifest"></head>`, { allowInstallLinks: true }), []);
+  assert.notDeepEqual(checkSingleFile(`<head><script src="a.js"></script></head>`, { allowInstallLinks: true }), []);
+});
+
 test('only index.html may carry the install links', () => {
   const html = '<head><link rel="manifest" href="manifest.webmanifest"></head>';
   assert.deepEqual(checkSingleFile(html, { allowInstallLinks: true }), []);

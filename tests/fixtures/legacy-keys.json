@@ -1,0 +1,884 @@
+{
+  "all": "list.all",
+  "allR": "list.allR",
+  "anagat": "player.anagat",
+  "artL": "settings.artL",
+  "bPr": "player.bPr",
+  "bR": "player.bR",
+  "bSe": "player.bSe",
+  "back": "player.back",
+  "blocksA": "player.blocksA",
+  "brand": "list.brand",
+  "c_addCharan": "composer.addCharan",
+  "c_addLine": "composer.addLine",
+  "c_addPra": "composer.addPra",
+  "c_allOk": "composer.allOk",
+  "c_apply": "composer.apply",
+  "c_aroha": "composer.aroha",
+  "c_auto": "composer.auto",
+  "c_avaroha": "composer.avaroha",
+  "c_back": "composer.back",
+  "c_book": {
+    "fn": "composer.book",
+    "params": [
+      "name"
+    ]
+  },
+  "c_cell": {
+    "fn": "composer.cell",
+    "params": [
+      "part",
+      "line",
+      "matra"
+    ]
+  },
+  "c_check": "composer.check",
+  "c_clear": "composer.clear",
+  "c_click": "composer.click",
+  "c_compileErr": "composer.compileErr",
+  "c_copied": "composer.copied",
+  "c_copy": "composer.copy",
+  "c_copySuffix": "composer.copySuffix",
+  "c_defName": {
+    "fn": "composer.defName",
+    "params": [
+      "n"
+    ]
+  },
+  "c_del": "composer.del",
+  "c_delBlock": "composer.delBlock",
+  "c_delLine": "composer.delLine",
+  "c_delete": "composer.delete",
+  "c_dimNote": {
+    "fn": "composer.dimNote",
+    "params": [
+      "keys"
+    ]
+  },
+  "c_draft": "composer.draft",
+  "c_dup": "composer.dup",
+  "c_dupLine": "composer.dupLine",
+  "c_edit": "composer.edit",
+  "c_errGans": {
+    "fn": "composer.errGans",
+    "params": [
+      "found"
+    ]
+  },
+  "c_errMatras": {
+    "fn": "composer.errMatras",
+    "params": [
+      "found",
+      "need"
+    ]
+  },
+  "c_export": "composer.export",
+  "c_exportP": "composer.exportP",
+  "c_fillFirst": "composer.fillFirst",
+  "c_fixes": {
+    "fn": "composer.fixes",
+    "params": [
+      "count"
+    ]
+  },
+  "c_go": "composer.go",
+  "c_hear": "composer.hear",
+  "c_high": "composer.high",
+  "c_hold": "composer.hold",
+  "c_import": "composer.import",
+  "c_importErr": "composer.importErr",
+  "c_imported": "composer.imported",
+  "c_instr": "composer.instr",
+  "c_keep": "composer.keep",
+  "c_line": {
+    "fn": "composer.line",
+    "params": [
+      "n"
+    ]
+  },
+  "c_lineNote": {
+    "fn": "composer.lineNote",
+    "params": [
+      "matras"
+    ]
+  },
+  "c_low": "composer.low",
+  "c_marchIt": "composer.marchIt",
+  "c_matras": {
+    "fn": "composer.matras",
+    "params": [
+      "count"
+    ]
+  },
+  "c_mine": "composer.mine",
+  "c_more": "composer.more",
+  "c_name": "composer.name",
+  "c_new": "composer.new",
+  "c_nextM": "composer.nextM",
+  "c_no": "composer.no",
+  "c_noScale": "composer.noScale",
+  "c_noSug": "composer.noSug",
+  "c_none": "composer.none",
+  "c_notSaved": "composer.notSaved",
+  "c_okList": [
+    "composer.okList.0",
+    "composer.okList.1"
+  ],
+  "c_once": "composer.once",
+  "c_openPlayer": "composer.openPlayer",
+  "c_optional": "composer.optional",
+  "c_outRaga": "composer.outRaga",
+  "c_playAll": "composer.playAll",
+  "c_playBlock": "composer.playBlock",
+  "c_playLine": "composer.playLine",
+  "c_playLineA": "composer.playLineA",
+  "c_prevM": "composer.prevM",
+  "c_privacy": "composer.privacy",
+  "c_raga": "composer.raga",
+  "c_ready": "composer.ready",
+  "c_redo": "composer.redo",
+  "c_rename": "composer.rename",
+  "c_rest": "composer.rest",
+  "c_roll": "composer.roll",
+  "c_saved": "composer.saved",
+  "c_shankhSub": "composer.shankhSub",
+  "c_share": "composer.share",
+  "c_split": "composer.split",
+  "c_splitA": {
+    "fn": "composer.splitA",
+    "params": [
+      "count"
+    ]
+  },
+  "c_start": "composer.start",
+  "c_sugEnd": "composer.sugEnd",
+  "c_sugFrom": {
+    "fn": "composer.sugFrom",
+    "params": [
+      "count"
+    ]
+  },
+  "c_sugInto": {
+    "fn": "composer.sugInto",
+    "params": [
+      "gan"
+    ]
+  },
+  "c_sugStart": "composer.sugStart",
+  "c_sugTitle": "composer.sugTitle",
+  "c_suggest": "composer.suggest",
+  "c_sure": "composer.sure",
+  "c_tabAnak": "composer.tabAnak",
+  "c_tabSwar": "composer.tabSwar",
+  "c_tabText": "composer.tabText",
+  "c_talaLaya": "composer.talaLaya",
+  "c_textAnak": "composer.textAnak",
+  "c_textMel": "composer.textMel",
+  "c_tips": {
+    "fn": "composer.tips",
+    "params": [
+      "count"
+    ]
+  },
+  "c_today": "composer.today",
+  "c_twiceT": "composer.twiceT",
+  "c_undo": "composer.undo",
+  "c_use": "composer.use",
+  "c_vanshiSub": "composer.vanshiSub",
+  "c_vik": "composer.vik",
+  "c_where": {
+    "fn": "composer.where",
+    "params": [
+      "part",
+      "line",
+      "matra"
+    ]
+  },
+  "c_yes": "composer.yes",
+  "charan": {
+    "fn": "player.charan",
+    "params": [
+      "n"
+    ]
+  },
+  "chipsA": "player.chipsA",
+  "close": "player.close",
+  "count": {
+    "fn": "list.count",
+    "params": [
+      "count"
+    ]
+  },
+  "countIn": null,
+  "countWord": {
+    "fn": "player.countWord",
+    "params": [
+      "word"
+    ]
+  },
+  "done": "player.done",
+  "f_bad": "correction.bad",
+  "f_brokenFix": "correction.brokenFix",
+  "f_btn": "correction.btn",
+  "f_cancel": "correction.cancel",
+  "f_changed": {
+    "fn": "correction.changed",
+    "numeric": [
+      "n"
+    ],
+    "params": [
+      "n"
+    ]
+  },
+  "f_copied": "correction.copied",
+  "f_copy": "correction.copy",
+  "f_delQ": "correction.delQ",
+  "f_delete": "correction.delete",
+  "f_dirty": "correction.dirty",
+  "f_discard": "correction.discard",
+  "f_draft": "correction.draft",
+  "f_err": "correction.err",
+  "f_export": "correction.export",
+  "f_exportAll": "correction.exportAll",
+  "f_exportP": "correction.exportP",
+  "f_file": "correction.file",
+  "f_fixCount": {
+    "fn": "correction.fixCount",
+    "numeric": [
+      "n"
+    ],
+    "params": [
+      "n"
+    ]
+  },
+  "f_fixes": "correction.fixes",
+  "f_fromLib": "correction.fromLib",
+  "f_help": "correction.help",
+  "f_import": "correction.import",
+  "f_importErr": "correction.importErr",
+  "f_imported": {
+    "fn": "correction.imported",
+    "numeric": [
+      "n"
+    ],
+    "params": [
+      "n"
+    ]
+  },
+  "f_jsonErr": "correction.jsonErr",
+  "f_later": "correction.later",
+  "f_laya": "correction.laya",
+  "f_leaveQ": "correction.leaveQ",
+  "f_legend": {
+    "html": true,
+    "key": "correction.legend"
+  },
+  "f_legendGuide": "correction.legendGuide",
+  "f_len": {
+    "fn": "correction.len",
+    "params": [
+      "parts"
+    ]
+  },
+  "f_line": {
+    "fn": "correction.line",
+    "params": [
+      "part",
+      "line"
+    ]
+  },
+  "f_no": "correction.no",
+  "f_noSrc": "correction.noSrc",
+  "f_notBook": "correction.notBook",
+  "f_ok": "correction.ok",
+  "f_orig": "correction.orig",
+  "f_pickup": "correction.pickup",
+  "f_play": "correction.play",
+  "f_revert": "correction.revert",
+  "f_revertQ": "correction.revertQ",
+  "f_reverted": "correction.reverted",
+  "f_save": "correction.save",
+  "f_saved": "correction.saved",
+  "f_savedT": "correction.savedT",
+  "f_share": "correction.share",
+  "f_tag": "correction.tag",
+  "f_tala": "correction.tala",
+  "f_title": {
+    "fn": "correction.title",
+    "params": [
+      "name"
+    ]
+  },
+  "f_warn": "correction.warn",
+  "f_yes": "correction.yes",
+  "faster": "player.faster",
+  "found": {
+    "fn": "list.found",
+    "params": [
+      "count"
+    ]
+  },
+  "g_open": "guide.open",
+  "goTo": {
+    "fn": "player.goTo",
+    "params": [
+      "target"
+    ]
+  },
+  "groups": {
+    "anak": "common.groups.anak",
+    "shankh": "common.groups.shankh",
+    "tal": "common.groups.tal",
+    "vanshi": "common.groups.vanshi"
+  },
+  "hint": "player.hint",
+  "instF": "list.instF",
+  "instL": "settings.instL",
+  "k_anakEmpty": [
+    "composer.check.anakEmpty.0",
+    {
+      "fn": "composer.check.anakEmpty.1",
+      "params": []
+    }
+  ],
+  "k_anakPartial": [
+    "composer.check.anakPartial.0",
+    {
+      "fn": "composer.check.anakPartial.1",
+      "params": [
+        "value"
+      ]
+    }
+  ],
+  "k_bolInMel": [
+    {
+      "fn": "composer.check.bolInMel.0",
+      "params": [
+        "value"
+      ]
+    },
+    {
+      "fn": "composer.check.bolInMel.1",
+      "params": []
+    }
+  ],
+  "k_compile": [
+    "composer.check.compile.0",
+    {
+      "fn": "composer.check.compile.1",
+      "params": [
+        "value"
+      ]
+    }
+  ],
+  "k_emptyBlock": [
+    "composer.check.emptyBlock.0",
+    {
+      "fn": "composer.check.emptyBlock.1",
+      "params": []
+    }
+  ],
+  "k_endNotSa": [
+    "composer.check.endNotSa.0",
+    {
+      "fn": "composer.check.endNotSa.1",
+      "params": []
+    }
+  ],
+  "k_melPartial": [
+    "composer.check.melPartial.0",
+    {
+      "fn": "composer.check.melPartial.1",
+      "params": [
+        "value"
+      ]
+    }
+  ],
+  "k_noteInAnak": [
+    {
+      "fn": "composer.check.noteInAnak.0",
+      "params": [
+        "value"
+      ]
+    },
+    {
+      "fn": "composer.check.noteInAnak.1",
+      "params": []
+    }
+  ],
+  "k_open": "ghoshdand.open",
+  "k_outOfRaga": [
+    {
+      "fn": "composer.check.outOfRaga.0",
+      "params": [
+        "value"
+      ]
+    },
+    {
+      "fn": "composer.check.outOfRaga.1",
+      "params": []
+    }
+  ],
+  "k_shankhRange": [
+    {
+      "fn": "composer.check.shankhRange.0",
+      "params": [
+        "value"
+      ]
+    },
+    {
+      "fn": "composer.check.shankhRange.1",
+      "params": []
+    }
+  ],
+  "k_startsHold": [
+    "composer.check.startsHold.0",
+    {
+      "fn": "composer.check.startsHold.1",
+      "params": []
+    }
+  ],
+  "kanL": "settings.kanL",
+  "l_change": "library.change",
+  "l_conflict": {
+    "fn": "library.conflict",
+    "params": [
+      "name"
+    ]
+  },
+  "l_count": {
+    "fn": "library.count",
+    "params": [
+      "folder",
+      "count"
+    ]
+  },
+  "l_delFile": {
+    "fn": "library.delFile",
+    "params": [
+      "path"
+    ]
+  },
+  "l_download": "library.download",
+  "l_g": {
+    "android": [
+      "library.g.android.0",
+      "library.g.android.1",
+      "library.g.android.2"
+    ],
+    "desktop": [
+      "library.g.desktop.0",
+      "library.g.desktop.1",
+      "library.g.desktop.2"
+    ],
+    "ios": [
+      "library.g.ios.0",
+      "library.g.ios.1",
+      "library.g.ios.2"
+    ]
+  },
+  "l_guideT": "library.guideT",
+  "l_libG": "library.libG",
+  "l_never": "library.never",
+  "l_noPerm": "library.noPerm",
+  "l_none": "library.none",
+  "l_ok": "library.ok",
+  "l_pending": {
+    "fn": "library.pending",
+    "params": [
+      "count"
+    ]
+  },
+  "l_pick": "library.pick",
+  "l_pickNote": "library.pickNote",
+  "l_reNote": "library.reNote",
+  "l_readErr": "library.readErr",
+  "l_reconnect": "library.reconnect",
+  "l_rescan": "library.rescan",
+  "l_ro": "library.ro",
+  "l_savedFolder": {
+    "fn": "library.savedFolder",
+    "params": [
+      "name"
+    ]
+  },
+  "l_savedLocal": "library.savedLocal",
+  "l_scanned": {
+    "fn": "library.scanned",
+    "params": [
+      "count",
+      "mine"
+    ]
+  },
+  "l_skipped": {
+    "fn": "library.skipped",
+    "params": [
+      "count"
+    ]
+  },
+  "l_srcBook": "library.srcBook",
+  "l_srcLib": "library.srcLib",
+  "l_tabAll": {
+    "fn": "library.tabAll",
+    "params": [
+      "count"
+    ]
+  },
+  "l_tagFolder": "library.tagFolder",
+  "l_tagPending": "library.tagPending",
+  "l_unlink": "library.unlink",
+  "l_writeAll": "library.writeAll",
+  "l_written": {
+    "fn": "library.written",
+    "params": [
+      "count"
+    ]
+  },
+  "l_zip": "library.zip",
+  "l_zipped": "library.zipped",
+  "langL": "settings.langL",
+  "laya": "player.laya",
+  "left": "player.left",
+  "listA": "list.listA",
+  "listErr": "list.listErr",
+  "loop": "player.loop",
+  "loopA": "player.loopA",
+  "mand": "list.mand",
+  "mandchal": "player.mandchal",
+  "march": "player.march",
+  "marchA": "player.marchA",
+  "marchClose": "player.marchClose",
+  "modesA": "player.modesA",
+  "ms": {
+    "fn": "settings.ms",
+    "params": [
+      "ms"
+    ]
+  },
+  "naimittik": "list.naimittik",
+  "needOne": "settings.needOne",
+  "next": "player.next",
+  "nirantar": "settings.nirantar",
+  "nirantarS": "settings.nirantarS",
+  "none": {
+    "fn": "list.none",
+    "params": [
+      "query"
+    ]
+  },
+  "now": "player.now",
+  "once": "player.once",
+  "onceA": "player.onceA",
+  "openErr": "list.openErr",
+  "parts": {
+    "anak": "common.parts.anak",
+    "jhallari": "common.parts.jhallari",
+    "panav": "common.parts.panav",
+    "shankh": "common.parts.shankh",
+    "steps": "common.parts.steps",
+    "tribhuj": "common.parts.tribhuj",
+    "vanshi": "common.parts.vanshi"
+  },
+  "perf": "player.perf",
+  "pf_backup_ago": "platform.backup_ago",
+  "pf_backup_btn": "platform.backup_btn",
+  "pf_backup_never": "platform.backup_never",
+  "pf_backup_today": "platform.backup_today",
+  "pf_bar_btn": "platform.bar_btn",
+  "pf_bar_days": "platform.bar_days",
+  "pf_bar_edits": "platform.bar_edits",
+  "pf_copy": "platform.copy",
+  "pf_counts": "platform.counts",
+  "pf_dismiss": "platform.dismiss",
+  "pf_err_empty": "platform.err_empty",
+  "pf_err_newer-format": "platform.err_newer-format",
+  "pf_err_not-a-backup": "platform.err_not-a-backup",
+  "pf_err_not-json": "platform.err_not-json",
+  "pf_err_too-big": "platform.err_too-big",
+  "pf_file_note": "platform.file_note",
+  "pf_first": "platform.first",
+  "pf_first_btn": "platform.first_btn",
+  "pf_inst_bar": "platform.inst_bar",
+  "pf_inst_btn": "platform.inst_btn",
+  "pf_inst_done": "platform.inst_done",
+  "pf_inst_show": "platform.inst_show",
+  "pf_inst_title": "platform.inst_title",
+  "pf_new_ok": "platform.new_ok",
+  "pf_new_title": "platform.new_title",
+  "pf_not_saved": "platform.not_saved",
+  "pf_nothing": "platform.nothing",
+  "pf_older_dl": "platform.older_dl",
+  "pf_older_have": "platform.older_have",
+  "pf_persist_no": "platform.persist_no",
+  "pf_persist_yes": "platform.persist_yes",
+  "pf_r_busy": "platform.r_busy",
+  "pf_r_cancel": "platform.r_cancel",
+  "pf_r_copies": "platform.r_copies",
+  "pf_r_done": "platform.r_done",
+  "pf_r_fail": "platform.r_fail",
+  "pf_r_fix_new": "platform.r_fix_new",
+  "pf_r_fix_newer": "platform.r_fix_newer",
+  "pf_r_fix_older": "platform.r_fix_older",
+  "pf_r_go": "platform.r_go",
+  "pf_r_new": "platform.r_new",
+  "pf_r_nochange": "platform.r_nochange",
+  "pf_r_note": "platform.r_note",
+  "pf_r_same": "platform.r_same",
+  "pf_r_set": "platform.r_set",
+  "pf_r_skipped": "platform.r_skipped",
+  "pf_r_title": "platform.r_title",
+  "pf_restore_btn": "platform.restore_btn",
+  "pf_steps": {
+    "android-chrome": [
+      "platform.steps.android-chrome.0",
+      "platform.steps.android-chrome.1"
+    ],
+    "android-firefox": [
+      "platform.steps.android-firefox.0",
+      "platform.steps.android-firefox.1"
+    ],
+    "android-samsung": [
+      "platform.steps.android-samsung.0",
+      "platform.steps.android-samsung.1"
+    ],
+    "desktop-chromium": [
+      "platform.steps.desktop-chromium.0"
+    ],
+    "desktop-other": [
+      "platform.steps.desktop-other.0"
+    ],
+    "desktop-safari": [
+      "platform.steps.desktop-safari.0"
+    ],
+    "file": [
+      "platform.steps.file.0",
+      "platform.steps.file.1"
+    ],
+    "ios-other": [
+      "platform.steps.ios-other.0",
+      "platform.steps.ios-other.1"
+    ],
+    "ios-safari": [
+      "platform.steps.ios-safari.0",
+      "platform.steps.ios-safari.1",
+      "platform.steps.ios-safari.2"
+    ]
+  },
+  "pf_upd_avail": "platform.upd_avail",
+  "pf_upd_btn": "platform.upd_btn",
+  "pf_upd_busy": "platform.upd_busy",
+  "pf_upd_check": "platform.upd_check",
+  "pf_upd_file": "platform.upd_file",
+  "pf_upd_none": "platform.upd_none",
+  "pf_usage": "platform.usage",
+  "pf_ver": "platform.ver",
+  "pf_whatsnew_btn": "platform.whatsnew_btn",
+  "pf_where_file": "platform.where_file",
+  "pf_where_site": "platform.where_site",
+  "pf_work": "platform.work",
+  "pitchL": "settings.pitchL",
+  "pitchN": "settings.pitchN",
+  "play": "player.play",
+  "playL": "player.playL",
+  "playerA": "player.playerA",
+  "prachalan": "list.prachalan",
+  "prarambhik": "player.prarambhik",
+  "prev": "player.prev",
+  "printed": "player.printed",
+  "raga": "player.raga",
+  "ranan": "player.ranan",
+  "rananAnak": "player.rananAnak",
+  "recent": "list.recent",
+  "right": "player.right",
+  "s_ab": "soundcheck.ab",
+  "s_acc": "soundcheck.acc",
+  "s_art": [
+    "soundcheck.art.0",
+    "soundcheck.art.1"
+  ],
+  "s_bols": {
+    "acc": "soundcheck.bols.acc",
+    "click": "soundcheck.bols.click",
+    "flam": "soundcheck.bols.flam",
+    "roll": "soundcheck.bols.roll",
+    "ta": "soundcheck.bols.ta",
+    "tha": "soundcheck.bols.tha",
+    "thra": "soundcheck.bols.thra",
+    "trt": "soundcheck.bols.trt"
+  },
+  "s_cycle": "soundcheck.cycle",
+  "s_cycleP": "soundcheck.cycleP",
+  "s_dev": {
+    "fn": "soundcheck.dev",
+    "params": [
+      "rate",
+      "latency",
+      "late"
+    ]
+  },
+  "s_inst": "soundcheck.inst",
+  "s_ios": "soundcheck.ios",
+  "s_join": "soundcheck.join",
+  "s_kan": "soundcheck.kan",
+  "s_kanO": [
+    "soundcheck.kanO.0",
+    "soundcheck.kanO.1",
+    "soundcheck.kanO.2"
+  ],
+  "s_keep": "soundcheck.keep",
+  "s_kept": "soundcheck.kept",
+  "s_key": {
+    "fn": "soundcheck.key",
+    "params": [
+      "note"
+    ]
+  },
+  "s_laya": "soundcheck.laya",
+  "s_left": "soundcheck.left",
+  "s_len": "soundcheck.len",
+  "s_lenO": {
+    "fn": "soundcheck.lenO",
+    "params": [
+      "matras"
+    ]
+  },
+  "s_loop": "soundcheck.loop",
+  "s_march": "soundcheck.march",
+  "s_mel": "soundcheck.mel",
+  "s_mixP": "soundcheck.mixP",
+  "s_mixPlay": "soundcheck.mixPlay",
+  "s_ms": {
+    "fn": "soundcheck.ms",
+    "params": [
+      "ms"
+    ]
+  },
+  "s_none": "soundcheck.none",
+  "s_oct": [
+    "soundcheck.oct.0",
+    "soundcheck.oct.1",
+    "soundcheck.oct.2"
+  ],
+  "s_open": "soundcheck.open",
+  "s_parts": {
+    "anak": "soundcheck.parts.anak",
+    "jhallari": "soundcheck.parts.jhallari",
+    "panav": "soundcheck.parts.panav",
+    "steps": "soundcheck.parts.steps",
+    "tribhuj": "soundcheck.parts.tribhuj"
+  },
+  "s_raga": "soundcheck.raga",
+  "s_ragaPick": "soundcheck.ragaPick",
+  "s_ranan": "soundcheck.ranan",
+  "s_right": "soundcheck.right",
+  "s_saptak": "soundcheck.saptak",
+  "s_seq": "soundcheck.seq",
+  "s_shankhNote": "soundcheck.shankhNote",
+  "s_steps": "soundcheck.steps",
+  "s_stop": "soundcheck.stop",
+  "s_swell": "soundcheck.swell",
+  "s_swellO": [
+    "soundcheck.swellO.0",
+    "soundcheck.swellO.1",
+    "soundcheck.swellO.2"
+  ],
+  "s_tabs": [
+    "soundcheck.tabs.0",
+    "soundcheck.tabs.1",
+    "soundcheck.tabs.2",
+    "soundcheck.tabs.3",
+    "soundcheck.tabs.4"
+  ],
+  "s_tala": "soundcheck.tala",
+  "s_three": "soundcheck.three",
+  "s_title": "soundcheck.title",
+  "s_tv": {
+    "count": "soundcheck.tv.count",
+    "end": "soundcheck.tv.end",
+    "jh": "soundcheck.tv.jh",
+    "jhL": "soundcheck.tv.jhL",
+    "pan": "soundcheck.tv.pan",
+    "panS": "soundcheck.tv.panS",
+    "tr": "soundcheck.tv.tr",
+    "trL": "soundcheck.tv.trL"
+  },
+  "s_var": "soundcheck.var",
+  "s_x4": "soundcheck.x4",
+  "sam": "player.sam",
+  "santar": "settings.santar",
+  "santarS": "settings.santarS",
+  "search": "list.search",
+  "searchA": "list.searchA",
+  "secA": "list.secA",
+  "settings": "settings.settings",
+  "setu": "player.setu",
+  "sheetP": "settings.sheetP",
+  "slower": "player.slower",
+  "step": {
+    "fn": "player.step",
+    "params": [
+      "n"
+    ]
+  },
+  "stepSnd": {
+    "html": true,
+    "key": "player.stepSnd"
+  },
+  "stepSndA": "player.stepSndA",
+  "stop": "player.stop",
+  "tagline": "list.tagline",
+  "tail": {
+    "fn": "player.tail",
+    "params": [
+      "part"
+    ]
+  },
+  "theme": "settings.theme",
+  "times": {
+    "fn": "player.times",
+    "params": [
+      "n"
+    ]
+  },
+  "tl_open": "tala.open",
+  "twice": "player.twice",
+  "x_about": "export.about",
+  "x_app": "export.app",
+  "x_btn": "export.btn",
+  "x_copied": "export.copied",
+  "x_copy": "export.copy",
+  "x_countL": "export.countL",
+  "x_endL": "export.endL",
+  "x_from": "export.from",
+  "x_grpL": "export.grpL",
+  "x_highO": "export.highO",
+  "x_holdL": "export.holdL",
+  "x_html": "export.html",
+  "x_layout": "export.layout",
+  "x_legend": "export.legend",
+  "x_lowO": "export.lowO",
+  "x_marks": "export.marks",
+  "x_mine": "export.mine",
+  "x_need": "export.need",
+  "x_order": "export.order",
+  "x_pages": "export.pages",
+  "x_parts": "export.parts",
+  "x_pickup": "export.pickup",
+  "x_plain": "export.plain",
+  "x_preview": "export.preview",
+  "x_print": "export.print",
+  "x_printNote": "export.printNote",
+  "x_ranan": "export.ranan",
+  "x_restL": "export.restL",
+  "x_rich": "export.rich",
+  "x_samL": "export.samL",
+  "x_score": "export.score",
+  "x_setuL": "export.setuL",
+  "x_steps": "export.steps",
+  "x_style": "export.style",
+  "x_tal": "export.tal",
+  "x_title": "export.title",
+  "x_twiceL": "export.twiceL",
+  "x_txt": "export.txt",
+  "x_vk": "export.vk"
+}

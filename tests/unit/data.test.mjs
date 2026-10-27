@@ -5,7 +5,8 @@ import { Settings } from '../../src/data/settings.ts';
 import { UserLibrary } from '../../src/data/userLibrary.ts';
 import { createBackup, parseBackup, planRestore, applyRestore, planIsEmpty, backupFileName, olderCopiesFile } from '../../src/data/backup.ts';
 
-const comp = (id, name, updated = '2026-10-01T10:00:00.000Z', extra = {}) => ({ v: 1, id, name, instr: 'vanshi', tala: 'kerva', laya: 120, raga: null, blocks: [{ type: 'charan', repeat: 2, lines: [] }], ignore: [], created: updated, updated, ...extra });
+// content differs per id (the `tag`), as real compositions do; pass { tag } to make two share their content
+const comp = (id, name, updated = '2026-10-01T10:00:00.000Z', extra = {}) => ({ v: 1, id, name, instr: 'vanshi', tala: 'kerva', laya: 120, raga: null, blocks: [{ type: 'charan', repeat: 2, lines: [], tag: extra.tag ?? id }], ignore: [], created: updated, updated });
 const fix = (id, at, tag = 'x') => ({ src: { format: 'ghosh-notation/1', id, title: { dev: tag }, parts: {}, updated: at }, at });
 const okChecks = { composition: () => null, correction: () => null };
 const opts = { copyLabel: '(backup)', makeId: (() => { let n = 0; return () => 'copy' + ++n; })() };
@@ -162,4 +163,14 @@ test('a browser that refuses to store tells the caller', () => {
   const kv = new MemoryKv(); kv.failWrites = true;
   const backup = parseBackup(JSON.stringify(createBackup(device(), { app: 'x' }))).backup;
   assert.equal(applyRestore(kv, planRestore(kv, backup, okChecks, opts)), false);
+});
+
+test('restoring the same backup again and again adds one copy, not one more each time', () => {
+  const backup = parseBackup(JSON.stringify(createBackup(device(), { app: 'x' }))).backup;
+  const other = device();
+  new UserLibrary(other).saveCompositions([comp('m1', 'changed here', '2026-10-20T00:00:00.000Z'), comp('m2', 'दोन')]);
+  let n = 0; const o = { copyLabel: '(backup)', makeId: () => 'c' + ++n };
+  for (let i = 0; i < 3; i++) applyRestore(other, planRestore(other, backup, okChecks, o));
+  const names = new UserLibrary(other).compositions().map(r => r.name).sort();
+  assert.deepEqual(names, ['changed here', 'एक (backup)', 'दोन'].sort());
 });

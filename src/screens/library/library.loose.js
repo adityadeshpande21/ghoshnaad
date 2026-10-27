@@ -11,42 +11,9 @@ import talasJson from '../../../rules/talas.json';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 export function createLibrary(env) {
-const { tx, esc, dv, L, I18N, APP, setLibRows } = env;
+const { i18n, esc, dv, APP, setLibRows } = env;
 const $ = env.q;   // like v1.1.0: null when the element is absent
 const GhoshCompile = { compile3: src => compile3(src, { talas: talasJson }) };
-const LS = {
- mr: { l_pick: 'फोल्डर निवडा', l_pickNote: 'तुमच्या रचना ठेवलेला फोल्डर निवडा — तो इथे जोडला जाईल.', l_count: (a, n) => `${a} · ${n} रचना`, l_rescan: 'पुन्हा वाचा', l_change: 'फोल्डर बदला', l_unlink: 'फोल्डर काढा',
-  l_reconnect: 'पुन्हा जोडा', l_reNote: 'ब्राउझर पुन्हा परवानगी विचारेल', l_ro: 'फक्त वाचन', l_pending: n => `फाइल म्हणून जतन बाकी: ${n}`, l_writeAll: 'फोल्डरमध्ये जतन करा', l_zip: 'सर्व डाउनलोड (zip)',
-  l_skipped: n => `${n} फाइल्स वाचता आल्या नाहीत`, l_tagFolder: 'फोल्डर', l_tagPending: 'जतन बाकी', l_srcBook: 'ग्रंथ', l_srcLib: 'फोल्डर', l_tabAll: n => `रचना ${n}`,
-  l_savedFolder: f => `फोल्डरमध्ये जतन: ${f}`, l_savedLocal: 'ब्राउझरमध्ये जतन केले. फाइल डाउनलोड करून तुमच्या रचना फोल्डरमध्ये ठेवा.', l_download: 'फाइल डाउनलोड',
-  l_guideT: 'सर्व रचना एकाच फोल्डरमध्ये ठेवा', l_never: 'पुन्हा दाखवू नका', l_ok: 'समजले', l_readErr: 'फोल्डर वाचता आला नाही', l_noPerm: 'फोल्डरची परवानगी मिळाली नाही',
-  l_conflict: f => `फाइल बाहेर बदलली होती; नवी प्रत जतन केली: ${f}`, l_delFile: f => `फोल्डरमधून ही फाइल स्वतः हटवा: ${f}`, l_scanned: (n, m) => `${n} रचना आणि ${m} माझ्या रचना वाचल्या`,
-  l_libG: 'रचना फोल्डर', l_none: 'अजून फोल्डर जोडलेला नाही.', l_written: n => `${n} फाइल्स फोल्डरमध्ये जतन केल्या`, l_zipped: 'zip डाउनलोड झाली — ती उघडून फाइल्स तुमच्या रचना फोल्डरमध्ये ठेवा.',
-  l_g: { ios: ['Files ॲपमध्ये "On My iPhone" (किंवा iCloud Drive) मध्ये "घोष रचना" नावाचा फोल्डर एकदाच बनवा.', 'डाउनलोड झालेली फाइल Downloads मधून त्या फोल्डरमध्ये हलवा (zip असल्यास आधी टॅप करून उघडा).', 'ॲपमध्ये "फोल्डर निवडा" → घोष रचना. नंतर नवीन फाइल्स ठेवल्यावर पुन्हा निवडा.'],
-   android: ['Files ॲपमध्ये Documents मध्ये "घोष रचना" फोल्डर एकदाच बनवा.', 'Download मधील फाइल त्या फोल्डरमध्ये हलवा (zip असल्यास आधी extract करा).', 'ॲपमध्ये "फोल्डर निवडा" → घोष रचना, नंतर "पुन्हा वाचा".'],
-   desktop: ['Documents मध्ये "घोष रचना" फोल्डर एकदाच बनवा.', 'Downloads मधील फाइल त्या फोल्डरमध्ये हलवा (zip असल्यास आधी extract करा). नावात "(1)" आले तरी चालते.', 'ॲपमध्ये "फोल्डर निवडा" → घोष रचना, नंतर "पुन्हा वाचा".'] } },
- hi: { l_pick: 'फ़ोल्डर चुनें', l_pickNote: 'अपनी रचनाओं वाला फ़ोल्डर चुनें — वह यहाँ जुड़ जाएगा।', l_count: (a, n) => `${a} · ${n} रचनाएँ`, l_rescan: 'फिर पढ़ें', l_change: 'फ़ोल्डर बदलें', l_unlink: 'फ़ोल्डर हटाएँ',
-  l_reconnect: 'फिर जोड़ें', l_reNote: 'ब्राउज़र फिर अनुमति पूछेगा', l_ro: 'केवल पढ़ना', l_pending: n => `फ़ाइल के रूप में सहेजना बाकी: ${n}`, l_writeAll: 'फ़ोल्डर में सहेजें', l_zip: 'सभी डाउनलोड (zip)',
-  l_skipped: n => `${n} फ़ाइलें पढ़ी नहीं जा सकीं`, l_tagFolder: 'फ़ोल्डर', l_tagPending: 'सहेजना बाकी', l_srcBook: 'पुस्तक', l_srcLib: 'फ़ोल्डर', l_tabAll: n => `रचनाएँ ${n}`,
-  l_savedFolder: f => `फ़ोल्डर में सहेजा: ${f}`, l_savedLocal: 'ब्राउज़र में सहेजा। फ़ाइल डाउनलोड करके अपने रचना फ़ोल्डर में रखें।', l_download: 'फ़ाइल डाउनलोड',
-  l_guideT: 'सभी रचनाएँ एक ही फ़ोल्डर में रखें', l_never: 'फिर न दिखाएँ', l_ok: 'समझ गया', l_readErr: 'फ़ोल्डर पढ़ा नहीं जा सका', l_noPerm: 'फ़ोल्डर की अनुमति नहीं मिली',
-  l_conflict: f => `फ़ाइल बाहर बदली गई थी; नई प्रति सहेजी: ${f}`, l_delFile: f => `फ़ोल्डर से यह फ़ाइल स्वयं हटाएँ: ${f}`, l_scanned: (n, m) => `${n} रचनाएँ और ${m} मेरी रचनाएँ पढ़ीं`,
-  l_libG: 'रचना फ़ोल्डर', l_none: 'अभी कोई फ़ोल्डर नहीं जुड़ा।', l_written: n => `${n} फ़ाइलें फ़ोल्डर में सहेजीं`, l_zipped: 'zip डाउनलोड हुई — उसे खोलकर फ़ाइलें अपने रचना फ़ोल्डर में रखें।',
-  l_g: { ios: ['Files ऐप में "On My iPhone" (या iCloud Drive) में "घोष रचना" नाम का फ़ोल्डर एक बार बनाएँ।', 'डाउनलोड हुई फ़ाइल Downloads से उस फ़ोल्डर में ले जाएँ (zip हो तो पहले टैप करके खोलें)।', 'ऐप में "फ़ोल्डर चुनें" → घोष रचना। नई फ़ाइलें रखने के बाद फिर चुनें।'],
-   android: ['Files ऐप में Documents में "घोष रचना" फ़ोल्डर एक बार बनाएँ।', 'Download की फ़ाइल उस फ़ोल्डर में ले जाएँ (zip हो तो पहले extract करें)।', 'ऐप में "फ़ोल्डर चुनें" → घोष रचना, फिर "फिर पढ़ें"।'],
-   desktop: ['Documents में "घोष रचना" फ़ोल्डर एक बार बनाएँ।', 'Downloads की फ़ाइल उस फ़ोल्डर में ले जाएँ (zip हो तो पहले extract करें)। नाम में "(1)" आए तो भी चलेगा।', 'ऐप में "फ़ोल्डर चुनें" → घोष रचना, फिर "फिर पढ़ें"।'] } },
- en: { l_pick: 'Choose folder', l_pickNote: 'Choose the folder where you keep your rachanas — it is added here.', l_count: (a, n) => `${a} · ${n} rachanas`, l_rescan: 'Re-read', l_change: 'Change folder', l_unlink: 'Disconnect',
-  l_reconnect: 'Reconnect', l_reNote: 'the browser asks for permission again', l_ro: 'read only', l_pending: n => `Not yet saved as files: ${n}`, l_writeAll: 'Save to folder', l_zip: 'Download all (zip)',
-  l_skipped: n => `${n} files couldn't be read`, l_tagFolder: 'folder', l_tagPending: 'not saved', l_srcBook: 'Book', l_srcLib: 'Folder', l_tabAll: n => `Rachanas ${n}`,
-  l_savedFolder: f => `Saved to the folder: ${f}`, l_savedLocal: 'Saved in the browser. Download the file and keep it in your rachana folder.', l_download: 'Download file',
-  l_guideT: 'Keep all rachanas in one folder', l_never: 'Don\'t show again', l_ok: 'Got it', l_readErr: 'Couldn\'t read the folder', l_noPerm: 'No permission for the folder',
-  l_conflict: f => `The file had changed outside the app; saved a new copy: ${f}`, l_delFile: f => `Delete this file from the folder yourself: ${f}`, l_scanned: (n, m) => `Read ${n} rachanas and ${m} of my rachanas`,
-  l_libG: 'Rachana folder', l_none: 'No folder linked yet.', l_written: n => `${n} files saved to the folder`, l_zipped: 'Zip downloaded — open it and put the files in your rachana folder.',
-  l_g: { ios: ['In the Files app, make a folder "Ghosh Rachana" once, under On My iPhone (or iCloud Drive).', 'Move the downloaded file from Downloads into that folder (tap a zip first to open it).', 'In the app: Choose folder → Ghosh Rachana. After adding files, choose it again.'],
-   android: ['In the Files app, make a folder "Ghosh Rachana" in Documents once.', 'Move the file from Download into that folder (extract a zip first).', 'In the app: Choose folder → Ghosh Rachana, then Re-read.'],
-   desktop: ['Make a folder "Ghosh Rachana" in Documents once.', 'Move the file from Downloads into that folder (extract a zip first). A "(1)" in the name is fine.', 'In the app: Choose folder → Ghosh Rachana, then Re-read.'] } }
-};
-for (const l in LS) Object.assign(I18N[l], LS[l]);
 
 const clone = o => JSON.parse(JSON.stringify(o));
 const now = () => new Date().toISOString();
@@ -112,8 +79,8 @@ async function ingest(list) {
   return { n: files.size, m: mine.size };
 }
 async function scanDir() {
-  const out = []; try { await walk(dir, '', out, 0); } catch (e) { note(tx('l_readErr')); return; }
-  const r = await ingest(out); note(tx('l_scanned', dv(r.n), dv(r.m)) + (skipped.length ? ' · ' + tx('l_skipped', dv(skipped.length)) : ''));
+  const out = []; try { await walk(dir, '', out, 0); } catch (e) { note(i18n.t('library.readErr')); return; }
+  const r = await ingest(out); note(i18n.t('library.scanned', { count: dv(r.n), mine: dv(r.m) }) + (skipped.length ? ' · ' + i18n.t('library.skipped', { count: dv(skipped.length) }) : ''));
 }
 async function permOf(h, ask) {
   try { const o = { mode: 'readwrite' }; let p = await h.queryPermission(o); if (p !== 'granted' && ask) p = await h.requestPermission(o); return p; } catch (e) { return 'denied'; }
@@ -129,7 +96,7 @@ dirInput.addEventListener('change', async () => {
   const rel = f => f.webkitRelativePath || f.name;
   dir = null; mode = 'ro'; dirName = (rel(fs[0]).split('/').length > 1 ? rel(fs[0]).split('/')[0] : '') || '…';
   const r = await ingest(fs.map(f => ({ name: f.name, path: rel(f), file: f })));
-  note(tx('l_scanned', dv(r.n), dv(r.m)) + (skipped.length ? ' · ' + tx('l_skipped', dv(skipped.length)) : ''));
+  note(i18n.t('library.scanned', { count: dv(r.n), mine: dv(r.m) }) + (skipped.length ? ' · ' + i18n.t('library.skipped', { count: dv(skipped.length) }) : ''));
 });
 async function pick() {
   if (canPickDir()) {
@@ -141,7 +108,7 @@ async function pick() {
 async function reconnect() {
   if (!dir) return pick();
   const p = await permOf(dir, true);
-  if (p === 'granted') { mode = 'rw'; await scanDir(); } else note(tx('l_noPerm'));
+  if (p === 'granted') { mode = 'rw'; await scanDir(); } else note(i18n.t('library.noPerm'));
 }
 async function unlink() { dir = null; mode = 'none'; dirName = ''; FILES = new Map(); MINEF = new Map(); skipped = []; await kv('del', 'dir'); refresh(); }
 
@@ -188,8 +155,8 @@ async function removeSource(id) {
   const had = PEND[id]; delete PEND[id]; savePend();
   const f = FILES.get(id); let msg = null;
   if (f) {
-    if (mode === 'rw' && f.fh && !f.path.includes('/') && !f.bundle) { try { await dir.removeEntry(f.file); FILES.delete(id); } catch (e) { msg = tx('l_delFile', f.path); } }
-    else msg = tx('l_delFile', f.path);
+    if (mode === 'rw' && f.fh && !f.path.includes('/') && !f.bundle) { try { await dir.removeEntry(f.file); FILES.delete(id); } catch (e) { msg = i18n.t('library.delFile', { path: f.path }); } }
+    else msg = i18n.t('library.delFile', { path: f.path });
   }
   refresh(); return { msg, had: !!had };
 }
@@ -218,7 +185,7 @@ async function mineDeleted(id) {
   if (m) {
     if (mode === 'rw' && m.fh && !m.path.includes('/')) { try { await dir.removeEntry(m.file); MINEF.delete(id); refresh(); return; } catch (e) {} }
     if (!MDEL.includes(id)) { MDEL.push(id); saveDel(); }
-    note(tx('l_delFile', m.path));
+    note(i18n.t('library.delFile', { path: m.path }));
   }
   refresh();
 }
@@ -249,11 +216,11 @@ async function downloadAll() {
   if (r === 'cancel') return;
   Object.values(PEND).forEach(p => { p.dl = true; }); savePend();
   mineUnsaved().forEach(r2 => { FILED['m:' + r2.id] = { at: r2.updated, file: safeName(r2.name) + '.ghosh.json', dl: true }; }); saveFiled();
-  refresh(); note(tx('l_zipped')); if (r === 'download') guide(true);
+  refresh(); note(i18n.t('library.zipped')); if (r === 'download') guide(true);
 }
 async function writeAll() { let n = 0;
   for (const p of Object.values(PEND)) { const r = await saveSource(p.src); if (r.written) n++; }
-  n += await flushMine(); note(tx('l_written', dv(n)));
+  n += await flushMine(); note(i18n.t('library.written', { count: dv(n) }));
 }
 const pendingCount = () => Object.values(PEND).filter(p => !p.dl).length + mineUnsaved().filter(r => !(FILED['m:' + r.id] && FILED['m:' + r.id].dl && FILED['m:' + r.id].at === r.updated)).length;
 
@@ -262,9 +229,9 @@ function platform() { const u = navigator.userAgent || ''; if (/iPhone|iPad|iPod
 function guide(force) {
   if (!force && sget('guideOff', false)) return;
   const g = $('#libGuide'); if (!g) return;
-  $('#libGuideT').textContent = tx('l_guideT');
-  $('#libGuideL').innerHTML = (L().l_g[platform()] || L().l_g.desktop).map(s => `<li>${esc(s)}</li>`).join('');
-  $('#libGuideN').textContent = tx('l_never'); $('#libGuideOk').textContent = tx('l_ok');
+  $('#libGuideT').textContent = i18n.t('library.guideT');
+  $('#libGuideL').innerHTML = [0, 1, 2].map(i => `<li>${esc(i18n.t(`library.g.${['android', 'ios'].includes(platform()) ? platform() : 'desktop'}.${i}`))}</li>`).join('');
+  $('#libGuideN').textContent = i18n.t('library.never'); $('#libGuideOk').textContent = i18n.t('library.ok');
   g.hidden = false;
 }
 
@@ -305,20 +272,20 @@ const FOLDER_SVG = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" 
 function barHTML() {
   const n = FILES.size + MINEF.size, pend = pendingCount();
   let h = '<div class="lb-row">';
-  if (mode === 'none') h += `<button class="lb-btn main" data-lb="pick">${FOLDER_SVG}${esc(tx('l_pick'))}</button><span class="lb-note">${esc(tx('l_pickNote'))}</span>`;
-  else if (mode === 'perm') h += `<span class="lb-name">${FOLDER_SVG}${esc(dirName)}</span><button class="lb-btn main" data-lb="reconnect">${esc(tx('l_reconnect'))}</button><span class="lb-note">${esc(tx('l_reNote'))}</span>`;
-  else h += `<span class="lb-name">${FOLDER_SVG}${esc(tx('l_count', dirName, dv(FILES.size)))}${mode === 'ro' ? ` <i>(${esc(tx('l_ro'))})</i>` : ''}</span><button class="lb-btn" data-lb="${mode === 'ro' ? 'pick' : 'rescan'}">${esc(tx('l_rescan'))}</button>`;
+  if (mode === 'none') h += `<button class="lb-btn main" data-lb="pick">${FOLDER_SVG}${esc(i18n.t('library.pick'))}</button><span class="lb-note">${esc(i18n.t('library.pickNote'))}</span>`;
+  else if (mode === 'perm') h += `<span class="lb-name">${FOLDER_SVG}${esc(dirName)}</span><button class="lb-btn main" data-lb="reconnect">${esc(i18n.t('library.reconnect'))}</button><span class="lb-note">${esc(i18n.t('library.reNote'))}</span>`;
+  else h += `<span class="lb-name">${FOLDER_SVG}${esc(i18n.t('library.count', { folder: dirName, count: dv(FILES.size) }))}${mode === 'ro' ? ` <i>(${esc(i18n.t('library.ro'))})</i>` : ''}</span><button class="lb-btn" data-lb="${mode === 'ro' ? 'pick' : 'rescan'}">${esc(i18n.t('library.rescan'))}</button>`;
   h += '</div>';
-  if (pend) h += `<div class="lb-row"><span class="lb-pend">${esc(tx('l_pending', dv(pend)))}</span>${mode === 'rw' ? `<button class="lb-btn main" data-lb="writeAll">${esc(tx('l_writeAll'))}</button>` : `<button class="lb-btn main" data-lb="zip">${esc(tx('l_zip'))}</button>`}</div>`;
+  if (pend) h += `<div class="lb-row"><span class="lb-pend">${esc(i18n.t('library.pending', { count: dv(pend) }))}</span>${mode === 'rw' ? `<button class="lb-btn main" data-lb="writeAll">${esc(i18n.t('library.writeAll'))}</button>` : `<button class="lb-btn main" data-lb="zip">${esc(i18n.t('library.zip'))}</button>`}</div>`;
   if (lastNote) h += `<div class="lb-msg" role="status">${esc(lastNote)}</div>`;
   return h;
 }
 function renderBar() { const b = $('#libbar'); if (b) b.innerHTML = barHTML(); const s = $('#libOpts'); if (s && !$('#sheet').hidden) s.innerHTML = sheetHTML(); }
 function sheetHTML() {
-  let h = `<div class="igrp"><b>${esc(tx('l_libG'))}</b><span class="note">${esc(mode === 'none' ? tx('l_none') : tx('l_count', dirName, dv(FILES.size)) + (mode === 'ro' ? ' · ' + tx('l_ro') : ''))}</span><div class="fxrow">`;
-  h += mode === 'none' ? `<button class="opt" data-lb="pick"><span>${esc(tx('l_pick'))}</span></button>` : `<button class="opt" data-lb="pick"><span>${esc(tx('l_change'))}</span></button><button class="opt" data-lb="unlink"><span>${esc(tx('l_unlink'))}</span></button>`;
-  h += `<button class="opt" data-fx="import"><span>${esc(tx('f_import'))}</span></button>`;
-  if (pendingCount()) h += `<button class="opt" data-lb="${mode === 'rw' ? 'writeAll' : 'zip'}"><span>${esc(tx(mode === 'rw' ? 'l_writeAll' : 'l_zip'))}</span></button>`;
+  let h = `<div class="igrp"><b>${esc(i18n.t('library.libG'))}</b><span class="note">${esc(mode === 'none' ? i18n.t('library.none') : i18n.t('library.count', { folder: dirName, count: dv(FILES.size) }) + (mode === 'ro' ? ' · ' + i18n.t('library.ro') : ''))}</span><div class="fxrow">`;
+  h += mode === 'none' ? `<button class="opt" data-lb="pick"><span>${esc(i18n.t('library.pick'))}</span></button>` : `<button class="opt" data-lb="pick"><span>${esc(i18n.t('library.change'))}</span></button><button class="opt" data-lb="unlink"><span>${esc(i18n.t('library.unlink'))}</span></button>`;
+  h += `<button class="opt" data-fx="import"><span>${esc(i18n.t('correction.import'))}</span></button>`;
+  if (pendingCount()) h += `<button class="opt" data-lb="${mode === 'rw' ? 'writeAll' : 'zip'}"><span>${esc(i18n.t(mode === 'rw' ? 'library.writeAll' : 'library.zip'))}</span></button>`;
   return h + '</div></div>';
 }
 document.addEventListener('click', e => {

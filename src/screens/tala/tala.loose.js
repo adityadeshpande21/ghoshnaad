@@ -8,50 +8,55 @@ import { tick as talaTick, levelOf as talaLevelOf, panavStroke as talaPanav, foo
 export function createTalaTimeline(root, env) {
 const A = env.audio;
 
-const DEV='०१२३४५६७८९', d=x=>String(x).replace(/\d/g,c=>DEV[c]);
+const {i18n}=env, tt=(k,p)=>i18n.t('tala.'+k,p);     // a text of this screen
+const d=x=>env.dv(x);                  // numbers in the language's digits
 const sec=x=>{const r=Math.round(x*1000)/1000;const s=Math.abs(x*1000-Math.round(x*1000))<1e-6?String(r):x.toFixed(2);return d(s)};
+const secs=x=>tt('secs',{n:x});          // a number of seconds with its unit
 const K=[[1,1],[1,1]];
-// ताल रचना: name, लय, गण (गट lengths), ध्वंकार, मात्रा per पाऊल (0 = स्थिर), चाल, roll per matra, note
+// ताल रचना: name, लय, गण (गट lengths), ध्वंकार, मात्रा per पाऊल (0 = स्थिर), चाल, roll per matra, note (a key: tala.note.<note>)
 const ROWS=[
- {id:'kerva',name:'केरवा',laya:120,gans:K,dhv:[1,2,3,4],mps:1,chal:'prachal',note:'प्रचलन रचना'},
- {id:'khemta',name:'खेमटा',laya:360,gans:[[3,3],[3,3]],dhv:[1,4,7,10],mps:3,chal:'prachal',note:'प्रचलन रचना',tri:1},
- {id:'ektal',name:'एकताल',laya:120,gans:Array(6).fill([1,1]),dhv:[1,2,3,4,5,6,7,8,9,10,11,12],mps:1,chal:'prachal',note:'वीरश्री · पावले गृहीत'},
- {id:'dadra',name:'दादरा',laya:180,gans:[[1,1,1],[1,1,1]],dhv:[1,4],mps:3,chal:'mand',note:'मंदचल'},
- {id:'dadra',name:'दादरा',laya:120,gans:[[1,1,1],[1,1,1]],dhv:[1,4],mps:3,chal:'mand',note:'मंदचल'},
- {id:'tritaal',name:'त्रिताल',laya:120,gans:Array(4).fill([1,1,1,1]),dhv:[1,3,5,7,9,11,13,15],mps:2,chal:'mand',note:'आरुणी · पावले गृहीत'},
- {id:'jhaptal',name:'झपताल',laya:240,gans:[[2,3],[2,3]],dhv:[1,3,6,8],mps:0,chal:'sthir',note:'आद्य सरसंघचालक प्रणाम'},
- {id:'jhaptal',name:'झपताल',laya:120,gans:[[2,3],[2,3]],dhv:[1,3,6,8],mps:0,chal:'sthir',note:'उद्घोष'},
- {id:'jhaptal',name:'झपताल',laya:100,gans:[[2,3],[2,3]],dhv:[1,3,6,8],mps:0,chal:'sthir',note:'उद्घोष'},
- {id:'rupak',name:'रूपक',laya:120,gans:[[3,2,2],[3,2,2]],dhv:[1,4,6,8,11,13],mps:0,chal:'sthir',note:'स्वागत प्रणाम · १४ अंक'},
- {id:'kerva',name:'केरवा',laya:100,gans:K,dhv:[1,2,3,4],mps:0,chal:'sthir',note:'उद्घोष'},
+ {id:'kerva',name:'केरवा',laya:120,gans:K,dhv:[1,2,3,4],mps:1,chal:'prachal',note:'prachalan'},
+ {id:'khemta',name:'खेमटा',laya:360,gans:[[3,3],[3,3]],dhv:[1,4,7,10],mps:3,chal:'prachal',note:'prachalan',tri:1},
+ {id:'ektal',name:'एकताल',laya:120,gans:Array(6).fill([1,1]),dhv:[1,2,3,4,5,6,7,8,9,10,11,12],mps:1,chal:'prachal',note:'ektal'},
+ {id:'dadra',name:'दादरा',laya:180,gans:[[1,1,1],[1,1,1]],dhv:[1,4],mps:3,chal:'mand',note:'mand'},
+ {id:'dadra',name:'दादरा',laya:120,gans:[[1,1,1],[1,1,1]],dhv:[1,4],mps:3,chal:'mand',note:'mand'},
+ {id:'tritaal',name:'त्रिताल',laya:120,gans:Array(4).fill([1,1,1,1]),dhv:[1,3,5,7,9,11,13,15],mps:2,chal:'mand',note:'tritaal'},
+ {id:'jhaptal',name:'झपताल',laya:240,gans:[[2,3],[2,3]],dhv:[1,3,6,8],mps:0,chal:'sthir',note:'sarsangh'},
+ {id:'jhaptal',name:'झपताल',laya:120,gans:[[2,3],[2,3]],dhv:[1,3,6,8],mps:0,chal:'sthir',note:'udghosh'},
+ {id:'jhaptal',name:'झपताल',laya:100,gans:[[2,3],[2,3]],dhv:[1,3,6,8],mps:0,chal:'sthir',note:'udghosh'},
+ {id:'rupak',name:'रूपक',laya:120,gans:[[3,2,2],[3,2,2]],dhv:[1,4,6,8,11,13],mps:0,chal:'sthir',note:'rupak'},
+ {id:'kerva',name:'केरवा',laya:100,gans:K,dhv:[1,2,3,4],mps:0,chal:'sthir',note:'udghosh'},
  {id:'kerva',name:'केरवा',laya:160,gans:K,dhv:[1,2,3,4],mps:0,chal:'sthir',note:''},
 ];
-const TALAS=[['kerva','केरवा'],['khemta','खेमटा'],['dadra','दादरा'],['jhaptal','झपताल'],['rupak','रूपक'],['ektal','एकताल'],['tritaal','त्रिताल']];
-const CHAL=[['all','सर्व'],['prachal','प्रचल'],['mand','मंदचल'],['sthir','स्थिर']];
-const CHALNAME={prachal:'संचलन — प्रचल',mand:'मंदचल',sthir:'स्थिर — प्रणाम, उद्घोष'};
-const LAYERS=[['dhv','ध्वंकार','i-drum','c-dh'],['tr','आनक त्र व हात','i-stick','c-hand'],['step','पाऊल','i-foot','c-step'],['rep','पुढची आवर्तने','i-rep','c-st']];
-const SOUNDS=[['num','ठेका'],['dhv','ध्वंकार'],['step','पाऊल']],SPEEDS=[1,.75,.5,.25];
-const WINS=[4,8,12], ZOOMS=[['70','लहान'],['100','मध्यम'],['150','मोठा']];
+const TALAS=['kerva','khemta','dadra','jhaptal','rupak','ektal','tritaal'];
+const TALA_DEV={kerva:'केरवा',khemta:'खेमटा',dadra:'दादरा',jhaptal:'झपताल',rupak:'रूपक',ektal:'एकताल',tritaal:'त्रिताल'};
+const talaLabel=id=>env.talaName(TALA_DEV[id]);
+const CHAL=['all','prachal','mand','sthir'];
+const LAYERS=[['dhv','i-drum','c-dh'],['tr','i-stick','c-hand'],['step','i-foot','c-step'],['rep','i-rep','c-st']];
+const SOUNDS=['num','dhv','step'],SPEEDS=[1,.75,.5,.25];
+const WINS=[4,8,12], ZOOMS=['70','100','150'];
+const nm=r=>env.talaName(r.name);        // a tala's name in the language's script
 const ic=(id,cls)=>`<svg class="ic ${cls||''}" aria-hidden="true"><use href="#${id}"/></svg>`;
-let st={talas:Object.fromEntries(TALAS.map(t=>[t[0],true])),chal:'all',dhv:true,tr:false,step:true,rep:true,win:8,pps:100,snd:{num:true,dhv:true,step:false},speed:1};
+let st={talas:Object.fromEntries(TALAS.map(t=>[t,true])),chal:'all',dhv:true,tr:false,step:true,rep:true,win:8,pps:100,snd:{num:true,dhv:true,step:false},speed:1};
 try{const s=JSON.parse(localStorage.getItem('tala.v3')||'null');if(s)st=Object.assign(st,s,{talas:Object.assign(st.talas,s.talas||{}),snd:Object.assign(st.snd,s.snd||{})})}catch(e){}
 const save=()=>{try{localStorage.setItem('tala.v3',JSON.stringify(st))}catch(e){}};
 
 function filters(){
   const b=(attr,val,on,label)=>`<button data-${attr}="${val}" aria-pressed="${on}">${label}</button>`;
   root.getElementById('filters').innerHTML=
-   `<div class="fr0"><span class="fl0">ताल</span><div class="chips">${TALAS.map(t=>b('t',t[0],st.talas[t[0]],t[1])).join('')}</div></div>`+
-   `<div class="fr0"><span class="fl0">चाल</span><div class="chips">${CHAL.map(c=>b('c',c[0],st.chal===c[0],c[1])).join('')}</div></div>`+
-   `<div class="fr0"><span class="fl0">दाखवा</span><div class="chips">${LAYERS.map(l=>b('l',l[0],st[l[0]],ic(l[2],st[l[0]]?'':l[3])+l[1])).join('')}</div></div>`+
-   `<div class="fr0"><span class="fl0">ध्वनी</span><div class="chips">${SOUNDS.map(l=>b('s',l[0],st.snd[l[0]],l[1])).join('')}</div><span class="sep"></span><span class="fl0">लय</span><div class="chips">${SPEEDS.map(v=>b('v',v,st.speed===v,d(Math.round(v*100))+'%')).join('')}</div></div>`+
-   `<div class="fr0"><span class="fl0">वेळ</span><div class="chips">${WINS.map(w=>b('w',w,st.win===w,d(w)+' से.')).join('')}</div><span class="sep"></span><span class="fl0">आकार</span><div class="chips">${ZOOMS.map(z=>b('z',z[0],st.pps===+z[0],z[1])).join('')}</div></div>`;
+   `<div class="fr0"><span class="fl0">${tt('f.tala')}</span><div class="chips">${TALAS.map(id=>b('t',id,st.talas[id],talaLabel(id))).join('')}</div></div>`+
+   `<div class="fr0"><span class="fl0">${tt('f.chal')}</span><div class="chips">${CHAL.map(c=>b('c',c,st.chal===c,tt('chal.'+c))).join('')}</div></div>`+
+   `<div class="fr0"><span class="fl0">${tt('f.show')}</span><div class="chips">${LAYERS.map(l=>b('l',l[0],st[l[0]],ic(l[1],st[l[0]]?'':l[2])+tt('layer.'+l[0]))).join('')}</div></div>`+
+   `<div class="fr0"><span class="fl0">${tt('f.sound')}</span><div class="chips">${SOUNDS.map(k=>b('s',k,st.snd[k],tt('snd.'+k))).join('')}</div><span class="sep"></span><span class="fl0">${tt('f.speed')}</span><div class="chips">${SPEEDS.map(v=>b('v',v,st.speed===v,d(Math.round(v*100))+'%')).join('')}</div></div>`+
+   `<div class="fr0"><span class="fl0">${tt('f.time')}</span><div class="chips">${WINS.map(w=>b('w',w,st.win===w,secs(d(w)))).join('')}</div><span class="sep"></span><span class="fl0">${tt('f.size')}</span><div class="chips">${ZOOMS.map(z=>b('z',z,st.pps===+z,tt('zoom.'+z))).join('')}</div></div>`;
 }
 function legend(){
-  const L=[`<span><i style="width:22px;height:12px;background:var(--g0);border-radius:3px"></i><i style="width:22px;height:12px;background:var(--g1);border-radius:3px;margin-left:-3px"></i>गण</span>`,
-   `<span><i style="height:14px;border-left:1.5px dashed var(--mut)"></i>गट</span>`,`<span><i style="height:16px;border-left:3px solid var(--fg)"></i>आवर्तन सुरू (॥)</span>`];
-  if(st.dhv)L.push(`<span>${ic('i-drum','c-dh')} नारिंगी अंक व बिंदू = ध्वंकार</span>`);
-  if(st.tr)L.push(`<span>${ic('i-stick','c-hand')} उंच रेघ = तंकार, लहान = अनुतंकार; <b style="color:var(--hand)">उ / डा</b> = हात</span>`);
-  if(st.step)L.push(`<span>${ic('i-foot','c-step')} <b style="color:var(--fl)">डावा</b> / <b style="color:var(--fr)">उजवा</b> = पाऊल</span>`);
+  // <b> in the two last texts is coloured by the stylesheet (.lg-tr, .lg-step)
+  const L=[`<span><i style="width:22px;height:12px;background:var(--g0);border-radius:3px"></i><i style="width:22px;height:12px;background:var(--g1);border-radius:3px;margin-left:-3px"></i>${tt('leg.gan')}</span>`,
+   `<span><i style="height:14px;border-left:1.5px dashed var(--mut)"></i>${tt('leg.gat')}</span>`,`<span><i style="height:16px;border-left:3px solid var(--fg)"></i>${tt('leg.cycle')}</span>`];
+  if(st.dhv)L.push(`<span>${ic('i-drum','c-dh')} ${tt('leg.dhv')}</span>`);
+  if(st.tr)L.push(`<span class="lg-tr">${ic('i-stick','c-hand')} ${i18n.tb('tala.leg.tr')}</span>`);
+  if(st.step)L.push(`<span class="lg-step">${ic('i-foot','c-step')} ${i18n.tb('tala.leg.step')}</span>`);
   root.getElementById('legend').innerHTML=L.join('');
 }
 // row geometry: count band, then optional sub-rows
@@ -70,42 +75,42 @@ function rowSVG(r,W,P,G){
         for(let q=0;q<gl;q++){k++;const x=tm*P,w=md*P;
           if(x<WIDTH-.5){
             const dh=st.dhv&&r.dhv.includes(k),fs=w>=16?13:w>=11?10.5:9;
-            el.push(`<g data-c="${rep}-${k}"><title>${r.name} ${d(r.laya)} · अंक ${d(k)} · ${sec(tm-t)} से. (आवर्तन ${d(rep+1)})</title><rect class="hit" x="${x.toFixed(1)}" y="${y.band[0]}" width="${w.toFixed(1)}" height="${y.band[1]-y.band[0]}"/><text class="n${dh?' dh':''}" x="${(x+w/2).toFixed(1)}" y="${y.band[0]+22}" font-size="${fs}">${d(k)}</text></g>`);
+            el.push(`<g data-c="${rep}-${k}"><title>${tt('cellTitle',{name:nm(r),laya:d(r.laya),count:d(k),time:sec(tm-t),rep:d(rep+1)})}</title><rect class="hit" x="${x.toFixed(1)}" y="${y.band[0]}" width="${w.toFixed(1)}" height="${y.band[1]-y.band[0]}"/><text class="n${dh?' dh':''}" x="${(x+w/2).toFixed(1)}" y="${y.band[0]+22}" font-size="${fs}">${d(k)}</text></g>`);
             if(dh)el.push(`<circle class="dot" cx="${(x+3).toFixed(1)}" cy="${y.dot}" r="3.2"/>`);
             if(st.tr){const per=r.tri?3:4;
               for(let j=0;j<per;j++){const sx=x+j*w/per;if(sx>=WIDTH)break;
                 if(r.tri){const big=j===0,acc=big&&(k-1)%3===0;
                   el.push(`<line class="${big?'tk':'atk'}${acc?' ac':''}" x1="${sx.toFixed(1)}" y1="${big?y.tr[0]:y.tr[0]+6}" x2="${sx.toFixed(1)}" y2="${y.tr[1]}"/>`);
-                  if(big&&w>=16)el.push(`<text class="hd" x="${sx.toFixed(1)}" y="${y.hand}">${(rep*N+k-1)%2?'डा':'उ'}</text>`)}
+                  if(big&&w>=16)el.push(`<text class="hd" x="${sx.toFixed(1)}" y="${y.hand}">${(rep*N+k-1)%2?tt('hand.L'):tt('hand.R')}</text>`)}
                 else{el.push(`<line class="tk" x1="${sx.toFixed(1)}" y1="${y.tr[0]}" x2="${sx.toFixed(1)}" y2="${y.tr[1]}"/><line class="atk" x1="${(sx+w/per/2).toFixed(1)}" y1="${y.tr[0]+6}" x2="${(sx+w/per/2).toFixed(1)}" y2="${y.tr[1]}"/>`);
-                  if(w/per>=16)el.push(`<text class="hd" x="${sx.toFixed(1)}" y="${y.hand}">${j%2?'डा':'उ'}</text>`)}}}
-            if(st.step&&r.mps&&(k-1)%r.mps===0){const s=Math.floor((rep*N+k-1)/r.mps),L=s%2===0;el.push(`<text class="ft ${L?'L':'R'}" x="${(x+1).toFixed(1)}" y="${y.step}">${L?'डावा':'उजवा'}</text>`)}
+                  if(w/per>=16)el.push(`<text class="hd" x="${sx.toFixed(1)}" y="${y.hand}">${j%2?tt('hand.L'):tt('hand.R')}</text>`)}}}
+            if(st.step&&r.mps&&(k-1)%r.mps===0){const s=Math.floor((rep*N+k-1)/r.mps),L=s%2===0;el.push(`<text class="ft ${L?'L':'R'}" x="${(x+1).toFixed(1)}" y="${y.step}">${L?tt('foot.L'):tt('foot.R')}</text>`)}
           }
           tm+=md}});
       tg+=glen});
     if(t*P<WIDTH)el.push(`<line class="cyc" x1="${(t*P).toFixed(1)}" y1="0" x2="${(t*P).toFixed(1)}" y2="${y.band[1]+4}"/>`);
     out.push(`<g${rep?' class="rep"':''}>${el.join('')}</g>`);t+=cyc;rep++}
   let grid='';for(let i=0;i<=W*4;i++){const s=i/4,c=i%4===0?'gm':i%2===0?'gh':'gq';grid+=`<line class="${c}" x1="${(s*P).toFixed(1)}" y1="0" x2="${(s*P).toFixed(1)}" y2="${h}"/>`}
-  return {svg:`<svg viewBox="0 0 ${WIDTH} ${h}" width="${WIDTH}" height="${h}" role="img" aria-label="${r.name} ${d(r.laya)}">${grid}${out.join('')}</svg>`,N,cyc};
+  return {svg:`<svg viewBox="0 0 ${WIDTH} ${h}" width="${WIDTH}" height="${h}" role="img" aria-label="${nm(r)} ${d(r.laya)}">${grid}${out.join('')}</svg>`,N,cyc};
 }
-function axis(W,P){let s='';for(let i=0;i<=W;i++)s+=`<text class="ax" x="${(i*P+(i===0?3:0)).toFixed(1)}" y="15" text-anchor="${i===0?'start':i===W?'end':'middle'}">${d(i)} से.</text>`;
-  if(P>=80)for(let i=0;i<W;i++)s+=`<text class="axh" x="${((i+.5)*P).toFixed(1)}" y="15" text-anchor="middle">${d(i)}.५</text>`;
+function axis(W,P){let s='';for(let i=0;i<=W;i++)s+=`<text class="ax" x="${(i*P+(i===0?3:0)).toFixed(1)}" y="15" text-anchor="${i===0?'start':i===W?'end':'middle'}">${secs(d(i))}</text>`;
+  if(P>=80)for(let i=0;i<W;i++)s+=`<text class="axh" x="${((i+.5)*P).toFixed(1)}" y="15" text-anchor="middle">${tt('half',{n:d(i)})}</text>`;
   return `<svg viewBox="0 0 ${W*P} 20" width="${W*P}" height="20" aria-hidden="true">${s}</svg>`}
 function render(){
   filters();legend();
   const W=st.win,P=st.pps,G=layout(),grid=root.getElementById('grid');
   grid.style.gridTemplateColumns=`var(--lw) ${W*P}px`;
   const rows=ROWS.filter(r=>st.talas[r.id]&&(st.chal==='all'||st.chal===r.chal));
-  if(!rows.length){grid.style.gridTemplateColumns='1fr';grid.innerHTML='<div class="empty">या निवडीत एकही ताल नाही. वरच्या पर्यायांतून ताल किंवा चाल निवडा.</div>';return}
+  if(!rows.length){grid.style.gridTemplateColumns='1fr';grid.innerHTML=`<div class="empty">${tt('empty')}</div>`;return}
   let h='',last=null;
   rows.forEach(r=>{
-    if(r.chal!==last){last=r.chal;h+=`<div class="grp"><div class="lab"><div class="who" style="padding-top:12px"><small style="font-weight:700;color:var(--fg);font-size:13px">${CHALNAME[r.chal]}</small></div><span></span></div><div class="axc">${axis(W,P)}</div></div>`}
+    if(r.chal!==last){last=r.chal;h+=`<div class="grp"><div class="lab"><div class="who" style="padding-top:12px"><small style="font-weight:700;color:var(--fg);font-size:13px">${tt('group.'+r.chal)}</small></div><span></span></div><div class="axc">${axis(W,P)}</div></div>`}
     const {svg,N,cyc}=rowSVG(r,W,P,G);
-    const icons=[st.dhv?`<svg class="c-dh" style="top:${G.y.dot-8}px" aria-label="ध्वंकार"><use href="#i-drum"/></svg>`:'',
-      st.tr?`<svg class="c-hand" style="top:${G.y.tr[0]}px" aria-label="आनक हात"><use href="#i-stick"/></svg>`:'',
-      st.step&&r.mps?`<svg class="c-step" style="top:${G.y.step-12}px" aria-label="पाऊल"><use href="#i-foot"/></svg>`:''].join('');
+    const icons=[st.dhv?`<svg class="c-dh" style="top:${G.y.dot-8}px" aria-label="${tt('layer.dhv')}"><use href="#i-drum"/></svg>`:'',
+      st.tr?`<svg class="c-hand" style="top:${G.y.tr[0]}px" aria-label="${tt('iconHand')}"><use href="#i-stick"/></svg>`:'',
+      st.step&&r.mps?`<svg class="c-step" style="top:${G.y.step-12}px" aria-label="${tt('layer.step')}"><use href="#i-foot"/></svg>`:''].join('');
     const ri=ROWS.indexOf(r),pl=PLAY&&PLAY.ri===ri;
-    h+=`<div class="row"><div class="lab"><div class="who"><span class="top"><button class="pb" data-play="${ri}" aria-pressed="${pl}" aria-label="${r.name} ${d(r.laya)} ${pl?'थांबवा':'वाजवा'}">${pl?STOPI:PLAYI}</button><b>${r.name} <span class="lay">${d(r.laya)}</span></b><span class="now" id="now${ri}"></span></span><small>${d(N)} अंक · गण ${r.gans[0].map(d).join('+')} · आवर्तन ${sec(cyc)} से.</small>${r.note?`<small>${r.note}</small>`:''}</div><div class="icons" style="height:${G.h}px">${icons}</div></div><div class="cell${pl?' playing':''}" id="cell${ri}">${svg}<div class="ph"></div></div></div>`;
+    h+=`<div class="row"><div class="lab"><div class="who"><span class="top"><button class="pb" data-play="${ri}" aria-pressed="${pl}" aria-label="${tt(pl?'stop':'play',{name:nm(r),laya:d(r.laya)})}">${pl?STOPI:PLAYI}</button><b>${nm(r)} <span class="lay">${d(r.laya)}</span></b><span class="now" id="now${ri}"></span></span><small>${tt('rowInfo',{n:d(N),gans:r.gans[0].map(d).join('+'),cycle:sec(cyc)})}</small>${r.note?`<small>${tt('note.'+r.note)}</small>`:''}</div><div class="icons" style="height:${G.h}px">${icons}</div></div><div class="cell${pl?' playing':''}" id="cell${ri}">${svg}<div class="ph"></div></div></div>`;
   });
   grid.innerHTML=h;
 }

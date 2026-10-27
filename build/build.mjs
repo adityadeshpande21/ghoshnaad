@@ -9,6 +9,7 @@ import { buildPack } from './lib/pack.mjs';
 import { fontCss } from './lib/fonts.mjs';
 import { assemble } from './lib/assemble.mjs';
 import { checkSingleFile } from './check-single-file.mjs';
+import { languagesPlugin } from './lib/languages.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DIST = path.join(ROOT, 'dist');
@@ -23,7 +24,7 @@ if (pack.warnings.length) console.warn(`${pack.warnings.length} compile warnings
 // The browser bundles come from the TypeScript core: one global each (GhoshCompile, buildTimeline3).
 const bundle = async entry => (await esbuild({
   entryPoints: [path.join(ROOT, entry)], bundle: true, minify: true, format: 'iife',
-  target: 'es2020', platform: 'browser', write: false, legalComments: 'none', charset: 'ascii', loader: { '.css': 'text', '.html': 'text' },
+  target: 'es2020', platform: 'browser', write: false, legalComments: 'none', charset: 'ascii', loader: { '.css': 'text', '.html': 'text', '.md': 'text' }, plugins: [languagesPlugin(ROOT)],
 })).outputFiles[0].text;
 const [compiler, timeline, platformlib, composercore, screens, i18nlib] = await Promise.all([bundle('src/browser/entry-compiler.ts'), bundle('src/browser/entry-timeline.ts'), bundle('src/browser/entry-platform.ts'), bundle('src/browser/entry-composer.ts'), bundle('src/browser/entry-screens.js'), bundle('src/browser/entry-i18n.js')]);
 const fflate = fs.readFileSync(path.join(ROOT, 'node_modules/fflate/umd/index.js'), 'utf8');
@@ -50,7 +51,7 @@ fs.writeFileSync(path.join(DIST, 'index.html'), site);
 for (const f of fs.readdirSync(path.join(ROOT, 'web/icons'))) fs.copyFileSync(path.join(ROOT, 'web/icons', f), path.join(DIST, 'icons', f));
 const manifest = JSON.parse(fs.readFileSync(path.join(ROOT, 'web/manifest.webmanifest'), 'utf8'));
 fs.writeFileSync(path.join(DIST, 'manifest.webmanifest'), JSON.stringify(manifest) + '\n');
-const precache = ['./', 'index.html', 'manifest.webmanifest', ...fs.readdirSync(path.join(DIST, 'icons')).map(f => 'icons/' + f)];
+const precache = ['index.html', 'manifest.webmanifest', ...fs.readdirSync(path.join(DIST, 'icons')).map(f => 'icons/' + f)];
 const sw = fs.readFileSync(path.join(ROOT, 'web/sw.template.js'), 'utf8')
   .replaceAll('__VERSION__', release.version).replaceAll('__FILES__', JSON.stringify(precache));
 if (/__[A-Z]+__/.test(sw)) throw new Error('sw.js still has an unfilled placeholder');

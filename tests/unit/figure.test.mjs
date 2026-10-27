@@ -4,8 +4,12 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
-import { Figure } from '../../src/screens/ghoshdand/figure.loose.js';
+import { Figure, textRoots } from '../../src/screens/ghoshdand/figure.loose.js';
+import { parseKeyed, textSlots, fillSlots } from '../../src/content/keyed.ts';
 import { ROOT } from '../golden/lib.mjs';
+
+// the words of the signals live in src/content/<lang>/ghoshdand.md (the page loads them in texts.js)
+fillSlots(textSlots(textRoots()), Object.fromEntries(['mr', 'hi', 'en'].map(l => [l, parseKeyed(fs.readFileSync(path.join(import.meta.dirname, '../../src/content', l, 'ghoshdand.md'), 'utf8'), l)])));
 
 const legacy = (() => {
   const sandbox = { module: { exports: {} }, window: undefined };

@@ -7,23 +7,8 @@ import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createExport(env) {
-const { tx, esc, dv, dvN, mmss, secName, applyStatic, fitRows, slotHTML, store, I18N } = env;
+const { i18n, esc, dv, dvN, mmss, secName, applyStatic, fitRows, slotHTML, store } = env;
 const $ = env.q;   // like v1.1.0: null when the element is absent
-const XS = {
- mr: { x_style: 'स्वरूप', x_rich: 'सुधारित', x_plain: 'ग्रंथासारखे', x_layout: 'मांडणी', x_score: 'एकत्र स्कोअर', x_pages: 'प्रत्येक वाद्य स्वतंत्र', x_about: 'सुमारे', x_marks: 'चिन्हे', x_lowO: 'मंद्र सप्तक', x_highO: 'तार सप्तक', x_vk: 'कोमल / तीव्र', x_holdL: 'स्वर चालू', x_restL: 'विराम', x_grpL: 'एका मात्रेत', x_twiceL: 'दोनदा वाजवा', x_endL: 'पहिला / दुसरा अंत', x_setuL: 'सेतु: सर्व एकत्र', x_samL: 'सम', x_countL: 'मात्रा क्रमांक', x_btn: 'स्वरलिपी निर्यात', x_title: 'स्वरलिपी निर्यात', x_parts: 'कोणत्या वाद्यांची स्वरलिपी?', x_tal: 'ताल वाद्ये (पणव, झल्लरी, त्रिभुज)', x_steps: 'पावले (डावा / उजवा)',
-  x_ranan: 'सुरुवातीचे रणन', x_print: 'प्रिंट / PDF', x_copy: 'मजकूर कॉपी करा', x_txt: 'मजकूर फाइल (.txt)', x_html: 'पान फाइल (.html)', x_preview: 'पूर्वदृश्य',
-  x_need: 'किमान एक वाद्य निवडा', x_printNote: 'प्रिंटमध्ये "PDF म्हणून जतन करा" निवडल्यास PDF मिळते.', x_from: 'घोष रचना ॲपमधून', x_pickup: 'आधी', x_mine: 'स्वरलिपी', x_app: 'ॲपसाठी फाइल',
-  x_order: 'वादन क्रम', x_legend: "चिन्हे: प. = मंद्र, स' = तार, ग_ = कोमल (म_ = तीव्र), ऽ = स्वर चालू, – = विराम, [ ] = एका मात्रेतील स्वर, | = गण, , = गत, ( ) = निरंतर (वर रेषा), ^ = जोर, ! = ठहराव, < > = आवाज वाढवा / कमी करा, ` = कण स्वर, {1 … } {2 … } = पहिला / दुसरा अंत, :॥ = दोनदा", x_copied: 'कॉपी झाले' },
- hi: { x_style: 'स्वरूप', x_rich: 'सुधारित', x_plain: 'पुस्तक जैसा', x_layout: 'व्यवस्था', x_score: 'संयुक्त स्कोर', x_pages: 'हर वाद्य अलग', x_about: 'लगभग', x_marks: 'चिह्न', x_lowO: 'मंद्र सप्तक', x_highO: 'तार सप्तक', x_vk: 'कोमल / तीव्र', x_holdL: 'स्वर जारी', x_restL: 'विराम', x_grpL: 'एक मात्रा में', x_twiceL: 'दो बार बजाएँ', x_endL: 'पहला / दूसरा अंत', x_setuL: 'सेतु: सब एक साथ', x_samL: 'सम', x_countL: 'मात्रा क्रमांक', x_btn: 'स्वरलिपि निर्यात', x_title: 'स्वरलिपि निर्यात', x_parts: 'किन वाद्यों की स्वरलिपि?', x_tal: 'ताल वाद्य (पणव, झल्लरी, त्रिभुज)', x_steps: 'कदम (बायाँ / दायाँ)',
-  x_ranan: 'शुरुआत का रणन', x_print: 'प्रिंट / PDF', x_copy: 'टेक्स्ट कॉपी करें', x_txt: 'टेक्स्ट फ़ाइल (.txt)', x_html: 'पेज फ़ाइल (.html)', x_preview: 'पूर्वावलोकन',
-  x_need: 'कम से कम एक वाद्य चुनें', x_printNote: 'प्रिंट में "PDF के रूप में सहेजें" चुनने पर PDF मिलता है।', x_from: 'घोष रचना ऐप से', x_pickup: 'पहले', x_mine: 'स्वरलिपि', x_app: 'ऐप के लिए फ़ाइल',
-  x_order: 'वादन क्रम', x_legend: "चिह्न: प. = मंद्र, स' = तार, ग_ = कोमल (म_ = तीव्र), ऽ = स्वर जारी, – = विराम, [ ] = एक मात्रा के स्वर, | = गण, , = गत, ( ) = निरंतर (ऊपर रेखा), ^ = ज़ोर, ! = ठहराव, < > = आवाज़ बढ़ाएँ / घटाएँ, ` = कण स्वर, {1 … } {2 … } = पहला / दूसरा अंत, :॥ = दो बार", x_copied: 'कॉपी हुआ' },
- en: { x_style: 'Style', x_rich: 'Enhanced', x_plain: 'As in the book', x_layout: 'Layout', x_score: 'Combined score', x_pages: 'Each instrument separately', x_about: 'about', x_marks: 'Marks', x_lowO: 'low octave', x_highO: 'high octave', x_vk: 'komal / tivra', x_holdL: 'hold', x_restL: 'rest', x_grpL: 'within one matra', x_twiceL: 'play twice', x_endL: 'first / second ending', x_setuL: 'setu: all together', x_samL: 'sam', x_countL: 'matra count', x_btn: 'Export notation', x_title: 'Export notation (स्वरलिपी)', x_parts: 'Notation for which instruments?', x_tal: 'Tal vadya (Panav, Jhallari, Tribhuj)', x_steps: 'Steps (left / right)',
-  x_ranan: 'Opening ranan', x_print: 'Print / PDF', x_copy: 'Copy text', x_txt: 'Text file (.txt)', x_html: 'Page file (.html)', x_preview: 'Preview',
-  x_need: 'Pick at least one instrument', x_printNote: 'Choose "Save as PDF" in the print dialog to get a PDF.', x_from: 'From the Ghosh Rachana app', x_pickup: 'Lead-in', x_mine: 'Notation', x_app: 'File for the app',
-  x_order: 'Play order', x_legend: "Marks: प. = low octave, स' = high octave, ग_ = komal (म_ = tivra), ऽ = hold, – = rest, [ ] = notes within one matra, | = गण, , = gat, ( ) = nirantar (line above), ^ = accent, ! = pause, < > = grow / fade, ` = grace note, {1 … } {2 … } = first / second ending, :॥ = twice", x_copied: 'Copied' }
-};
-for (const l in XS) Object.assign(I18N[l], XS[l]);
 
 /* ---------- what can be exported ---------- */
 let XP = null, xsel = null, xranan = true, xstyle = 'rich', xlay = 'score';
@@ -44,8 +29,8 @@ function partGans(piece, k) {
   return gs.map(g => { const jg = J[g.addr]; if (!jg || !g.gats) return g; const jm = jg.gats.flatMap(x => x.matras); let i = 0;
     return { ...g, gats: g.gats.map(gt => ({ ...gt, matras: gt.matras.map(m => { const j = jm[i++]; return m.charanEnd && j ? j : m; }) })) }; });
 }
-const optName = k => (k === 'tal' ? tx('x_tal') : k === 'steps' ? tx('x_steps') : tx('parts')[k]);
-const rowName = k => (k === 'tal' ? tx('groups').tal : tx('parts')[k]);
+const optName = k => (k === 'tal' ? i18n.t('export.tal') : k === 'steps' ? i18n.t('export.steps') : i18n.t('common.parts.' + k));
+const rowName = k => (k === 'tal' ? i18n.t('common.groups.tal') : i18n.t('common.parts.' + k));
 
 /* ---------- book layout helpers ---------- */
 // The books print each instrument on its own page: "instrument | title | tala-laya", आरोहण/अवरोहण for वंशी,
@@ -119,7 +104,7 @@ function partText(piece, k) {
 function fullText(piece, sel) {
   const out = [];
   sel.forEach((k, i) => { if (i) out.push('', '────────────────────────', ''); out.push(...partText(piece, k)); });
-  out.push('', '', tx('x_legend'));
+  out.push('', '', i18n.t('export.legend'));
   return out.join('\n');
 }
 
@@ -194,19 +179,19 @@ function rulerGan(g, gats) {
 }
 function perfStrip(piece) {
   const R = piece.rhythm; if (!R.performance) return '';
-  const chip = st => { if (st.id === 'r') return `<span class="pc r">${esc(tx('ranan'))}</span>`; const c = R.charans.find(x => x.id === st.id);
-    const lab = c.type === 'prarambhik' ? tx('bPr') : c.type === 'setu' ? tx('setu') : (c.no ? dvN(c.no) : '·');
+  const chip = st => { if (st.id === 'r') return `<span class="pc r">${esc(i18n.t('player.ranan'))}</span>`; const c = R.charans.find(x => x.id === st.id);
+    const lab = c.type === 'prarambhik' ? i18n.t('player.bPr') : c.type === 'setu' ? i18n.t('player.setu') : (c.no ? dvN(c.no) : '·');
     return `<span class="pc${st.closing ? ' cl' : ''}">${esc(lab)}${st.times > 1 ? `<small>×${dvN(st.times)}</small>` : ''}</span>`; };
-  return `<div class="rperf"><span class="rlab">${esc(tx('x_order'))}</span>${R.performance.map(chip).join('<span class="par">→</span>')}</div>`;
+  return `<div class="rperf"><span class="rlab">${esc(i18n.t('export.order'))}</span>${R.performance.map(chip).join('<span class="par">→</span>')}</div>`;
 }
 function richHeader(piece, keys) {
   const m = piece.meta, R = piece.rhythm, rg = m.raga;
   let dur = '';
-  try { const lead = piece.layout.lead, t = buildTimeline3(piece, lead, { order: R.performance ? 'performance' : 'printed' }); dur = tx('x_about') + ' ' + mmss(t.total - t.origin); } catch (e) {}
+  try { const lead = piece.layout.lead, t = buildTimeline3(piece, lead, { order: R.performance ? 'performance' : 'printed' }); dur = i18n.t('export.about') + ' ' + mmss(t.total - t.origin); } catch (e) {}
   const sc = str => Composer.tokenize(str).map(noteSpan).join(' ');
   return `<header class="rhead"><div class="rh1"><h1>${esc(m.title.dev)}</h1><div class="rparts">${keys.map(k => `<span class="rp p-${partKey(k)}">${BOOK_NAME[k]}</span>`).join('')}</div></div>
     <div class="rmeta"><span>${esc(secName(m.section))}</span><span>${esc(talaLaya(piece))}</span>${dur ? `<span>${esc(dur)}</span>` : ''}</div>
-    ${rg && rg.aroha ? `<div class="rraga"><span><b>${esc(tx('raga'))} ${esc(rg.name || '')}</b></span><span><i>आरोहण</i> ${sc(rg.aroha)}</span><span><i>अवरोहण</i> ${sc(rg.avaroha || '')}</span></div>` : ''}
+    ${rg && rg.aroha ? `<div class="rraga"><span><b>${esc(i18n.t('player.raga'))} ${esc(rg.name || '')}</b></span><span><i>आरोहण</i> ${sc(rg.aroha)}</span><span><i>अवरोहण</i> ${sc(rg.avaroha || '')}</span></div>` : ''}
     ${perfStrip(piece)}</header>`;
 }
 function richDoc(piece, sel) {
@@ -219,13 +204,13 @@ function richDoc(piece, sel) {
   let h = richHeader(piece, sel), setu = false;
   if (keys.includes('anak') && xranan && R.prelude) {
     const P0 = R.prelude, pg = (R.talas[P0.tala] || {}).gats;
-    h += `<section class="rblk ranan"><div class="rbadge"><b>${esc(tx('ranan'))}</b></div><div class="rlines"><div class="rline">${row('anak', '॥', P0.parts.anak.gans.map(g => richGan(g, pg)), '॥')}</div></div></section>`;
+    h += `<section class="rblk ranan"><div class="rbadge"><b>${esc(i18n.t('player.ranan'))}</b></div><div class="rlines"><div class="rline">${row('anak', '॥', P0.parts.anak.gans.map(g => richGan(g, pg)), '॥')}</div></div></section>`;
   }
   let ci = -1, blk = null;
   const byC = {}; info.forEach(x => (byC[x.c.id] = byC[x.c.id] || []).push(x));
   R.charans.forEach((c, cidx) => {
     const xs = byC[c.id]; if (!xs) return; ci++;
-    const lab = c.type === 'prarambhik' ? tx('bPr') : c.type === 'setu' ? tx('setu') : (c.no ? dvN(c.no) : '');
+    const lab = c.type === 'prarambhik' ? i18n.t('player.bPr') : c.type === 'setu' ? i18n.t('player.setu') : (c.no ? dvN(c.no) : '');
     if (c.type === 'setu') setu = true;
     h += `<section class="rblk${ci % 2 ? ' alt' : ''}"><div class="rbadge"><b>${esc(lab)}</b>${c.repeat > 1 ? `<small>×${dvN(c.repeat)}</small>` : ''}${c.type === 'setu' ? '<small>*</small>' : ''}</div><div class="rlines">`;
     const gats = gatsOf(c);
@@ -233,7 +218,7 @@ function richDoc(piece, sel) {
     if (pus.length || (cidx === 0 && om)) h += `<div class="rpick"><span class="rom">${cidx === 0 && om ? '‖ॐ‖' : ''}</span><span class="rpus">${pus.map(([k, p]) => `<span class="p-${k}">${multi ? `<em>${SHORT[k === 'panav' ? 'tal' : k]}</em>` : ''}${gats ? ', ' : ''}${p.matras.map(bookMatra).join('')} ‖</span>`).join('')}</span></div>`;
     xs.forEach((x, i) => {
       h += '<div class="rline">';
-      if (i === 0) h += `<div class="rrow rruler"><span class="rlbl">${esc(tx('c_split'))}</span><span class="rbar"></span>${x.l.gans.map((a, j) => (j ? '<span class="rbar"></span>' : '') + rulerGan(G[lead][a], gats)).join('')}<span class="rbar"></span></div>`;
+      if (i === 0) h += `<div class="rrow rruler"><span class="rlbl">${esc(i18n.t('composer.split'))}</span><span class="rbar"></span>${x.l.gans.map((a, j) => (j ? '<span class="rbar"></span>' : '') + rulerGan(G[lead][a], gats)).join('')}<span class="rbar"></span></div>`;
       keys.forEach(k => { const l = k === lead ? x.l : (L[k][c.id] || [])[i]; if (!l) return;
         h += row(k, x.open, l.gans.map(a => (G[k][a] ? richGan(G[k][a], gats) : '<span class="rg"></span>')), x.close); });
       h += '</div>';
@@ -241,8 +226,8 @@ function richDoc(piece, sel) {
     h += '</div></section>';
   });
   if (setu) h += `<p class="rnote">* ${SETU_NOTE}</p>`;
-  const lg = [['<span class="s dot-b">प</span>', 'x_lowO'], ['<span class="s dot-t">स</span>', 'x_highO'], ['<span class="s vk">ग</span>', 'x_vk'], ['ऽ', 'x_holdL'], ['–', 'x_restL'], ['<span class="bmt grp">सग</span>', 'x_grpL'], [':‖', 'x_twiceL'], ['<sup>१</sup> <sup>२</sup>', 'x_endL'], ['<b class="rsam">१</b>', 'x_samL']];
-  h += `<footer class="rleg"><b>${esc(tx('x_marks'))}</b>${lg.map(([g, k]) => `<span><i>${g}</i>${esc(tx(k))}</span>`).join('')}</footer>`;
+  const lg = [['<span class="s dot-b">प</span>', 'export.lowO'], ['<span class="s dot-t">स</span>', 'export.highO'], ['<span class="s vk">ग</span>', 'export.vk'], ['ऽ', 'export.holdL'], ['–', 'export.restL'], ['<span class="bmt grp">सग</span>', 'export.grpL'], [':‖', 'export.twiceL'], ['<sup>१</sup> <sup>२</sup>', 'export.endL'], ['<b class="rsam">१</b>', 'export.samL']];
+  h += `<footer class="rleg"><b>${esc(i18n.t('export.marks'))}</b>${lg.map(([g, k]) => `<span><i>${g}</i>${esc(i18n.t(k))}</span>`).join('')}</footer>`;
   return `<article class="rdoc">${h}</article>`;
 }
 const RICH_CSS = `.rsheet{font-family:"Mukta","Noto Sans Devanagari",system-ui,sans-serif;color:#17191E;background:#fff;max-width:900px;margin:0 auto;padding:10px 8px}
@@ -310,11 +295,11 @@ function openExport2(piece) {
 function renderX() {
   const opts = options(XP);
   $('#xParts').innerHTML = opts.map(k => `<button class="opt" data-xk="${k}" aria-pressed="${xsel.includes(k)}"><span>${esc(optName(k))}</span></button>`).join('') +
-    (XP.rhythm.prelude && xsel.includes('anak') ? `<button class="opt" data-xr="1" aria-pressed="${xranan}"><span>${esc(tx('x_ranan'))}</span></button>` : '');
+    (XP.rhythm.prelude && xsel.includes('anak') ? `<button class="opt" data-xr="1" aria-pressed="${xranan}"><span>${esc(i18n.t('export.ranan'))}</span></button>` : '');
   const none = !xsel.length;
-  $('#xStyle').innerHTML = [['rich', 'x_rich'], ['plain', 'x_plain']].map(([v, k]) => `<button class="opt" data-xs="${v}" aria-pressed="${xstyle === v}"><span>${esc(tx(k))}</span></button>`).join('');
+  $('#xStyle').innerHTML = [['rich', 'export.rich'], ['plain', 'export.plain']].map(([v, k]) => `<button class="opt" data-xs="${v}" aria-pressed="${xstyle === v}"><span>${esc(i18n.t(k))}</span></button>`).join('');
   $('#xLayW').hidden = xstyle !== 'rich' || xsel.length < 2;
-  $('#xLay').innerHTML = [['score', 'x_score'], ['pages', 'x_pages']].map(([v, k]) => `<button class="opt" data-xl="${v}" aria-pressed="${xlay === v}"><span>${esc(tx(k))}</span></button>`).join('');
+  $('#xLay').innerHTML = [['score', 'export.score'], ['pages', 'export.pages']].map(([v, k]) => `<button class="opt" data-xl="${v}" aria-pressed="${xlay === v}"><span>${esc(i18n.t(k))}</span></button>`).join('');
   $('#xNeed').hidden = !none;
   ['#xPrint', '#xCopy', '#xTxt', '#xHtml'].forEach(id => { $(id).disabled = none; });
   const order = opts.filter(k => xsel.includes(k));
@@ -329,7 +314,8 @@ function renderX() {
   }
 }
 function chosen() { return options(XP).filter(k => xsel.includes(k)); }
-function fname(ext) { return (XP.meta.title.rom || XP.meta.title.dev || 'rachana').replace(/[\\/:*?"<>|]+/g, ' ').trim() + ' — swarlipi.' + ext; }
+// plain ASCII: some browsers turn a file name with "—" into "download"
+function fname(ext) { return (XP.meta.title.rom || XP.meta.title.dev || 'rachana').replace(/[\\/:*?"<>|]+/g, ' ').trim() + ' - swarlipi.' + ext; }
 async function saveFile(text, name, type) {
   try { const f = new File([text], name, { type }); if (navigator.canShare && navigator.canShare({ files: [f] })) { await navigator.share({ files: [f], title: name }); return; } } catch (e) { if (e && e.name === 'AbortError') return; }
   try { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], { type })); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1500); } catch (e) {}
@@ -349,7 +335,7 @@ $('#xexport').addEventListener('click', async e => {
     document.title = (XP.meta.title.dev || '') + ' — स्वरलिपी';
     setTimeout(() => { try { window.print(); } catch (er) {} }, 50); return;
   }
-  if (b.id === 'xCopy') { const t = fullText(XP, sel); try { await navigator.clipboard.writeText(t); toastX(tx('x_copied')); } catch (er) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toastX(tx('x_copied')); } catch (x) {} ta.remove(); } return; }
+  if (b.id === 'xCopy') { const t = fullText(XP, sel); try { await navigator.clipboard.writeText(t); toastX(i18n.t('export.copied')); } catch (er) { const ta = document.createElement('textarea'); ta.value = t; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); toastX(i18n.t('export.copied')); } catch (x) {} ta.remove(); } return; }
   if (b.id === 'xTxt') { saveFile(fullText(XP, sel), fname('txt'), 'text/plain'); return; }
   if (b.id === 'xHtml') {
     const css = [...document.querySelectorAll('style')].map(s => s.textContent).join('\n');

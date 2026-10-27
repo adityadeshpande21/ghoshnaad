@@ -7,7 +7,7 @@ import { makeScoreView } from '../../ui/scoreview.loose.js';
 
 /** @param {any} env */
 export function createPlayer(env) {
-const { q: $, tx, esc, dv, dvN, L, I18N, mmss, secName, talaName, ragaName, store, APP, INST_NAMES, PART, PART_C, PRINTED, applyStatic, loadJSON, i18n } = env;
+const { q: $, esc, dv, dvN, mmss, secName, talaName, ragaName, store, APP, INST_NAMES, PART, PART_C, PRINTED, applyStatic, loadJSON, i18n } = env;
 const LSV = () => env.list();
 const ScoreView = { makeScoreView };
 /* ================= audio ================= */
@@ -62,7 +62,7 @@ const TR=new GhoshAudio.Transport(ENG,{
     if(e.type==='step')footfall(at,e.foot,out);
     else if(e.stroke==='dhvam'||e.stroke==='jham'||e.stroke==='tam'){const ml=e.dur?Math.max(.2,e.dur*1.5):0;(e.stroke==='dhvam'?panav:e.stroke==='jham'?jhal:trib)(at,v,out,ml)}
     else if(e.type==='stroke')playStroke(e,at,out);else if(e.type==='note'){const vs=voicesFor(it.k);vs.forEach(v=>playNote({...e,accent:e.accent,pk:it.k},at,out,v))}},
-  onEnd:()=>{stop(true);S.pos=0;paintAt(0);$('#tnow').textContent=tx('done')},
+  onEnd:()=>{stop(true);S.pos=0;paintAt(0);$('#tnow').textContent=i18n.t('player.done')},
   onLate:()=>{LATE++},
   // a call, the lock screen or a tab switch took the sound: pause where it was; the next tap on play resumes from there
   onInterrupt:()=>{stop(true)}});
@@ -84,7 +84,7 @@ async function openPiece(id,user){
   if(user)audio();             // unlock sound inside the tap
   let piece;
   try{piece=id.startsWith('f~')?window.Library.pieceOf(id.slice(2)):await loadJSON('data/r/'+id+'.json')}
-  catch(e){alert1(tx('openErr'));return}
+  catch(e){alert1(i18n.t('list.openErr'));return}
   const rec=[id,...store.get('recent',[]).filter(x=>x!==id)].slice(0,6);store.set('recent',rec);
   try{if(location.hash!=='#'+id)history.pushState({id},'', '#'+id)}catch(e){}
   showPiece(piece,{play:user,key:id});
@@ -114,19 +114,19 @@ function alert1(msg){$('#rows').insertAdjacentHTML('afterbegin',`<p class="empty
 /* ---------- notation ---------- */
 const {slotHTML,matraHTML,ganHTML,fitRows}=ScoreView.makeScoreView({esc,dvN,$});
 function charanLabel(c){
-  if(c.type==='ranan')return tx('ranan');
-  if(c.type==='prarambhik')return tx('prarambhik');
-  if(c.type==='setu')return tx('setu');
+  if(c.type==='ranan')return i18n.t('player.ranan');
+  if(c.type==='prarambhik')return i18n.t('player.prarambhik');
+  if(c.type==='setu')return i18n.t('player.setu');
   if(c.label&&!c.no)return c.label;
-  const base=c.no?tx('charan',dv(c.no)):(c.label||'');
-  return base+(c.repeat>1?' · '+tx('twice'):'');
+  const base=c.no?i18n.t('player.charan', { n: dv(c.no) }):(c.label||'');
+  return base+(c.repeat>1?' · '+i18n.t('player.twice'):'');
 }
 let CELL={};  // part -> addr -> element
 function renderPlayer(){
   const T0=R.talas[(R.charans.find(c=>c.type!=='prarambhik')||R.charans[0]).tala];
-  const ttl=L().romanNames&&P.meta.title.rom?P.meta.title.rom:P.meta.title.dev;$('#ptitle').textContent=ttl;$('#mtitle').textContent=ttl;
+  const ttl=i18n.name(P.meta.title.dev,P.meta.title.rom);$('#ptitle').textContent=ttl;$('#mtitle').textContent=ttl;
   const talas=[...new Set(R.charans.map(c=>talaName(R.talas[c.tala].name.dev)+' '+dv(c.laya)))].join(' → ');
-  $('#psub').textContent=[secName(P.meta.section),talas,P.meta.raga&&P.meta.raga.name&&(tx('raga')+' '+ragaName(P.meta.raga.name)),returnTo==='fixer'&&tx('f_draft'),curKey&&curKey.startsWith('f~')&&tx('l_tagFolder')].filter(Boolean).join(' · ');
+  $('#psub').textContent=[secName(P.meta.section),talas,P.meta.raga&&P.meta.raga.name&&(i18n.t('player.raga')+' '+ragaName(P.meta.raga.name)),returnTo==='fixer'&&i18n.t('correction.draft'),curKey&&curKey.startsWith('f~')&&i18n.t('library.tagFolder')].filter(Boolean).join(' · ');
   $('#fixBtn').hidden=!(window.FixerUI&&(returnTo==='fixer'||(curKey&&LSV().LIST.some(r=>r.id===curKey))));
   renderModes();
   $('#marchBtn').disabled=!P.parts.steps;$('#marchBtn').style.opacity=P.parts.steps?1:.4;
@@ -135,12 +135,12 @@ function renderPlayer(){
 function renderModes(){$('#modes [data-m="perf"]').hidden=!R.performance;
   $('#modes').querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mode));
 }
-const instName=id=>INST_NAMES[id][L().romanNames?1:0];
+const instName=id=>i18n.name(...INST_NAMES[id]);
 function chipName(k){if(k==='shankh'||k==='vanshi')return INST[k].map(instName).join(' + ');return PART[k].dv}
 function renderChips(){
   const keys=KEYS.filter(k=>PART[k]&&enabled(k));
   const all=keys.filter(k=>k!=='steps').every(on)&&!on('steps');
-  $('#pchips').innerHTML=`<button class="chip" data-k="all" aria-pressed="${all}">${tx('all')}</button>`+
+  $('#pchips').innerHTML=`<button class="chip" data-k="all" aria-pressed="${all}">${i18n.t('list.all')}</button>`+
     keys.map(k=>`<button class="chip" data-k="${k}" aria-pressed="${on(k)&&!all}"><span class="dot" style="background:${PART[k].c}"></span>${chipName(k)}</button>`).join('');
 }
 let fitT=null;addEventListener('resize',()=>{clearTimeout(fitT);fitT=setTimeout(()=>{if(P&&!$('#player').hidden){fitRows();if(marchOn)paintMarchLines()}},150)});
@@ -159,10 +159,10 @@ function renderScore(){
     return pad(pre)+l.gans.map(a=>gan[k][a]?ganHTML(gan[k][a],k):'<span class="gp"></span>').join('')+pad(C-pre-l.gans.length)};
   // अनागत: matras played just before सम (printed as a short line before the charan), shown right-aligned
   const pickRow=c=>{const ps=vis.map(k=>[k,(P.parts[k].pickups||[]).find(x=>x.charan===c.id)]).filter(x=>x[1]);if(!ps.length)return '';
-    return `<div class="ln pk" data-first="${c.id}.p.${ps[0][1].matras[0].at}">`+ps.map(([k,pk],i)=>`<div class="pr r-${k} pkrow ${vis.indexOf(k)===0?'lead':'sec'}">${i===0?`<span class="pkl">↪ ${esc(tx('anagat'))}</span>`:'<span class="pkl"></span>'}${pk.matras.map(m=>`<span class="g pkm" data-a="${c.id}.p.${m.at}">${matraHTML(m)}</span>`).join('')}<span class="pkbar">॥</span></div>`).join('')+'</div>'};
+    return `<div class="ln pk" data-first="${c.id}.p.${ps[0][1].matras[0].at}">`+ps.map(([k,pk],i)=>`<div class="pr r-${k} pkrow ${vis.indexOf(k)===0?'lead':'sec'}">${i===0?`<span class="pkl">↪ ${esc(i18n.t('player.anagat'))}</span>`:'<span class="pkl"></span>'}${pk.matras.map(m=>`<span class="g pkm" data-a="${c.id}.p.${m.at}">${matraHTML(m)}</span>`).join('')}<span class="pkbar">॥</span></div>`).join('')+'</div>'};
   let h='';
   if(perf&&R.prelude){
-    h+=`<div class="cb" data-c="r"><button class="chh" data-jump="r">${tx('rananAnak')}</button><div class="ln" data-first="r.b.0">`+
+    h+=`<div class="cb" data-c="r"><button class="chh" data-jump="r">${i18n.t('player.rananAnak')}</button><div class="ln" data-first="r.b.0">`+
       `<div class="pr r-anak lead pre">${(R.prelude.parts.anak||{gans:[]}).gans.map(g=>ganHTML(g,'anak')).join('')}</div>`+
       (TV&&R.prelude.parts[TV]?`<div class="pr r-${TV} tal">${R.prelude.parts[TV].gans.map((g,i)=>ganHTML(tvGan(g,(R.prelude.parts.jhallari||{gans:[]}).gans[i]),TV)).join('')}</div>`:'')+`</div></div>`;
   }
@@ -174,7 +174,7 @@ function renderScore(){
       h+=`<div class="ln" data-first="${first?first.gans[0]:''}">`+rows.map((k,vi)=>{const l=(lines[k][c.id]||[])[i];if(!l)return '';
         return `<div class="pr r-${k} ${k===TV?'tal':vi===0?'lead':'sec'}">${lineCells(k,l)}</div>`}).join('')+`</div>`}
     h+=`</div>`});
-  if(perf&&R.performance){const cl=R.performance.find(x=>x.closing);if(cl){const c=R.charans.find(x=>x.id===cl.id);h+=`<p class="tail">${esc(tx('tail',charanLabel({...c,repeat:1})))}</p>`}}
+  if(perf&&R.performance){const cl=R.performance.find(x=>x.closing);if(cl){const c=R.charans.find(x=>x.id===cl.id);h+=`<p class="tail">${esc(i18n.t('player.tail', { part: charanLabel({...c,repeat:1}) }))}</p>`}}
   $('#score').innerHTML=h;fitRows();
   $('#score').querySelectorAll('.g').forEach(el=>{const pr=el.closest('.pr');if(pr.classList.contains('pre')){vis.forEach(k=>CELL[k][el.dataset.a]=el);return}
     const k=[...pr.classList].find(x=>x.startsWith('r-')).slice(2);(CELL[k]||(CELL[k]={}))[el.dataset.a]=el});
@@ -210,10 +210,10 @@ function build(){
   renderBlocks();$('#tend').textContent=mmss(end);
   const base=(R.charans.find(c=>c.type!=='prarambhik')||R.charans[0]).laya;$('#tval').textContent=$('#mtval').textContent=dv(Math.round(base*tempo));
 }
-function blockLabel(b,i){if(b.charan===0)return tx('bR');const c=R.charans.find(x=>x.n===b.charan);if(!c)return '';
-  if(c.type==='prarambhik')return tx('bPr');if(c.type==='setu')return tx('bSe');if(c.role==='closing-tag')return '·';return c.no?dv(c.no):''}
+function blockLabel(b,i){if(b.charan===0)return i18n.t('player.bR');const c=R.charans.find(x=>x.n===b.charan);if(!c)return '';
+  if(c.type==='prarambhik')return i18n.t('player.bPr');if(c.type==='setu')return i18n.t('player.bSe');if(c.role==='closing-tag')return '·';return c.no?dv(c.no):''}
 function renderBlocks(){const B=EV.blocks;const lastI=B.length-1;const cl=perf&&R.performance&&R.performance[R.performance.length-1].closing;
-  $('#blocks').innerHTML=B.map((b,i)=>`<button data-b="${i}" class="${cl&&i===lastI?'cl':''}" style="flex-grow:${Math.max(.6,b.e-b.s)}" aria-label="${esc(tx('goTo',blockLabel(b,i)))}"><i></i><span>${blockLabel(b,i)}${cl&&i===lastI?' ⟲':''}</span></button>`).join('')}
+  $('#blocks').innerHTML=B.map((b,i)=>`<button data-b="${i}" class="${cl&&i===lastI?'cl':''}" style="flex-grow:${Math.max(.6,b.e-b.s)}" aria-label="${esc(i18n.t('player.goTo', { target: blockLabel(b,i) }))}"><i></i><span>${blockLabel(b,i)}${cl&&i===lastI?' ⟲':''}</span></button>`).join('')}
 $('#blocks').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;const B=EV.blocks[+b.dataset.b];seek(B.s)});
 function idxAt(arr,t){let lo=0,hi=arr.length-1,a=-1;while(lo<=hi){const m=(lo+hi)>>1;if(arr[m].t<=t+EPS){a=m;lo=m+1}else hi=m-1}return a}
 function curPos(){return TR.position()}
@@ -230,7 +230,7 @@ function start(from=0,countIn=marchOn){
   let lead=.12;
   if(countIn&&R.countIn){const md=60/((R.charans.find(c=>c.type!=='prarambhik')||R.charans[0]).laya*tempo);const cd=Math.min(1.4,Math.max(.4,md*(R.countIn.matras||2)));const now=ctx.currentTime+.12;
     // अंक-ताल: "एक दो, एक दो" (दादरा: "एक दो तीन, एक दो तीन"), a soft click on each count, the रणन follows in that tempo
-    const raw=R.countIn.words||['एक','दो','एक','दो'],words=raw.map(w=>L().countWord?L().countWord(w):w);words.forEach((w,k)=>{click(now+k*cd,w===words[0]||raw[k]==='एक'?1:.6,master);S.cnt.push(setTimeout(()=>{$('#count').textContent=w;$('#count').hidden=false},(.12+k*cd+outLat())*1000))});
+    const raw=R.countIn.words||['एक','दो','एक','दो'],words=raw.map(w=>i18n.t('player.countWord',{word:w}));words.forEach((w,k)=>{click(now+k*cd,w===words[0]||raw[k]==='एक'?1:.6,master);S.cnt.push(setTimeout(()=>{$('#count').textContent=w;$('#count').hidden=false},(.12+k*cd+outLat())*1000))});
     S.cnt.push(setTimeout(()=>{$('#count').hidden=true},(.12+words.length*cd+outLat())*1000));lead=.12+words.length*cd}
   TR.load(EV.items,EV.end);TR.start({from,window:win,lead});
   setPlayIcon(true);S.raf=requestAnimationFrame(frame);wake(true)}
@@ -238,7 +238,7 @@ function stop(silent){const pos=curPos();TR.halt();cancelAnimationFrame(S.raf);S
   ENG.fadeOutParts();gains=ENG.parts;
   if(!silent)S.pos=pos;setPlayIcon(false)}
 function setPlayIcon(p){const d=p?'M7 5h4v14H7zM13 5h4v14h-4z':'M8 5v14l11-7z';$('#pi').setAttribute('d',d);$('#mpi').setAttribute('d',d);
-  $('#play').setAttribute('aria-label',p?tx('stop'):tx('play'));$('#mplay').setAttribute('aria-label',p?tx('stop'):tx('play'))}
+  $('#play').setAttribute('aria-label',p?i18n.t('player.stop'):i18n.t('player.play'));$('#mplay').setAttribute('aria-label',p?i18n.t('player.stop'):i18n.t('player.play'))}
 function restart(pos){stop(true);build();start(pos,false)}
 function seek(t){S.pos=t;if(S.playing){restart(t)}else{paintAt(t)}}
 let LATE=0;   // sounds skipped because they would have come late (shown in ध्वनी तपासणी)
@@ -260,12 +260,12 @@ function paintAt(t){
   $('#tnow').textContent=mmss(t);
   if(marchOn){const j=idxAt(STEPS,t);if(j!==lastStep){lastStep=j;const st=STEPS[j];
       $('#fL').classList.toggle('on',!!st&&st.foot==='L');$('#fR').classList.toggle('on',!!st&&st.foot==='R');
-      $('#mstep').textContent=tx('step',dv(Math.max(0,j+1)));
+      $('#mstep').textContent=i18n.t('player.step', { n: dv(Math.max(0,j+1)) });
       if(st&&S.playing&&navigator.vibrate)try{navigator.vibrate(18)}catch(e){}}
     const lb=EV.hl[LEAD]||Object.values(EV.hl)[0];const i=idxAt(lb,t);const b=i>=0?lb[i]:null;$('#msam').classList.toggle('on',!!b&&b.sam);
-    if(bi!==lastBlock){lastBlock=bi;const bb=B[bi];$('#mpos').textContent=bb?(bb.charan===0?tx('ranan'):blockName(bb)):'—'}}
+    if(bi!==lastBlock){lastBlock=bi;const bb=B[bi];$('#mpos').textContent=bb?(bb.charan===0?i18n.t('player.ranan'):blockName(bb)):'—'}}
 }
-function blockName(b){const c=R.charans.find(x=>x.n===b.charan);if(!c)return '';return charanLabel({...c,repeat:1})+(b.passes>1?' · '+tx('times',dv(2)):'')}
+function blockName(b){const c=R.charans.find(x=>x.n===b.charan);if(!c)return '';return charanLabel({...c,repeat:1})+(b.passes>1?' · '+i18n.t('player.times', { n: dv(2) }):'')}
 function scrollToLine(ln){const sc=$('#score');const r=ln.getBoundingClientRect(),sr=sc.getBoundingClientRect();
   const want=sr.top+sr.height*.18;if(r.top<sr.top+4||r.top>sr.top+sr.height*.45)sc.scrollTop+=r.top-want}
 $('#score').addEventListener('click',e=>{
@@ -287,29 +287,29 @@ async function setMode(m){if(m===mode)return;stop(true);S.pos=0;mode=m;perf=m===
   renderModes();renderChips();renderScore();build();paintAt(0);renderModes()}
 $('#modes').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(b)setMode(b.dataset.m)});
 $('#marchBtn').onclick=async()=>{if(!P.parts.steps)return;marchOn=true;$('#march').hidden=false;
-  $('#msub').textContent=tx('marchA')+' · '+(P.meta.performance.mode==='mandchal'?tx('mandchal'):tx('prachalan'));if(stepSnd)SEL.add('steps');applySel();lastStep=-1;lastBlock=-1;paintMarchLines();
+  $('#msub').textContent=i18n.t('player.marchA')+' · '+(P.meta.performance.mode==='mandchal'?i18n.t('player.mandchal'):i18n.t('list.prachalan'));if(stepSnd)SEL.add('steps');applySel();lastStep=-1;lastBlock=-1;paintMarchLines();
   if(!S.playing){audio();start(S.pos>=EV.end-.05?0:S.pos,true)}};
 $('#mclose').onclick=()=>{marchOn=false;$('#march').hidden=true;SEL.delete('steps');if(!SEL.size)SEL=new Set(KEYS.filter(x=>x!=='steps'));applySel()};
 $('#mstepSnd').onclick=()=>{stepSnd=!stepSnd;$('#mstepSnd').setAttribute('aria-pressed',stepSnd);if(stepSnd)SEL.add('steps');else SEL.delete('steps');if(!SEL.size)SEL=new Set(['steps']);applySel()};
 function paintMarchLines(){const cur=lastLine||$('#score .ln');if(!cur){$('#mlines').innerHTML='';return}
   const all=[...$('#score').querySelectorAll('.ln')],i=all.indexOf(cur),pv=all[i-1],nx=all[i+1];
   const row=(tag,el,cls)=>`<div class="mrow ${cls}"><span class="tag">${tag}</span>${el?el.outerHTML.replace(' cur',''):'<div class="ln ln-empty"></div>'}</div>`;
-  $('#mlines').innerHTML=row(tx('prev'),pv,'m-prev')+row(tx('now'),cur,'m-now')+row(tx('next'),nx,'m-next');fitRows($('#mlines'));
+  $('#mlines').innerHTML=row(i18n.t('player.prev'),pv,'m-prev')+row(i18n.t('player.now'),cur,'m-now')+row(i18n.t('player.next'),nx,'m-next');fitRows($('#mlines'));
   const n=$('#mlines .m-now .ln');if(n)n.classList.add('cur')}
 
 /* ---------- वाद्य निवड ---------- */
 function renderSheet(){
   $('#sheetBody').innerHTML=Object.entries(INSTR).map(([g,G])=>{
     const need=(g==='shankh'||g==='vanshi');
-    const en=L().romanNames;
-    return `<div class="igrp"><b>${tx('groups')[g]}</b><div class="opts">${G.opts.map(([id])=>{const [d,e]=INST_NAMES[id];return `<button class="opt" data-g="${g}" data-i="${id}" aria-pressed="${INST[g].includes(id)}"><span>${en?e:d}</span><small>${en?d:e}</small></button>`}).join('')}</div>${need?`<span class="note">${tx('needOne')}</span>`:''}</div>`}).join('');
+    const en=i18n.romanNames;
+    return `<div class="igrp"><b>${i18n.t('common.groups.' + g)}</b><div class="opts">${G.opts.map(([id])=>{const [d,e]=INST_NAMES[id];return `<button class="opt" data-g="${g}" data-i="${id}" aria-pressed="${INST[g].includes(id)}"><span>${i18n.name(d,e)}</span><small>${en?d:e}</small></button>`}).join('')}</div>${need?`<span class="note">${i18n.t('settings.needOne')}</span>`:''}</div>`}).join('');
   const sel=(on)=>`aria-pressed="${on}"`;
-  $('#playOpts').innerHTML=`<div class="igrp"><b>${tx('pitchL')}</b>${['shankh','vanshi'].map(pk=>`<span class="note">${tx('groups')[pk]} · ${SA_KEYS[saKeys[pk]]}${SA_DEF[pk].oct}</span><div class="opts keys">${SA_KEYS.map((k,i)=>`<button class="opt key" data-sa="${pk}:${i}" ${sel(i===saKeys[pk])}><span>${k}</span></button>`).join('')}</div>`).join('')}</div>
-  <div class="igrp"><b>${tx('artL')}</b><div class="opts">${['santar','nirantar'].map(a=>`<button class="opt" data-art="${a}" ${sel(a===artic)}><span>${tx(a)}</span><small>${tx(a+'S')}</small></button>`).join('')}</div></div>
-  <div class="igrp"><b>${tx('kanL')}</b><div class="opts">${[30,45,60,80,100,130].map(m=>`<button class="opt key" data-kan="${m}" ${sel(m===kanMs)}><span>${dv(m)}</span></button>`).join('')}</div><span class="note">${tx('ms','')}</span></div>`;
+  $('#playOpts').innerHTML=`<div class="igrp"><b>${i18n.t('settings.pitchL')}</b>${['shankh','vanshi'].map(pk=>`<span class="note">${i18n.t('common.groups.' + pk)} · ${SA_KEYS[saKeys[pk]]}${SA_DEF[pk].oct}</span><div class="opts keys">${SA_KEYS.map((k,i)=>`<button class="opt key" data-sa="${pk}:${i}" ${sel(i===saKeys[pk])}><span>${k}</span></button>`).join('')}</div>`).join('')}</div>
+  <div class="igrp"><b>${i18n.t('settings.artL')}</b><div class="opts">${['santar','nirantar'].map(a=>`<button class="opt" data-art="${a}" ${sel(a===artic)}><span>${i18n.t('settings.'+a)}</span><small>${i18n.t('settings.'+a+'S')}</small></button>`).join('')}</div></div>
+  <div class="igrp"><b>${i18n.t('settings.kanL')}</b><div class="opts">${[30,45,60,80,100,130].map(m=>`<button class="opt key" data-kan="${m}" ${sel(m===kanMs)}><span>${dv(m)}</span></button>`).join('')}</div><span class="note">${i18n.t('settings.ms', { ms: '' })}</span></div>`;
   $('#libOpts').innerHTML=window.Library?window.Library.sheetHTML():'';
   if(window.PlatformUI)window.PlatformUI.render();
-  $('#langs').innerHTML=Object.keys(I18N).map(k=>`<button class="opt lang" data-lang="${k}" aria-pressed="${k===i18n.LANG}" lang="${k}"><span>${I18N[k].lang}</span></button>`).join('')}
+  $('#langs').innerHTML=i18n.languages.map(l=>`<button class="opt lang" data-lang="${l.code}" aria-pressed="${l.code===i18n.LANG}" lang="${l.code}"><span>${l.name}</span></button>`).join('')}
 $('#instBtn').onclick=$('#instBtn2').onclick=()=>{renderSheet();$('#sheet').hidden=false};
 $('#sheetX').onclick=()=>{$('#sheet').hidden=true};
 $('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet'){$('#sheet').hidden=true;return}
@@ -352,10 +352,12 @@ const services = {
 // what the page does after the language changed: redraw the rachana on screen, if one is open
 function rerender() {
   if (P) { renderPlayer(); renderBlocks(); $('#tend').textContent = mmss(EV.end); const base = (R.charans.find(c => c.type !== 'prarambhik') || R.charans[0]).laya; $('#tval').textContent = $('#mtval').textContent = dv(Math.round(base * tempo));
-    lastBlock = -1; lastStep = -2; setPlayIcon(S.playing); if (marchOn) { $('#msub').textContent = tx('marchA') + ' · ' + (P.meta.performance.mode === 'mandchal' ? tx('mandchal') : tx('prachalan')); paintMarchLines(); } paintAt(curPos()); }
+    lastBlock = -1; lastStep = -2; setPlayIcon(S.playing); if (marchOn) { $('#msub').textContent = i18n.t('player.marchA') + ' · ' + (P.meta.performance.mode === 'mandchal' ? i18n.t('player.mandchal') : i18n.t('list.prachalan')); paintMarchLines(); } paintAt(curPos()); }
 }
 // Handles other page scripts and the tests use by name (platform.js is not migrated yet); the screens use env instead.
 Object.assign(window, { openPiece, renderSheet, announce, otherPlays, stop, S, TR, ganHTML, slotHTML, matraHTML });
 for (const [n, get] of Object.entries({ ctx: () => ctx, artic: () => artic, kanMs: () => kanMs, saKeys: () => saKeys })) Object.defineProperty(window, n, { get, configurable: true });
-return { services, rerender, openPiece, renderSheet };
+return { services, rerender, openPiece, renderSheet, isBusy: () => S.playing,
+  /** the language changed: the settings sheet, and the rachana on screen if one is open */
+  onLang() { renderSheet(); rerender(); } };
 }

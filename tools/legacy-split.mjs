@@ -17,6 +17,7 @@ const GEN = [
   [/window\.Composer=/, 'composercore'],
   [/window\.ScoreView=/, 'scoreview'],
   [/window\.I18n=/, 'i18n'],
+  [/window\.buildTimeline3=/, 'timeline'],
   [/ScreenApp:[\w$]+,Sanket:/, 'screens'],
 ];
 
@@ -44,7 +45,6 @@ function partName(seg, used) {
     : seg.kind === 'style' ? (seg.text.length < 200 ? 'reset' : 'app')
     : /^\s*'use strict';\s*const \$=/.test(head) ? 'app'
     : /घोषदंड संकेत/.test(head) ? 'sanket'
-    : /window\.buildTimeline3=/.test(seg.text.slice(-200)) ? 'timeline3'     // the TypeScript build of the timeline
     : 'part';
   let name = n, k = 2; while (used.has(name + '.' + ext(seg))) name = `${n}-${k++}`;
   return name + '.' + ext(seg);

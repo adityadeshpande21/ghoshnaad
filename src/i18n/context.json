@@ -1,0 +1,2113 @@
+{
+  "common.groups.anak": {
+    "screen": "common"
+  },
+  "common.groups.shankh": {
+    "screen": "common"
+  },
+  "common.groups.tal": {
+    "screen": "common"
+  },
+  "common.groups.vanshi": {
+    "screen": "common"
+  },
+  "common.parts.anak": {
+    "screen": "common"
+  },
+  "common.parts.jhallari": {
+    "screen": "common"
+  },
+  "common.parts.panav": {
+    "screen": "common"
+  },
+  "common.parts.shankh": {
+    "screen": "common"
+  },
+  "common.parts.steps": {
+    "screen": "common"
+  },
+  "common.parts.tribhuj": {
+    "screen": "common"
+  },
+  "common.parts.vanshi": {
+    "screen": "common"
+  },
+  "composer.addCharan": {
+    "screen": "composer"
+  },
+  "composer.addLine": {
+    "screen": "composer"
+  },
+  "composer.addPra": {
+    "screen": "composer"
+  },
+  "composer.allOk": {
+    "screen": "composer"
+  },
+  "composer.apply": {
+    "screen": "composer"
+  },
+  "composer.aroha": {
+    "screen": "composer"
+  },
+  "composer.auto": {
+    "screen": "composer"
+  },
+  "composer.avaroha": {
+    "screen": "composer"
+  },
+  "composer.back": {
+    "screen": "composer"
+  },
+  "composer.book": {
+    "params": {
+      "name": "the name of the book"
+    },
+    "screen": "composer"
+  },
+  "composer.cell": {
+    "params": {
+      "part": "the part (e.g. shankh)",
+      "line": "line number",
+      "matra": "matra number"
+    },
+    "screen": "composer"
+  },
+  "composer.check": {
+    "screen": "composer"
+  },
+  "composer.check.anakEmpty.0": {
+    "screen": "composer"
+  },
+  "composer.check.anakEmpty.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.anakPartial.0": {
+    "screen": "composer"
+  },
+  "composer.check.anakPartial.1": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.bolInMel.0": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.bolInMel.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.compile.0": {
+    "screen": "composer"
+  },
+  "composer.check.compile.1": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.emptyBlock.0": {
+    "screen": "composer"
+  },
+  "composer.check.emptyBlock.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.endNotSa.0": {
+    "screen": "composer"
+  },
+  "composer.check.endNotSa.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.melPartial.0": {
+    "screen": "composer"
+  },
+  "composer.check.melPartial.1": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.noteInAnak.0": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.noteInAnak.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.outOfRaga.0": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.outOfRaga.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.shankhRange.0": {
+    "params": {
+      "value": "the value found, filled in by the screen"
+    },
+    "screen": "composer"
+  },
+  "composer.check.shankhRange.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.check.startsHold.0": {
+    "screen": "composer"
+  },
+  "composer.check.startsHold.1": {
+    "params": {},
+    "screen": "composer"
+  },
+  "composer.clear": {
+    "screen": "composer"
+  },
+  "composer.click": {
+    "screen": "composer"
+  },
+  "composer.compileErr": {
+    "screen": "composer"
+  },
+  "composer.copied": {
+    "screen": "composer"
+  },
+  "composer.copy": {
+    "screen": "composer"
+  },
+  "composer.copySuffix": {
+    "screen": "composer"
+  },
+  "composer.defName": {
+    "params": {
+      "n": "the next free number of a new rachana"
+    },
+    "screen": "composer"
+  },
+  "composer.del": {
+    "screen": "composer"
+  },
+  "composer.delBlock": {
+    "screen": "composer"
+  },
+  "composer.delLine": {
+    "screen": "composer"
+  },
+  "composer.delete": {
+    "screen": "composer"
+  },
+  "composer.dimNote": {
+    "params": {
+      "keys": "the keys that are dimmed, as text"
+    },
+    "screen": "composer"
+  },
+  "composer.draft": {
+    "screen": "composer"
+  },
+  "composer.dup": {
+    "screen": "composer"
+  },
+  "composer.dupLine": {
+    "screen": "composer"
+  },
+  "composer.edit": {
+    "screen": "composer"
+  },
+  "composer.editor": {
+    "screen": "composer",
+    "note": "Spoken label of the editor page (not shown)."
+  },
+  "composer.errGans": {
+    "params": {
+      "found": "how many गण were found"
+    },
+    "screen": "composer"
+  },
+  "composer.errMatras": {
+    "params": {
+      "found": "matras found in the गण",
+      "need": "matras the गण needs"
+    },
+    "screen": "composer"
+  },
+  "composer.export": {
+    "screen": "composer"
+  },
+  "composer.exportFile": {
+    "screen": "composer",
+    "note": "Spoken label of the box that holds the file text (not shown)."
+  },
+  "composer.exportP": {
+    "screen": "composer"
+  },
+  "composer.fillFirst": {
+    "screen": "composer"
+  },
+  "composer.fixes": {
+    "params": {
+      "count": "number of things to fix"
+    },
+    "screen": "composer"
+  },
+  "composer.go": {
+    "screen": "composer"
+  },
+  "composer.hear": {
+    "screen": "composer"
+  },
+  "composer.high": {
+    "screen": "composer"
+  },
+  "composer.hold": {
+    "screen": "composer"
+  },
+  "composer.import": {
+    "screen": "composer"
+  },
+  "composer.importErr": {
+    "screen": "composer"
+  },
+  "composer.imported": {
+    "screen": "composer"
+  },
+  "composer.instr": {
+    "screen": "composer"
+  },
+  "composer.keep": {
+    "screen": "composer"
+  },
+  "composer.line": {
+    "params": {
+      "n": "line number"
+    },
+    "screen": "composer"
+  },
+  "composer.lineNote": {
+    "params": {
+      "matras": "matras in a गण"
+    },
+    "screen": "composer"
+  },
+  "composer.low": {
+    "screen": "composer"
+  },
+  "composer.marchIt": {
+    "screen": "composer"
+  },
+  "composer.matras": {
+    "params": {
+      "count": "number of matras"
+    },
+    "screen": "composer"
+  },
+  "composer.mine": {
+    "screen": "composer"
+  },
+  "composer.more": {
+    "screen": "composer"
+  },
+  "composer.name": {
+    "screen": "composer"
+  },
+  "composer.new": {
+    "screen": "composer"
+  },
+  "composer.nextM": {
+    "screen": "composer"
+  },
+  "composer.no": {
+    "screen": "composer"
+  },
+  "composer.noScale": {
+    "screen": "composer"
+  },
+  "composer.noSug": {
+    "screen": "composer"
+  },
+  "composer.none": {
+    "screen": "composer"
+  },
+  "composer.notSaved": {
+    "screen": "composer"
+  },
+  "composer.okList.0": {
+    "screen": "composer"
+  },
+  "composer.okList.1": {
+    "screen": "composer"
+  },
+  "composer.once": {
+    "screen": "composer"
+  },
+  "composer.openPlayer": {
+    "screen": "composer"
+  },
+  "composer.optional": {
+    "screen": "composer"
+  },
+  "composer.outRaga": {
+    "screen": "composer"
+  },
+  "composer.playAll": {
+    "screen": "composer"
+  },
+  "composer.playBlock": {
+    "screen": "composer"
+  },
+  "composer.playLine": {
+    "screen": "composer"
+  },
+  "composer.playLineA": {
+    "screen": "composer"
+  },
+  "composer.prevM": {
+    "screen": "composer"
+  },
+  "composer.privacy": {
+    "screen": "composer"
+  },
+  "composer.raga": {
+    "screen": "composer"
+  },
+  "composer.ready": {
+    "screen": "composer"
+  },
+  "composer.redo": {
+    "screen": "composer"
+  },
+  "composer.rename": {
+    "screen": "composer"
+  },
+  "composer.rest": {
+    "screen": "composer"
+  },
+  "composer.roll": {
+    "screen": "composer"
+  },
+  "composer.saved": {
+    "screen": "composer"
+  },
+  "composer.shankhSub": {
+    "screen": "composer"
+  },
+  "composer.share": {
+    "screen": "composer"
+  },
+  "composer.split": {
+    "screen": "composer"
+  },
+  "composer.splitA": {
+    "params": {
+      "count": "number of parts a matra is split into"
+    },
+    "screen": "composer"
+  },
+  "composer.start": {
+    "screen": "composer"
+  },
+  "composer.sugEnd": {
+    "screen": "composer"
+  },
+  "composer.sugFrom": {
+    "params": {
+      "count": "number of patterns"
+    },
+    "screen": "composer"
+  },
+  "composer.sugInto": {
+    "params": {
+      "gan": "the गण the suggestion goes into"
+    },
+    "screen": "composer"
+  },
+  "composer.sugStart": {
+    "screen": "composer"
+  },
+  "composer.sugTitle": {
+    "screen": "composer"
+  },
+  "composer.suggest": {
+    "screen": "composer"
+  },
+  "composer.sure": {
+    "screen": "composer"
+  },
+  "composer.tabAnak": {
+    "screen": "composer"
+  },
+  "composer.tabSwar": {
+    "screen": "composer"
+  },
+  "composer.tabText": {
+    "screen": "composer"
+  },
+  "composer.talaLaya": {
+    "screen": "composer"
+  },
+  "composer.textAnak": {
+    "screen": "composer"
+  },
+  "composer.textMel": {
+    "screen": "composer"
+  },
+  "composer.tips": {
+    "params": {
+      "count": "number of tips"
+    },
+    "screen": "composer"
+  },
+  "composer.today": {
+    "screen": "composer"
+  },
+  "composer.twiceT": {
+    "screen": "composer"
+  },
+  "composer.undo": {
+    "screen": "composer"
+  },
+  "composer.use": {
+    "screen": "composer"
+  },
+  "composer.vanshiSub": {
+    "screen": "composer"
+  },
+  "composer.vik": {
+    "screen": "composer"
+  },
+  "composer.where": {
+    "params": {
+      "part": "the part (e.g. shankh)",
+      "line": "line number",
+      "matra": "matra number"
+    },
+    "screen": "composer"
+  },
+  "composer.yes": {
+    "screen": "composer"
+  },
+  "correction.bad": {
+    "screen": "correction"
+  },
+  "correction.brokenFix": {
+    "screen": "correction"
+  },
+  "correction.btn": {
+    "screen": "correction"
+  },
+  "correction.cancel": {
+    "screen": "correction"
+  },
+  "correction.changed": {
+    "params": {
+      "n": "number of lines changed"
+    },
+    "screen": "correction"
+  },
+  "correction.copied": {
+    "screen": "correction"
+  },
+  "correction.copy": {
+    "screen": "correction"
+  },
+  "correction.delQ": {
+    "screen": "correction"
+  },
+  "correction.delete": {
+    "screen": "correction"
+  },
+  "correction.dirty": {
+    "screen": "correction"
+  },
+  "correction.discard": {
+    "screen": "correction"
+  },
+  "correction.draft": {
+    "screen": "correction"
+  },
+  "correction.err": {
+    "screen": "correction"
+  },
+  "correction.export": {
+    "screen": "correction"
+  },
+  "correction.exportAll": {
+    "screen": "correction"
+  },
+  "correction.exportP": {
+    "screen": "correction"
+  },
+  "correction.file": {
+    "screen": "correction"
+  },
+  "correction.fixCount": {
+    "params": {
+      "n": "number of corrected rachanas"
+    },
+    "screen": "correction"
+  },
+  "correction.fixes": {
+    "screen": "correction"
+  },
+  "correction.fromLib": {
+    "screen": "correction"
+  },
+  "correction.help": {
+    "screen": "correction"
+  },
+  "correction.import": {
+    "screen": "correction"
+  },
+  "correction.importErr": {
+    "screen": "correction"
+  },
+  "correction.imported": {
+    "params": {
+      "n": "number of corrections imported"
+    },
+    "screen": "correction"
+  },
+  "correction.jsonErr": {
+    "screen": "correction"
+  },
+  "correction.later": {
+    "screen": "correction"
+  },
+  "correction.laya": {
+    "screen": "correction"
+  },
+  "correction.leaveQ": {
+    "screen": "correction"
+  },
+  "correction.legend": {
+    "screen": "correction"
+  },
+  "correction.legendGuide": {
+    "screen": "correction",
+    "note": "The label of the link at the end of the legend; the screen makes it a link to the notation guide."
+  },
+  "correction.len": {
+    "params": {
+      "parts": "the parts that differ, as text"
+    },
+    "screen": "correction"
+  },
+  "correction.line": {
+    "params": {
+      "part": "the part name",
+      "line": "line number"
+    },
+    "screen": "correction"
+  },
+  "correction.no": {
+    "screen": "correction"
+  },
+  "correction.noSrc": {
+    "screen": "correction"
+  },
+  "correction.notBook": {
+    "screen": "correction"
+  },
+  "correction.notation": {
+    "screen": "correction",
+    "note": "Spoken label of the notation text box (not shown)."
+  },
+  "correction.ok": {
+    "screen": "correction"
+  },
+  "correction.orig": {
+    "screen": "correction"
+  },
+  "correction.pickup": {
+    "screen": "correction"
+  },
+  "correction.play": {
+    "screen": "correction"
+  },
+  "correction.revert": {
+    "screen": "correction"
+  },
+  "correction.revertQ": {
+    "screen": "correction"
+  },
+  "correction.reverted": {
+    "screen": "correction"
+  },
+  "correction.save": {
+    "screen": "correction"
+  },
+  "correction.saved": {
+    "screen": "correction"
+  },
+  "correction.savedT": {
+    "screen": "correction"
+  },
+  "correction.share": {
+    "screen": "correction"
+  },
+  "correction.tag": {
+    "screen": "correction"
+  },
+  "correction.tala": {
+    "screen": "correction"
+  },
+  "correction.title": {
+    "params": {
+      "name": "the rachana name"
+    },
+    "screen": "correction"
+  },
+  "correction.warn": {
+    "screen": "correction"
+  },
+  "correction.yes": {
+    "screen": "correction"
+  },
+  "export.about": {
+    "screen": "export"
+  },
+  "export.app": {
+    "screen": "export"
+  },
+  "export.btn": {
+    "screen": "export"
+  },
+  "export.copied": {
+    "screen": "export"
+  },
+  "export.copy": {
+    "screen": "export"
+  },
+  "export.countL": {
+    "screen": "export"
+  },
+  "export.endL": {
+    "screen": "export"
+  },
+  "export.from": {
+    "screen": "export"
+  },
+  "export.grpL": {
+    "screen": "export"
+  },
+  "export.highO": {
+    "screen": "export"
+  },
+  "export.holdL": {
+    "screen": "export"
+  },
+  "export.html": {
+    "screen": "export"
+  },
+  "export.layout": {
+    "screen": "export"
+  },
+  "export.legend": {
+    "screen": "export"
+  },
+  "export.lowO": {
+    "screen": "export"
+  },
+  "export.marks": {
+    "screen": "export"
+  },
+  "export.mine": {
+    "screen": "export"
+  },
+  "export.need": {
+    "screen": "export"
+  },
+  "export.order": {
+    "screen": "export"
+  },
+  "export.pages": {
+    "screen": "export"
+  },
+  "export.parts": {
+    "screen": "export"
+  },
+  "export.pickup": {
+    "screen": "export"
+  },
+  "export.plain": {
+    "screen": "export"
+  },
+  "export.preview": {
+    "screen": "export"
+  },
+  "export.print": {
+    "screen": "export"
+  },
+  "export.printNote": {
+    "screen": "export"
+  },
+  "export.ranan": {
+    "screen": "export"
+  },
+  "export.restL": {
+    "screen": "export"
+  },
+  "export.rich": {
+    "screen": "export"
+  },
+  "export.samL": {
+    "screen": "export"
+  },
+  "export.score": {
+    "screen": "export"
+  },
+  "export.setuL": {
+    "screen": "export"
+  },
+  "export.steps": {
+    "screen": "export"
+  },
+  "export.style": {
+    "screen": "export"
+  },
+  "export.tal": {
+    "screen": "export"
+  },
+  "export.title": {
+    "screen": "export"
+  },
+  "export.twiceL": {
+    "screen": "export"
+  },
+  "export.txt": {
+    "screen": "export"
+  },
+  "export.vk": {
+    "screen": "export"
+  },
+  "ghoshdand.L": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.R": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.again": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.band.anak": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.band.march": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.band.shankh": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.band.stand": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.band.tal": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.band.vanshi": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.blk.ch": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.blk.count": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.blk.end": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.blk.pr": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.blk.ranan": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.0": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.1": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.2": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.3": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.4": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.5": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.6": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.chap.7": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.close": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.cycIntro": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.dal": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.does": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.err": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.key": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.left": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.letters": {
+    "screen": "ghoshdand",
+    "note": "The letters that label the steps of a signal, in order (five letters, no spaces): the first letters of your alphabet, written like अ ब क ड इ."
+  },
+  "ghoshdand.loading": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.music": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.open": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.page": {
+    "screen": "ghoshdand",
+    "params": {
+      "page": "page number in the book घोष परिचय"
+    }
+  },
+  "ghoshdand.pass": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.play": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.pramukh": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.ready": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.resume": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.right": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.rules": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.sig": {
+    "screen": "ghoshdand",
+    "params": {
+      "n": "count of the signal in the sixteen",
+      "total": "sixteen"
+    }
+  },
+  "ghoshdand.silent": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.slow": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.still": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.stop": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.tabs.0": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.tabs.1": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.title": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.views.0": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.views.1": {
+    "screen": "ghoshdand"
+  },
+  "ghoshdand.when": {
+    "screen": "ghoshdand"
+  },
+  "guide.open": {
+    "screen": "guide"
+  },
+  "library.change": {
+    "screen": "library"
+  },
+  "library.conflict": {
+    "params": {
+      "name": "file name of the new copy"
+    },
+    "screen": "library"
+  },
+  "library.count": {
+    "params": {
+      "folder": "folder name",
+      "count": "number of rachanas"
+    },
+    "screen": "library"
+  },
+  "library.delFile": {
+    "params": {
+      "path": "file path"
+    },
+    "screen": "library"
+  },
+  "library.download": {
+    "screen": "library"
+  },
+  "library.g.android.0": {
+    "screen": "library"
+  },
+  "library.g.android.1": {
+    "screen": "library"
+  },
+  "library.g.android.2": {
+    "screen": "library"
+  },
+  "library.g.desktop.0": {
+    "screen": "library"
+  },
+  "library.g.desktop.1": {
+    "screen": "library"
+  },
+  "library.g.desktop.2": {
+    "screen": "library"
+  },
+  "library.g.ios.0": {
+    "screen": "library"
+  },
+  "library.g.ios.1": {
+    "screen": "library"
+  },
+  "library.g.ios.2": {
+    "screen": "library"
+  },
+  "library.guideT": {
+    "screen": "library"
+  },
+  "library.libG": {
+    "screen": "library"
+  },
+  "library.never": {
+    "screen": "library"
+  },
+  "library.noPerm": {
+    "screen": "library"
+  },
+  "library.none": {
+    "screen": "library"
+  },
+  "library.ok": {
+    "screen": "library"
+  },
+  "library.pending": {
+    "params": {
+      "count": "number of rachanas not yet saved"
+    },
+    "screen": "library"
+  },
+  "library.pick": {
+    "screen": "library"
+  },
+  "library.pickNote": {
+    "screen": "library"
+  },
+  "library.reNote": {
+    "screen": "library"
+  },
+  "library.readErr": {
+    "screen": "library"
+  },
+  "library.reconnect": {
+    "screen": "library"
+  },
+  "library.rescan": {
+    "screen": "library"
+  },
+  "library.ro": {
+    "screen": "library"
+  },
+  "library.savedFolder": {
+    "params": {
+      "name": "file name"
+    },
+    "screen": "library"
+  },
+  "library.savedLocal": {
+    "screen": "library"
+  },
+  "library.scanned": {
+    "params": {
+      "count": "number of book rachanas read",
+      "mine": "number of my rachanas read"
+    },
+    "screen": "library"
+  },
+  "library.skipped": {
+    "params": {
+      "count": "number of files that could not be read"
+    },
+    "screen": "library"
+  },
+  "library.srcBook": {
+    "screen": "library"
+  },
+  "library.srcLib": {
+    "screen": "library"
+  },
+  "library.tabAll": {
+    "params": {
+      "count": "number of rachanas"
+    },
+    "screen": "library"
+  },
+  "library.tagFolder": {
+    "screen": "library"
+  },
+  "library.tagPending": {
+    "screen": "library"
+  },
+  "library.unlink": {
+    "screen": "library"
+  },
+  "library.writeAll": {
+    "screen": "library"
+  },
+  "library.written": {
+    "params": {
+      "count": "number of files saved"
+    },
+    "screen": "library"
+  },
+  "library.zip": {
+    "screen": "library"
+  },
+  "library.zipped": {
+    "screen": "library"
+  },
+  "list.all": {
+    "screen": "list"
+  },
+  "list.allR": {
+    "screen": "list"
+  },
+  "list.brand": {
+    "screen": "list"
+  },
+  "list.count": {
+    "params": {
+      "count": "number of rachanas"
+    },
+    "screen": "list"
+  },
+  "list.found": {
+    "params": {
+      "count": "number of rachanas found"
+    },
+    "screen": "list"
+  },
+  "list.instF": {
+    "screen": "list"
+  },
+  "list.listA": {
+    "screen": "list"
+  },
+  "list.listErr": {
+    "screen": "list"
+  },
+  "list.mand": {
+    "screen": "list"
+  },
+  "list.naimittik": {
+    "screen": "list"
+  },
+  "list.none": {
+    "params": {
+      "query": "what was searched for"
+    },
+    "screen": "list"
+  },
+  "list.openErr": {
+    "screen": "list"
+  },
+  "list.prachalan": {
+    "screen": "list"
+  },
+  "list.recent": {
+    "screen": "list"
+  },
+  "list.search": {
+    "screen": "list"
+  },
+  "list.searchA": {
+    "screen": "list"
+  },
+  "list.secA": {
+    "screen": "list"
+  },
+  "list.tagline": {
+    "screen": "list"
+  },
+  "platform.backup_ago": {
+    "screen": "platform",
+    "params": {
+      "days": "number of days"
+    }
+  },
+  "platform.backup_btn": {
+    "screen": "platform"
+  },
+  "platform.backup_never": {
+    "screen": "platform"
+  },
+  "platform.backup_today": {
+    "screen": "platform"
+  },
+  "platform.bar_btn": {
+    "screen": "platform"
+  },
+  "platform.bar_days": {
+    "screen": "platform",
+    "params": {
+      "days": "number of days"
+    }
+  },
+  "platform.bar_edits": {
+    "screen": "platform"
+  },
+  "platform.copy": {
+    "screen": "platform"
+  },
+  "platform.counts": {
+    "screen": "platform",
+    "params": {
+      "own": "number of own rachanas",
+      "corrections": "number of corrections"
+    }
+  },
+  "platform.dismiss": {
+    "screen": "platform"
+  },
+  "platform.err_empty": {
+    "screen": "platform"
+  },
+  "platform.err_newer-format": {
+    "screen": "platform"
+  },
+  "platform.err_not-a-backup": {
+    "screen": "platform"
+  },
+  "platform.err_not-json": {
+    "screen": "platform"
+  },
+  "platform.err_too-big": {
+    "screen": "platform"
+  },
+  "platform.file_note": {
+    "screen": "platform"
+  },
+  "platform.first": {
+    "screen": "platform"
+  },
+  "platform.first_btn": {
+    "screen": "platform"
+  },
+  "platform.inst_bar": {
+    "screen": "platform"
+  },
+  "platform.inst_btn": {
+    "screen": "platform"
+  },
+  "platform.inst_done": {
+    "screen": "platform"
+  },
+  "platform.inst_show": {
+    "screen": "platform"
+  },
+  "platform.inst_title": {
+    "screen": "platform"
+  },
+  "platform.new_ok": {
+    "screen": "platform"
+  },
+  "platform.new_title": {
+    "screen": "platform"
+  },
+  "platform.not_saved": {
+    "screen": "platform"
+  },
+  "platform.nothing": {
+    "screen": "platform"
+  },
+  "platform.older_dl": {
+    "screen": "platform"
+  },
+  "platform.older_have": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.persist_no": {
+    "screen": "platform"
+  },
+  "platform.persist_yes": {
+    "screen": "platform"
+  },
+  "platform.r_busy": {
+    "screen": "platform"
+  },
+  "platform.r_cancel": {
+    "screen": "platform"
+  },
+  "platform.r_copies": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_done": {
+    "screen": "platform"
+  },
+  "platform.r_fail": {
+    "screen": "platform"
+  },
+  "platform.r_fix_new": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_fix_newer": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_fix_older": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_go": {
+    "screen": "platform"
+  },
+  "platform.r_new": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_nochange": {
+    "screen": "platform"
+  },
+  "platform.r_note": {
+    "screen": "platform"
+  },
+  "platform.r_same": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_set": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_skipped": {
+    "screen": "platform",
+    "params": {
+      "n": "a count"
+    }
+  },
+  "platform.r_title": {
+    "screen": "platform"
+  },
+  "platform.restore_btn": {
+    "screen": "platform"
+  },
+  "platform.steps.android-chrome.0": {
+    "screen": "platform"
+  },
+  "platform.steps.android-chrome.1": {
+    "screen": "platform"
+  },
+  "platform.steps.android-firefox.0": {
+    "screen": "platform"
+  },
+  "platform.steps.android-firefox.1": {
+    "screen": "platform"
+  },
+  "platform.steps.android-samsung.0": {
+    "screen": "platform"
+  },
+  "platform.steps.android-samsung.1": {
+    "screen": "platform"
+  },
+  "platform.steps.desktop-chromium.0": {
+    "screen": "platform"
+  },
+  "platform.steps.desktop-other.0": {
+    "screen": "platform"
+  },
+  "platform.steps.desktop-safari.0": {
+    "screen": "platform"
+  },
+  "platform.steps.file.0": {
+    "screen": "platform",
+    "params": {
+      "url": "the address of the website"
+    }
+  },
+  "platform.steps.file.1": {
+    "screen": "platform"
+  },
+  "platform.steps.ios-other.0": {
+    "screen": "platform"
+  },
+  "platform.steps.ios-other.1": {
+    "screen": "platform"
+  },
+  "platform.steps.ios-safari.0": {
+    "screen": "platform"
+  },
+  "platform.steps.ios-safari.1": {
+    "screen": "platform"
+  },
+  "platform.steps.ios-safari.2": {
+    "screen": "platform"
+  },
+  "platform.upd_avail": {
+    "screen": "platform",
+    "params": {
+      "version": "version number"
+    }
+  },
+  "platform.upd_btn": {
+    "screen": "platform"
+  },
+  "platform.upd_busy": {
+    "screen": "platform"
+  },
+  "platform.upd_check": {
+    "screen": "platform"
+  },
+  "platform.upd_file": {
+    "screen": "platform"
+  },
+  "platform.upd_none": {
+    "screen": "platform"
+  },
+  "platform.usage": {
+    "screen": "platform",
+    "params": {
+      "mb": "megabytes used"
+    }
+  },
+  "platform.ver": {
+    "screen": "platform"
+  },
+  "platform.whatsnew_btn": {
+    "screen": "platform"
+  },
+  "platform.where_file": {
+    "screen": "platform"
+  },
+  "platform.where_site": {
+    "screen": "platform"
+  },
+  "platform.work": {
+    "screen": "platform"
+  },
+  "player.anagat": {
+    "screen": "player"
+  },
+  "player.bPr": {
+    "screen": "player"
+  },
+  "player.bR": {
+    "screen": "player"
+  },
+  "player.bSe": {
+    "screen": "player"
+  },
+  "player.back": {
+    "screen": "player"
+  },
+  "player.blocksA": {
+    "screen": "player"
+  },
+  "player.charan": {
+    "params": {
+      "n": "charan number"
+    },
+    "screen": "player"
+  },
+  "player.chipsA": {
+    "screen": "player"
+  },
+  "player.close": {
+    "screen": "player"
+  },
+  "player.countWord": {
+    "params": {
+      "word": "a spoken count word (एक, दो, तीन)"
+    },
+    "screen": "player"
+  },
+  "player.done": {
+    "screen": "player"
+  },
+  "player.faster": {
+    "screen": "player"
+  },
+  "player.goTo": {
+    "params": {
+      "target": "what to go to (a charan name)"
+    },
+    "screen": "player"
+  },
+  "player.hint": {
+    "screen": "player"
+  },
+  "player.laya": {
+    "screen": "player"
+  },
+  "player.left": {
+    "screen": "player"
+  },
+  "player.loop": {
+    "screen": "player"
+  },
+  "player.loopA": {
+    "screen": "player"
+  },
+  "player.mandchal": {
+    "screen": "player"
+  },
+  "player.march": {
+    "screen": "player"
+  },
+  "player.marchA": {
+    "screen": "player"
+  },
+  "player.marchClose": {
+    "screen": "player"
+  },
+  "player.modesA": {
+    "screen": "player"
+  },
+  "player.next": {
+    "screen": "player"
+  },
+  "player.now": {
+    "screen": "player"
+  },
+  "player.once": {
+    "screen": "player"
+  },
+  "player.onceA": {
+    "screen": "player"
+  },
+  "player.perf": {
+    "screen": "player"
+  },
+  "player.play": {
+    "screen": "player"
+  },
+  "player.playL": {
+    "screen": "player"
+  },
+  "player.playerA": {
+    "screen": "player"
+  },
+  "player.prarambhik": {
+    "screen": "player"
+  },
+  "player.prev": {
+    "screen": "player"
+  },
+  "player.printed": {
+    "screen": "player"
+  },
+  "player.raga": {
+    "screen": "player"
+  },
+  "player.ranan": {
+    "screen": "player"
+  },
+  "player.rananAnak": {
+    "screen": "player"
+  },
+  "player.right": {
+    "screen": "player"
+  },
+  "player.sam": {
+    "screen": "player"
+  },
+  "player.setu": {
+    "screen": "player"
+  },
+  "player.slower": {
+    "screen": "player"
+  },
+  "player.step": {
+    "params": {
+      "n": "step number"
+    },
+    "screen": "player"
+  },
+  "player.stepSnd": {
+    "screen": "player"
+  },
+  "player.stepSndA": {
+    "screen": "player"
+  },
+  "player.stop": {
+    "screen": "player"
+  },
+  "player.tail": {
+    "params": {
+      "part": "the part that repeats at the end"
+    },
+    "screen": "player"
+  },
+  "player.times": {
+    "params": {
+      "n": "number of repeats"
+    },
+    "screen": "player"
+  },
+  "player.twice": {
+    "screen": "player"
+  },
+  "settings.artL": {
+    "screen": "settings"
+  },
+  "settings.instL": {
+    "screen": "settings"
+  },
+  "settings.kanL": {
+    "screen": "settings"
+  },
+  "settings.langL": {
+    "screen": "settings"
+  },
+  "settings.ms": {
+    "params": {
+      "ms": "milliseconds"
+    },
+    "screen": "settings"
+  },
+  "settings.needOne": {
+    "screen": "settings"
+  },
+  "settings.nirantar": {
+    "screen": "settings"
+  },
+  "settings.nirantarS": {
+    "screen": "settings"
+  },
+  "settings.pitchL": {
+    "screen": "settings"
+  },
+  "settings.pitchN": {
+    "screen": "settings"
+  },
+  "settings.santar": {
+    "screen": "settings"
+  },
+  "settings.santarS": {
+    "screen": "settings"
+  },
+  "settings.settings": {
+    "screen": "settings"
+  },
+  "settings.sheetP": {
+    "screen": "settings"
+  },
+  "settings.theme": {
+    "screen": "settings"
+  },
+  "soundcheck.ab": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.acc": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.art.0": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.art.1": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.acc": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.click": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.flam": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.roll": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.ta": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.tha": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.thra": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.bols.trt": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.cycle": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.cycleP": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.dev": {
+    "params": {
+      "rate": "sample rate in kHz",
+      "latency": "speaker delay in ms",
+      "late": "number of sounds skipped as late"
+    },
+    "screen": "soundcheck"
+  },
+  "soundcheck.inst": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.ios": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.join": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.kan": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.kanO.0": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.kanO.1": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.kanO.2": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.keep": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.kept": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.key": {
+    "params": {
+      "note": "the name of the Sa note"
+    },
+    "screen": "soundcheck"
+  },
+  "soundcheck.laya": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.left": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.len": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.lenO": {
+    "params": {
+      "matras": "number of matras"
+    },
+    "screen": "soundcheck"
+  },
+  "soundcheck.loop": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.march": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.mel": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.mixP": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.mixPlay": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.ms": {
+    "params": {
+      "ms": "milliseconds"
+    },
+    "screen": "soundcheck"
+  },
+  "soundcheck.none": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.oct.0": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.oct.1": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.oct.2": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.open": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.parts.anak": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.parts.jhallari": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.parts.panav": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.parts.steps": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.parts.tribhuj": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.raga": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.ragaPick": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.ranan": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.right": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.saptak": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.seq": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.shankhNote": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.steps": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.stop": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.swell": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.swellO.0": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.swellO.1": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.swellO.2": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tabs.0": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tabs.1": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tabs.2": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tabs.3": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tabs.4": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tala": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.three": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.title": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.count": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.end": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.jh": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.jhL": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.pan": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.panS": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.tr": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.tv.trL": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.var": {
+    "screen": "soundcheck"
+  },
+  "soundcheck.x4": {
+    "screen": "soundcheck"
+  },
+  "tala.cellTitle": {
+    "screen": "tala",
+    "note": "Shown when a finger rests on a count.",
+    "params": {
+      "name": "the tala",
+      "laya": "tempo",
+      "count": "count number",
+      "time": "seconds from the start",
+      "rep": "which avartan"
+    }
+  },
+  "tala.chal.all": {
+    "screen": "tala"
+  },
+  "tala.chal.mand": {
+    "screen": "tala"
+  },
+  "tala.chal.prachal": {
+    "screen": "tala"
+  },
+  "tala.chal.sthir": {
+    "screen": "tala"
+  },
+  "tala.empty": {
+    "screen": "tala"
+  },
+  "tala.f.chal": {
+    "screen": "tala"
+  },
+  "tala.f.show": {
+    "screen": "tala"
+  },
+  "tala.f.size": {
+    "screen": "tala"
+  },
+  "tala.f.sound": {
+    "screen": "tala"
+  },
+  "tala.f.speed": {
+    "screen": "tala"
+  },
+  "tala.f.tala": {
+    "screen": "tala"
+  },
+  "tala.f.time": {
+    "screen": "tala"
+  },
+  "tala.foot": {
+    "screen": "tala"
+  },
+  "tala.foot.L": {
+    "screen": "tala"
+  },
+  "tala.foot.R": {
+    "screen": "tala"
+  },
+  "tala.group.mand": {
+    "screen": "tala"
+  },
+  "tala.group.prachal": {
+    "screen": "tala"
+  },
+  "tala.group.sthir": {
+    "screen": "tala"
+  },
+  "tala.half": {
+    "screen": "tala",
+    "note": "Half a second after a whole second on the time axis.",
+    "params": {
+      "n": "the whole second before it"
+    }
+  },
+  "tala.hand.L": {
+    "screen": "tala"
+  },
+  "tala.hand.R": {
+    "screen": "tala"
+  },
+  "tala.iconHand": {
+    "screen": "tala"
+  },
+  "tala.layer.dhv": {
+    "screen": "tala"
+  },
+  "tala.layer.rep": {
+    "screen": "tala"
+  },
+  "tala.layer.step": {
+    "screen": "tala"
+  },
+  "tala.layer.tr": {
+    "screen": "tala"
+  },
+  "tala.lede": {
+    "screen": "tala"
+  },
+  "tala.leg.cycle": {
+    "screen": "tala"
+  },
+  "tala.leg.dhv": {
+    "screen": "tala"
+  },
+  "tala.leg.gan": {
+    "screen": "tala"
+  },
+  "tala.leg.gat": {
+    "screen": "tala"
+  },
+  "tala.leg.step": {
+    "screen": "tala",
+    "note": "Keep the order: the first bold word is the left foot, the second the right foot (each has its own colour)."
+  },
+  "tala.leg.tr": {
+    "screen": "tala",
+    "note": "The bold text is the hand labels shown on the chart; it is drawn in the hand colour."
+  },
+  "tala.note.ektal": {
+    "screen": "tala"
+  },
+  "tala.note.mand": {
+    "screen": "tala"
+  },
+  "tala.note.prachalan": {
+    "screen": "tala"
+  },
+  "tala.note.rupak": {
+    "screen": "tala"
+  },
+  "tala.note.sarsangh": {
+    "screen": "tala"
+  },
+  "tala.note.tritaal": {
+    "screen": "tala"
+  },
+  "tala.note.udghosh": {
+    "screen": "tala"
+  },
+  "tala.open": {
+    "screen": "tala"
+  },
+  "tala.play": {
+    "screen": "tala",
+    "note": "Label of a play button.",
+    "params": {
+      "name": "the tala",
+      "laya": "tempo"
+    }
+  },
+  "tala.read.anak": {
+    "screen": "tala"
+  },
+  "tala.read.mand": {
+    "screen": "tala"
+  },
+  "tala.read.prachal": {
+    "screen": "tala"
+  },
+  "tala.read.sthir": {
+    "screen": "tala"
+  },
+  "tala.rowInfo": {
+    "screen": "tala",
+    "note": "Under a tala's name: its length, the gans and the length of one avartan.",
+    "params": {
+      "n": "number of counts",
+      "gans": "lengths of the gans, joined by +",
+      "cycle": "seconds in one avartan"
+    }
+  },
+  "tala.secs": {
+    "screen": "tala",
+    "note": "A number of seconds, with its unit. {n} is already in the language's digits.",
+    "params": {
+      "n": "the number of seconds"
+    }
+  },
+  "tala.snd.dhv": {
+    "screen": "tala"
+  },
+  "tala.snd.num": {
+    "screen": "tala"
+  },
+  "tala.snd.step": {
+    "screen": "tala"
+  },
+  "tala.source": {
+    "screen": "tala"
+  },
+  "tala.stop": {
+    "screen": "tala",
+    "note": "Label of a stop button.",
+    "params": {
+      "name": "the tala",
+      "laya": "tempo"
+    }
+  },
+  "tala.title": {
+    "screen": "tala"
+  },
+  "tala.zoom.100": {
+    "screen": "tala"
+  },
+  "tala.zoom.150": {
+    "screen": "tala"
+  },
+  "tala.zoom.70": {
+    "screen": "tala"
+  }
+}

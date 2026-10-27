@@ -8,46 +8,10 @@ import talasJson from '../../../rules/talas.json';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createCorrection(env) {
-const { tx, esc, dv, dvN, L, I18N, applyStatic, loadJSON, openPiece, player: PL } = env;
+const { i18n, esc, dv, dvN, applyStatic, loadJSON, openPiece, player: PL } = env;
 const $ = env.q;   // like v1.1.0: null when the element is absent
 const Library = { saveSource: (...a) => window.Library.saveSource(...a), removeSource: (...a) => window.Library.removeSource(...a), downloadSource: (...a) => window.Library.downloadSource(...a), isLib: id => window.Library.isLib(id), sourceOf: id => window.Library.sourceOf(id), rows: () => window.Library.rows(), pieceOf: id => window.Library.pieceOf(id), mode: () => window.Library.mode() };
 const GhoshCompile = { compile3: src => compile3(src, { talas: talasJson }) };
-const FS = {
- mr: { f_draft: 'दुरुस्तीचा मसुदा', f_fromLib: 'तुमच्या फोल्डरमधील प्रत', f_later: 'नंतर', f_delete: 'ही प्रत हटवा', f_delQ: 'तुमची ही प्रत हटवायची? ग्रंथातील मूळ रचना तशीच राहील.', f_btn: 'दुरुस्त करा', f_title: n => `दुरुस्ती · ${n}`, f_orig: 'ग्रंथातील मूळ रचना', f_saved: 'दुरुस्त केलेली · या उपकरणावर जतन', f_dirty: 'जतन न केलेले बदल',
-  f_changed: n => n === '१' ? '१ ओळ बदलली' : `${n} ओळी बदलल्या`, f_file: 'पूर्ण फाइल', f_tala: 'ताल', f_laya: 'लय', f_play: 'ऐका ▶', f_save: 'जतन करा', f_export: 'फाइल डाउनलोड',
-  f_revert: 'ग्रंथातील मूळ आणा', f_revertQ: 'संपादकात ग्रंथातील मूळ मजकूर परत आणायचा? (जतन केल्यावरच तुमची प्रत बदलेल)', f_yes: 'हो, मूळ आणा', f_no: 'नाही',
-  f_leaveQ: 'बदल जतन करायचे?', f_discard: 'टाकून द्या', f_cancel: 'रद्द', f_ok: 'काही त्रुटी नाही', f_line: (p, n) => `${p} · ओळ ${n}`,
-  f_err: 'त्रुटी', f_warn: 'सूचना', f_len: (a) => `भागांची लांबी जुळत नाही: ${a}`, f_jsonErr: 'फाइल वाचता आली नाही (JSON): ', f_help: 'चिन्हे',
-  f_legend: '<code>॥ॐ॥</code> सुरुवात · <code>|</code> गण · <code>,</code> गट · <code>:॥</code> दोनदा · <code>{1 … }</code> <code>{2 … }</code> पहिला / दुसरा शेवट · <code>[ ]</code> एका मात्रेत · <code>ऽ</code> लांबवा · <code>–</code> विराम · <code>प.</code> मंद्र · <code>स\'</code> तार · <code>ग_</code> कोमल / तीव्र म · <code>^</code> आघात · <code>`म</code> कण स्वर · <code>त त्र थ थ्र +</code> आनक बोल · <a href="#" data-guide="swar">पूर्ण मार्गदर्शक →</a>',
-  f_bad: 'आधी त्रुटी दुरुस्त करा', f_savedT: 'जतन केले', f_reverted: 'मूळ रचना परत आणली', f_brokenFix: 'दुरुस्त केलेली रचना चालत नाही; ग्रंथातील मूळ उघडली',
-  f_fixes: 'दुरुस्त्या', f_fixCount: n => n ? `${n} रचना या उपकरणावर दुरुस्त केल्या आहेत.` : 'अजून कोणतीही रचना दुरुस्त केलेली नाही.', f_exportAll: 'सर्व दुरुस्त्या निर्यात', f_import: 'फाइल आयात',
-  f_imported: n => n === '१' ? '१ दुरुस्ती आयात झाली' : `${n} दुरुस्त्या आयात झाल्या`, f_importErr: 'ही फाइल वाचता आली नाही', f_notBook: 'ही ग्रंथातील रचना नाही — "माझ्या रचना" मध्ये आयात करा',
-  f_tag: 'दुरुस्त', f_copy: 'मजकूर कॉपी करा', f_share: 'शेअर / जतन करा', f_copied: 'कॉपी झाले', f_exportP: 'ही फाइल पाठवल्यास इतरांनाही हीच दुरुस्ती वापरता येते: सेटिंग्ज → दुरुस्त्या → दुरुस्ती आयात.',
-  f_pickup: 'अनागत (समेच्या आधीच्या मात्रा)', f_noSrc: 'या रचनेची मूळ फाइल सापडली नाही' },
- hi: { f_draft: 'सुधार का प्रारूप', f_fromLib: 'आपके फ़ोल्डर की प्रति', f_later: 'बाद में', f_delete: 'यह प्रति हटाएँ', f_delQ: 'आपकी यह प्रति हटाएँ? पुस्तक की मूल रचना वैसी ही रहेगी।', f_btn: 'सुधारें', f_title: n => `सुधार · ${n}`, f_orig: 'पुस्तक की मूल रचना', f_saved: 'सुधारी हुई · इस उपकरण पर सहेजी', f_dirty: 'बिना सहेजे बदल',
-  f_changed: n => n === '१' ? '१ पंक्ति बदली' : `${n} पंक्तियाँ बदलीं`, f_file: 'पूरी फ़ाइल', f_tala: 'ताल', f_laya: 'लय', f_play: 'सुनें ▶', f_save: 'सहेजें', f_export: 'फ़ाइल डाउनलोड',
-  f_revert: 'पुस्तक का मूल लाएँ', f_revertQ: 'संपादक में पुस्तक का मूल पाठ वापस लाएँ? (सहेजने पर ही आपकी प्रति बदलेगी)', f_yes: 'हाँ, मूल लाएँ', f_no: 'नहीं',
-  f_leaveQ: 'बदल सहेजें?', f_discard: 'छोड़ दें', f_cancel: 'रद्द', f_ok: 'कोई त्रुटि नहीं', f_line: (p, n) => `${p} · पंक्ति ${n}`,
-  f_err: 'त्रुटि', f_warn: 'सूचना', f_len: (a) => `भागों की लंबाई मेल नहीं खाती: ${a}`, f_jsonErr: 'फ़ाइल पढ़ी नहीं जा सकी (JSON): ', f_help: 'चिह्न',
-  f_legend: '<code>॥ॐ॥</code> आरंभ · <code>|</code> गण · <code>,</code> गट · <code>:॥</code> दो बार · <code>{1 … }</code> <code>{2 … }</code> पहला / दूसरा अंत · <code>[ ]</code> एक मात्रा में · <code>ऽ</code> खींचें · <code>–</code> विराम · <code>प.</code> मंद्र · <code>स\'</code> तार · <code>ग_</code> कोमल / तीव्र म · <code>^</code> आघात · <code>`म</code> कण स्वर · <code>त त्र थ थ्र +</code> आनक बोल · <a href="#" data-guide="swar">पूरी मार्गदर्शिका →</a>',
-  f_bad: 'पहले त्रुटियाँ सुधारें', f_savedT: 'सहेजा गया', f_reverted: 'मूल रचना वापस आई', f_brokenFix: 'सुधारी रचना नहीं चल रही; पुस्तक की मूल खोली',
-  f_fixes: 'सुधार', f_fixCount: n => n ? `${n} रचनाएँ इस उपकरण पर सुधारी गई हैं।` : 'अभी कोई रचना सुधारी नहीं गई।', f_exportAll: 'सभी सुधार निर्यात', f_import: 'फ़ाइल आयात',
-  f_imported: n => `${n} सुधार आयात हुए`, f_importErr: 'यह फ़ाइल पढ़ी नहीं जा सकी', f_notBook: 'यह पुस्तक की रचना नहीं — "मेरी रचनाएँ" में आयात करें',
-  f_tag: 'सुधारी', f_copy: 'पाठ कॉपी करें', f_share: 'शेयर / सहेजें', f_copied: 'कॉपी हुआ', f_exportP: 'यह फ़ाइल भेजने पर दूसरे भी यही सुधार उपयोग कर सकते हैं: सेटिंग्स → सुधार → सुधार आयात।',
-  f_pickup: 'अनागत (सम से पहले की मात्राएँ)', f_noSrc: 'इस रचना की मूल फ़ाइल नहीं मिली' },
- en: { f_draft: 'correction draft', f_fromLib: 'Your folder copy', f_later: 'Later', f_delete: 'Delete this copy', f_delQ: 'Delete your copy? The book version stays as it is.', f_btn: 'Correct', f_title: n => `Correct · ${n}`, f_orig: 'As in the book', f_saved: 'Corrected · saved on this device', f_dirty: 'Unsaved changes',
-  f_changed: n => n === '1' ? '1 line changed' : `${n} lines changed`, f_file: 'Whole file', f_tala: 'Tala', f_laya: 'Tempo', f_play: 'Play ▶', f_save: 'Save', f_export: 'Download file',
-  f_revert: 'Book text', f_revertQ: 'Put the book text back in the editor? (Your copy changes only when you save.)', f_yes: 'Yes, restore', f_no: 'No',
-  f_leaveQ: 'Save your changes?', f_discard: 'Discard', f_cancel: 'Cancel', f_ok: 'No problems found', f_line: (p, n) => `${p} · line ${n}`,
-  f_err: 'Error', f_warn: 'Note', f_len: (a) => `Parts differ in length: ${a}`, f_jsonErr: 'Couldn\'t read the file (JSON): ', f_help: 'Symbols',
-  f_legend: '<code>॥ॐ॥</code> start · <code>|</code> gan · <code>,</code> gat · <code>:॥</code> twice · <code>{1 … }</code> <code>{2 … }</code> first / second ending · <code>[ ]</code> in one matra · <code>ऽ</code> hold · <code>–</code> rest · <code>प.</code> lower octave · <code>स\'</code> upper octave · <code>ग_</code> komal / tivra म · <code>^</code> accent · <code>`म</code> grace note · <code>त त्र थ थ्र +</code> anak bols · <a href="#" data-guide="swar">Full guide →</a>',
-  f_bad: 'Fix the errors first', f_savedT: 'Saved', f_reverted: 'Book version restored', f_brokenFix: 'The corrected version doesn\'t build; opened the book version',
-  f_fixes: 'Corrections', f_fixCount: n => n ? `${n} rachanas corrected on this device.` : 'No rachana has been corrected yet.', f_exportAll: 'Export all corrections', f_import: 'Import file',
-  f_imported: n => n === '1' ? '1 correction imported' : `${n} corrections imported`, f_importErr: 'Couldn\'t read this file', f_notBook: 'Not a book rachana — import it under My rachanas',
-  f_tag: 'corrected', f_copy: 'Copy text', f_share: 'Share / save', f_copied: 'Copied', f_exportP: 'Send this file and others can use the same correction: Settings → Corrections → Import corrections.',
-  f_pickup: 'pickup / anagat (before सम)', f_noSrc: 'The source of this rachana is missing' }
-};
-for (const l in FS) Object.assign(I18N[l], FS[l]);
 
 const clone = o => JSON.parse(JSON.stringify(o));
 // the compiler speaks English; the common messages are given in मराठी / हिंदी too
@@ -78,7 +42,7 @@ const compile = src => GhoshCompile.compile3(src);
 /* ---------- editor state ---------- */
 let cur = null;   // { id, orig, draft, tab, dirty, res }
 const partKeys = d => Object.keys(d.parts || {}).sort((a, b) => (MEL.includes(b) - MEL.includes(a)));
-const partName = k => (tx('parts') || {})[k] || k;
+const partName = k => (i18n.has('common.parts.' + k) ? i18n.t('common.parts.' + k) : k);
 
 function check(d) {
   const msgs = []; let piece = null;
@@ -94,7 +58,7 @@ function check(d) {
     try {
       const tot = Object.keys(piece.parts).filter(k => MEL.includes(k) || k === 'anak').map(k => [k, buildTimeline3(piece, k).total]);
       if (tot.length > 1 && Math.max(...tot.map(x => x[1])) - Math.min(...tot.map(x => x[1])) > 0.05)
-        msgs.push({ sev: 'w', part: null, msg: tx('f_len', tot.map(([k, t]) => `${partName(k)} ${t.toFixed(1)} s`).join(', ')) });
+        msgs.push({ sev: 'w', part: null, msg: i18n.t('correction.len', { parts: tot.map(([k, t]) => `${partName(k)} ${t.toFixed(1)} s`).join(', ') }) });
     } catch (e) {}
   }
   return { piece, msgs };
@@ -125,7 +89,7 @@ async function open(key, line) {
   const id = String(key).replace(/^f~/, ''), isBook = PL.BOOK.some(r => r.id === id);
   let book = null; if (isBook) { try { book = await loadJSON('data/src/' + id + '.json'); } catch (e) {} }
   const lib = window.Library ? Library.sourceOf(id) : null;
-  const orig = lib || book; if (!orig) { toast(tx('f_noSrc')); return; }
+  const orig = lib || book; if (!orig) { toast(i18n.t('correction.noSrc')); return; }
   const keep = cur && cur.id === id && cur.dirty;
   if (!keep) cur = { id, book, orig, draft: clone(orig), fromLib: !!lib, tab: partKeys(orig)[0], dirty: false };
   if (line && line.part && cur.draft.parts[line.part]) cur.tab = line.part;
@@ -142,22 +106,22 @@ function changedLines() {
 }
 function renderHead() {
   const t = cur.draft.title || cur.orig.title || {};
-  $('#fxT').textContent = tx('f_title', (L().romanNames && t.rom) || t.dev || cur.id);
+  $('#fxT').textContent = i18n.t('correction.title', { name: t.dev ? i18n.name(t.dev, t.rom) : cur.id });
   const n = changedLines();
-  $('#fxSub').textContent = [cur.dirty ? tx('f_dirty') : cur.fromLib ? tx('f_fromLib') : tx('f_orig'), n ? tx('f_changed', dv(n)) : ''].filter(Boolean).join(' · ');
+  $('#fxSub').textContent = [cur.dirty ? i18n.t('correction.dirty') : cur.fromLib ? i18n.t('correction.fromLib') : i18n.t('correction.orig'), n ? i18n.t('correction.changed', { n }) : ''].filter(Boolean).join(' · ');
   $('#fxRevert').hidden = !cur.book || !(cur.fromLib || cur.dirty); $('#fxDelete').hidden = !(window.Library && Library.isLib(cur.id));
 }
 function render() {
   renderHead();
   const errs = k => (cur.res ? cur.res.msgs.filter(m => m.sev === 'e' && m.part === k).length : 0);
   $('#fxTabs').innerHTML = partKeys(cur.draft).map(k => `<button role="tab" data-fx-tab="${k}" aria-selected="${cur.tab === k}">${esc(partName(k))}${errs(k) ? `<span class="bad">!</span>` : ''}</button>`).join('') +
-    `<button role="tab" data-fx-tab="_json" aria-selected="${cur.tab === '_json'}">${esc(tx('f_file'))}</button>`;
+    `<button role="tab" data-fx-tab="_json" aria-selected="${cur.tab === '_json'}">${esc(i18n.t('correction.file'))}</button>`;
   const json = cur.tab === '_json', ta = $('#fxText');
   $('#fxTala').parentNode.hidden = $('#fxLaya').parentNode.hidden = json;
   ta.classList.toggle('json', json);
   if (json) ta.value = JSON.stringify(cur.draft, null, 1);
   else { const p = cur.draft.parts[cur.tab]; ta.value = p.lines.map(lineT).join('\n'); $('#fxTala').value = p.tala || ''; $('#fxLaya').value = p.laya || ''; }
-  $('#fxLegend').innerHTML = tx('f_legend');
+  $('#fxLegend').innerHTML = i18n.tb('correction.legend') + ' · <a href="#" data-guide="swar">' + esc(i18n.t('correction.legendGuide')) + '</a>';
   renderGutter(); renderMsgs();
 }
 function renderGutter() {
@@ -168,14 +132,14 @@ function renderGutter() {
   (cur.res ? cur.res.msgs : []).forEach(m => { if (m.part === cur.tab && m.line) mark[m.line] = mark[m.line] === 'e' ? 'e' : m.sev; });
   const ln = curLine();
   let h = ''; for (let i = 1; i <= n; i++) { const o = p.lines[i - 1]; const pk = o && typeof o === 'object' && o.pickup;
-    h += `<div class="${mark[i] || ''}${i === ln ? ' cur' : ''}" ${pk ? `title="${esc(tx('f_pickup'))}"` : ''}>${pk ? '↪ ' : ''}${dvN(i)}</div>`; }
+    h += `<div class="${mark[i] || ''}${i === ln ? ' cur' : ''}" ${pk ? `title="${esc(i18n.t('correction.pickup'))}"` : ''}>${pk ? '↪ ' : ''}${dvN(i)}</div>`; }
   $('#fxGut').innerHTML = h; $('#fxGut').scrollTop = $('#fxText').scrollTop;
 }
 function renderMsgs() {
   const ms = cur.res ? cur.res.msgs : [];
-  $('#fxMsgs').innerHTML = (cur.jsonErr ? `<button class="e"><i>${esc(tx('f_err'))}</i><span>${esc(tx('f_jsonErr') + cur.jsonErr)}</span></button>` : '') +
-    (ms.length ? ms.map((m, i) => `<button class="${m.sev}" data-fx-msg="${i}"><i>${esc(m.sev === 'e' ? tx('f_err') : tx('f_warn'))}</i><span>${m.part && m.part !== '*' ? esc(m.line ? tx('f_line', partName(m.part), dvN(m.line)) : partName(m.part)) + ': ' : ''}${esc(m.msg.split('\n')[0])}</span></button>`).join('')
-      : (cur.jsonErr ? '' : `<button class="ok"><i>✓</i><span>${esc(tx('f_ok'))}</span></button>`));
+  $('#fxMsgs').innerHTML = (cur.jsonErr ? `<button class="e"><i>${esc(i18n.t('correction.err'))}</i><span>${esc(i18n.t('correction.jsonErr') + cur.jsonErr)}</span></button>` : '') +
+    (ms.length ? ms.map((m, i) => `<button class="${m.sev}" data-fx-msg="${i}"><i>${esc(m.sev === 'e' ? i18n.t('correction.err') : i18n.t('correction.warn'))}</i><span>${m.part && m.part !== '*' ? esc(m.line ? i18n.t('correction.line', { part: partName(m.part), line: dvN(m.line) }) : partName(m.part)) + ': ' : ''}${esc(m.msg.split('\n')[0])}</span></button>`).join('')
+      : (cur.jsonErr ? '' : `<button class="ok"><i>✓</i><span>${esc(i18n.t('correction.ok'))}</span></button>`));
 }
 let ckT = null;
 function recheck(now) { clearTimeout(ckT); const go = () => { if (!cur) return; cur.res = check(cur.draft); render2(); }; if (now) go(); else ckT = setTimeout(go, 350); }
@@ -227,29 +191,29 @@ function ask(q, btns) {
 }
 async function save() {
   cur.res = check(cur.draft);
-  if (cur.jsonErr || cur.res.msgs.some(m => m.sev === 'e')) { render2(); toast(tx('f_bad')); return false; }
+  if (cur.jsonErr || cur.res.msgs.some(m => m.sev === 'e')) { render2(); toast(i18n.t('correction.bad')); return false; }
   const r = await Library.saveSource(cur.draft);
   cur.orig = clone(cur.draft); cur.fromLib = true; cur.dirty = false; render2();
-  if (r.written) toast(r.conflict ? tx('l_conflict', r.file) : tx('l_savedFolder', r.file));
-  else ask(tx('l_savedLocal'), [{ label: tx('l_download'), go: () => Library.downloadSource(cur.draft) }, { label: tx('f_later') }]);
+  if (r.written) toast(r.conflict ? i18n.t('library.conflict', { name: r.file }) : i18n.t('library.savedFolder', { name: r.file }));
+  else ask(i18n.t('library.savedLocal'), [{ label: i18n.t('library.download'), go: () => Library.downloadSource(cur.draft) }, { label: i18n.t('correction.later') }]);
   return true;
 }
 $('#fxSave').onclick = save;
 $('#fxPlay').onclick = () => {
-  if (cur.jsonErr) { toast(tx('f_bad')); return; }
+  if (cur.jsonErr) { toast(i18n.t('correction.bad')); return; }
   cur.res = check(cur.draft); render2();
-  if (!cur.res.piece) { toast(tx('f_bad')); return; }
+  if (!cur.res.piece) { toast(i18n.t('correction.bad')); return; }
   env.audio.unlock(); PL.showPiece(cur.res.piece, { play: true, returnTo: 'fixer' });
 };
 // back to the book text (as an unsaved change; saving it updates the folder copy)
-$('#fxRevert').onclick = () => ask(tx('f_revertQ'), [
-  { label: tx('f_yes'), danger: true, go: () => { cur.draft = clone(cur.book); cur.dirty = true; cur.jsonErr = null; if (!cur.draft.parts[cur.tab] && cur.tab !== '_json') cur.tab = partKeys(cur.draft)[0]; render(); recheck(true); } },
-  { label: tx('f_no') }]);
+$('#fxRevert').onclick = () => ask(i18n.t('correction.revertQ'), [
+  { label: i18n.t('correction.yes'), danger: true, go: () => { cur.draft = clone(cur.book); cur.dirty = true; cur.jsonErr = null; if (!cur.draft.parts[cur.tab] && cur.tab !== '_json') cur.tab = partKeys(cur.draft)[0]; render(); recheck(true); } },
+  { label: i18n.t('correction.no') }]);
 // remove the folder / browser copy of this rachana
-$('#fxDelete').onclick = () => ask(tx('f_delQ'), [
-  { label: tx('f_delete'), danger: true, go: async () => { const r = await Library.removeSource(cur.id); if (r.msg) toast(r.msg);
+$('#fxDelete').onclick = () => ask(i18n.t('correction.delQ'), [
+  { label: i18n.t('correction.delete'), danger: true, go: async () => { const r = await Library.removeSource(cur.id); if (r.msg) toast(r.msg);
     if (cur.book) { cur.draft = clone(cur.book); cur.orig = clone(cur.book); cur.fromLib = false; cur.dirty = false; render(); recheck(true); } else { cur.dirty = false; leave(); } } },
-  { label: tx('f_no') }]);
+  { label: i18n.t('correction.no') }]);
 function leave() {
   $('#fxAsk').hidden = true;
   document.querySelectorAll('.cview').forEach(v => { if (v.id === 'fixer') v.hidden = true; });
@@ -259,7 +223,7 @@ function leave() {
 }
 $('#fxBack').onclick = () => {
   if (!cur.dirty) { leave(); return; }
-  ask(tx('f_leaveQ'), [{ label: tx('f_save'), go: async () => { if (await save()) leave(); } }, { label: tx('f_discard'), danger: true, go: () => { cur.dirty = false; leave(); } }, { label: tx('f_cancel') }]);
+  ask(i18n.t('correction.leaveQ'), [{ label: i18n.t('correction.save'), go: async () => { if (await save()) leave(); } }, { label: i18n.t('correction.discard'), danger: true, go: () => { cur.dirty = false; leave(); } }, { label: i18n.t('correction.cancel') }]);
 };
 
 /* download this rachana as a file */
@@ -276,8 +240,8 @@ $('#fxImport').addEventListener('change', () => {
       else if (o.format === 'ghosh-notation/1' && o.parts && !o.composer) list.push(o);
       else throw new Error('format');
       for (const src of list) { try { compile(clone(src)); await Library.saveSource(src); n++; } catch (e) {} }
-      msg(tx('f_imported', dv(n)));
-    } catch (e) { msg(tx('f_importErr')); }
+      msg(i18n.t('correction.imported', { n }));
+    } catch (e) { msg(i18n.t('correction.importErr')); }
   };
   rd.readAsText(f);
 });
@@ -286,7 +250,7 @@ document.addEventListener('click', e => { const b = e.target.closest('[data-fx]'
 
 
 try { applyStatic(); } catch (e) {}
-return { open, back() { show(); render(); }, editing: () => cur && cur.id, lang() { if (cur && !$('#fixer').hidden) render(); } };
+return { open, back() { show(); render(); }, editing: () => cur && cur.id, busy: () => !!(cur && cur.dirty), lang() { if (cur && !$('#fixer').hidden) render(); } };
 }
 
 export class CorrectionScreen extends Screen {
@@ -295,4 +259,5 @@ export class CorrectionScreen extends Screen {
   open(arg) { return this.fx.open(arg); }
   close() { this.root.hidden = true; }
   onLang() { this.fx.lang(); }
+  isBusy() { return this.fx.busy(); }
 }

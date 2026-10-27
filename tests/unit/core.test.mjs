@@ -72,7 +72,7 @@ test('the two books kept out of the catalog still compile cleanly', () => {
   }
 });
 
-// The schema and cross checks that tools/ghosh-notation-v2/validate3.js ran by hand, now part of the test run.
+// The schema and cross checks that the old validate3.js ran by hand, now part of the test run.
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 const validate = ajv.compile(JSON.parse(fs.readFileSync(path.join(ROOT, 'docs/schema/ghosh-3.schema.json'), 'utf8')));
 for (const f of bookIds()) {

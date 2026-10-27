@@ -5,47 +5,16 @@ import { Screen } from '../../ui/screen.js';
 import { Transport } from '../../audio/transport.ts';
 import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 import { Figure } from './figure.loose.js';
+import './texts.js';                      // the words of the signals, from src/content
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createGhoshdand(env) {
-const { tx, esc, dv, I18N, loadJSON, audio: A, player: PL } = env;
+const { esc, dv, loadJSON, audio: A, player: PL } = env;
 const $ = env.q;   // like v1.1.0: null when the element is absent
 const SK = Figure;
-const LS = {
- mr: { k_open: 'घोषदंड संकेत', k_title: 'घोषदंड संकेत', k_stop: 'थांबवा', k_tabs: ['शिका', 'पूर्ण आवर्तन'], k_views: ['वादकांच्या नजरेतून', 'प्रमुखाच्या मागून'],
-  k_rules: 'सर्व संकेतांसाठी नियम', k_when: 'केव्हा', k_does: 'परिणाम', k_page: p => `घोष परिचय पृ. ${p}`, k_play: '⏸ थांबवा', k_resume: '▶ चालवा', k_again: '↺ पुन्हा', k_slow: '½× हळू', k_close: '✕ बंद',
-  k_left: 'डावा', k_right: 'उजवा', k_still: 'स्थिर', k_L: 'डा', k_R: 'उ', k_music: '♪ वादन चालू', k_silent: 'वादन थांबले',
-  k_key: 'घन चौकट = पाऊल पडते (डा = डावा, उ = उजवा) · ठिपकेदार = स्थिर · नारिंगी रेघ = घोषदंड हलतो',
-  k_cycIntro: 'स्थिर → घोषदंडाने प्रचल → रणन आणि श्रीराम (शंख) → वाद्यनिर्देश सहित वादनान्त → रणन आणि केदार (वंशी) → स्तभ् → वादनान्त. खरा आवाज, खरी लय.',
-  k_band: { anak: 'आनक', shankh: 'शंख', vanshi: 'वंशी', tal: 'ताल वाद्ये', march: 'प्रचल', stand: 'स्थिर' }, k_ready: 'सिद्ध',
-  k_blk: { count: 'अंक', ranan: 'रणन', pr: 'प्रारंभिक', ch: 'चरण', end: 'शेवट' }, k_sig: (n, m) => `संकेत अंक ${n}/${m}`, k_pass: n => n > 1 ? ' (पुन्हा)' : '',
-  k_chap: ['स्थिर', 'प्रचल', 'रणन', 'श्रीराम', 'रचना बदल', 'रणन', 'केदार · स्तभ्', 'वादनान्त'],
-  k_pramukh: 'घोष प्रमुख', k_dal: 'दल प्रमुख', k_loading: 'तयार होत आहे…', k_err: 'रचना उघडता आली नाही.' },
- hi: { k_open: 'घोषदंड संकेत', k_title: 'घोषदंड संकेत', k_stop: 'रोकें', k_tabs: ['सीखें', 'पूर्ण आवर्तन'], k_views: ['वादकों की दृष्टि से', 'प्रमुख के पीछे से'],
-  k_rules: 'सब संकेतों के नियम', k_when: 'कब', k_does: 'परिणाम', k_page: p => `घोष परिचय पृ. ${p}`, k_play: '⏸ रोकें', k_resume: '▶ चलाएँ', k_again: '↺ फिर से', k_slow: '½× धीरे', k_close: '✕ बंद',
-  k_left: 'बायाँ', k_right: 'दायाँ', k_still: 'स्थिर', k_L: 'बा', k_R: 'दा', k_music: '♪ वादन जारी', k_silent: 'वादन रुका',
-  k_key: 'ठोस खाना = कदम (बा = बायाँ, दा = दायाँ) · बिंदीदार = स्थिर · नारंगी रेखा = घोषदंड चलता है',
-  k_cycIntro: 'स्थिर → घोषदंड से प्रचल → रणन और श्रीराम (शंख) → वाद्यनिर्देश सहित वादनान्त → रणन और केदार (वंशी) → स्तभ् → वादनान्त। असली आवाज़, असली लय।',
-  k_band: { anak: 'आनक', shankh: 'शंख', vanshi: 'वंशी', tal: 'ताल वाद्य', march: 'प्रचल', stand: 'स्थिर' }, k_ready: 'सिद्ध',
-  k_blk: { count: 'अंक', ranan: 'रणन', pr: 'प्रारंभिक', ch: 'चरण', end: 'अंत' }, k_sig: (n, m) => `संकेत अंक ${n}/${m}`, k_pass: n => n > 1 ? ' (दोबारा)' : '',
-  k_chap: ['स्थिर', 'प्रचल', 'रणन', 'श्रीराम', 'रचना बदल', 'रणन', 'केदार · स्तभ्', 'वादनान्त'],
-  k_pramukh: 'घोष प्रमुख', k_dal: 'दल प्रमुख', k_loading: 'तैयार हो रहा है…', k_err: 'रचना नहीं खुली।' },
- en: { k_open: 'Ghoshdand signals', k_title: 'Ghoshdand signals', k_stop: 'Stop', k_tabs: ['Learn', 'Full cycle'], k_views: ['Players’ view', 'From behind'],
-  k_rules: 'Rules for every signal', k_when: 'When', k_does: 'Result', k_page: p => `घोष परिचय p. ${p}`, k_play: '⏸ Pause', k_resume: '▶ Play', k_again: '↺ Again', k_slow: '½× slow', k_close: '✕ Close',
-  k_left: 'Left', k_right: 'Right', k_still: 'Still', k_L: 'L', k_R: 'R', k_music: '♪ Playing', k_silent: 'Not playing',
-  k_key: 'Solid box = a step (L / R) · dotted = standing · orange line = the staff moves',
-  k_cycIntro: 'Standing → प्रचल by the staff → रणन and श्रीराम (शंख) → change to वंशी (वाद्यनिर्देश सहित वादनान्त) → रणन and केदार (वंशी) → halt → stop playing. Real sound, real tempo.',
-  k_band: { anak: 'आनक', shankh: 'शंख', vanshi: 'वंशी', tal: 'Tala instruments', march: 'Marching', stand: 'Standing' }, k_ready: 'ready',
-  k_blk: { count: 'Count', ranan: 'रणन', pr: 'प्रारंभिक', ch: 'Charan', end: 'End' }, k_sig: (n, m) => `Signal count ${n}/${m}`, k_pass: n => n > 1 ? ' (repeat)' : '',
-  k_chap: ['Standing', 'प्रचल', 'रणन', 'श्रीराम', 'Change', 'रणन', 'केदार · halt', 'Stop'],
-  k_pramukh: 'घोष प्रमुख', k_dal: 'Section leader', k_loading: 'Getting ready…', k_err: 'Could not open the rachana.' },
-};
-for (const l in LS) if (typeof I18N !== 'undefined' && I18N[l]) I18N[l].k_open = LS[l].k_open;
-const lang = () => LS[env.lang()] ? env.lang() : 'mr';
-const tk = (k, ...a) => { const v = LS[lang()][k]; return typeof v === 'function' ? v(...a) : v; };
-const T = x => SK.T(x, lang());
+const tk = (k, params) => env.i18n.t('ghoshdand.' + k, params);
+const T = x => SK.T(x, env.i18n.chain());
 const n = x => dv(x);
-const LET = { mr: 'अबकडइ', hi: 'अबकडइ', en: 'abcde' };
 let tab = 0, view = 'front';
 try { const v = localStorage.getItem('ghosh.skView'); if (v) view = v; } catch (e) {}
 
@@ -76,7 +45,7 @@ function halt(keep) {
   if (!keep) E.pos = 0;
 }
 function paint() { if (E.frame) E.frame(Math.min(now(), E.end)); }
-function setBtn() { const b = document.querySelector('#sk .sk-pp'); if (b) b.textContent = E.playing ? tk('k_play') : tk('k_resume'); }
+function setBtn() { const b = document.querySelector('#sk .sk-pp'); if (b) b.textContent = E.playing ? tk('play') : tk('resume'); }
 function stopAll() { halt(true); setBtn(); }
 
 /* app sounds */
@@ -99,16 +68,16 @@ function card(st, code, full = true) {
 /* ---------- शिका: the 8 signals ---------- */
 let cur = null;   // { id, i } — the signal animation showing
 function renderLearn() {
-  const L = LET[lang()] || LET.mr;
-  let h = `<div class="sk-rules"><b>${esc(tk('k_rules'))}</b><ol>${SK.RULES.map(r => `<li>${esc(T(r))}</li>`).join('')}</ol></div>`;
+  const L = [...tk('letters')];            // the letters that label the steps
+  let h = `<div class="sk-rules"><b>${esc(tk('rules'))}</b><ol>${SK.RULES.map(r => `<li>${esc(T(r))}</li>`).join('')}</ol></div>`;
   SK.SIGNALS.forEach(sg => {
     const num = sg.n ? n(sg.n) : n(0);
     let inner;
     if (sg.seq) inner = `<div class="sk-seq">${sg.seq.map((st, i) => st.pose ? card(st, num + L[i], false) : `<div class="sk-gap"><span class="sk-cnt">${st.count}</span>${esc(T(st.label))}</div>`).join('')}</div>`;
     else inner = `<div class="sk-cards">${sg.steps.map((st, i) => card(st, sg.n ? num + L[i] : num)).join('')}</div>`;
-    const meta = [sg.when ? `<span><b>${esc(tk('k_when'))}:</b> ${esc(T(sg.when))}</span>` : '', sg.does ? `<span><b>${esc(tk('k_does'))}:</b> ${esc(T(sg.does))}</span>` : ''].join('');
+    const meta = [sg.when ? `<span><b>${esc(tk('when'))}:</b> ${esc(T(sg.when))}</span>` : '', sg.does ? `<span><b>${esc(tk('does'))}:</b> ${esc(T(sg.does))}</span>` : ''].join('');
     const plays = sg.anim ? `<div class="sk-plays">${sg.anim.map((a, i) => `<button class="lb-btn" data-skp="${sg.id}:${i}" aria-pressed="false">▶ ${esc(T(a.label))}</button>`).join('')}</div><div data-skslot="${sg.id}"></div>` : '';
-    h += `<section class="sk-sig" id="sk-${sg.id}"><div class="sk-sh"><span class="sk-num">${num}</span><h3>${esc(T(sg.name))}</h3><span class="sk-pg">${esc(tk('k_page', n(sg.page)))}</span></div>${meta ? `<div class="sk-meta">${meta}</div>` : ''}${plays}${inner}</section>`;
+    h += `<section class="sk-sig" id="sk-${sg.id}"><div class="sk-sh"><span class="sk-num">${num}</span><h3>${esc(T(sg.name))}</h3><span class="sk-pg">${esc(tk('page', { page: n(sg.page) }))}</span></div>${meta ? `<div class="sk-meta">${meta}</div>` : ''}${plays}${inner}</section>`;
   });
   $('#skBody').innerHTML = h;
   if (cur) openSignal(cur.id, cur.i, true);
@@ -116,8 +85,8 @@ function renderLearn() {
 function playerHTML(strip, extra = '') {
   return `<div class="sk-player"><div class="sk-pst"><div class="sk-bubble" hidden></div><div class="sk-f"></div><div class="sk-s"></div></div>
    <div class="sk-pin"><div class="sk-now"><span class="sk-big">${n(0)}</span><span class="sk-foot">—</span><span class="sk-blk"></span><span class="sk-mus"></span></div>
-   <div class="sk-cap" aria-live="polite"></div>${extra}<div class="sk-strip">${strip}</div><div class="sk-key">${esc(tk('k_key'))}</div>
-   <div class="sk-ctl"><button class="lb-btn sk-pp">${esc(tk('k_play'))}</button><button class="lb-btn sk-rp">${esc(tk('k_again'))}</button><button class="lb-btn sk-sp" aria-pressed="${E.speed < 1}">${esc(tk('k_slow'))}</button>${tab === 0 ? `<button class="lb-btn sk-cl">${esc(tk('k_close'))}</button>` : ''}</div></div></div>`;
+   <div class="sk-cap" aria-live="polite"></div>${extra}<div class="sk-strip">${strip}</div><div class="sk-key">${esc(tk('key'))}</div>
+   <div class="sk-ctl"><button class="lb-btn sk-pp">${esc(tk('play'))}</button><button class="lb-btn sk-rp">${esc(tk('again'))}</button><button class="lb-btn sk-sp" aria-pressed="${E.speed < 1}">${esc(tk('slow'))}</button>${tab === 0 ? `<button class="lb-btn sk-cl">${esc(tk('close'))}</button>` : ''}</div></div></div>`;
 }
 function scaleTL(tl, f) { return { T: tl.T.map(x => x == null ? x : x / f), D: tl.D.map(x => x == null ? x : x / f), end: tl.end / f }; }
 function openSignal(id, i, keepTime) {
@@ -126,7 +95,7 @@ function openSignal(id, i, keepTime) {
   const sg = SK.SIGNALS.find(x => x.id === id), a = sg.anim[i], tl = scaleTL(SK.timeline(a), E.speed), m = a.march || [0, -1];
   cur = { id, i };
   const sigC = new Set(a.pose.slice(1).map(x => x[0]));
-  const strip = Array.from({ length: a.n }, (_, j) => { const k = j + 1, mm = k >= m[0] && k <= m[1]; return `<span data-k="${k}" class="${mm ? 'm' : ''}${sigC.has(k) ? ' sig' : ''}">${n(k)}<small>${mm ? (k % 2 ? tk('k_L') : tk('k_R')) : '·'}</small></span>`; }).join('');
+  const strip = Array.from({ length: a.n }, (_, j) => { const k = j + 1, mm = k >= m[0] && k <= m[1]; return `<span data-k="${k}" class="${mm ? 'm' : ''}${sigC.has(k) ? ' sig' : ''}">${n(k)}<small>${mm ? (k % 2 ? tk('L') : tk('R')) : '·'}</small></span>`; }).join('');
   const slot = document.querySelector(`[data-skslot="${id}"]`); slot.innerHTML = playerHTML(strip);
   document.querySelectorAll('#skBody [data-skp]').forEach(b => b.setAttribute('aria-pressed', b.dataset.skp === id + ':' + i));
   // sounds: a footfall on every step, the ताल वाद्ये while वादन is on, ध्वंकार-द्वय where the signal calls for it, a soft count when standing
@@ -146,8 +115,8 @@ function openSignal(id, i, keepTime) {
     q('.sk-s').innerHTML = SK.draw(f.state, { view: 'side' });
     if (f.count === last) return; last = f.count;
     q('.sk-big').textContent = n(f.count);
-    const ft = q('.sk-foot'); ft.className = 'sk-foot' + (f.marching ? (f.count % 2 ? ' L' : ' R') : ''); ft.textContent = f.count ? (f.marching ? (f.count % 2 ? tk('k_left') : tk('k_right')) : tk('k_still')) : '—';
-    q('.sk-mus').className = 'sk-mus sk-band'; q('.sk-mus').innerHTML = f.music == null ? '' : `<span class="${f.music ? 'k-play' : ''}">${esc(f.music ? tk('k_music') : tk('k_silent'))}</span>`;
+    const ft = q('.sk-foot'); ft.className = 'sk-foot' + (f.marching ? (f.count % 2 ? ' L' : ' R') : ''); ft.textContent = f.count ? (f.marching ? (f.count % 2 ? tk('left') : tk('right')) : tk('still')) : '—';
+    q('.sk-mus').className = 'sk-mus sk-band'; q('.sk-mus').innerHTML = f.music == null ? '' : `<span class="${f.music ? 'k-play' : ''}">${esc(f.music ? tk('music') : tk('silent'))}</span>`;
     q('.sk-cap').textContent = f.note ? T(f.note[1]) : '';
     slot.querySelectorAll('.sk-strip span').forEach(s => s.classList.toggle('on', +s.dataset.k === f.count));
   };
@@ -282,15 +251,15 @@ function bandHTML(c, t) {
   const st = (a, b, c2, d) => t >= c2 && t < d ? 'k-play' : t >= a && t < b ? 'k-ready' : '';
   const anak = st(CY.caps[1][0], CY.t0S, CY.t0S, CY.endMusic), shankh = st(CY.t0S, CY.sPr, CY.sPr, CY.endS), vanshi = st(CY.t0K, CY.kC1, CY.kC1, CY.endMusic);
   const mv = t >= CY.tl.T[CY.MARCH0] - .05 && t < CY.tl.T[CY.HALT] + .05;
-  const B = tk('k_band'), R = ` · ${tk('k_ready')}`;
+  const B = new Proxy({}, { get: (_, k) => tk('band.' + k) }), R = ` · ${tk('ready')}`;
   const chip = (k, s) => `<span class="${s}">${esc(B[k])}${s === 'k-ready' ? esc(R) : ''}</span>`;
   return chip('anak', anak) + chip('shankh', shankh) + chip('vanshi', vanshi) + chip('tal', anak) + `<span class="${mv ? 'k-mv' : ''}">${esc(mv ? B.march : B.stand)}</span>`;
 }
 async function renderCycle() {
   halt(); cur = null;
-  $('#skBody').innerHTML = `<p class="sk-intro">${esc(tk('k_cycIntro'))}</p><div id="skCyc"><p class="sk-intro">${esc(tk('k_loading'))}</p></div>`;
-  try { CY = await buildCycle(E.speed); } catch (e) { $('#skCyc').innerHTML = `<p class="sk-intro">${esc(tk('k_err'))}</p>`; return; }
-  const ch = tk('k_chap');
+  $('#skBody').innerHTML = `<p class="sk-intro">${esc(tk('cycIntro'))}</p><div id="skCyc"><p class="sk-intro">${esc(tk('loading'))}</p></div>`;
+  try { CY = await buildCycle(E.speed); } catch (e) { $('#skCyc').innerHTML = `<p class="sk-intro">${esc(tk('err'))}</p>`; return; }
+  const ch = new Proxy({}, { get: (_, i) => tk('chap.' + i) });
   const chapH = `<div class="sk-chap">${CY.chap.map((t, i) => `<button data-skc="${i}"><i></i>${esc(ch[i])}</button>`).join('')}</div>`;
   $('#skCyc').innerHTML = playerHTML('', `<div class="sk-band"></div>${chapH}`);
   const root = $('#skCyc'), q = c => root.querySelector(c);
@@ -304,27 +273,27 @@ async function renderCycle() {
     let ci = -1; CY.caps.forEach((c, i) => { if (t >= c[0] - .01) ci = i; });
     if (ci !== lastCap) { lastCap = ci; const c = CY.caps[ci] || CY.caps[0];
       q('.sk-cap').textContent = T(c[1]);
-      const bb = q('.sk-bubble'); if (c[2]) { bb.hidden = false; bb.innerHTML = `<span><small>${esc(c[2] === 'dal' ? tk('k_dal') : tk('k_pramukh'))}</small>${esc(c[3])}</span>`; } else bb.hidden = true; }
+      const bb = q('.sk-bubble'); if (c[2]) { bb.hidden = false; bb.innerHTML = `<span><small>${esc(c[2] === 'dal' ? tk('dal') : tk('pramukh'))}</small>${esc(c[3])}</span>`; } else bb.hidden = true; }
     q('.sk-band').innerHTML = bandHTML(CY, t);
     CY.chap.forEach((c0, i) => { const c1 = i + 1 < CY.chap.length ? CY.chap[i + 1] : CY.tl.end; const b = root.querySelector(`[data-skc="${i}"]`); const p = Math.max(0, Math.min(1, (t - c0) / (c1 - c0)));
       b.classList.toggle('on', t >= c0 && t < c1); b.firstChild.style.width = (p * 100).toFixed(1) + '%'; });
     if (f.count === lastK) return; lastK = f.count;
     const inf = CY.info[f.count] || { blk: 'count', no: 0 };
     q('.sk-big').textContent = n(inf.no || 0);
-    const ft = q('.sk-foot'); ft.className = 'sk-foot' + (f.marching ? (f.count % 2 ? ' L' : ' R') : ''); ft.textContent = f.count ? (f.marching ? (f.count % 2 ? tk('k_left') : tk('k_right')) : tk('k_still')) : '—';
-    const BL = tk('k_blk');
-    q('.sk-blk').innerHTML = f.count ? `<b>${esc(BL[inf.blk])}${esc(tk('k_pass', inf.pass))}</b>${inf.sig ? `<span class="sk-sigc">${esc(tk('k_sig', n(inf.sig), n(16)))}</span>` : ''}` : '';
+    const ft = q('.sk-foot'); ft.className = 'sk-foot' + (f.marching ? (f.count % 2 ? ' L' : ' R') : ''); ft.textContent = f.count ? (f.marching ? (f.count % 2 ? tk('left') : tk('right')) : tk('still')) : '—';
+    const BL = new Proxy({}, { get: (_, k) => tk('blk.' + k) });
+    q('.sk-blk').innerHTML = f.count ? `<b>${esc(BL[inf.blk])}${esc((inf.pass > 1 ? tk('pass') : ''))}</b>${inf.sig ? `<span class="sk-sigc">${esc(tk('sig', { n: n(inf.sig), total: n(16) }))}</span>` : ''}` : '';
   };
   wire(root, () => renderCycle());
   root.querySelector('.sk-chap').onclick = e => { const b = e.target.closest('[data-skc]'); if (b) play(CY.chap[+b.dataset.skc]); };
-  E.pos = 0; paint(); setBtn(); q('.sk-pp').textContent = tk('k_resume');
+  E.pos = 0; paint(); setBtn(); q('.sk-pp').textContent = tk('resume');
 }
 
 /* ---------- page ---------- */
 function renderTop() {
-  $('#skT').textContent = tk('k_title'); $('#skStopT').textContent = tk('k_stop');
-  $('#skTabs').innerHTML = tk('k_tabs').map((x, i) => `<button role="tab" data-sktab="${i}" aria-selected="${i === tab}">${esc(x)}</button>`).join('');
-  $('#skView').innerHTML = tk('k_views').map((x, i) => `<button data-skv="${i ? 'back' : 'front'}" aria-pressed="${(i ? 'back' : 'front') === view}">${esc(x)}</button>`).join('');
+  $('#skT').textContent = tk('title'); $('#skStopT').textContent = tk('stop');
+  $('#skTabs').innerHTML = [0, 1].map(i => tk('tabs.' + i)).map((x, i) => `<button role="tab" data-sktab="${i}" aria-selected="${i === tab}">${esc(x)}</button>`).join('');
+  $('#skView').innerHTML = [0, 1].map(i => tk('views.' + i)).map((x, i) => `<button data-skv="${i ? 'back' : 'front'}" aria-pressed="${(i ? 'back' : 'front') === view}">${esc(x)}</button>`).join('');
 }
 function render() { renderTop(); if (tab === 0) renderLearn(); else renderCycle(); }
 let from = null;
@@ -345,7 +314,7 @@ $('#skBody').addEventListener('click', e => { const b = e.target.closest('[data-
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#sk').hidden) close(); });
 document.addEventListener('click', e => { const b = e.target.closest('[data-sanket]'); if (b) { e.preventDefault(); open(b.dataset.sanket || null); } });
 
-return { open, close, stopAll, lang() { if (!$('#sk').hidden) { const p = E.playing; halt(true); render(); } }, _cycle: () => CY, _E: E };
+return { open, close, stopAll, busy: () => E.playing, lang() { if (!$('#sk').hidden) { const p = E.playing; halt(true); render(); } }, _cycle: () => CY, _E: E };
 }
 
 export class GhoshdandScreen extends Screen {
@@ -355,4 +324,5 @@ export class GhoshdandScreen extends Screen {
   close() { this.page.close(); }
   onLang() { this.page.lang(); }
   onStopAll() { this.page.stopAll(); }
+  isBusy() { return this.page.busy(); }
 }
