@@ -53,22 +53,6 @@
  },
  {
   "kind": "script",
-  "gen": "scoreview"
- },
- {
-  "kind": "raw",
-  "file": "raw-scoreview.html"
- },
- {
-  "kind": "script",
-  "gen": "audio"
- },
- {
-  "kind": "raw",
-  "file": "raw-audio.html"
- },
- {
-  "kind": "script",
   "file": "app.js"
  },
  {

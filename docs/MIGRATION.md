@@ -25,7 +25,8 @@ A script counts as migrated only when **a test shows it does what v1.1.0 did**:
 | `app.js`: language core | ~50 | **done** | `src/ui/i18n.loose.js`; every text of all three languages and the helpers equal to v1.1.0 (`screens.spec.mjs`) | — |
 | `app.js`: data loading | ~15 | **done** | `Catalog` in `src/data/catalog.ts` (the embedded pack only; unit-tested against the released pack) | — |
 | `app.js`: rachana list | ~30 | **done** | `src/screens/list/list.loose.js`; same rows, chips and counts through search and every filter in 3 languages | — |
-| `app.js`: player, sheet, boot (what is left, ~330 lines) | 330 | next | `PlayerScreen`, `SettingsSheet`, `App` start-up | the sound and Transport shims retired |
+| `app.js`: player, sound wiring, settings sheet | ~320 | **moved** | `src/screens/player/player.loose.js` (one closure, as before). Same list, score, sheet and playback behaviour; all tests pass. Still to do: split it into `PlayerScreen`, `SettingsSheet`, and a sound-settings piece; retire the `window` handles it keeps for `platform.js` and the tests | — |
+| `app.js`: what remains | 42 | **done** | helpers, theme toggle, language switching, the services object, start-up | — |
 | `legacy/tala-velresha.html` | 595 KB | **done** | `TalaTimelineScreen` in `src/screens/tala/` (shadow DOM; shared `AudioEngine` and `Transport`; sounds in `src/audio/tala.ts`; same `tala.v3` key). Draws the same as the standalone page through 27 filter steps, and its sounds match to 1e-6 (`tala.spec.mjs`). Its text is still Marathi only | — |
 
 Rules while migrating: one script per change; the old script is deleted in the same change that adds its replacement;

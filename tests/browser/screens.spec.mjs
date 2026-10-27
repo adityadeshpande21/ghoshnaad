@@ -419,6 +419,6 @@ test.describe('guide screen behaviour', () => {
 
   test('screens are registered with the app', async ({ page }) => {
     await open(page);
-    expect((await page.evaluate(() => [...ScreenApp.screens.keys()])).sort()).toEqual(['composer', 'correction', 'export', 'ghoshdand', 'guide', 'library', 'list', 'soundcheck', 'tala']);
+    expect((await page.evaluate(() => [...ScreenApp.screens.keys()])).sort()).toEqual(['composer', 'correction', 'export', 'ghoshdand', 'guide', 'library', 'list', 'player', 'soundcheck', 'tala']);
   });
 });

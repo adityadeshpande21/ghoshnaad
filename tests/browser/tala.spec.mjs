@@ -1,6 +1,7 @@
 // The tala timeline, merged into the app. It must draw what the standalone v1.1.0 page drew, sound the same, and behave well as a screen.
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
+import { build } from 'esbuild';
 import path from 'node:path';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
@@ -51,6 +52,9 @@ test.describe('sound', () => {
   test('the ठेका, ध्वंकार and footfall are the same sounds as the standalone page made', async ({ page }) => {
     await page.goto('file://' + DIST);
     await page.waitForSelector('#rows .row', { state: 'attached' });
+    // the new code under test, bundled on its own
+    const bundle = (await build({ entryPoints: [path.join(ROOT, 'src/browser/entry-audio.ts')], bundle: true, format: 'iife', target: 'es2020', write: false })).outputFiles[0].text;
+    await page.addScriptTag({ content: bundle });
     // the original recipe functions, cut out of the original script
     const recipes = SCRIPT.slice(SCRIPT.indexOf('/* ठेका'), SCRIPT.indexOf('function stopPlay'));
     expect(recipes).toContain('function tick');

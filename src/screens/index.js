@@ -2,6 +2,7 @@
 // The screens that have been migrated to the Screen / App structure. The page starts them with its services: Screens.start(AppEnv).
 import { App } from '../ui/screen.js';
 import { GuideScreen } from './guide/guide.js';
+import { createPlayer } from './player/player.loose.js';
 import { createList } from './list/list.loose.js';
 import { ComposerScreen } from './composer/composer.loose.js';
 import { createLibrary } from './library/library.loose.js';
@@ -15,6 +16,10 @@ import { Figure } from './ghoshdand/figure.loose.js';
 /** @param {import('../ui/env.d.ts').AppEnv} env */
 export function start(env) {
   const app = new App(env);
+  // the player first: it provides the sound, player and settings services that the other screens use
+  const player = createPlayer(env);
+  Object.assign(env, player.services);
+  app.register('player', player);
   const guide = app.register('guide', new GuideScreen(env));
   const ghoshdand = app.register('ghoshdand', new GhoshdandScreen(env));
   app.register('list', createList(env));

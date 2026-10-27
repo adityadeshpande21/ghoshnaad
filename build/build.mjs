@@ -25,18 +25,16 @@ const bundle = async entry => (await esbuild({
   entryPoints: [path.join(ROOT, entry)], bundle: true, minify: true, format: 'iife',
   target: 'es2020', platform: 'browser', write: false, legalComments: 'none', charset: 'ascii', loader: { '.css': 'text', '.html': 'text' },
 })).outputFiles[0].text;
-const [compiler, timeline, audio, platformlib, composercore, screens, scoreview, i18nlib] = await Promise.all([bundle('src/browser/entry-compiler.ts'), bundle('src/browser/entry-timeline.ts'), bundle('src/browser/entry-audio.ts'), bundle('src/browser/entry-platform.ts'), bundle('src/browser/entry-composer.ts'), bundle('src/browser/entry-screens.js'), bundle('src/browser/entry-scoreview.js'), bundle('src/browser/entry-i18n.js')]);
+const [compiler, timeline, platformlib, composercore, screens, i18nlib] = await Promise.all([bundle('src/browser/entry-compiler.ts'), bundle('src/browser/entry-timeline.ts'), bundle('src/browser/entry-platform.ts'), bundle('src/browser/entry-composer.ts'), bundle('src/browser/entry-screens.js'), bundle('src/browser/entry-i18n.js')]);
 const fflate = fs.readFileSync(path.join(ROOT, 'node_modules/fflate/umd/index.js'), 'utf8');
 const generated = {
   pack: safe(`window.GHOSH_PACK="${pack.base64}";`, 'pack'),
   fflate: safe(`/* fflate 0.8.2, MIT License, (c) 2023 Arjun Barrett */\n${fflate}\n`, 'fflate'),
   compiler: safe('\n' + compiler, 'compiler'),
   timeline: safe('\n' + timeline, 'timeline'),
-  audio: safe('\n' + audio, 'audio'),
   platformlib: safe('\n' + platformlib, 'platform'),
   composercore: safe('\n' + composercore, 'composer model'),
   screens: safe('\n' + screens, 'screens'),
-  scoreview: safe('\n' + scoreview, 'scoreview'),
   i18n: safe('\n' + i18nlib, 'i18n'),
 };
 const fonts = await fontCss(ROOT);
