@@ -113,13 +113,34 @@ html[lang="en"] .brand h1{font-family:var(--f-ui);font-weight:700;font-size:28px
 .s.dot-b::after{bottom:-3px}.s.dot-t::before{top:-2px}
 .s.vk{text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.5px}
 .s.hold,.s.rest{color:var(--dim)}
-.s .ac{position:absolute;top:-.75em;left:0;right:0;text-align:center;font-size:.55em}
+.s .ac{position:absolute;top:-.75em;left:0;right:0;text-align:center;font-size:.75em}
+.s .ac{white-space:nowrap}
+.s.mk2{min-width:1.25em;text-align:center}.s.mk3{min-width:1.8em;text-align:center}
+/* the marks of a whole group, drawn once over it: a cell as wide as the matra, its marks spread across it (a hairpin then reads over the notes it spans) */
+.mt .mk{position:absolute;left:0;right:0;top:-.75em;display:flex;justify-content:space-evenly;font-size:.75em;line-height:1.1;white-space:nowrap;pointer-events:none}
+.mt .mk i{font-style:normal}
+.pr .mt .mk{top:2.5px}
 .s .gr{font-size:.6em;vertical-align:super;opacity:.85}
 .s.sls,.s.slm,.s.sle{border-top:1.5px solid currentColor}.s.sls{border-top-left-radius:8px}.s.sle{border-top-right-radius:8px}
 .cue{font-size:.8em;color:var(--mut);font-weight:700}
 .end{position:absolute;top:1px;left:3px;font-size:11px;font-weight:800;color:var(--accInk);line-height:1}
 .g.ve{box-shadow:inset 0 2px 0 var(--acc);border-top-left-radius:0;border-top-right-radius:0;padding-top:6px}
 .g.ve0{border-left:2px solid var(--acc)!important}
+/* The marks of the score each have a band of their own, so no two collide. A row reserves a band only when one of its notes needs it, and every note of the row gets the same
+   bands, so the notes stay on one baseline. Top, from the top: the slur's line, the accent, the तार dot. Bottom, from the glyph: the komal underline, the मंद dot, the bracket of a group. */
+.pr .s{border-top:1.5px solid transparent}
+.pr .s.sls,.pr .s.slm,.pr .s.sle{border-top-color:currentColor}
+.pr:has(.dot-t,.sls,.slm,.sle) .s{padding-top:5px}
+.pr .s.dot-t::before{top:1px}
+.pr:has(.ac,.mk) .s{padding-top:calc(.83em + 7px)}                  /* the accent is .75em of text at line-height 1.1: its band grows with the text, the dot's does not */
+.pr:has(.ac) .s .ac{top:1px}
+.pr:has(.ac,.mk) .s.dot-t::before{top:calc(.83em + 2px)}
+.pr:has(.vk) .mt{padding-bottom:7px}
+.pr:has(.dot-b) .mt{padding-bottom:8px}
+.pr .s.dot-b::after{bottom:-4px}
+.pr:has(.vk.dot-b) .mt{padding-bottom:12px}
+.pr .s.vk.dot-b::after{bottom:-8px}
+.pr:has(.ve0) .g{padding-top:17px}
 .gp{min-height:30px}
 .ln.pk{background:transparent;border-style:dashed}
 .pr.pkrow{display:flex;justify-content:flex-end;align-items:center;gap:4px}

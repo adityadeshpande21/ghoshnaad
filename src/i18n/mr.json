@@ -41,7 +41,7 @@
  "composer.check.outOfRaga.0": "{value} हा स्वर रागात नाही",
  "composer.check.outOfRaga.1": "हेतुपूर्वक असल्यास तसेच ठेवा.",
  "composer.check.shankhRange.0": "{value} शंखावर वाजत नाही",
- "composer.check.shankhRange.1": "शंखाचे स्वर: प़ स ग प.",
+ "composer.check.shankhRange.1": "शंखाचे स्वर: प़ स़ स ग प.",
  "composer.check.startsHold.0": "भाग ऽ ने सुरू होतो",
  "composer.check.startsHold.1": "पहिल्या मात्रेत स्वर किंवा – असावा.",
  "composer.clear": "रिकामे",

@@ -1,0 +1,68 @@
+{
+  "note": "Changes to the book rachanas made after v1.1.0, each from docs/ghoshnaad-fixes-for-coding-agent.md (Fix D#). `line` counts the entries of the part's lines from 1, pickup lines included; `before` must occur exactly once in v1.1.0's line. The pack-equals-v1.1.0 test, the golden record and tools/check-rachana.mts allow a difference for exactly these ids and exactly these changes.",
+  "corrections": [
+    {
+      "fix": "D4",
+      "id": "trihut",
+      "part": "shankh",
+      "line": 14,
+      "before": "(प [स)प.]",
+      "after": "(प `सप.)",
+      "reason": "The slur and the grace stroke are misplaced compared with the page."
+    },
+    {
+      "fix": "D6",
+      "id": "ganesh",
+      "part": "vanshi",
+      "line": 15,
+      "before": "नि_ऽप) | मऽ– , (पऽम) | रीऽ(प , मऽरी) | सऽ–",
+      "after": "नि_ऽप | म)ऽ– , (पऽम | री)ऽ(प , मऽरी | स)ऽ–",
+      "reason": "Four slurs close before the bar line; the book carries them across it."
+    },
+    {
+      "fix": "D6",
+      "id": "ganesh",
+      "part": "vanshi",
+      "line": 23,
+      "before": "नि_ऽप) | मऽ– , (पऽम) | रीऽ(प , मऽरी) | सऽ–",
+      "after": "नि_ऽप | म)ऽ– , (पऽम | री)ऽ(प , मऽरी | स)ऽ–",
+      "reason": "Same text as line 15; the book carries the slurs across the bar line."
+    },
+    {
+      "fix": "D6",
+      "id": "ganesh",
+      "part": "vanshi",
+      "line": 26,
+      "before": "(मऽप) | नि_ऽ(म",
+      "after": "(मऽप | नि_)ऽ(म",
+      "reason": "The slur closes one note early; the book carries it across the bar line."
+    },
+    {
+      "fix": "D8",
+      "id": "parijatam",
+      "part": "vanshi",
+      "line": 1,
+      "before": "[स'^–] [स'^–]",
+      "after": "[स^–] [स^–]",
+      "reason": "The book prints madhya स with no तार dot."
+    },
+    {
+      "fix": "D9",
+      "id": "vandemataram",
+      "part": "vanshi",
+      "line": 11,
+      "before": "[(नि_ऽपम] [ग_)री]",
+      "after": "[(नि_ऽपम] [ग_री)]",
+      "reason": "The slur ends one note early."
+    },
+    {
+      "fix": "D11",
+      "id": "aruni",
+      "part": "vanshi",
+      "line": 38,
+      "before": "| ऽ – – – ॥",
+      "after": "| ऽ! – – – ॥",
+      "reason": "The book prints a second लयभंग arrow on the hold. It compiles as a fermata with no warnings; the length is unchanged at 428 s."
+    }
+  ]
+}

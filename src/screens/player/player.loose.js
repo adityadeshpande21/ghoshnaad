@@ -112,7 +112,7 @@ addEventListener('popstate',()=>{const id=decodeURIComponent(location.hash.slice
 function alert1(msg){$('#rows').insertAdjacentHTML('afterbegin',`<p class="empty" role="alert">${esc(msg)}</p>`)}
 
 /* ---------- notation ---------- */
-const {slotHTML,matraHTML,ganHTML,fitRows}=ScoreView.makeScoreView({esc,dvN,$});
+const {slotHTML,matraHTML,ganHTML,fitRows,sharedMarks,markCell}=ScoreView.makeScoreView({esc,dvN,$});
 function charanLabel(c){
   if(c.type==='ranan')return i18n.t('player.ranan');
   if(c.type==='prarambhik')return i18n.t('player.prarambhik');
@@ -337,7 +337,7 @@ document.addEventListener('visibilitychange',()=>{if(document.visibilityState===
 document.addEventListener('keydown',e=>{if(!P||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||document.querySelector('.cview:not([hidden])'))return;if(e.code==='Space'){e.preventDefault();$('#play').click()}});
 
 const services = {
-  matraHTML, slotHTML, fitRows, renderPlayer: () => renderPlayer(), openPiece, wake: v => wake(v), 
+  matraHTML, slotHTML, sharedMarks, markCell, fitRows, renderPlayer: () => renderPlayer(), openPiece, wake: v => wake(v), 
   audio: { get engine() { return ENG; }, unlock: () => audio(), announce: () => announce(), outLat: () => outLat(), get ctx() { return ctx; }, get master() { return master; }, get gains() { return gains; },
     hz: s => hz(s), playNote: (e, t, o, v) => playNote(e, t, o, v), playStroke: (e, t, o) => playStroke(e, t, o), footfall: (t, f, o) => footfall(t, f, o),
     panav: (t, v, o, m) => panav(t, v, o, m), jhal: (t, v, o, m) => jhal(t, v, o, m), trib: (t, v, o, m) => trib(t, v, o, m), click: (t, v, o) => click(t, v, o),

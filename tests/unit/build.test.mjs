@@ -2,7 +2,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
-import { ROOT, legacyPack, stable, withoutStamp } from '../golden/lib.mjs';
+import { ROOT, legacyPack, stable, withoutStamp, loadCorrections, applyCorrections } from '../golden/lib.mjs';
 import { buildPack } from '../../build/lib/pack.mjs';
 import { checkSingleFile } from '../../build/check-single-file.mjs';
 
@@ -17,14 +17,22 @@ test('the pack holds the 120 books, compiled and as written, plus the catalog', 
   assert.equal(Object.keys(pack).filter(k => k.startsWith('data/src/')).length, 120);
 });
 
-test('the pack is identical to the one v1.1.0 shipped', { skip: !hasLegacy }, () => {
-  const mine = buildPack(ROOT, { stamp: '2026-01-01T00:00:00.000Z' }).pack, theirs = legacyPack();
+test('the pack is identical to the one v1.1.0 shipped, except the corrections declared in tests/fixtures/book-corrections.json', { skip: !hasLegacy }, () => {
+  const mine = buildPack(ROOT, { stamp: '2026-01-01T00:00:00.000Z' }).pack, theirs = legacyPack(), fixes = loadCorrections();
+  const corrected = new Set(fixes.map(c => c.id));
   assert.deepEqual(Object.keys(mine).sort(), Object.keys(theirs).sort());
   for (const k of Object.keys(theirs)) {
+    const id = /^data\/(?:src|r)\/(.+)\.json$/.exec(k)?.[1];
     const strip = k.startsWith('data/r/') ? withoutStamp : x => x;
-    assert.equal(stable(strip(mine[k])), stable(strip(theirs[k])), k);
+    if (id && corrected.has(id)) {
+      if (k.startsWith('data/src/')) {
+        const { src, problems } = applyCorrections(theirs[k], fixes.filter(c => c.id === id));
+        assert.deepEqual(problems, []);
+        assert.equal(stable(mine[k]), stable(src), `${k}: not v1.1.0's source with the declared corrections`);
+      } else assert.notEqual(stable(strip(mine[k])), stable(strip(theirs[k])), `${k}: the declared corrections change nothing`);
+    } else assert.equal(stable(strip(mine[k])), stable(strip(theirs[k])), k);
   }
-  assert.deepEqual(mine['data/index.json'], theirs['data/index.json'], 'catalog rows and their order');
+  assert.deepEqual(mine['data/index.json'], theirs['data/index.json'], 'catalog rows and their order');          // a correction must not change a row: title, tala, length …
 });
 
 test('the build is repeatable: same inputs, same pack', () => {

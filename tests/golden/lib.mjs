@@ -46,3 +46,24 @@ export function legacyPack() {
   const m = html.match(/window\.GHOSH_PACK="([^"]+)"/);
   return JSON.parse(zlib.gunzipSync(Buffer.from(m[1], 'base64')).toString('utf8'));
 }
+
+// Changes made to the books after v1.1.0, each declared in tests/fixtures/book-corrections.json (see its note). Everything that compares a book with
+// v1.1.0 goes through these, so a difference is accepted for exactly the declared ids and exactly the declared change.
+export function loadCorrections(root = ROOT) {
+  const f = path.join(root, 'tests/fixtures/book-corrections.json');
+  return fs.existsSync(f) ? JSON.parse(fs.readFileSync(f, 'utf8')).corrections : [];
+}
+const lineText = l => (typeof l === 'string' ? l : String(l?.t ?? ''));
+/** v1.1.0's source with the declared corrections of one rachana applied: { src, problems } (a `before` must occur exactly once in its line). */
+export function applyCorrections(legacySrc, fixes) {
+  const src = structuredClone(legacySrc), problems = [];
+  for (const c of fixes) {
+    const lines = src.parts?.[c.part]?.lines, cur = lines?.[c.line - 1];
+    if (cur === undefined) { problems.push(`${c.fix}: v1.1.0 has no line ${c.line} in ${c.part}`); continue; }
+    const text = lineText(cur), times = text.split(c.before).length - 1;
+    if (times !== 1) { problems.push(`${c.fix}: "${c.before}" must occur exactly once in v1.1.0's ${c.part} line ${c.line} (it occurs ${times} times): make it longer`); continue; }
+    const next = text.replace(c.before, () => c.after);
+    lines[c.line - 1] = typeof cur === 'string' ? next : { ...cur, t: next };
+  }
+  return { src, problems };
+}

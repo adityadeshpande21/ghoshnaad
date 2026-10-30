@@ -156,7 +156,8 @@ export function ragaSet(raga: Raga | null | undefined): Set<string> | null {
   tokenize((raga.aroha || '') + ' ' + (raga.avaroha || '')).forEach(t => { const p = parseToken(t); if (p && p.kind === 'note') set.add(p.base + (p.vikrit ? '_' : '')); });
   return set.size ? set : null;
 }
-export const SHANKH_OK = new Set(['प.', 'स', 'ग', 'प']);
+// the notes the shankh (bugle) can play; v1.1.0 lacked 'स.' although the books use it (दीपनिर्वाण सूचना), and the sound check already allows it
+export const SHANKH_OK = new Set(['प.', 'स.', 'स', 'ग', 'प']);
 
 /* checks ------------------------------------------------------------------ */
 export interface CheckItem { sev: 'fix' | 'tip'; k: string; at: { bi: number; li: number; row: 'mel' | 'anak'; i: number }; n?: number; t?: string; key?: string }

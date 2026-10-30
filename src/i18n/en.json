@@ -41,7 +41,7 @@
  "composer.check.outOfRaga.0": "{value} is not in the raga",
  "composer.check.outOfRaga.1": "Keep it if it is intended.",
  "composer.check.shankhRange.0": "{value} can't be played on the shankh",
- "composer.check.shankhRange.1": "Shankh notes: प़ स ग प.",
+ "composer.check.shankhRange.1": "Shankh notes: प़ स़ स ग प.",
  "composer.check.startsHold.0": "Part starts with ऽ",
  "composer.check.startsHold.1": "The first matra should be a swara or –.",
  "composer.clear": "Clear",

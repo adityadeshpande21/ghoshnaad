@@ -5,11 +5,20 @@ import path from 'node:path';
 import { stripI18n } from '../support/strip-i18n.mjs';
 import { I18n } from '../../src/i18n/i18n.ts';
 import { legacyTables } from '../support/legacy-tables.ts';
+import { buildPack } from '../../build/lib/pack.mjs';
+import { loadCorrections } from '../golden/lib.mjs';
+import { undoMarkCells } from '../support/legacy-marks.mjs';
 
 const ROOT = path.resolve(import.meta.dirname, '../..');
 const LEGACY = path.join(ROOT, 'legacy/v1.1.0/Ghoshnaad.html');
 const DIST = path.join(ROOT, 'dist/Ghoshnaad.html');
 const LANGS = ['mr', 'hi', 'en'];
+// The drawing code is what these tests compare, so both pages must draw the same data. The rachanas whose notation was corrected after v1.1.0
+// (tests/fixtures/book-corrections.json) are therefore handed to both pages as the current compiled piece, instead of each page's own copy.
+const CORRECTED = (() => {
+  const ids = new Set(loadCorrections().map(c => c.id)), pack = buildPack(ROOT, { stamp: '2026-01-01T00:00:00.000Z' }).pack;
+  return Object.fromEntries([...ids].map(id => [id, pack[`data/r/${id}.json`]]));
+})();
 
 async function openFile(page, file) {
   await page.context().route(/^https?:\/\//, r => r.abort());
@@ -82,23 +91,24 @@ test.describe('export screen', () => {
     const grab = async file => {
       const ctx = await browser.newContext(), page = await ctx.newPage();
       await openFile(page, file);
-      const out = await page.evaluate(async langs => {
+      const out = await page.evaluate(async ({ langs, corrected, undo }) => {
+        const old = eval('(' + undo + ')');
         const idx = await loadJSON('data/index.json'), res = {}, seen = new Set();
         const picks = idx.filter(r => { const k = r.talas.join() + r.parts.join(); if (seen.has(k)) return false; seen.add(k); return true; }).slice(0, 12);
         for (const l of langs) {
           setLang(l);
           for (const r of picks) {
-            const piece = await loadJSON('data/r/' + r.id + '.json');
+            const piece = corrected[r.id] ?? await loadJSON('data/r/' + r.id + '.json');
             for (const [st, lay] of [['rich', 'score'], ['plain', 'pages']]) {
               store.set('xstyle', st); store.set('xlay', lay);
               Swarlipi.open(piece);
               const keys = Object.keys(piece.parts).filter(k => ['shankh', 'vanshi', 'anak'].includes(k));
-              res[`${l}/${r.id}/${st}/${lay}`] = { dom: document.querySelector('#xexport').innerHTML, sheet: Swarlipi.sheet(piece, keys), text: Swarlipi.text(piece, keys) };
+              res[`${l}/${r.id}/${st}/${lay}`] = { dom: old(document.querySelector('#xexport').innerHTML), sheet: old(Swarlipi.sheet(piece, keys)), text: Swarlipi.text(piece, keys) };
             }
           }
         }
         return res;
-      }, LANGS);
+      }, { langs: LANGS, corrected: CORRECTED, undo: undoMarkCells.toString() });
       await ctx.close();
       return out;
     };
@@ -243,7 +253,7 @@ test.describe('language core', () => {
     await ctx.close();
     expect(Object.keys(was).sort()).toEqual(['en', 'hi', 'mr']);
     for (const l of LANGS) {
-      const n = dump(now[l], argSets(l));
+      const n = stripI18n(dump(now[l], argSets(l)));          // the deliberate differences are undone (tests/support/strip-i18n.mjs)
       // the legend's link is a text of its own now (a message may not hold an <a>); the screen puts it back, so together they are the old text
       n.f_legend = `${n.f_legend} · <a href="#" data-guide="swar">${n.f_legendGuide}</a>`;
       for (const k of Object.keys(was[l])) expect(n[k], `${l}.${k}`).toEqual(was[l][k]);
@@ -292,18 +302,19 @@ test.describe('score drawing', () => {
     const grab = async file => {
       const ctx = await browser.newContext(), page = await ctx.newPage();
       await openFile(page, file);
-      const out = await page.evaluate(async () => {
+      const out = await page.evaluate(async ({ corrected, undo }) => {
+        const old = eval('(' + undo + ')');            // the marks of a group back as v1.1.0 drew them (tests/support/legacy-marks.mjs)
         const idx = await loadJSON('data/index.json'); let n = 0, hash = 0, sample = '';
         for (const r of idx) {
-          const p = await loadJSON('data/r/' + r.id + '.json');
+          const p = corrected[r.id] ?? await loadJSON('data/r/' + r.id + '.json');
           for (const part of Object.values(p.parts)) for (const g of part.gans) {
-            const h = ganHTML(g, part.instrument); n++;
+            const h = old(ganHTML(g, part.instrument)); n++;
             for (let i = 0; i < h.length; i++) hash = (Math.imul(hash, 31) + h.charCodeAt(i)) | 0;
             if (n === 500) sample = h;
           }
         }
         return { n, hash, sample, slot: slotHTML({ type: 'note', dev: 'ग', octave: -1, vikrit: true, accent: true, slur: 'start', grace: [{ dev: 'म' }] }), cue: matraHTML({ cue: 'ॐ' }) };
-      });
+      }, { corrected: CORRECTED, undo: undoMarkCells.toString() });
       await ctx.close();
       return out;
     };

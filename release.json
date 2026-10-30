@@ -6,19 +6,22 @@
       "iPhone वर फोनचा मूक (silent) मोड चालू असला तरी आता आवाज येतो.",
       "कॉल किंवा लॉक स्क्रीनमुळे वादन थांबले, तर ▶ दाबताच तिथूनच पुन्हा सुरू होते.",
       "बॅकअप आणि परत आणणे: तुमच्या सर्व रचना आणि दुरुस्त्या एका फाइलमध्ये डाउनलोड करा आणि कोणत्याही उपकरणावर परत आणा (सेटिंग्ज).",
-      "नवीन आवृत्ती तयार असल्यास अ‍ॅप सांगते; काही वाजत नसताना आणि काम जतन झाल्यावरच ती लागू होते."
+      "नवीन आवृत्ती तयार असल्यास अ‍ॅप सांगते; काही वाजत नसताना आणि काम जतन झाल्यावरच ती लागू होते.",
+      "पुस्तकाशी जुळवण्यासाठी ५ रचनांची स्वरलिपी दुरुस्त केली: त्रिहुत, गणेश, पारिजातम्, वन्देमातरम्, आरुणी."
     ],
     "hi": [
       "iPhone पर फ़ोन का साइलेंट मोड चालू होने पर भी अब आवाज़ आती है।",
       "कॉल या लॉक स्क्रीन से वादन रुक जाए तो ▶ दबाते ही वहीं से फिर शुरू होता है।",
       "बैकअप और वापस लाना: अपनी सभी रचनाएँ और सुधार एक फ़ाइल में डाउनलोड करें और किसी भी उपकरण पर वापस लाएँ (सेटिंग्स)।",
-      "नया संस्करण तैयार होने पर ऐप बताता है; वह तभी लागू होता है जब कुछ बज नहीं रहा हो और काम सहेजा जा चुका हो।"
+      "नया संस्करण तैयार होने पर ऐप बताता है; वह तभी लागू होता है जब कुछ बज नहीं रहा हो और काम सहेजा जा चुका हो।",
+      "पुस्तक से मिलाने के लिए 5 रचनाओं की स्वरलिपि सुधारी गई: त्रिहुत, गणेश, पारिजातम्, वन्देमातरम्, आरुणी।"
     ],
     "en": [
       "On iPhone the app now plays even when the phone's silent switch is on.",
       "If a call or the lock screen stops playback, tapping ▶ continues from the same place.",
       "Backup and restore: download all your rachanas and corrections as one file and bring them back on any device (Settings).",
-      "The app tells you when a new version is ready and installs it only when nothing is playing or unsaved."
+      "The app tells you when a new version is ready and installs it only when nothing is playing or unsaved.",
+      "Notation corrected to match the book in 5 rachanas: Trihut, Ganesh, Parijatam, Vandemataram, Aruni."
     ]
   },
   "site": "https://adityadeshpande21.github.io/ghoshnaad/"

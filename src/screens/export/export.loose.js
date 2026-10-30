@@ -7,7 +7,7 @@ import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createExport(env) {
-const { i18n, esc, dv, dvN, mmss, secName, applyStatic, fitRows, slotHTML, store } = env;
+const { i18n, esc, dv, dvN, mmss, secName, applyStatic, fitRows, slotHTML, sharedMarks, markCell, store } = env;
 const $ = env.q;   // like v1.1.0: null when the element is absent
 
 /* ---------- what can be exported ---------- */
@@ -117,8 +117,8 @@ function noteSpan(t) {
 }
 function bookMatra(m) {
   if (m.cue) return `<span class="bcue">${esc(m.cue)}</span>`;
-  const grp = (m.slots || []).length > 1 || m.group;
-  return `<span class="bmt${grp ? ' grp' : ''}">${(m.slots || []).map(x => (x.type === 'step' ? `<span class="s">${x.foot === 'L' ? 'बा' : 'दा'}</span>` : slotHTML(x))).join('')}</span>`;
+  const grp = (m.slots || []).length > 1 || m.group, sh = sharedMarks(m.slots);         // a group's marks: once, over the group
+  return `<span class="bmt${grp ? ' grp' : ''}">${sh ? markCell(sh) : ''}${(m.slots || []).map(x => (x.type === 'step' ? `<span class="s">${x.foot === 'L' ? 'बा' : 'दा'}</span>` : slotHTML(x, !sh))).join('')}</span>`;
 }
 const BAR = t => String(t).replace(/॥/g, '‖');
 function bookGan(g, gats) {
@@ -281,7 +281,8 @@ const SHEET_CSS = RICH_CSS + `.sheet{font-family:"Mukta","Noto Sans Devanagari",
 .bpick{display:grid;grid-template-columns:44px 1fr;align-items:center;min-height:30px;font-size:18px;font-weight:600}.bpu{text-align:right;padding-right:6px}
 .bnote{font-size:12px;margin:10px 0 0}
 .sheet .s.hold,.sheet .s.rest{color:#111}
-.sheet .s .ac{font-size:.6em}`;
+.sheet .s .ac{font-size:.75em;white-space:nowrap}.sheet .s.mk2{min-width:1.25em;text-align:center}.sheet .s.mk3{min-width:1.8em;text-align:center}
+.bmt .mk{position:absolute;left:0;right:0;top:-.8em;display:flex;justify-content:space-evenly;font-size:.75em;line-height:1.1;white-space:nowrap}.bmt .mk i{font-style:normal}`;
 
 /* ---------- dialog ---------- */
 function openExport2(piece) {

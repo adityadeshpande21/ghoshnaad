@@ -18,6 +18,7 @@
     "test:dist": "node tools/run-tests.mjs \"tests/dist/*.test.mjs\"",
     "typecheck": "tsc -p . && node tools/check-names.mjs",
     "i18n:check": "node tools/i18n-check.mjs",
+    "check:rachana": "node tools/check-rachana.mts",
     "i18n:export": "node tools/i18n-xlsx.mjs export",
     "i18n:import": "node tools/i18n-xlsx.mjs import"
   },

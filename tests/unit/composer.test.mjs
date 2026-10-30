@@ -12,6 +12,8 @@ const legacy = (() => {
   const code = fs.readFileSync(path.join(ROOT, 'legacy/src/app/composer-core.js'), 'utf8');
   const sandbox = { module: { exports: {} }, window: undefined };
   vm.runInNewContext(code, sandbox);
+  // the one deliberate difference from v1.1.0: the shankh may play the mandra स (the books use it, see the test below)
+  sandbox.module.exports.SHANKH_OK.add('स.');
   return sandbox.module.exports;
 })();
 // the old module runs in its own realm, so compare by value (JSON) rather than by prototype
@@ -90,4 +92,11 @@ test('compositions made with it still compile to playable rachanas', () => {
     const { piece } = compile3(src, { talas });
     assert.ok(Object.keys(piece.parts).length > 0);
   }
+});
+
+test("the shankh may play the mandra स (दीपनिर्वाण सूचना uses it) and nothing else outside प. स. स ग प", () => {
+  const sa = { id: 't', instr: 'shankh', tala: 'kerva', laya: 120, raga: null, blocks: [{ lines: [{ mel: [{ n: 2, s: ['स.', 'ग'] }, { n: 2, s: ['प.', 'प'] }, { n: 2, s: ['री', 'ध'] }, { n: 2, s: ['स', 'ग'] }], anak: [] }] }] };
+  const bad = C.check(structuredClone(sa)).filter(c => c.k === 'shankhRange').map(c => c.t);
+  assert.deepEqual(bad, ['री', 'ध']);
+  assert.ok(C.SHANKH_OK.has('स.') && C.SHANKH_OK.size === 5);
 });

@@ -41,7 +41,7 @@
  "composer.check.outOfRaga.0": "{value} स्वर राग में नहीं",
  "composer.check.outOfRaga.1": "जानबूझकर हो तो ऐसे ही रखें।",
  "composer.check.shankhRange.0": "{value} शंख पर नहीं बजता",
- "composer.check.shankhRange.1": "शंख के स्वर: प़ स ग प।",
+ "composer.check.shankhRange.1": "शंख के स्वर: प़ स़ स ग प।",
  "composer.check.startsHold.0": "भाग ऽ से शुरू होता है",
  "composer.check.startsHold.1": "पहली मात्रा में स्वर या – होना चाहिए।",
  "composer.clear": "खाली",

@@ -55,7 +55,7 @@ Shivranjani, vanshi — first line: 4 gans × 2 matras
 | N:स! | स! | Hold (लयभंग) | लयभंग: hold the swara longer than written (often the last one). | Held into the silence after it — up to its own length, at most 2 matras. |
 | N:प< ग> | < > | Grow / fade | Swell or fade the swara. | Volume rises / falls. |
 
-> The <b>शंख</b> (bugle) can only play <b>प़ स ग प</b> (and rarely नि_ स'); the editor warns on other swaras. <b>Santar</b> (default): each swara stops a little before its time; <b>Nirantar</b>: full length. For the वंशी part: flute, venu, clarinet, sax, melodica; for the शंख part: bugle, trumpet, melodica.
+> The <b>शंख</b> (bugle) can only play <b>प़ स़ स ग प</b> (and rarely नि_ स'); the editor warns on other swaras. <b>Santar</b> (default): each swara stops a little before its time; <b>Nirantar</b>: full length. For the वंशी part: flute, venu, clarinet, sax, melodica; for the शंख part: bugle, trumpet, melodica.
 
 ## anak: आनक (side drum) — bols
 
