@@ -1,4 +1,4 @@
-// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// Moved from v1.1.0 with its shared names replaced by the services below. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // घोषदंड संकेत page: learn the 8 signals (शिका) and watch a full cycle with real sound (पूर्ण आवर्तन).
 // The figure is src/screens/ghoshdand/figure; every sound comes from the app's engine, scheduled by the shared Transport.
 import { Screen } from '../../ui/screen.js';
@@ -6,6 +6,7 @@ import { Transport } from '../../audio/transport.ts';
 import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 import { Figure } from './figure.loose.js';
 import './texts.js';                      // the words of the signals, from src/content
+import { clicked, qsa } from '../../ui/dom.js';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createGhoshdand(env) {
@@ -97,7 +98,7 @@ function openSignal(id, i, keepTime) {
   const sigC = new Set(a.pose.slice(1).map(x => x[0]));
   const strip = Array.from({ length: a.n }, (_, j) => { const k = j + 1, mm = k >= m[0] && k <= m[1]; return `<span data-k="${k}" class="${mm ? 'm' : ''}${sigC.has(k) ? ' sig' : ''}">${n(k)}<small>${mm ? (k % 2 ? tk('L') : tk('R')) : '·'}</small></span>`; }).join('');
   const slot = document.querySelector(`[data-skslot="${id}"]`); slot.innerHTML = playerHTML(strip);
-  document.querySelectorAll('#skBody [data-skp]').forEach(b => b.setAttribute('aria-pressed', b.dataset.skp === id + ':' + i));
+  qsa('#skBody [data-skp]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.skp === id + ':' + i)));
   // sounds: a footfall on every step, the ताल वाद्ये while वादन is on, ध्वंकार-द्वय where the signal calls for it, a soft count when standing
   const items = [];
   for (let k = 1; k <= a.n; k++) {
@@ -118,7 +119,7 @@ function openSignal(id, i, keepTime) {
     const ft = q('.sk-foot'); ft.className = 'sk-foot' + (f.marching ? (f.count % 2 ? ' L' : ' R') : ''); ft.textContent = f.count ? (f.marching ? (f.count % 2 ? tk('left') : tk('right')) : tk('still')) : '—';
     q('.sk-mus').className = 'sk-mus sk-band'; q('.sk-mus').innerHTML = f.music == null ? '' : `<span class="${f.music ? 'k-play' : ''}">${esc(f.music ? tk('music') : tk('silent'))}</span>`;
     q('.sk-cap').textContent = f.note ? T(f.note[1]) : '';
-    slot.querySelectorAll('.sk-strip span').forEach(s => s.classList.toggle('on', +s.dataset.k === f.count));
+    /** @type {NodeListOf<HTMLElement>} */ (slot.querySelectorAll('.sk-strip span')).forEach(s => s.classList.toggle('on', +s.dataset.k === f.count));
   };
   wire(slot, () => openSignal(id, i));
   E.pos = was; paint();
@@ -251,7 +252,7 @@ function bandHTML(c, t) {
   const st = (a, b, c2, d) => t >= c2 && t < d ? 'k-play' : t >= a && t < b ? 'k-ready' : '';
   const anak = st(CY.caps[1][0], CY.t0S, CY.t0S, CY.endMusic), shankh = st(CY.t0S, CY.sPr, CY.sPr, CY.endS), vanshi = st(CY.t0K, CY.kC1, CY.kC1, CY.endMusic);
   const mv = t >= CY.tl.T[CY.MARCH0] - .05 && t < CY.tl.T[CY.HALT] + .05;
-  const B = new Proxy({}, { get: (_, k) => tk('band.' + k) }), R = ` · ${tk('ready')}`;
+  const B = /** @type {Record<string, string>} */ (new Proxy({}, { get: (_, k) => tk('band.' + String(k)) })), R = ` · ${tk('ready')}`;
   const chip = (k, s) => `<span class="${s}">${esc(B[k])}${s === 'k-ready' ? esc(R) : ''}</span>`;
   return chip('anak', anak) + chip('shankh', shankh) + chip('vanshi', vanshi) + chip('tal', anak) + `<span class="${mv ? 'k-mv' : ''}">${esc(mv ? B.march : B.stand)}</span>`;
 }
@@ -259,7 +260,7 @@ async function renderCycle() {
   halt(); cur = null;
   $('#skBody').innerHTML = `<p class="sk-intro">${esc(tk('cycIntro'))}</p><div id="skCyc"><p class="sk-intro">${esc(tk('loading'))}</p></div>`;
   try { CY = await buildCycle(E.speed); } catch (e) { $('#skCyc').innerHTML = `<p class="sk-intro">${esc(tk('err'))}</p>`; return; }
-  const ch = new Proxy({}, { get: (_, i) => tk('chap.' + i) });
+  const ch = new Proxy({}, { get: (_, i) => tk('chap.' + String(i)) });
   const chapH = `<div class="sk-chap">${CY.chap.map((t, i) => `<button data-skc="${i}"><i></i>${esc(ch[i])}</button>`).join('')}</div>`;
   $('#skCyc').innerHTML = playerHTML('', `<div class="sk-band"></div>${chapH}`);
   const root = $('#skCyc'), q = c => root.querySelector(c);
@@ -281,11 +282,11 @@ async function renderCycle() {
     const inf = CY.info[f.count] || { blk: 'count', no: 0 };
     q('.sk-big').textContent = n(inf.no || 0);
     const ft = q('.sk-foot'); ft.className = 'sk-foot' + (f.marching ? (f.count % 2 ? ' L' : ' R') : ''); ft.textContent = f.count ? (f.marching ? (f.count % 2 ? tk('left') : tk('right')) : tk('still')) : '—';
-    const BL = new Proxy({}, { get: (_, k) => tk('blk.' + k) });
+    const BL = new Proxy({}, { get: (_, k) => tk('blk.' + String(k)) });
     q('.sk-blk').innerHTML = f.count ? `<b>${esc(BL[inf.blk])}${esc((inf.pass > 1 ? tk('pass') : ''))}</b>${inf.sig ? `<span class="sk-sigc">${esc(tk('sig', { n: n(inf.sig), total: n(16) }))}</span>` : ''}` : '';
   };
   wire(root, () => renderCycle());
-  root.querySelector('.sk-chap').onclick = e => { const b = e.target.closest('[data-skc]'); if (b) play(CY.chap[+b.dataset.skc]); };
+  root.querySelector('.sk-chap').onclick = e => { const b = clicked(e, '[data-skc]'); if (b) play(CY.chap[+b.dataset.skc]); };
   E.pos = 0; paint(); setBtn(); q('.sk-pp').textContent = tk('resume');
 }
 
@@ -307,12 +308,12 @@ function open(t) {
 function close() { halt(); cur = null; $('#sk').hidden = true; }
 $('#skBack').onclick = close;
 $('#skStop').onclick = () => { halt(true); setBtn(); };
-$('#skTabs').addEventListener('click', e => { const b = e.target.closest('[data-sktab]'); if (!b) return; halt(); cur = null; tab = +b.dataset.sktab; render(); $('#skBody').scrollTop = 0; });
-$('#skView').addEventListener('click', e => { const b = e.target.closest('[data-skv]'); if (!b) return; view = b.dataset.skv; try { localStorage.setItem('ghosh.skView', view); } catch (x) {}
+$('#skTabs').addEventListener('click', e => { const b = clicked(e, '[data-sktab]'); if (!b) return; halt(); cur = null; tab = +b.dataset.sktab; render(); $('#skBody').scrollTop = 0; });
+$('#skView').addEventListener('click', e => { const b = clicked(e, '[data-skv]'); if (!b) return; view = b.dataset.skv; try { localStorage.setItem('ghosh.skView', view); } catch (x) {}
   renderTop(); if (tab === 0) { const keep = cur; const pos = now(), was = E.playing; renderLearn(); if (keep && was) play(pos); } else { paint(); } });
-$('#skBody').addEventListener('click', e => { const b = e.target.closest('[data-skp]'); if (!b) return; const [id, i] = b.dataset.skp.split(':'); E.speed = E.speed || 1; openSignal(id, +i); });
+$('#skBody').addEventListener('click', e => { const b = clicked(e, '[data-skp]'); if (!b) return; const [id, i] = b.dataset.skp.split(':'); E.speed = E.speed || 1; openSignal(id, +i); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#sk').hidden) close(); });
-document.addEventListener('click', e => { const b = e.target.closest('[data-sanket]'); if (b) { e.preventDefault(); open(b.dataset.sanket || null); } });
+document.addEventListener('click', e => { const b = clicked(e, '[data-sanket]'); if (b) { e.preventDefault(); open(b.dataset.sanket || null); } });
 
 return { open, close, stopAll, busy: () => E.playing, lang() { if (!$('#sk').hidden) { const p = E.playing; halt(true); render(); } }, _cycle: () => CY, _E: E };
 }

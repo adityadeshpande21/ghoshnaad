@@ -1,6 +1,6 @@
 // One-file backup and restore of the person's work.
 //
-//   { format: 'ghoshnaad-backup/1', app, created, mine: [composer records], fixes: { <id>: { src, at } }, settings: {…} }
+//   { format: 'ghoshnaad-backup/1', app, created, mine: [composer records], fixes: { <id>: { src, at } }, settings: {…}, tala?: {…} }
 //
 // `mine` and `fixes` hold the formats the app already reads (composer files, ghosh-fixes/1 entries), unchanged.
 // Restoring has four rules:
@@ -15,6 +15,8 @@ import { BACKUP_FORMAT, BACKUP_MAX_BYTES, isSettingKey } from './schema.ts';
 import { Settings } from './settings.ts';
 import { UserLibrary, isComposition } from './userLibrary.ts';
 import type { Composition, Corrections } from './userLibrary.ts';
+import { sanitizeTalaPage, writeTalaPage } from './talaPage.ts';
+import type { RawStorage } from './talaPage.ts';
 
 export interface BackupFile {
   format: typeof BACKUP_FORMAT;
@@ -23,12 +25,16 @@ export interface BackupFile {
   mine: Composition[];
   fixes: Corrections;
   settings: Record<string, unknown>;
+  /** the choices of the tala timeline page (kept outside the app's key prefix; see talaPage.ts). Optional: backups made before it was added have none. */
+  tala?: Record<string, unknown>;
 }
 
 export const backupFileName = (d: Date): string => `ghoshnaad-backup-${d.toISOString().slice(0, 10)}.json`;
 
-export function createBackup(kv: Kv, o: { app: string; now?: Date }): BackupFile {
+/** `o.tala`: the tala page's saved choices, which the caller reads from raw storage (readTalaPage). */
+export function createBackup(kv: Kv, o: { app: string; now?: Date; tala?: Record<string, unknown> | null }): BackupFile {
   const lib = new UserLibrary(kv);
+  const tala = sanitizeTalaPage(o.tala);
   return {
     format: BACKUP_FORMAT,
     app: o.app,
@@ -36,6 +42,7 @@ export function createBackup(kv: Kv, o: { app: string; now?: Date }): BackupFile
     mine: lib.compositions(),
     fixes: lib.corrections(),
     settings: new Settings(kv).all(),
+    ...(tala ? { tala } : {}),
   };
 }
 
@@ -55,7 +62,8 @@ export function parseBackup(text: string): ParseResult {
   const mine = Array.isArray(b.mine) ? (b.mine as unknown[]) : [];
   const fixes = b.fixes && typeof b.fixes === 'object' && !Array.isArray(b.fixes) ? (b.fixes as Record<string, unknown>) : {};
   const settings = b.settings && typeof b.settings === 'object' && !Array.isArray(b.settings) ? (b.settings as Record<string, unknown>) : {};
-  if (!mine.length && !Object.keys(fixes).length && !Object.keys(settings).length) return { ok: false, error: 'empty' };
+  const tala = sanitizeTalaPage(b.tala);
+  if (!mine.length && !Object.keys(fixes).length && !Object.keys(settings).length && !tala) return { ok: false, error: 'empty' };
   return {
     ok: true,
     backup: {
@@ -65,6 +73,7 @@ export function parseBackup(text: string): ParseResult {
       mine: mine as Composition[],
       fixes: fixes as Corrections,
       settings,
+      ...(tala ? { tala } : {}),
     },
   };
 }
@@ -79,6 +88,8 @@ export interface RestorePlan {
   compositions: { add: Composition[]; same: number; copies: Composition[] };
   corrections: { add: Corrections; same: number; newer: Corrections; older: { id: string; src: Record<string, unknown>; at?: string }[] };
   settings: { add: Record<string, unknown>; kept: number };
+  /** the tala page's choices: added only when this device has none of its own */
+  tala: { add: Record<string, unknown> | null; kept: boolean };
   problems: { kind: 'composition' | 'correction'; id: string; message: string }[];
 }
 
@@ -90,12 +101,14 @@ const contentKey = (r: Composition): string => { const { id, name, ...rest } = r
 const newId = (): string => 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
 
 /** Work out what restoring would do. Writes nothing. */
-export function planRestore(kv: Kv, backup: BackupFile, checks: Checks, o: { copyLabel: string; makeId?: () => string }): RestorePlan {
+/** `o.haveTala`: this device already has choices on the tala page (the caller reads them from raw storage). */
+export function planRestore(kv: Kv, backup: BackupFile, checks: Checks, o: { copyLabel: string; makeId?: () => string; haveTala?: boolean }): RestorePlan {
   const lib = new UserLibrary(kv), makeId = o.makeId ?? newId;
   const plan: RestorePlan = {
     compositions: { add: [], same: 0, copies: [] },
     corrections: { add: {}, same: 0, newer: {}, older: [] },
     settings: { add: {}, kept: 0 },
+    tala: { add: null, kept: false },
     problems: [],
   };
 
@@ -134,15 +147,18 @@ export function planRestore(kv: Kv, backup: BackupFile, checks: Checks, o: { cop
     if (!isSettingKey(k)) continue;
     if (missing.has(k)) plan.settings.add[k] = backup.settings[k]; else plan.settings.kept++;
   }
+  const tala = sanitizeTalaPage(backup.tala);
+  if (tala) { if (o.haveTala) plan.tala.kept = true; else plan.tala.add = tala; }
   return plan;
 }
 
 export const planIsEmpty = (p: RestorePlan): boolean =>
   !p.compositions.add.length && !p.compositions.copies.length && !Object.keys(p.corrections.add).length &&
-  !Object.keys(p.corrections.newer).length && !p.corrections.older.length && !Object.keys(p.settings.add).length;
+  !Object.keys(p.corrections.newer).length && !p.corrections.older.length && !Object.keys(p.settings.add).length && !p.tala.add;
 
 /** Write the plan. Returns false (having changed nothing that was not already written) if the browser refuses; the caller says so. */
-export function applyRestore(kv: Kv, plan: RestorePlan): boolean {
+/** `raw`: raw storage, to write the tala page's choices (without it they are left out). */
+export function applyRestore(kv: Kv, plan: RestorePlan, raw?: Pick<RawStorage, 'setItem'>): boolean {
   const lib = new UserLibrary(kv);
   const compositions = [...lib.compositions(), ...plan.compositions.add, ...plan.compositions.copies];
   const corrections: Corrections = { ...lib.corrections(), ...plan.corrections.add, ...plan.corrections.newer };
@@ -153,6 +169,7 @@ export function applyRestore(kv: Kv, plan: RestorePlan): boolean {
   if (plan.corrections.older.length) ok = lib.saveOlderCorrections(older) && ok;
   const settings = new Settings(kv);
   for (const [k, v] of Object.entries(plan.settings.add)) if (isSettingKey(k)) ok = settings.set(k, v) && ok;
+  if (plan.tala.add && raw) ok = writeTalaPage(raw, plan.tala.add) && ok;
   return ok;
 }
 

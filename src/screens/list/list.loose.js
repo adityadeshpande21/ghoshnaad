@@ -1,7 +1,8 @@
-// @ts-nocheck — moved from v1.1.0 (app.js); not fully typed yet.
+// Moved from v1.1.0 (app.js). Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // The rachana list: the search box, the section / instrument / source filters, the rows, and the recently opened.
 // The person's own folder rachanas (keys "f~<id>") are listed next to the book ones.
 
+import { clicked } from '../../ui/dom.js';
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 export function createList(env) {
 const { q: $, i18n, esc, dv, mmss, secName, talaName, ragaName, store, openPiece, PART, PART_C, SEC_K } = env;
@@ -33,10 +34,10 @@ function renderList(){
   $('#recent').innerHTML=rec.map(r=>`<button data-id="${r.id}"><b>${esc(titleMain(r))}</b><small>${esc(r.talas.map(talaName).join('·'))} · ${mmss(r.sec_s)}</small></button>`).join('');
 }
 $('#q').addEventListener('input',renderList);
-$('#srcs').addEventListener('click',e=>{const b=e.target.closest('[data-src]');if(!b)return;srcF=srcF===b.dataset.src?null:b.dataset.src;renderList()});
-$('#insts').addEventListener('click',e=>{const b=e.target.closest('[data-ins]');if(!b)return;insF=insF===b.dataset.ins?null:b.dataset.ins;store.set('insF',insF);renderList()});
-$('#secs').addEventListener('click',e=>{const b=e.target.closest('[data-s]');if(!b)return;secF=b.dataset.s;store.set('sec',secF);renderList()});
-document.addEventListener('click',e=>{const b=e.target.closest('#rows [data-id],#recent [data-id]');if(b)openPiece(b.dataset.id,true)});
+$('#srcs').addEventListener('click',e=>{const b=clicked(e, '[data-src]');if(!b)return;srcF=srcF===b.dataset.src?null:b.dataset.src;renderList()});
+$('#insts').addEventListener('click',e=>{const b=clicked(e, '[data-ins]');if(!b)return;insF=insF===b.dataset.ins?null:b.dataset.ins;store.set('insF',insF);renderList()});
+$('#secs').addEventListener('click',e=>{const b=clicked(e, '[data-s]');if(!b)return;secF=b.dataset.s;store.set('sec',secF);renderList()});
+document.addEventListener('click',e=>{const b=clicked(e, '#rows [data-id],#recent [data-id]');if(b)openPiece(b.dataset.id,true)});
 
 return { renderList, setLibRows,
   /** the language changed: the rows, the chips and the count are drawn again */

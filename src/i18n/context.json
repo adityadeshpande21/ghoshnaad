@@ -264,9 +264,6 @@
   "composer.go": {
     "screen": "composer"
   },
-  "composer.hear": {
-    "screen": "composer"
-  },
   "composer.high": {
     "screen": "composer"
   },
@@ -500,9 +497,6 @@
   "correction.bad": {
     "screen": "correction"
   },
-  "correction.brokenFix": {
-    "screen": "correction"
-  },
   "correction.btn": {
     "screen": "correction"
   },
@@ -513,12 +507,6 @@
     "params": {
       "n": "number of lines changed"
     },
-    "screen": "correction"
-  },
-  "correction.copied": {
-    "screen": "correction"
-  },
-  "correction.copy": {
     "screen": "correction"
   },
   "correction.delQ": {
@@ -542,22 +530,7 @@
   "correction.export": {
     "screen": "correction"
   },
-  "correction.exportAll": {
-    "screen": "correction"
-  },
-  "correction.exportP": {
-    "screen": "correction"
-  },
   "correction.file": {
-    "screen": "correction"
-  },
-  "correction.fixCount": {
-    "params": {
-      "n": "number of corrected rachanas"
-    },
-    "screen": "correction"
-  },
-  "correction.fixes": {
     "screen": "correction"
   },
   "correction.fromLib": {
@@ -616,9 +589,6 @@
   "correction.noSrc": {
     "screen": "correction"
   },
-  "correction.notBook": {
-    "screen": "correction"
-  },
   "correction.notation": {
     "screen": "correction",
     "note": "Spoken label of the notation text box (not shown)."
@@ -641,22 +611,7 @@
   "correction.revertQ": {
     "screen": "correction"
   },
-  "correction.reverted": {
-    "screen": "correction"
-  },
   "correction.save": {
-    "screen": "correction"
-  },
-  "correction.saved": {
-    "screen": "correction"
-  },
-  "correction.savedT": {
-    "screen": "correction"
-  },
-  "correction.share": {
-    "screen": "correction"
-  },
-  "correction.tag": {
     "screen": "correction"
   },
   "correction.tala": {
@@ -689,13 +644,7 @@
   "export.copy": {
     "screen": "export"
   },
-  "export.countL": {
-    "screen": "export"
-  },
   "export.endL": {
-    "screen": "export"
-  },
-  "export.from": {
     "screen": "export"
   },
   "export.grpL": {
@@ -737,9 +686,6 @@
   "export.parts": {
     "screen": "export"
   },
-  "export.pickup": {
-    "screen": "export"
-  },
   "export.plain": {
     "screen": "export"
   },
@@ -765,9 +711,6 @@
     "screen": "export"
   },
   "export.score": {
-    "screen": "export"
-  },
-  "export.setuL": {
     "screen": "export"
   },
   "export.steps": {
@@ -1537,16 +1480,10 @@
   "player.once": {
     "screen": "player"
   },
-  "player.onceA": {
-    "screen": "player"
-  },
   "player.perf": {
     "screen": "player"
   },
   "player.play": {
-    "screen": "player"
-  },
-  "player.playL": {
     "screen": "player"
   },
   "player.playerA": {
@@ -1734,9 +1671,6 @@
   "soundcheck.keep": {
     "screen": "soundcheck"
   },
-  "soundcheck.kept": {
-    "screen": "soundcheck"
-  },
   "soundcheck.key": {
     "params": {
       "note": "the name of the Sa note"
@@ -1828,9 +1762,6 @@
     "screen": "soundcheck"
   },
   "soundcheck.shankhNote": {
-    "screen": "soundcheck"
-  },
-  "soundcheck.steps": {
     "screen": "soundcheck"
   },
   "soundcheck.stop": {

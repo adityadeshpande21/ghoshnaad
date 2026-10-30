@@ -4,6 +4,10 @@ import { test, expect } from '@playwright/test';
 const isLegacy = (process.env.GHOSH_TARGET || 'legacy') === 'legacy';
 test.skip(isLegacy, 'new in v2');
 
+// Real audio output in a browser that shares a loaded machine with other audio tests sometimes starts late or not at all (Firefox most of all: it has been
+// seen refusing play() and stalling a page for tens of seconds). A real fault fails every time, so a few retries tell the two apart; a retry shows as "flaky".
+test.describe.configure({ retries: 2 });
+
 const IPHONE_UA = 'Mozilla/5.0 (iPhone; CPU iPhone OS 17_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.0 Mobile/15E148 Safari/604.1';
 
 async function openAndPlay(page) {
@@ -11,7 +15,7 @@ async function openAndPlay(page) {
   await expect(page.locator('#rows .row')).toHaveCount(120, { timeout: 20_000 });
   await page.locator('#rows .row[data-id="shriram"]').click();       // a tap: starts playing
   await expect(page.locator('#player')).toBeVisible();
-  await expect.poll(() => page.locator('#tnow').textContent(), { timeout: 10_000 }).not.toBe('०:००');
+  await expect.poll(() => page.locator('#tnow').textContent(), { timeout: 20_000 }).not.toBe('०:००');
 }
 
 test('an interrupted audio context pauses playback; tapping play resumes from the same place', async ({ page }) => {
@@ -30,7 +34,7 @@ test('an interrupted audio context pauses playback; tapping play resumes from th
 
 test('after an interruption the position is where it stopped, not the start', async ({ page }) => {
   await openAndPlay(page);
-  await expect.poll(() => page.evaluate(() => TR.position()), { timeout: 10_000 }).toBeGreaterThan(2);
+  await expect.poll(() => page.evaluate(() => TR.position()), { timeout: 20_000 }).toBeGreaterThan(2);
   await page.evaluate(() => ctx.suspend());
   await expect.poll(() => page.evaluate(() => S.playing)).toBe(false);
   const pos = await page.evaluate(() => S.pos);
@@ -64,7 +68,7 @@ test.describe('iPhone after a call', () => {
     await page.evaluate(() => document.querySelector('audio').pause());                 // what iOS does when a call takes the audio
     expect(await page.evaluate(() => document.querySelector('audio').paused)).toBe(true);
     await page.evaluate(() => AppEnv.audio.unlock());                                   // the next tap on play calls this
-    await expect.poll(() => page.evaluate(() => !document.querySelector('audio').paused)).toBe(true);
+    await expect.poll(() => page.evaluate(() => !document.querySelector('audio').paused), { timeout: 15_000 }).toBe(true);
   });
 });
 

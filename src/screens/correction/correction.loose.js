@@ -1,10 +1,11 @@
-// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// Moved from v1.1.0 with its shared names replaced by the services below. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // दुरुस्ती: correct a book rachana by hand. Edits the book source (ghosh-notation/1), compiles it with the same compiler as the
 // 120 book files, plays it, and keeps the corrected version on this device. Corrections can be exported as files and imported.
 import { Screen } from '../../ui/screen.js';
 import { compile3 } from '../../core/compile/ghosh3.ts';
 import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 import talasJson from '../../../rules/talas.json';
+import { clicked, qsa } from '../../ui/dom.js';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createCorrection(env) {
@@ -15,6 +16,7 @@ const GhoshCompile = { compile3: src => compile3(src, { talas: talasJson }) };
 
 const clone = o => JSON.parse(JSON.stringify(o));
 // the compiler speaks English; the common messages are given in मराठी / हिंदी too
+/** @type {[RegExp, Record<string, string>][]} */
 const TR = [
   [/^गण has (\d+) matras; (\S+) expects (\d+)/, { mr: 'गणात $1 मात्रा आहेत; $2 मध्ये $3 हव्यात', hi: 'गण में $1 मात्राएँ हैं; $2 में $3 चाहिए' }],
   [/^गट split (\S+); (\S+) expects (\S+)/, { mr: 'गटांची विभागणी $1; $2 मध्ये $3 हवी', hi: 'गटों का विभाजन $1; $2 में $3 चाहिए' }],
@@ -41,7 +43,7 @@ const compile = src => GhoshCompile.compile3(src);
 
 /* ---------- editor state ---------- */
 let cur = null;   // { id, orig, draft, tab, dirty, res }
-const partKeys = d => Object.keys(d.parts || {}).sort((a, b) => (MEL.includes(b) - MEL.includes(a)));
+const partKeys = d => Object.keys(d.parts || {}).sort((a, b) => (Number(MEL.includes(b)) - Number(MEL.includes(a))));
 const partName = k => (i18n.has('common.parts.' + k) ? i18n.t('common.parts.' + k) : k);
 
 function check(d) {
@@ -56,6 +58,7 @@ function check(d) {
   }
   if (piece) {
     try {
+      /** @type {[string, number][]} */
       const tot = Object.keys(piece.parts).filter(k => MEL.includes(k) || k === 'anak').map(k => [k, buildTimeline3(piece, k).total]);
       if (tot.length > 1 && Math.max(...tot.map(x => x[1])) - Math.min(...tot.map(x => x[1])) > 0.05)
         msgs.push({ sev: 'w', part: null, msg: i18n.t('correction.len', { parts: tot.map(([k, t]) => `${partName(k)} ${t.toFixed(1)} s`).join(', ') }) });
@@ -83,7 +86,7 @@ function mergeLines(old, texts) {
 /* ---------- view ---------- */
 function show() {
   $('#list').hidden = true; $('#player').hidden = true;
-  document.querySelectorAll('.cview').forEach(v => { v.hidden = v.id !== 'fixer'; });
+  qsa('.cview').forEach(v => { v.hidden = v.id !== 'fixer'; });
 }
 async function open(key, line) {
   const id = String(key).replace(/^f~/, ''), isBook = PL.BOOK.some(r => r.id === id);
@@ -146,7 +149,7 @@ function recheck(now) { clearTimeout(ckT); const go = () => { if (!cur) return; 
 function render2() {   // after a check: refresh marks without touching the text the person is typing in
   renderHead(); renderGutter(); renderMsgs();
   const errs = k => cur.res.msgs.filter(m => m.sev === 'e' && m.part === k).length;
-  document.querySelectorAll('#fxTabs [data-fx-tab]').forEach(b => { const k = b.dataset.fxTab; if (k === '_json') return; b.innerHTML = esc(partName(k)) + (errs(k) ? '<span class="bad">!</span>' : ''); });
+  qsa('#fxTabs [data-fx-tab]').forEach(b => { const k = b.dataset.fxTab; if (k === '_json') return; b.innerHTML = esc(partName(k)) + (errs(k) ? '<span class="bad">!</span>' : ''); });
 }
 function curLine() { const ta = $('#fxText'); return ta.value.slice(0, ta.selectionStart).split('\n').length; }
 function selectLine(n) {
@@ -172,12 +175,12 @@ $('#fxText').addEventListener('scroll', () => { $('#fxGut').scrollTop = $('#fxTe
 $('#fxTala').addEventListener('input', () => { cur.draft.parts[cur.tab].tala = $('#fxTala').value.trim(); cur.dirty = true; renderHead(); recheck(); });
 $('#fxLaya').addEventListener('input', () => { const v = +$('#fxLaya').value; if (v > 0) { cur.draft.parts[cur.tab].laya = v; cur.dirty = true; renderHead(); recheck(); } });
 $('#fxTabs').addEventListener('click', e => {
-  const b = e.target.closest('[data-fx-tab]'); if (!b || b.dataset.fxTab === cur.tab) return;
+  const b = clicked(e, '[data-fx-tab]'); if (!b || b.dataset.fxTab === cur.tab) return;
   if (cur.tab === '_json' && cur.jsonErr) return;   // keep the person in the file until it reads again
   cur.tab = b.dataset.fxTab; render();
 });
 $('#fxMsgs').addEventListener('click', e => {
-  const b = e.target.closest('[data-fx-msg]'); if (!b) return; const m = cur.res.msgs[+b.dataset.fxMsg];
+  const b = clicked(e, '[data-fx-msg]'); if (!b) return; const m = cur.res.msgs[+b.dataset.fxMsg];
   if (m.part && cur.draft.parts[m.part]) { if (cur.tab !== m.part) { cur.tab = m.part; render(); } if (m.line) selectLine(m.line); }
 });
 
@@ -187,7 +190,7 @@ function ask(q, btns) {
   $('#fxAskT').textContent = q;
   $('#fxAskB').innerHTML = btns.map((b, i) => `<button data-i="${i}" class="${b.danger ? 'd' : ''}">${esc(b.label)}</button>`).join('');
   $('#fxAsk').hidden = false;
-  $('#fxAskB').onclick = e => { const x = e.target.closest('[data-i]'); if (!x) return; $('#fxAsk').hidden = true; const f = btns[+x.dataset.i].go; if (f) f(); };
+  $('#fxAskB').onclick = e => { const x = clicked(e, '[data-i]'); if (!x) return; $('#fxAsk').hidden = true; const f = btns[+x.dataset.i].go; if (f) f(); };
 }
 async function save() {
   cur.res = check(cur.draft);
@@ -216,7 +219,7 @@ $('#fxDelete').onclick = () => ask(i18n.t('correction.delQ'), [
   { label: i18n.t('correction.no') }]);
 function leave() {
   $('#fxAsk').hidden = true;
-  document.querySelectorAll('.cview').forEach(v => { if (v.id === 'fixer') v.hidden = true; });
+  qsa('.cview').forEach(v => { if (v.id === 'fixer') v.hidden = true; });
   const id = cur.id; if (!cur.dirty) cur = null;
   const key = window.Library && Library.isLib(id) ? 'f~' + id : PL.BOOK.some(r => r.id === id) ? id : null;
   if (key) openPiece(key, false); else { $('#list').hidden = false; env.renderList(); }
@@ -235,7 +238,7 @@ $('#fxImport').addEventListener('change', () => {
   rd.onload = async () => {
     let n = 0;
     try {
-      const o = JSON.parse(rd.result), list = [];
+      const o = JSON.parse(String(rd.result)), list = [];
       if (o.format === 'ghosh-fixes/1' && o.fixes) Object.entries(o.fixes).forEach(([id, v]) => { if (v && v.src) list.push({ ...v.src, id }); });
       else if (o.format === 'ghosh-notation/1' && o.parts && !o.composer) list.push(o);
       else throw new Error('format');
@@ -246,7 +249,7 @@ $('#fxImport').addEventListener('change', () => {
   rd.readAsText(f);
 });
 function msg(t) { toast(t); }
-document.addEventListener('click', e => { const b = e.target.closest('[data-fx]'); if (!b) return; if (b.dataset.fx === 'import') $('#fxImport').click(); });
+document.addEventListener('click', e => { const b = clicked(e, '[data-fx]'); if (!b) return; if (b.dataset.fx === 'import') $('#fxImport').click(); });
 
 
 try { applyStatic(); } catch (e) {}

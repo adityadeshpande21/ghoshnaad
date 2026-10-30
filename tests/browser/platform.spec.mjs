@@ -85,6 +85,34 @@ test('restoring a backup on a clean device brings back everything', async ({ pag
   expect(await page.evaluate(() => ScreenApp.get('list').LIST.some(r => r.id === 'f~shriram'))).toBe(true);
 });
 
+test("the tala page's choices (tala.v3) go into the backup the button makes, and come back on a clean device but never replace a device's own", async ({ page, browser, browserName }) => {
+  test.skip(browserName === 'webkit', 'WebKit shares the file instead of downloading it');
+  const TALA = { chal: 'mand', win: 12, speed: 0.5, snd: { num: false } };
+  const ctx = await browser.newContext({ baseURL: 'http://localhost:4173/' }), src = await ctx.newPage();
+  await boot(src, { entries: { ...settled, 'tala.v3': JSON.stringify(TALA) } });
+  await openSheet(src);
+  await src.waitForTimeout(250);
+  const [download] = await Promise.all([src.waitForEvent('download'), src.locator('[data-pf="backup"]').click()]);
+  const file = fs.readFileSync(await download.path(), 'utf8');
+  await ctx.close();
+  expect(JSON.parse(file).tala).toEqual(TALA);
+  // a clean device gets them
+  await boot(page);
+  await restoreInto(page, file);
+  await expect(page.locator('[data-pf-box]')).toContainText('Settings');
+  await Promise.all([page.waitForEvent('load'), page.locator('[data-pf="restore-go"]').click()]);
+  await page.waitForSelector('#rows .row', { state: 'attached' });
+  expect(JSON.parse(await page.evaluate(() => localStorage['tala.v3']))).toEqual(TALA);
+  // a device with its own choices keeps them
+  const ctx2 = await browser.newContext({ baseURL: 'http://localhost:4173/' }), other = await ctx2.newPage();
+  await boot(other, { entries: { 'tala.v3': JSON.stringify({ chal: 'sthir' }) } });
+  await restoreInto(other, file);
+  await Promise.all([other.waitForEvent('load'), other.locator('[data-pf="restore-go"]').click()]);
+  await other.waitForSelector('#rows .row', { state: 'attached' });
+  expect(JSON.parse(await other.evaluate(() => localStorage['tala.v3']))).toEqual({ chal: 'sthir' });
+  await ctx2.close();
+});
+
 test('restoring onto a device with different work keeps both, and says so first', async ({ page, browser }) => {
   const backup = await backupOf(browser, settled);
   const mine = JSON.parse(FIXTURE['ghosh.mine']);

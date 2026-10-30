@@ -1,4 +1,4 @@
-// @ts-nocheck — moved from v1.1.0; not fully typed yet. `npm run typecheck` still fails on any unresolved shared name (tools/check-names.mjs).
+// Moved from v1.1.0. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // ध्वनी तपासणी: listen to every sound of the app, through the same engine the rachanas use.
 // Melody instruments in every पट्टी, सप्तक and राग, with each variation; आनक bols; ताल वाद्ये; steps; a mix check.
 // Nothing here changes the app's settings, except "keep this पट्टी" which the person taps on purpose.
@@ -6,6 +6,7 @@ import { Screen } from '../../ui/screen.js';
 import { VOICES } from '../../audio/melodic.ts';
 import * as Composer from '../../core/composer.ts';
 import talasJson from '../../../rules/talas.json';
+import { clicked } from '../../ui/dom.js';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createSoundCheck(env) {
@@ -49,6 +50,7 @@ const keyHz = (pk, k) => { const d = ST.SA_DEF[pk]; return 440 * Math.pow(2, (k 
 const labSa = () => keyHz(st.pk, st.keys[st.pk]);
 const voice = inst => ST.VOICE_OF[inst] || inst;
 function noteObj(sw, vk, oct, dur, extra = {}) {
+  /** @type {Record<string, any>} a note as the engine plays it; a slur, a swell and grace notes are added below */
   const e = { swara: sw, vikrit: !!vk, octave: oct, dur, pk: st.pk, saHz: labSa(), accent: st.acc, ...extra };
   if (st.join) e.slur = 'mid';
   if (st.swell === 1) e.swell = 'grow'; else if (st.swell === 2) e.swell = 'fade';
@@ -77,7 +79,7 @@ const three = () => { const up = []; [-1, 0].forEach(o => ORDER.forEach(s => up.
   return up.concat(up.slice(0, -1).reverse().map((x, i, a) => [...x.slice(0, 3), i === a.length - 1 ? 2 : 1])); };
 function ragaSeq(name) {
   const r = (ragas || []).find(x => x.name === name); if (!r) return [];
-  const toks = s => Composer.tokenize(s).map(Composer.parseToken).filter(p => p && p.kind === 'note').map(p => [p.swara, p.vikrit ? 1 : 0, p.oct, 1]);
+  const toks = s => Composer.tokenize(s).map(Composer.parseToken).filter((/** @type {any} */ p) => p && p.kind === 'note').map((/** @type {any} */ p) => [p.swara, p.vikrit ? 1 : 0, p.oct, 1]);
   const a = toks(r.aroha), b = toks(r.avaroha); if (a.length) a[a.length - 1][3] = 2; if (b.length) b[b.length - 1][3] = 2;
   return a.concat(b);
 }
@@ -90,7 +92,7 @@ const ANAK = [
   ['tha', 'थ', () => strokeObj('tha')], ['thra', 'थ्र', () => strokeObj('thra')], ['click', '+', () => strokeObj('click')]];
 function tile(id, el, times) {
   const a = ANAK.find(x => x[0] === id); stopAll();
-  const go = () => { const evs = []; for (let i = 0; i < times; i++) evs.push({ t: i * md(), dur: md() * .9, el, fn: (at, o) => A.playStroke(a[2](), at, o) }); run(evs, times * md(), go); };
+  const go = () => { const evs = []; for (let i = 0; i < times; i++) evs.push({ t: i * md(), dur: md() * .9, el, fn: (at, o) => A.playStroke(/** @type {() => any} */ (a[2])(), at, o) }); run(evs, times * md(), go); };
   go();
 }
 function rananSeq(el) {
@@ -165,7 +167,7 @@ function render() {
   devLine();
 }
 function melody() {
-  const nm = id => i18n.name(...ST.INST_NAMES[id]);
+  const nm = id => i18n.name(ST.INST_NAMES[id][0], ST.INST_NAMES[id][1]);
   const instChips = ['shankh', 'vanshi'].map(pk => `<span class="note">${esc(i18n.t('common.groups.' + pk))}</span>` + chips(MEL_INST[pk].map(id => [pk + ':' + id, esc(nm(id))]), st.pk + ':' + st.inst, 'linst')).join('');
   const saHz = labSa();
   const kb = [-1, 0, 1].map((oct, oi) => `<div class="lab-oct"><span>${esc(i18n.t('soundcheck.oct.' + oi))}</span><div class="lab-kb ${st.pk}">${KB.map(([sw, vk, dev]) => {
@@ -230,7 +232,7 @@ function devLine() {
 }
 
 /* ---------- events ---------- */
-$('#labTabs').addEventListener('click', e => { const b = e.target.closest('[data-ltab]'); if (!b) return; stopAll(); st.tab = +b.dataset.ltab; render(); });
+$('#labTabs').addEventListener('click', e => { const b = clicked(e, '[data-ltab]'); if (!b) return; stopAll(); st.tab = +b.dataset.ltab; render(); });
 $('#labStop').onclick = stopAll;
 $('#labLoop').onclick = () => { loopOn = !loopOn; if (!loopOn) clearTimeout(loopT); $('#labLoop').setAttribute('aria-pressed', loopOn); };
 function setLaya(d) { laya = Math.max(40, Math.min(600, laya + d * (laya >= 300 ? 15 : 5))); $('#labLaya').textContent = dv(laya); }
@@ -244,7 +246,7 @@ $('#labBody').addEventListener('change', e => {
   if (e.target.id === 'labMixR') st.mixId = e.target.value;
 });
 $('#labBody').addEventListener('click', e => {
-  const t = e.target.closest('[data-k],[data-linst],[data-lkey],[data-lart],[data-ltog],[data-lkan],[data-lsw],[data-llen],[data-lseq],[data-lab],[data-ltala],[data-lbol],[data-lx4],[data-lranan],[data-ltv],[data-lcyc],[data-lmute],[data-lcycplay],[data-lfoot],[data-lmarch],[data-lmixplay],#labKeep');
+  const t = clicked(e, '[data-k],[data-linst],[data-lkey],[data-lart],[data-ltog],[data-lkan],[data-lsw],[data-llen],[data-lseq],[data-lab],[data-ltala],[data-lbol],[data-lx4],[data-lranan],[data-ltv],[data-lcyc],[data-lmute],[data-lcycplay],[data-lfoot],[data-lmarch],[data-lmixplay],#labKeep');
   if (!t) return; const d = t.dataset;
   if (t.id === 'labKeep') { ST.setSaKey(st.pk, st.keys[st.pk]); render(); return; }
   if (d.k) { const [o, sw, vk] = d.k.split(':'); tapKey(+o, sw, +vk); return; }
@@ -287,7 +289,7 @@ function close() {
 }
 $('#labBack').onclick = close;
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && !$('#lab').hidden) close(); });
-document.addEventListener('click', e => { const b = e.target.closest('[data-labopen]'); if (b) { e.preventDefault(); open(b.dataset.labopen === '' ? null : +b.dataset.labopen); } });
+document.addEventListener('click', e => { const b = clicked(e, '[data-labopen]'); if (b) { e.preventDefault(); open(b.dataset.labopen === '' ? null : +b.dataset.labopen); } });
 
 return { open, close, stopAll, busy: () => !!ens || loopT !== null, lang() { if (!$('#lab').hidden) render(); } };
 }

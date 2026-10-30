@@ -1,4 +1,4 @@
-// @ts-nocheck — moved from v1.1.0 (app.js); not fully typed yet.
+// Moved from v1.1.0 (app.js). Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // भाषा / language: the I18n class over the translation files in src/i18n, and the small helpers the screens share.
 // Screens write `i18n.t('screen.key', { name: value })`; names of talas and ragas are data, not texts.
 import { I18n } from '../i18n/i18n.ts';
@@ -14,7 +14,7 @@ const RAGA_ROM={'आसावरी':'Asavari','कलावती':'Kalavati','
 const INST_NAMES={bugle:['शंख','Bugle'],trumpet:['तूर्य','Trumpet'],flute:['वंशी','Flute'],venu:['वेणु','Bamboo flute'],clarinet:['स्वरद','Clarinet'],sax:['नागांग','Saxophone'],melodica:['मधुरिका','Melodica'],side:['आनक','Side drum'],bass:['पणव','Bass drum'],cym:['झल्लरी (झांज)','Cymbals'],tri:['त्रिभुज','Triangle']};
 // v1.1.0 chose Marathi, or Hindi when the browser prefers it, and Marathi for everything else (English included)
 const preferred = (navigator.languages || [navigator.language || '']).filter(l => /^(mr|hi)/i.test(String(l)));
-const core = new I18n({ languages, messages, nameOverrides, store: new LocalKv(), preferred, defaultLanguage: 'mr', document });
+const core = new I18n({ languages: /** @type {any} */ (languages), messages, nameOverrides, store: new LocalKv(), preferred, defaultLanguage: 'mr', document });
 const talaName = d => core.name(d, TALA_ROM[d]);
 const ragaName = d => core.name(d, RAGA_ROM[d]);
 function applyStatic() { document.documentElement.lang = core.code; core.apply(document); }   // data-i18n, data-i18n-html, data-i18n-attr

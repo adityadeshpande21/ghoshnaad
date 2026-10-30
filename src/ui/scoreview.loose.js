@@ -1,4 +1,4 @@
-// @ts-nocheck — moved from v1.1.0 (app.js) unchanged except that it receives esc / dvN / $; not fully typed yet.
+// Moved from v1.1.0 (app.js) unchanged except that it receives esc / dvN / $. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // Drawing the score: one slot, one matra, one गण as HTML, and fitting a row of गण into the width available.
 // Pure apart from fitRows, which measures the page. Every screen that shows notation draws it with these.
 

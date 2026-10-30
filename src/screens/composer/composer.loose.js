@@ -1,9 +1,10 @@
-// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// Moved from v1.1.0 with its shared names replaced by the services below. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // Write a new rachana: grid of matras, ghosh keypad, आनक suggestions, checks, play, save on this device.
 import { Screen } from '../../ui/screen.js';
 import * as C from '../../core/composer.ts';
 import { compile3 } from '../../core/compile/ghosh3.ts';
 import talasJson from '../../../rules/talas.json';
+import { clicked, target, qsa } from '../../ui/dom.js';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createComposer(env) {
@@ -40,17 +41,17 @@ let view = null, lastView = 'ceditor';
 function show(id) {
   if (id !== 'ceditor' && PL.S.custom) stopPlay();
   $('#list').hidden = true; $('#player').hidden = true;
-  document.querySelectorAll('.cview').forEach(v => { v.hidden = v.id !== id; });
+  qsa('.cview').forEach(v => { v.hidden = v.id !== id; });
   view = id; if (id === 'ceditor' || id === 'ccheck') lastView = id;
 }
-function toList() { stopPlay(); document.querySelectorAll('.cview').forEach(v => v.hidden = true); $('#player').hidden = true; $('#list').hidden = false; view = null; setLib('mine'); }
+function toList() { stopPlay(); qsa('.cview').forEach(v => v.hidden = true); $('#player').hidden = true; $('#list').hidden = false; view = null; setLib('mine'); }
 
 /* ---------- library tabs + my rachanas ---------- */
 let lib = 'book', menuFor = null, renaming = null, confirmDel = null;
 function setLib(l) {
   lib = l; try { env.store.set('lib', l); } catch (e) {}
   $('#bookWrap').hidden = l !== 'book'; $('#mineWrap').hidden = l !== 'mine';
-  document.querySelectorAll('[data-lib]').forEach(b => b.setAttribute('aria-selected', b.dataset.lib === l));
+  qsa('[data-lib]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.lib === l)));
   if (l === 'mine') renderMine();
 }
 const instrName = k => i18n.t('common.parts.' + k);
@@ -89,7 +90,7 @@ function byId(id) { return MINE.find(r => r.id === id); }
 function touch(r) { r.updated = new Date().toISOString(); saveMine(); }
 function dupOf(r, name) { const c = JSON.parse(JSON.stringify(r)); c.id = 'm' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6); c.name = name || r.name + i18n.t('composer.copySuffix'); c.created = c.updated = new Date().toISOString(); return c; }
 document.addEventListener('click', e => {
-  const t = e.target.closest('[data-lib],[data-open],[data-play],[data-menu],[data-act],#mNew,#mImport'); if (!t || !t.closest('#list')) return;
+  const t = clicked(e, '[data-lib],[data-open],[data-play],[data-menu],[data-act],#mNew,#mImport'); if (!t || !t.closest('#list')) return;
   if (t.dataset.lib) { setLib(t.dataset.lib); return; }
   if (t.dataset.open) { openEditor(t.dataset.open); return; }
   if (t.dataset.play) { env.audio.unlock(); playWhole(byId(t.dataset.play), {}); return; }
@@ -133,7 +134,7 @@ function renderNew() {
   } else box.hidden = true;
 }
 $('#cnew').addEventListener('click', e => {
-  const b = e.target.closest('[data-instr],[data-tala]'); if (!b) return;
+  const b = clicked(e, '[data-instr],[data-tala]'); if (!b) return;
   if (b.dataset.instr) nf.instr = b.dataset.instr;
   if (b.dataset.tala) { nf.tala = b.dataset.tala; nf.laya = TI[nf.tala].laya; }
   renderNew();
@@ -315,7 +316,7 @@ function scrollSel() { const el = $('#cLines .cc.sel'); if (el && el.scrollIntoV
 function toast(msg) { const t = $('#cToast'); t.textContent = msg; t.hidden = false; clearTimeout(t._t); t._t = setTimeout(() => { t.hidden = true; }, 2200); }
 
 $('#ceditor').addEventListener('click', e => {
-  const t = e.target.closest('button'); if (!t) return;
+  const t = clicked(e, 'button'); if (!t) return;
   const d = t.dataset;
   if (d.l != null && d.r) { sel = { bi: sel.bi, li: +d.l, row: d.r, i: +d.i }; if (d.r === 'anak' && tab === 'swar') tab = 'anak'; else if (d.r === 'mel' && tab === 'anak') { tab = 'swar'; sugOpen = false; } textErr = ''; render(); return; }
   if (d.b != null) { sel = { bi: +d.b, li: 0, row: sel.row, i: 0 }; delAsk = false; stopPlay(); render(); return; }
@@ -369,7 +370,7 @@ function renameInline() {
 const KB = { s: 'स', r: 'री', g: 'ग', m: 'म', p: 'प', d: 'ध', n: 'नि' }, KA = { t: 'त', y: 'त्र', h: 'थ', j: 'थ्र', '+': '+' };
 document.addEventListener('keydown', e => {
   if (view !== 'ceditor' || !cur) return;
-  const tag = (e.target.tagName || '').toLowerCase(); if (tag === 'input' || tag === 'textarea') return;
+  const tag = (target(e).tagName || '').toLowerCase(); if (tag === 'input' || tag === 'textarea') return;
   const k = e.key, mod = e.ctrlKey || e.metaKey;
   if (mod && k.toLowerCase() === 'z') { e.preventDefault(); $(e.shiftKey ? '#cRedo' : '#cUndo').click(); return; }
   if (mod || e.altKey) return;
@@ -395,7 +396,7 @@ function compileCur(r) {
   try { const { piece } = compile3x(C.toSource(r)); return piece; }
   catch (e) { toast(i18n.t('composer.compileErr') + ': ' + (e.message || e)); return null; }
 }
-function stopPlay() { if (PL.S.custom) { stop(true); PL.S.custom = null; } playing = null; if (lastCell) { lastCell.classList.remove('play'); lastCell = null; } setIco(); }
+function stopPlay() { if (PL.S.custom) { PL.stop(true); PL.S.custom = null; } playing = null; if (lastCell) { lastCell.classList.remove('play'); lastCell = null; } setIco(); }
 function setIco() { const p = $('#cPlayIco'); if (p) p.setAttribute('d', playing === 'line' ? 'M7 5h4v14H7zM13 5h4v14h-4z' : 'M7 5v14l11-7z'); }
 function playScope(scope, restart) {
   if (playing === scope && !restart) { stopPlay(); return; }
@@ -436,7 +437,7 @@ function renderCheck() {
   $('#cchkBody').innerHTML = h; $('#cchkBody')._all = all;
 }
 $('#ccheck').addEventListener('click', e => {
-  const t = e.target.closest('button'); if (!t) return;
+  const t = clicked(e, 'button'); if (!t) return;
   if (t.id === 'cchkBack') { show('ceditor'); render(); return; }
   if (t.dataset.go != null) { const x = $('#cchkBody')._all[+t.dataset.go]; openEditor(cur.id, { ...x.at }); tab = x.at.row === 'anak' ? 'anak' : 'swar'; render(); return; }
   if (t.dataset.keep) { cur.ignore = (cur.ignore || []).concat(t.dataset.keep); touch(cur); renderCheck(); return; }
@@ -449,7 +450,7 @@ let expR = null;
 function fileText(r) { return JSON.stringify({ ...C.toSource(r), composer: r }, null, 1); }
 function openExport(r) {
   expR = r; $('#cexpText').value = fileText(r);
-  document.querySelectorAll('.cview').forEach(v => { if (v.id === 'cexport') v.hidden = false; });
+  qsa('.cview').forEach(v => { if (v.id === 'cexport') v.hidden = false; });
 }
 $('#cexpX').onclick = () => { $('#cexport').hidden = true; };
 $('#cexport').addEventListener('click', e => { if (e.target.id === 'cexport') $('#cexport').hidden = true; });
@@ -465,7 +466,7 @@ $('#cexpShare').onclick = async () => {
 };
 function fromSource(src) {
   const instr = src.parts && (src.parts.vanshi ? 'vanshi' : src.parts.shankh ? 'shankh' : null); if (!instr) throw new Error('no melody part');
-  const tdev = String(src.parts[instr].tala || '').split(/[-\s]/)[0], tala = Object.keys(TI).find(k => TI[k].dev === tdev); if (!tala) throw new Error('tala ' + tdev);
+  const tdev = String(src.parts[instr].tala || '').split(/[-\s]/)[0], tala = /** @type {import('../../core/composer.ts').TalaKey} */ (Object.keys(TI).find(k => TI[k].dev === tdev)); if (!tala) throw new Error('tala ' + tdev);
   const ml = src.parts[instr].lines.map(l => (typeof l === 'string' ? l : l.src || '')), al = src.parts.anak ? src.parts.anak.lines.map(l => (typeof l === 'string' ? l : l.src || '')) : [];
   if (ml.some(l => /[{}]/.test(l))) throw new Error('endings {1 2} are not supported yet');
   const r = C.newRachana({ name: (src.title && src.title.dev) || 'Import', instr, tala, laya: src.parts[instr].laya || TI[tala].laya, raga: src.raga ? { name: src.raga.name || '', aroha: src.raga.aroha || '', avaroha: src.raga.avaroha || '' } : null });
@@ -485,7 +486,7 @@ $('#cImport').addEventListener('change', () => {
   const rd = new FileReader();
   rd.onload = () => {
     try {
-      const o = JSON.parse(rd.result); let r;
+      const o = JSON.parse(String(rd.result)); let r;
       if (o.composer && Array.isArray(o.composer.blocks)) r = o.composer; else if (o.format === 'ghosh-notation/1') r = fromSource(o); else throw new Error('format');
       if (byId(r.id)) r = dupOf(r, r.name); r.updated = new Date().toISOString();
       MINE.push(r); saveMine(true); setLib('mine'); toast(i18n.t('composer.imported') + ': ' + r.name);

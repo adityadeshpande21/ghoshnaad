@@ -39,7 +39,7 @@ function download(name, obj) {
 }
 function doBackup() {
   if (window.ComposerUI && ComposerUI.flush) ComposerUI.flush();
-  download(P.backupFileName(new Date()), P.createBackup(kv, { app: appName() }));
+  download(P.backupFileName(new Date()), P.createBackup(kv, { app: appName(), tala: P.readTalaPage(localStorage) }));      // the tala page keeps its choices outside the key prefix
   guard.noteBackup(); message = ''; barDismissed.delete('backup'); render(); renderBar();
 }
 async function readRestoreFile(file) {
@@ -47,14 +47,14 @@ async function readRestoreFile(file) {
   const parsed = P.parseBackup(await file.text());
   if (!parsed.ok) { message = i18n.t('platform.err_' + parsed.error); render(); return; }
   if (window.ComposerUI && ComposerUI.flush) ComposerUI.flush();
-  restoring = { plan: P.planRestore(kv, parsed.backup, checks, { copyLabel: i18n.t('platform.copy') }) };
+  restoring = { plan: P.planRestore(kv, parsed.backup, checks, { copyLabel: i18n.t('platform.copy'), haveTala: !!P.readTalaPage(localStorage) }) };
   openSheet(); render();
 }
 function applyRestoreNow() {
   if (ScreenApp.isBusy()) { message = i18n.t('platform.r_busy'); render(); return; }          // the page reloads after a restore: not while sound plays or work is unsaved
   const plan = restoring.plan; restoring = null;
   if (window.ComposerUI && ComposerUI.freeze) ComposerUI.freeze();   // a pending save must not write the old list over the restored one
-  const ok = P.applyRestore(kv, plan);
+  const ok = P.applyRestore(kv, plan, localStorage);
   message = ok ? i18n.t('platform.r_done') : i18n.t('platform.r_fail');
   if (!ok && window.ComposerUI && ComposerUI.unfreeze) ComposerUI.unfreeze();
   render(); if (ok) setTimeout(() => location.reload(), 900);
@@ -72,7 +72,7 @@ function restoreHTML() {
   if (Object.keys(p.corrections.add).length) rows.push(n('r_fix_new', Object.keys(p.corrections.add).length));
   if (Object.keys(p.corrections.newer).length) rows.push(n('r_fix_newer', Object.keys(p.corrections.newer).length));
   if (p.corrections.older.length) rows.push(n('r_fix_older', p.corrections.older.length));
-  if (Object.keys(p.settings.add).length) rows.push(n('r_set', Object.keys(p.settings.add).length));
+  if (Object.keys(p.settings.add).length + (p.tala.add ? 1 : 0)) rows.push(n('r_set', Object.keys(p.settings.add).length + (p.tala.add ? 1 : 0)));   // the tala page's choices count as one setting
   const problems = p.problems.map(x => `<li>${esc(x.id)} — ${esc(x.message)}</li>`).join('');
   const nothing = P.planIsEmpty(p);
   return `<div class="pf-box" data-pf-box><b>${esc(i18n.t('platform.r_title'))}</b>
@@ -175,7 +175,7 @@ function tryUpdate() {
 
 /* ---------- clicks ---------- */
 document.addEventListener('click', e => {
-  const b = e.target.closest('[data-pf]'); if (!b) return;
+  const b = /** @type {HTMLElement | null} */ (/** @type {Element} */ (e.target).closest('[data-pf]')); if (!b) return;
   switch (b.dataset.pf) {
     case 'backup': doBackup(); break;
     case 'restore-go': applyRestoreNow(); break;
@@ -197,7 +197,7 @@ document.addEventListener('click', e => {
   }
 });
 document.addEventListener('change', e => {
-  const f = e.target.closest('[data-pf-file]'); if (!f || !f.files[0]) return;
+  const f = /** @type {HTMLInputElement | null} */ (/** @type {Element} */ (e.target).closest('[data-pf-file]')); if (!f || !f.files[0]) return;
   const file = f.files[0]; f.value = ''; readRestoreFile(file);
 });
 

@@ -1,9 +1,10 @@
-// @ts-nocheck — moved from v1.1.0 with its shared names replaced by the services below; not fully typed yet.
+// Moved from v1.1.0 with its shared names replaced by the services below. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // स्वरलिपी export: the rachana in the book's notation, for the instruments the user picks.
 // Two outputs: a printable sheet (print / save as PDF) and plain text exactly as the books write it.
 import { Screen } from '../../ui/screen.js';
 import * as Composer from '../../core/composer.ts';
 import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
+import { clicked } from '../../ui/dom.js';
 
 /** @param {import('../../ui/env.d.ts').AppEnv} env */
 function createExport(env) {
@@ -324,7 +325,7 @@ async function saveFile(text, name, type) {
 function toastX(m) { const t = $('#cToast'); if (!t) return; t.textContent = m; t.hidden = false; clearTimeout(t._t); t._t = setTimeout(() => { t.hidden = true; }, 2000); }
 $('#xexport').addEventListener('click', async e => {
   if (e.target.id === 'xexport') { $('#xexport').hidden = true; return; }
-  const b = e.target.closest('button'); if (!b) return;
+  const b = clicked(e, 'button'); if (!b) return;
   if (b.dataset.xk) { const k = b.dataset.xk; xsel = xsel.includes(k) ? xsel.filter(x => x !== k) : [...xsel, k]; try { store.set('xsel2', xsel.map(x => (MEL.includes(x) ? 'mel' : x))); } catch (er) {} renderX(); return; }
   if (b.dataset.xr) { xranan = !xranan; renderX(); return; }
   if (b.dataset.xs) { xstyle = b.dataset.xs; try { store.set('xstyle', xstyle); } catch (er) {} renderX(); return; }

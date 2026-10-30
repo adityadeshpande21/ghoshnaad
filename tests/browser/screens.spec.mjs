@@ -233,6 +233,7 @@ test.describe('language core', () => {
   // v1.1.0 kept its texts in tables (I18N[lang][key], some of them functions). The new app keeps them in src/i18n/*.json under new keys;
   // tests/fixtures/legacy-keys.json says where each old key went, and tests/support/legacy-tables.ts rebuilds the old table shape from the new messages.
   const readJSON = f => JSON.parse(fs.readFileSync(path.join(ROOT, f), 'utf8'));
+  const RETIRED = new Set(readJSON('tests/fixtures/retired-texts.json').retired.map(r => r.old));        // v1.1.0 texts that were never shown (and are not in the app any more)
   const digitsOf = (l, n) => (l === 'mr' ? String(n).replace(/\d/g, d => '०१२३४५६७८९'[d]) : String(n));   // what dv() gives in that language
   // the screens hand these functions every argument, already in the language's digits; a short list would only show "undefined" against "{blank}"
   const argSets = l => [[3, 12, 5, 7, 2].map(n => digitsOf(l, n)), [1, 0, 2, 4, 9].map(n => digitsOf(l, n)), ['x', 'y', 'z', 'w', 'v'], [{ dev: 'क', rom: 'k' }, digitsOf(l, 2), digitsOf(l, 3), digitsOf(l, 4)]];
@@ -256,7 +257,7 @@ test.describe('language core', () => {
       const n = stripI18n(dump(now[l], argSets(l)));          // the deliberate differences are undone (tests/support/strip-i18n.mjs)
       // the legend's link is a text of its own now (a message may not hold an <a>); the screen puts it back, so together they are the old text
       n.f_legend = `${n.f_legend} · <a href="#" data-guide="swar">${n.f_legendGuide}</a>`;
-      for (const k of Object.keys(was[l])) expect(n[k], `${l}.${k}`).toEqual(was[l][k]);
+      for (const k of Object.keys(was[l])) if (!RETIRED.has(k)) expect(n[k], `${l}.${k}`).toEqual(was[l][k]);
     }
   });
 

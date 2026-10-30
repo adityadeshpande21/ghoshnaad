@@ -19,12 +19,12 @@ export function parseKeyed(md: string, name = 'file.md'): Record<string, string>
     const g = /^## ([A-Za-z0-9_.-]+)$/.exec(line);
     if (g) { group = g[1]!; return; }
     const t = /^- ([A-Za-z0-9_.-]+): (.*)$/.exec(line);
-    if (!t) return fail('expected "## group" or "- key: text"');
-    if (!group) return fail('a text before the first group');
-    const key = `${group}.${t[1]}`;
-    if (key in out) return fail(`${key} is written twice`);
-    if (!t[2]!.trim()) return fail(`${key} is empty`);
-    out[key] = t[2]!.trim();
+    if (!t) fail('expected "## group" or "- key: text"');
+    if (!group) fail('a text before the first group');
+    const key = `${group}.${t![1]}`;
+    if (key in out) fail(`${key} is written twice`);
+    if (!t![2]!.trim()) fail(`${key} is empty`);
+    out[key] = t![2]!.trim();
   });
   return out;
 }

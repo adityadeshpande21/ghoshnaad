@@ -8,7 +8,10 @@
   },
   "include": [
     "src/ui/env.d.ts",
+    "src/ui/globals.d.ts",
     "src/**/*.loose.js",
+    "src/app/app.js",
+    "src/app/platform.js",
     "src/ui/assets.d.ts"
   ],
   "exclude": []

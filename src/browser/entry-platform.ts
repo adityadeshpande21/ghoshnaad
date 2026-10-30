@@ -1,5 +1,6 @@
 // Browser entry for data and platform: the settings sheet and the bottom bar reach them as window.GhoshPlatform.
 import { LocalKv } from '../data/kv.ts';
+import { readTalaPage } from '../data/talaPage.ts';
 import { Settings } from '../data/settings.ts';
 import { UserLibrary } from '../data/userLibrary.ts';
 import { createBackup, parseBackup, planRestore, applyRestore, planIsEmpty, backupFileName, olderCopiesFile } from '../data/backup.ts';
@@ -10,6 +11,6 @@ import { UpdateManager } from '../platform/updateManager.ts';
 const GhoshPlatform = {
   LocalKv, Settings, UserLibrary, StorageGuard, UpdateManager,
   createBackup, parseBackup, planRestore, applyRestore, planIsEmpty, backupFileName, olderCopiesFile,
-  detectInstall, currentEnv,
+  detectInstall, currentEnv, readTalaPage,
 };
 (window as unknown as { GhoshPlatform: typeof GhoshPlatform }).GhoshPlatform = GhoshPlatform;

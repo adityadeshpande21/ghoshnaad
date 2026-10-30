@@ -1,4 +1,4 @@
-// @ts-nocheck — moved from v1.1.0; not fully typed yet. `npm run typecheck` still fails on any unresolved shared name (tools/check-names.mjs).
+// Moved from v1.1.0. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // A tiny renderer for notation samples: it parses a few signs and draws them with the player's own matra drawing.
 
 const STROKES = { 'त्र': 'roll', 'थ्र': 'thra', 'त': 'ta', 'थ': 'tha', '+': 'click', 'ध्व': 'dhvam', 'झ': 'jham', 'ट': 'tam' };
@@ -15,8 +15,9 @@ function readSym(s, i) {
   }
   return [null, i + 1];
 }
-/** Draw a sample in the book notation as the player draws it. @param {string} src */
-export const makeSample = (matraHTML) => function sample(src) {
+/** Draw a sample in the book notation as the player draws it.
+ *  @param {(m: object) => string} matraHTML the player's drawing of one matra @returns {(src: string) => string} */
+export const makeSample = (matraHTML) => function sample(/** @type {string} */ src) {
   const out = []; let i = 0, slurOn = false, lastSlot = null, group = null, grace = null;
   const add = sl => { if (grace) { sl.grace = grace; grace = null; } if (slurOn) { sl.slur = lastSlot && lastSlot.slur ? 'mid' : 'start'; } lastSlot = sl; if (group) group.push(sl); else out.push({ m: { slots: [sl] } }); };
   while (i < src.length) {

@@ -16,7 +16,7 @@ const i18n=I18n.createI18n();
 const {TALA_ROM,RAGA_ROM,INST_NAMES,talaName,ragaName,applyStatic,secName}=i18n;
 const SEC_K=['all','prachalan','mand','naimittik'];
 const PART_C={shankh:'var(--shankh)',vanshi:'var(--mel)',anak:'var(--anak)',panav:'var(--tv)',jhallari:'var(--tv)',tribhuj:'var(--tv)',steps:'var(--dim)'};
-const PART=new Proxy({},{get:(o,k)=>PART_C[k]?{dv:i18n.t('common.parts.' + k),c:PART_C[k]}:undefined});
+const PART=new Proxy({},{get:(o,k)=>PART_C[k]?{dv:i18n.t('common.parts.' + String(k)),c:PART_C[k]}:undefined});
 const PRINTED=['shankh','vanshi','anak'];
 
 /* theme toggle (per viewer) */

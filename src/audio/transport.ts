@@ -7,7 +7,8 @@ const EPS = 1e-6;
 const AHEAD = .5;           // seconds of sound scheduled in advance
 const TICK_MS = 25;
 
-export interface Timed { t: number }
+/** A thing at a time (seconds). What else it holds is the caller's: the player's items carry a part and a step, the tala page's a count, the Ghoshdand page's a function. */
+export interface Timed { t: number; [payload: string]: any }
 export interface Window { s: number; e: number }
 
 /** Plain, readable state: the screens read (and a few write) these fields directly. */

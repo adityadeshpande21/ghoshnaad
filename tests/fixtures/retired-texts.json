@@ -1,0 +1,93 @@
+{
+  "note": "Texts that v1.1.0 had in its language tables but never showed (its own source never reads them either), removed from the app in v2. The language-core test leaves exactly these out when it compares every v1.1.0 text.",
+  "retired": [
+    {
+      "old": "c_hear",
+      "new": "composer.hear"
+    },
+    {
+      "old": "f_brokenFix",
+      "new": "correction.brokenFix"
+    },
+    {
+      "old": "f_copied",
+      "new": "correction.copied"
+    },
+    {
+      "old": "f_copy",
+      "new": "correction.copy"
+    },
+    {
+      "old": "f_exportAll",
+      "new": "correction.exportAll"
+    },
+    {
+      "old": "f_exportP",
+      "new": "correction.exportP"
+    },
+    {
+      "old": "f_fixCount",
+      "new": "correction.fixCount"
+    },
+    {
+      "old": "f_fixes",
+      "new": "correction.fixes"
+    },
+    {
+      "old": "f_notBook",
+      "new": "correction.notBook"
+    },
+    {
+      "old": "f_reverted",
+      "new": "correction.reverted"
+    },
+    {
+      "old": "f_saved",
+      "new": "correction.saved"
+    },
+    {
+      "old": "f_savedT",
+      "new": "correction.savedT"
+    },
+    {
+      "old": "f_share",
+      "new": "correction.share"
+    },
+    {
+      "old": "f_tag",
+      "new": "correction.tag"
+    },
+    {
+      "old": "onceA",
+      "new": "player.onceA"
+    },
+    {
+      "old": "playL",
+      "new": "player.playL"
+    },
+    {
+      "old": "s_kept",
+      "new": "soundcheck.kept"
+    },
+    {
+      "old": "s_steps",
+      "new": "soundcheck.steps"
+    },
+    {
+      "old": "x_countL",
+      "new": "export.countL"
+    },
+    {
+      "old": "x_from",
+      "new": "export.from"
+    },
+    {
+      "old": "x_pickup",
+      "new": "export.pickup"
+    },
+    {
+      "old": "x_setuL",
+      "new": "export.setuL"
+    }
+  ]
+}

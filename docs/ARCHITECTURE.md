@@ -83,7 +83,8 @@ Arrows point to what a layer uses. Screens never touch music rules directly, and
 3. **One owner per resource.** One `AudioEngine` owns the audio context, one `Transport` owns "what is playing", one `UserLibrary` owns the user's work.
 4. **Classes for things with state and a lifetime; functions for rules.** No class wraps a single function.
 5. **User data is portable.** Everything a user makes can leave as a file and come back.
-6. **Behaviour changes need a fixture change.** Any diff in golden output must be approved, never accidental.
+6. **Behaviour changes need a fixture change.** Any diff in golden output must be approved, never accidental. A correction to a book rachana after v1.1.0 is declared in `tests/fixtures/book-corrections.json` (id, part, line, before, after, reason); the tests that compare with v1.1.0 accept a difference for exactly those ids and exactly those changes.
+7. **No text and no language in the code.** Screen text is `src/i18n/<code>.json`, long content is `src/content/<code>/*.md`, and the build finds every language of `languages.json` by itself; adding a language adds files, not code (`docs/TRANSLATING.md`).
 
 **Repository layout** (as built; `docs/MIGRATION.md` tracks what is still being moved)
 
@@ -97,29 +98,36 @@ ghoshnaad/
   build/
     build.mjs              esbuild bundles + data pack + fonts + service worker -> dist/
     check-single-file.mjs  fails if the HTML fetches or links anything external
-    lib/                   pack, catalog, fonts, assemble
+    lib/                   pack, catalog, fonts, assemble, languages (the esbuild plugin that turns languages.json into the
+                           virtual:languages/messages, /names and /content modules)
   books/                   the 120 rachanas in book notation (ghosh-notation/1); books-unshipped/ holds two kept out
-  rules/                   talas.json (the only place tala facts live), catalog-order.json, composer.json
+  rules/                   talas.json (the only place tala facts live), catalog-order.json, composer.json;
+                           names/<script>.json (corrections to transliterated names, only where one is wrong)
   web/                     website companions: sw.template.js, manifest.webmanifest, icons/
   src/
     core/                  pure music rules (TypeScript): notation, compile, timeline, tala, composer model
     audio/                 AudioEngine, Drums, melodic voices, Transport, tala sounds
-    data/                  Catalog, UserLibrary, Settings, Backup (+ kv, schema)
+    data/                  Catalog, UserLibrary, Settings, Backup, FolderSync, the tala page's choices (+ kv, schema)
     platform/              UpdateManager, InstallGuide, StorageGuard
     screens/               one folder per screen: guide, soundcheck, ghoshdand, export, correction, library, composer,
-                           list, player, tala (files named *.loose.js were moved from v1.1.0 and are not fully typed yet)
-    ui/                    Screen and App, i18n, score drawing
-    i18n/                  mr.json, hi.json, en.json (texts of the data and platform screens)
+                           list, player, tala (files named *.loose.js were moved from v1.1.0: checked by tsc as plain JavaScript, not fully annotated yet)
+    ui/                    Screen and App, the language core's page wrapper, score drawing
+    i18n/                  languages.json, <code>.json (all screen text), context.json (notes for translators), format.ts (messages),
+                           i18n.ts (the I18n class), names.ts (names in other scripts)
+    content/               <code>/guide.md and ghoshdand.md: long content, one folder per language (parsers: guide.ts, keyed.ts)
     browser/               entry points that expose the bundles to the page
     app/                   what is left of the v1.1.0 page scripts, and the page's markup and CSS
   tests/
-    golden/                120 compiled rachanas + timelines, recorded from v1.1.0
-    unit/                  core rules, composer model, figure, data, platform, catalog, timeline vs v1.1.0
+    golden/                120 compiled rachanas + timelines, recorded from v1.1.0 (and the declared corrections)
+    unit/                  core rules, composer model, figure, data, platform, catalog, timeline vs v1.1.0, i18n, content, tools
     dist/                  the build equals v1.1.0 except for the named changes
-    browser/               Playwright, on Chromium, Firefox and WebKit
-    fixtures/              a real v1.1.0 storage dump
+    browser/               Playwright, on Chromium, Firefox and WebKit: screens equal to v1.1.0, languages, pseudo-language at 360 px,
+                           colliding marks of the score at phone widths
+    support/               helpers shared by tests (old text tables rebuilt from the new messages, the pseudo-language, the mark detector …)
+    fixtures/              a real v1.1.0 storage dump, the old-key map, the book corrections
   legacy/                  v1.1.0 as released and its parts: the reference the tests compare against; band-score-tool/ kept as received
-  tools/                   legacy-split.mjs, check-names.mjs, run-tests.mjs
+  tools/                   typecheck.mjs (strict for the typed files, plain-JavaScript checking for the *.loose.js ones), i18n-check.mjs, i18n-xlsx.mjs (translators'
+                           spreadsheet), check-rachana.mts (a book rachana against everything that should still hold), run-tests.mjs, legacy-split.mjs
   docs/                    this file, MIGRATION.md, the notation notes and schema
   dist/                    build output (not committed): index.html, Ghoshnaad.html, sw.js, manifest, icons, version.json
 ```
@@ -155,6 +163,16 @@ Tests run in GitHub Actions on every push; a failure leaves the live version unt
 - The iPhone silent-switch fix, applied on the first tap.
 - A request to the browser to keep the app's storage permanently (`navigator.storage.persist()`), shown as a status in settings.
 
+## Compatibility handles on `window`
+
+Some names are set on `window` on purpose: `openPiece`, `renderSheet`, `announce`, `S`, `TR`, `ganHTML`, `slotHTML`, `matraHTML` (the player, set in `player.loose.js`);
+`ScreenApp`, `Sanket`, `SanketUI` (`src/screens/index.js`); `ComposerUI`, `Library`, `FixerUI`, `Swarlipi` (the composer, library, correction and export screens);
+`PlatformUI` (`platform.js`); `LIBROWS` (the list); `AppEnv`, `APP`, `GhoshPlatform`, `GhoshCatalog`. They are **the test contract with v1.1.0**: the browser tests run the
+same `page.evaluate` code on the released page and on the new one (`Swarlipi.open(piece)`, `ComposerUI.init()`, `openPiece(id)` …) and compare what both draw. Retiring them
+would drop that proof, so they stay, and they are declared in `src/ui/globals.d.ts`. New code does not use them: a screen gets what it needs from `env` (the services
+`AppEnv`) or from the `App` registry (`ScreenApp.get(name)`). The ones still read inside the code (`platform.js` and the folder library reach `ComposerUI`, `Library` and
+`PlatformUI` by name) are the next to move onto `env` when those screens are typed further.
+
 ## Storage, backup and updates
 
 On the website, a user's work is kept by the site's address, so it survives every update. It still lives inside one browser on one device, so a backup file remains the only guarantee.
@@ -165,7 +183,7 @@ On the website, a user's work is kept by the site's address, so it survives ever
 | --- | --- | --- | --- |
 | Website storage (installed app) | Every edit, saved instantly | Yes, same address | "Saved on this device" |
 | Downloaded file's storage | Every edit, saved instantly | Only if the new file has the same name and folder | "Saved on this device (file)" |
-| Backup file `ghoshnaad-backup-YYYY-MM-DD.json` | All compositions, corrections, settings | Yes, on any device, browser or address | "Backed up 3 days ago" |
+| Backup file `ghoshnaad-backup-YYYY-MM-DD.json` | All compositions, corrections, settings, and the tala page's choices (`tala.v3`) | Yes, on any device, browser or address | "Backed up 3 days ago" |
 | Rachana folder (Chrome, Edge desktop) | Each rachana as its own file | Yes | "Saved to folder" |
 
 The website and a downloaded file are separate places: work made in one does not appear in the other until moved by backup and restore. The app says which one it is running as.
@@ -197,10 +215,11 @@ No phase starts until the previous gate is met. MP3 export waits until the audio
 
 1. **Golden output.** The 120 compiled rachanas and their timelines at tempos 60%, 100% and 140%, recorded from v1.1.0. Any difference fails the build until approved.
 2. **One-file check.** The build fails if the HTML references any other file, URL, font or worker script outside itself.
-3. **Browser tests in GitHub Actions** with Chromium, Firefox and WebKit, both ways: opening `Ghoshnaad.html` as a file with the network blocked, and opening the built website, installing the offline cache, going offline, reopening. Each run: 120 rachanas listed, a piece plays, a composition saves, a backup restores, an update is offered and applied.
-4. **No preview address.** A preview under the same address would share the website's storage and be intercepted by its offline-cache worker. Each pull request is checked by the same jobs and its built site is kept as a downloadable artifact instead; `main` only changes when `release/production` passes.
-5. **Real-device checklist** at the end of each phase: iPhone (Add to Home Screen, offline, silent switch), Android Chrome (low-end and recent phone), Windows Chrome or Edge, macOS Safari, Firefox desktop. Each tick records device, browser version and date.
-6. **One change at a time.** A structural move never also changes a music rule.
+3. **Translations and notation.** `npm run i18n:check` (keys, blanks, plain messages, languages); `npm run check:rachana -- all` (source, compiled output, symbols, matras, parts end together); a browser test in a pseudo-language at 360 px (text written into the code, text that does not fit) and one that finds colliding marks of the score at 360, 390 and 430 px.
+4. **Browser tests in GitHub Actions** with Chromium, Firefox and WebKit, both ways: opening `Ghoshnaad.html` as a file with the network blocked, and opening the built website, installing the offline cache, going offline, reopening. Each run: 120 rachanas listed, a piece plays, a composition saves, a backup restores, an update is offered and applied.
+5. **No preview address.** A preview under the same address would share the website's storage and be intercepted by its offline-cache worker. Each pull request is checked by the same jobs and its built site is kept as a downloadable artifact instead; `main` only changes when `release/production` passes.
+6. **Real-device checklist** at the end of each phase: iPhone (Add to Home Screen, offline, silent switch), Android Chrome (low-end and recent phone), Windows Chrome or Edge, macOS Safari, Firefox desktop. Each tick records device, browser version and date.
+7. **One change at a time.** A structural move never also changes a music rule.
 
 **Process for each change**
 

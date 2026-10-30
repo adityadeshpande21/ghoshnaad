@@ -1,4 +1,4 @@
-// @ts-nocheck — moved from v1.1.0; not fully typed yet. `npm run typecheck` still fails on any unresolved shared name (tools/check-names.mjs).
+// Moved from v1.1.0. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 /* घोषदंड संकेत — the घोष प्रमुख figure (style C, in uniform) and the 8 signals of घोष परिचय pp. 28–36.
    Model frame (the प्रमुख's own): x = his right, y = up (ground 0), z = forward (towards the band). Units ≈ cm × 1.1.
    A pose gives hand targets; arms are solved with two-bone IK, the staff is placed from its grip. */
@@ -49,7 +49,7 @@ import { newSlot } from '../../content/keyed.ts';
     gatyantar2: { r: { to: [4, 136, 24], pole: PRANAM_POLE }, l: DOWN_L, staff: { dir: deg(45), f: .1 } },
   };
   // मंदचल 2: staff keeps its angle, कलश in front of the chest; the hand is just above the कलश
-  { const d = nrm(mul(deg(45), -1)), kal = [3, 128, 26]; P.mandchal2.r = { to: sub(kal, mul(d, .07 * L)), pole: [1, -1, .2] }; }
+  { const d = nrm(mul(deg(45), -1)), kal = [3, 128, 26]; /** @type {any} */ (P.mandchal2).r = { to: sub(kal, mul(d, .07 * L)), pole: [1, -1, .2] }; }
   // स्तभ् 1: the staff slants so the कलश is over the head
   { const H = P.stambh1.r.to, top = [2, 0, 0]; const dx = top[0] - H[0]; top[1] = H[1] + Math.sqrt(L * L * .97 * .97 - dx * dx); P.stambh1.staff.dir = sub(top, H); P.stambh1._top = top; }
   { const H = P.stambh2.r.to, top = P.stambh1._top; P.stambh2.staff.dir = sub(top, H); }
@@ -81,7 +81,7 @@ import { newSlot } from '../../content/keyed.ts';
     const pt = q => pr(q);
     // legs
     const legs = s.legs || { R: { lift: 0, z: s.step === 'R' ? 28 : 0 }, L: { lift: 0, z: 0 } };
-    [['R', 9], ['L', -9]].forEach(([k, x]) => {
+    /** @type {[string, number][]} */ ([['R', 9], ['L', -9]]).forEach(([k, x]) => {
       const lg = legs[k] || { lift: 0, z: 0 }, z = lg.z || 0, th = (lg.lift || 0) * 1.25;   // thigh raised by up to ~70°
       const hipW = [x, 97, 0], kneeW = th ? [x, 97 - 47 * Math.cos(th), 47 * Math.sin(th)] : [x, 50, z * .5];
       const footW = th ? [x, kneeW[1] - 44, kneeW[2] - 4] : [x, 6, z];
@@ -224,7 +224,7 @@ import { newSlot } from '../../content/keyed.ts';
       notes: [[1, tr()], [3, tr()], [7, tr()], [8, tr()]] }],
   };
   // while the feet are moving the staff is carried clear of the ground
-  Object.values(ANIM).flat().forEach(a => { const m = a.march || [0, -1]; a.pose.forEach(p => { if (p[1] === 'daksh' && p[0] >= m[0] && p[0] < m[1]) p[1] = 'carry'; }); });
+  Object.values(ANIM).flat().forEach(a => { const m = a.march || [0, -1]; a.pose.forEach((/** @type {any} */ p) => { if (p[1] === 'daksh' && p[0] >= m[0] && p[0] < m[1]) p[1] = 'carry'; }); });
   SIGNALS.forEach(sg => { if (ANIM[sg.id]) sg.anim = ANIM[sg.id]; });
 
   /* the frame at time t (seconds) of an animation */

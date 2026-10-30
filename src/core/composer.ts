@@ -160,7 +160,7 @@ export function ragaSet(raga: Raga | null | undefined): Set<string> | null {
 export const SHANKH_OK = new Set(['प.', 'स.', 'स', 'ग', 'प']);
 
 /* checks ------------------------------------------------------------------ */
-export interface CheckItem { sev: 'fix' | 'tip'; k: string; at: { bi: number; li: number; row: 'mel' | 'anak'; i: number }; n?: number; t?: string; key?: string }
+export interface CheckItem { sev: 'fix' | 'tip'; k: string; at: { bi: number; li: number; row: 'mel' | 'anak'; i: number }; n?: number; t?: string; key?: string; /** the compiler's message, on the item the screen adds when a composition does not compile */ msg?: string }
 
 export function check(r: Rachana): CheckItem[] {
   const out: CheckItem[] = [], rs = ragaSet(r.raga);

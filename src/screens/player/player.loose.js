@@ -1,9 +1,12 @@
-// @ts-nocheck — moved from v1.1.0 (app.js) unchanged except for its inputs and outputs; not fully typed yet.
+// Moved from v1.1.0 (app.js) unchanged except for its inputs and outputs. Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // The player: the sound and instrument choices, the rachana on screen (score, chips, blocks, position), the transport, the march
 // view, and the settings sheet. One closure, as before: the pieces share their state.
 import * as GhoshAudio from '../../audio/index.ts';
+import { SoundSettings, VOICE_OF } from '../../audio/soundSettings.ts';
+import { SettingsSheet } from './settings-sheet.js';
 import { buildTimeline3 } from '../../core/timeline/timeline3.ts';
 import { makeScoreView } from '../../ui/scoreview.loose.js';
+import { clicked, target, qsa } from '../../ui/dom.js';
 
 /** @param {any} env */
 export function createPlayer(env) {
@@ -17,14 +20,9 @@ let ctx=null,master=null,gains={},noiseBuf=null;
 // वादनाची पट्टी, per part: शंख Sa = B♭4 (466 Hz), वंशी Sa = F♯5 (740 Hz). Each can be moved to any of the 12 notes;
 // the octave stays (शंख: 4th octave, वंशी: 5th). Any other melody instrument chosen for a part plays at that part's Sa.
 const SA_KEYS=GhoshAudio.SA_KEYS,SA_DEF=GhoshAudio.SA_DEF;
-let saKeys=(()=>{const v=store.get('saKeys',null)||{};const o={};for(const k in SA_DEF){const x=v[k];o[k]=Number.isInteger(x)&&x>=0&&x<12?x:SA_DEF[k].key}return o})();
-const saHzOf=pk=>{const d=SA_DEF[pk]||SA_DEF.vanshi;return 440*Math.pow(2,((saKeys[pk in SA_DEF?pk:'vanshi'])-9)/12+(d.oct-4))};
-function setSaKey(pk,k){saKeys[pk]=k;store.set('saKeys',saKeys)}
-// सांतर (default): each note stops a little before its time is up; निरंतर: full length.
-let artic=store.get('artic','santar')==='nirantar'?'nirantar':'santar';
-// कण स्वर (म in म्ग): sounds on the beat for this long, then the main note
-let kanMs=(()=>{const v=+store.get('kanMs',60);return v>=20&&v<=200?v:60})();
-const ENG=new GhoshAudio.AudioEngine({settings:()=>({saKeys,artic,kanMs})});
+// what the person chose about the sound (पट्टी, सांतर / निरंतर, कण स्वर, instruments): src/audio/soundSettings.ts
+const SS=new SoundSettings(store);
+const ENG=new GhoshAudio.AudioEngine({settings:()=>SS.engineSettings()});
 function syncAudio(){ctx=ENG.ctx;master=ENG.master;gains=ENG.parts;noiseBuf=ENG.noise}
 ENG.onContext(syncAudio);
 function audio(){ENG.unlock();syncAudio();return ctx}
@@ -38,18 +36,8 @@ const playStroke=(e,t,out)=>ENG.drums.playStroke(e,t,out);
 const panav=(t,v,o,maxLen)=>ENG.drums.panav(t,v,o,maxLen),jhal=(t,v,o,maxLen)=>ENG.drums.jhal(t,v,o,maxLen),trib=(t,v,o,maxLen)=>ENG.drums.trib(t,v,o,maxLen);
 const footfall=(t,foot,out)=>ENG.drums.footfall(t,foot,out);
 const VOICES=GhoshAudio.VOICES;
-/* वाद्य निवड: which real instruments play each part (saved per viewer) */
-const INSTR={
-  shankh:{dv:'शंख भाग',opts:[['bugle','शंख','Bugle'],['trumpet','तूर्य','Trumpet'],['melodica','मधुरिका','Melodica']]},
-  vanshi:{dv:'वंशी भाग',opts:[['flute','वंशी','Flute'],['venu','वेणु','Bamboo flute'],['clarinet','स्वरद','Clarinet'],['sax','नागांग','Saxophone'],['melodica','मधुरिका','Melodica']]},
-  anak:{dv:'आनक भाग',opts:[['side','आनक','Side drum']]},
-  tal:{dv:'ताल वाद्य',opts:[['bass','पणव','Bass drum'],['cym','झल्लरी (झांज)','Cymbals'],['tri','त्रिभुज','Triangle']]}};
-const INST_DEF={shankh:['bugle'],vanshi:['flute'],anak:['side'],tal:['bass','cym','tri']};
-let INST=(()=>{const v=store.get('inst',null);const o={};for(const g in INST_DEF){const ok=v&&Array.isArray(v[g])?v[g].filter(x=>INSTR[g].opts.some(o=>o[0]===x)):null;o[g]=ok&&(ok.length||g==='anak'||g==='tal')?ok:INST_DEF[g].slice()}return o})();
-const VOICE_OF={bugle:'shankh',trumpet:'trumpet',flute:'vanshi',venu:'venu',clarinet:'clarinet',sax:'sax',melodica:'melodica'};
-const PART_INST={anak:['anak','side'],panav:['tal','bass'],jhallari:['tal','cym'],tribhuj:['tal','tri']};
-function enabled(k){const m=PART_INST[k];return !m||INST[m[0]].includes(m[1])}
-function voicesFor(k){return (INST[k]||[k]).map(x=>VOICE_OF[x]||x)}
+/* वाद्य निवड: which real instruments play each part (saved per viewer; the choice and its rules are in SS) */
+const enabled=k=>SS.enabled(k),voicesFor=k=>SS.voicesFor(k);
 const hz=s=>ENG.hz(s);
 const playNote=(e,t,out,part)=>ENG.note(e,t,out,part);
 
@@ -95,7 +83,7 @@ function loadPiece(piece,order){stop(true);S.custom=null;P=piece;R=P.rhythm;KEYS
 let returnTo=null;   // 'composer' when the player was opened from the composer
 let curKey=null;   // the list row now in the player (book id, or f~<id> for a folder rachana)
 function showPiece(piece,o={}){loadPiece(piece);returnTo=o.returnTo||null;curKey=o.key||null;
-  $('#list').hidden=true;document.querySelectorAll('.cview').forEach(v=>v.hidden=true);$('#player').hidden=false;$('#march').hidden=true;marchOn=false;
+  $('#list').hidden=true;qsa('.cview').forEach(v=>v.hidden=true);$('#player').hidden=false;$('#march').hidden=true;marchOn=false;
   renderPlayer();build();wake(true);
   if(o.play)start(0);if(o.march)$('#marchBtn').click()}
 $('#xBtn').onclick=()=>{if(P&&window.Swarlipi)window.Swarlipi.open(P)};
@@ -136,7 +124,7 @@ function renderModes(){$('#modes [data-m="perf"]').hidden=!R.performance;
   $('#modes').querySelectorAll('[data-m]').forEach(b=>b.setAttribute('aria-pressed',b.dataset.m===mode));
 }
 const instName=id=>i18n.name(...INST_NAMES[id]);
-function chipName(k){if(k==='shankh'||k==='vanshi')return INST[k].map(instName).join(' + ');return PART[k].dv}
+function chipName(k){if(k==='shankh'||k==='vanshi')return SS.inst[k].map(instName).join(' + ');return PART[k].dv}
 function renderChips(){
   const keys=KEYS.filter(k=>PART[k]&&enabled(k));
   const all=keys.filter(k=>k!=='steps').every(on)&&!on('steps');
@@ -189,9 +177,9 @@ function chipTap(k){if(k==='all'){SEL=new Set(KEYS.filter(x=>x!=='steps'));if(ma
   else if(SEL.size===1&&on(k)){SEL=new Set(KEYS.filter(x=>x!=='steps'))}else SEL=new Set([k]);
   if(marchOn&&stepSnd&&P.parts.steps)SEL.add('steps');applySel()}
 function chipLong(k){if(k==='all')return;if(on(k))SEL.delete(k);else SEL.add(k);if(!SEL.size)SEL=new Set(KEYS.filter(x=>x!=='steps'));applySel();if(navigator.vibrate)try{navigator.vibrate(15)}catch(e){}}
-$('#pchips').addEventListener('pointerdown',e=>{const b=e.target.closest('[data-k]');if(!b)return;longDone=false;clearTimeout(pressT);pressT=setTimeout(()=>{longDone=true;chipLong(b.dataset.k)},480)});
+$('#pchips').addEventListener('pointerdown',e=>{const b=clicked(e, '[data-k]');if(!b)return;longDone=false;clearTimeout(pressT);pressT=setTimeout(()=>{longDone=true;chipLong(b.dataset.k)},480)});
 ['pointerup','pointercancel','pointerleave'].forEach(t=>$('#pchips').addEventListener(t,()=>clearTimeout(pressT)));
-$('#pchips').addEventListener('click',e=>{const b=e.target.closest('[data-k]');if(!b)return;if(longDone){longDone=false;return}chipTap(b.dataset.k)});
+$('#pchips').addEventListener('click',e=>{const b=clicked(e, '[data-k]');if(!b)return;if(longDone){longDone=false;return}chipTap(b.dataset.k)});
 $('#pchips').addEventListener('contextmenu',e=>e.preventDefault());
 
 /* ---------- timeline + transport ---------- */
@@ -214,7 +202,7 @@ function blockLabel(b,i){if(b.charan===0)return i18n.t('player.bR');const c=R.ch
   if(c.type==='prarambhik')return i18n.t('player.bPr');if(c.type==='setu')return i18n.t('player.bSe');if(c.role==='closing-tag')return '·';return c.no?dv(c.no):''}
 function renderBlocks(){const B=EV.blocks;const lastI=B.length-1;const cl=perf&&R.performance&&R.performance[R.performance.length-1].closing;
   $('#blocks').innerHTML=B.map((b,i)=>`<button data-b="${i}" class="${cl&&i===lastI?'cl':''}" style="flex-grow:${Math.max(.6,b.e-b.s)}" aria-label="${esc(i18n.t('player.goTo', { target: blockLabel(b,i) }))}"><i></i><span>${blockLabel(b,i)}${cl&&i===lastI?' ⟲':''}</span></button>`).join('')}
-$('#blocks').addEventListener('click',e=>{const b=e.target.closest('[data-b]');if(!b)return;const B=EV.blocks[+b.dataset.b];seek(B.s)});
+$('#blocks').addEventListener('click',e=>{const b=clicked(e, '[data-b]');if(!b)return;const B=EV.blocks[+b.dataset.b];seek(B.s)});
 function idxAt(arr,t){let lo=0,hi=arr.length-1,a=-1;while(lo<=hi){const m=(lo+hi)>>1;if(arr[m].t<=t+EPS){a=m;lo=m+1}else hi=m-1}return a}
 function curPos(){return TR.position()}
 function blockAt(t){const B=EV.blocks;let i=B.findIndex(b=>t>=b.s-EPS&&t<b.e-EPS);if(i<0)i=t<(B[0]?B[0].s:0)?0:B.length-1;return i}
@@ -269,9 +257,9 @@ function blockName(b){const c=R.charans.find(x=>x.n===b.charan);if(!c)return '';
 function scrollToLine(ln){const sc=$('#score');const r=ln.getBoundingClientRect(),sr=sc.getBoundingClientRect();
   const want=sr.top+sr.height*.18;if(r.top<sr.top+4||r.top>sr.top+sr.height*.45)sc.scrollTop+=r.top-want}
 $('#score').addEventListener('click',e=>{
-  const j=e.target.closest('[data-jump]');
+  const j=clicked(e, '[data-jump]');
   if(j){const cid=j.dataset.jump;const B=EV.blocks.find(b=>cid==='r'?b.charan===0:(R.charans.find(c=>c.id===cid)||{}).n===b.charan);if(B)seek(B.s);return}
-  const ln=e.target.closest('.ln[data-first]');if(!ln||!ln.dataset.first)return;
+  const ln=clicked(e, '.ln[data-first]');if(!ln||!ln.dataset.first)return;
   const a=ln.dataset.first,lb=EV.hl[visibleParts()[0]];const now=curPos();
   const hits=lb.filter(b=>b.key===a||b.key.startsWith(a+'.'));if(!hits.length)return;
   const h=hits.find(b=>b.t>=now-0.05)||hits[0];seek(h.t)});
@@ -285,7 +273,7 @@ $('#tup').onclick=$('#mtup').onclick=()=>setTempo(1);$('#tdown').onclick=$('#mtd
 $('#loop').onclick=()=>{loop=!loop;$('#loop').setAttribute('aria-pressed',loop);if(S.playing)restart(curPos())};
 async function setMode(m){if(m===mode)return;stop(true);S.pos=0;mode=m;perf=m==='perf';
   renderModes();renderChips();renderScore();build();paintAt(0);renderModes()}
-$('#modes').addEventListener('click',e=>{const b=e.target.closest('[data-m]');if(b)setMode(b.dataset.m)});
+$('#modes').addEventListener('click',e=>{const b=clicked(e, '[data-m]');if(b)setMode(b.dataset.m)});
 $('#marchBtn').onclick=async()=>{if(!P.parts.steps)return;marchOn=true;$('#march').hidden=false;
   $('#msub').textContent=i18n.t('player.marchA')+' · '+(P.meta.performance.mode==='mandchal'?i18n.t('player.mandchal'):i18n.t('list.prachalan'));if(stepSnd)SEL.add('steps');applySel();lastStep=-1;lastBlock=-1;paintMarchLines();
   if(!S.playing){audio();start(S.pos>=EV.end-.05?0:S.pos,true)}};
@@ -298,30 +286,10 @@ function paintMarchLines(){const cur=lastLine||$('#score .ln');if(!cur){$('#mlin
   const n=$('#mlines .m-now .ln');if(n)n.classList.add('cur')}
 
 /* ---------- वाद्य निवड ---------- */
-function renderSheet(){
-  $('#sheetBody').innerHTML=Object.entries(INSTR).map(([g,G])=>{
-    const need=(g==='shankh'||g==='vanshi');
-    const en=i18n.romanNames;
-    return `<div class="igrp"><b>${i18n.t('common.groups.' + g)}</b><div class="opts">${G.opts.map(([id])=>{const [d,e]=INST_NAMES[id];return `<button class="opt" data-g="${g}" data-i="${id}" aria-pressed="${INST[g].includes(id)}"><span>${i18n.name(d,e)}</span><small>${en?d:e}</small></button>`}).join('')}</div>${need?`<span class="note">${i18n.t('settings.needOne')}</span>`:''}</div>`}).join('');
-  const sel=(on)=>`aria-pressed="${on}"`;
-  $('#playOpts').innerHTML=`<div class="igrp"><b>${i18n.t('settings.pitchL')}</b>${['shankh','vanshi'].map(pk=>`<span class="note">${i18n.t('common.groups.' + pk)} · ${SA_KEYS[saKeys[pk]]}${SA_DEF[pk].oct}</span><div class="opts keys">${SA_KEYS.map((k,i)=>`<button class="opt key" data-sa="${pk}:${i}" ${sel(i===saKeys[pk])}><span>${k}</span></button>`).join('')}</div>`).join('')}</div>
-  <div class="igrp"><b>${i18n.t('settings.artL')}</b><div class="opts">${['santar','nirantar'].map(a=>`<button class="opt" data-art="${a}" ${sel(a===artic)}><span>${i18n.t('settings.'+a)}</span><small>${i18n.t('settings.'+a+'S')}</small></button>`).join('')}</div></div>
-  <div class="igrp"><b>${i18n.t('settings.kanL')}</b><div class="opts">${[30,45,60,80,100,130].map(m=>`<button class="opt key" data-kan="${m}" ${sel(m===kanMs)}><span>${dv(m)}</span></button>`).join('')}</div><span class="note">${i18n.t('settings.ms', { ms: '' })}</span></div>`;
-  $('#libOpts').innerHTML=window.Library?window.Library.sheetHTML():'';
-  if(window.PlatformUI)window.PlatformUI.render();
-  $('#langs').innerHTML=i18n.languages.map(l=>`<button class="opt lang" data-lang="${l.code}" aria-pressed="${l.code===i18n.LANG}" lang="${l.code}"><span>${l.name}</span></button>`).join('')}
-$('#instBtn').onclick=$('#instBtn2').onclick=()=>{renderSheet();$('#sheet').hidden=false};
-$('#sheetX').onclick=()=>{$('#sheet').hidden=true};
-$('#sheet').addEventListener('click',e=>{if(e.target.id==='sheet'){$('#sheet').hidden=true;return}
-  if(e.target.closest('[data-fx]'))return;
-  const lb=e.target.closest('[data-lang]');if(lb){env.setLang(lb.dataset.lang);return}
-  const sb=e.target.closest('[data-sa]');if(sb){const [pk,k]=sb.dataset.sa.split(':');setSaKey(pk,+k);renderSheet();previewSa(pk);return}
-  const ab=e.target.closest('[data-art]');if(ab){artic=ab.dataset.art;store.set('artic',artic);renderSheet();return}
-  const kb=e.target.closest('[data-kan]');if(kb){kanMs=+kb.dataset.kan;store.set('kanMs',kanMs);renderSheet();previewKan();return}
-  const b=e.target.closest('.opt');if(!b)return;const g=b.dataset.g,i=b.dataset.i,cur=INST[g];
-  if(cur.includes(i)){if((g==='shankh'||g==='vanshi')&&cur.length===1)return;INST[g]=cur.filter(x=>x!==i)}else INST[g]=[...cur,i];
-  store.set('inst',INST);renderSheet();if(P&&!$('#player').hidden)applySel()});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('#sheet').hidden)$('#sheet').hidden=true});
+const sheet=new SettingsSheet({$,i18n,dv,settings:SS,instrumentNames:INST_NAMES,saKeys:SA_KEYS,saDefaults:SA_DEF,setLang:l=>env.setLang(l),
+  library:()=>window.Library,platform:()=>window.PlatformUI,onSa:pk=>previewSa(pk),onKan:()=>previewKan(),onInstruments:()=>{if(P&&!$('#player').hidden)applySel()}});
+function renderSheet(){sheet.render()}      // other scripts and the tests call this by name
+sheet.bind();
 // short previews when a setting changes (not while a rachana is playing)
 function previewSa(pk){if(S.playing)return;audio();const t=ctx.currentTime+.05,v=voicesFor(pk)[0];
   [['S',0],['G',0],['P',0],['S',1]].forEach(([sw,o],i)=>playNote({swara:sw,octave:o,dur:.32,pk},t+i*.34,master,v))}
@@ -334,7 +302,7 @@ let lock=null;
 async function wake(want){try{if(want&&!lock&&'wakeLock' in navigator&&document.visibilityState==='visible'){lock=await navigator.wakeLock.request('screen');lock.addEventListener('release',()=>{lock=null})}
   else if(!want&&lock){await lock.release();lock=null}}catch(e){lock=null}}
 document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible'&&P)wake(true)});
-document.addEventListener('keydown',e=>{if(!P||e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||document.querySelector('.cview:not([hidden])'))return;if(e.code==='Space'){e.preventDefault();$('#play').click()}});
+document.addEventListener('keydown',e=>{if(!P||target(e).tagName==='INPUT'||target(e).tagName==='TEXTAREA'||document.querySelector('.cview:not([hidden])'))return;if(e.code==='Space'){e.preventDefault();$('#play').click()}});
 
 const services = {
   matraHTML, slotHTML, sharedMarks, markCell, fitRows, renderPlayer: () => renderPlayer(), openPiece, wake: v => wake(v), 
@@ -346,8 +314,7 @@ const services = {
   player: { get LATE() { return LATE; }, get LIST() { return LSV().LIST; }, get LEAD() { return LEAD; }, get TL() { return TL; }, get P() { return P; }, set P(v) { P = v; }, S, get curKey() { return curKey; },
     get BOOK() { return LSV().BOOK; }, get SEL() { return SEL; }, set SEL(v) { SEL = v; }, get MIX() { return MIX; }, set MIX(v) { MIX = v; },
     loadPiece: (p, o) => loadPiece(p, o), build: () => build(), start: (a, b) => start(a, b), stop: s => stop(s), showPiece: (p, o) => showPiece(p, o) },
-  settings: { get artic() { return artic; }, set artic(v) { artic = v; }, get kanMs() { return kanMs; }, set kanMs(v) { kanMs = v; }, get saKeys() { return saKeys; }, setSaKey: (k, v) => setSaKey(k, v),
-    SA_KEYS, SA_DEF, VOICE_OF, INST_NAMES, RAGA_ROM: env.RAGA_ROM },
+  settings: Object.assign(SS, { SA_KEYS, SA_DEF, VOICE_OF, INST_NAMES, RAGA_ROM: env.RAGA_ROM }),      // the sound settings, with the tables the sound check reads beside them
 };
 // what the page does after the language changed: redraw the rachana on screen, if one is open
 function rerender() {
@@ -356,7 +323,7 @@ function rerender() {
 }
 // Handles other page scripts and the tests use by name (platform.js is not migrated yet); the screens use env instead.
 Object.assign(window, { openPiece, renderSheet, announce, otherPlays, stop, S, TR, ganHTML, slotHTML, matraHTML });
-for (const [n, get] of Object.entries({ ctx: () => ctx, artic: () => artic, kanMs: () => kanMs, saKeys: () => saKeys })) Object.defineProperty(window, n, { get, configurable: true });
+for (const [n, get] of Object.entries({ ctx: () => ctx, artic: () => SS.artic, kanMs: () => SS.kanMs, saKeys: () => SS.saKeys })) Object.defineProperty(window, n, { get, configurable: true });
 return { services, rerender, openPiece, renderSheet, isBusy: () => S.playing,
   /** the language changed: the settings sheet, and the rachana on screen if one is open */
   onLang() { renderSheet(); rerender(); } };

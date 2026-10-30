@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { MemoryKv, getJSON, setJSON } from '../../src/data/kv.ts';
 import { Settings } from '../../src/data/settings.ts';
 import { UserLibrary } from '../../src/data/userLibrary.ts';
+import { sanitizeTalaPage, readTalaPage } from '../../src/data/talaPage.ts';
 import { createBackup, parseBackup, planRestore, applyRestore, planIsEmpty, backupFileName, olderCopiesFile } from '../../src/data/backup.ts';
 
 // content differs per id (the `tag`), as real compositions do; pass { tag } to make two share their content
@@ -173,4 +174,37 @@ test('restoring the same backup again and again adds one copy, not one more each
   for (let i = 0; i < 3; i++) applyRestore(other, planRestore(other, backup, okChecks, o));
   const names = new UserLibrary(other).compositions().map(r => r.name).sort();
   assert.deepEqual(names, ['changed here', 'एक (backup)', 'दोन'].sort());
+});
+
+/* ---------- the tala page's choices (tala.v3, outside the key prefix) ---------- */
+const raw = (o = {}) => { const m = { ...o }; return { getItem: k => (k in m ? m[k] : null), setItem: (k, v) => { m[k] = v; }, dump: () => m }; };
+const TALA = { chal: 'mand', win: 12, speed: 0.5, dhv: true, snd: { num: false, step: true }, talas: { kerva: true, khemta: false } };
+
+test('tala page: only what the page can have written is kept', () => {
+  assert.deepEqual(sanitizeTalaPage(TALA), TALA);
+  assert.deepEqual(sanitizeTalaPage({ ...TALA, chal: 'nope', win: 99, speed: 7, dhv: 'yes', evil: '<script>', snd: { num: true, hack: true }, talas: { 'a b': true, kerva: 'x' } }), { snd: { num: true } });
+  assert.equal(sanitizeTalaPage('x'), null); assert.equal(sanitizeTalaPage([]), null); assert.equal(sanitizeTalaPage({ junk: 1 }), null);
+  assert.deepEqual(readTalaPage(raw({ 'tala.v3': JSON.stringify(TALA) })), TALA);
+  assert.equal(readTalaPage(raw({ 'tala.v3': '{broken' })), null); assert.equal(readTalaPage(raw()), null);
+});
+test('tala page: it travels in a backup and is restored only where the device has no choices of its own', () => {
+  const dev = device(), backup = parseBackup(JSON.stringify(createBackup(dev, { app: 'x', tala: TALA }))).backup;
+  assert.deepEqual(backup.tala, TALA);
+  const fresh = new MemoryKv(), r1 = raw();
+  const plan = planRestore(fresh, backup, okChecks, { ...opts, haveTala: false });
+  assert.deepEqual(plan.tala, { add: TALA, kept: false }); assert.equal(planIsEmpty(plan), false);
+  assert.equal(applyRestore(fresh, plan, r1), true);
+  assert.deepEqual(JSON.parse(r1.dump()['tala.v3']), TALA);
+  const kept = planRestore(new MemoryKv(), backup, okChecks, { ...opts, haveTala: true });
+  assert.deepEqual(kept.tala, { add: null, kept: true });
+  const r2 = raw({ 'tala.v3': '{"chal":"sthir"}' }); applyRestore(new MemoryKv(), kept, r2);
+  assert.equal(r2.dump()['tala.v3'], '{"chal":"sthir"}');                      // the device's own choice is not replaced
+  assert.equal(applyRestore(new MemoryKv(), plan), true);                      // no raw storage given: the tala part is left out, the rest still works
+});
+test('tala page: a backup from before it was added restores as before; a backup of only tala choices is not empty; damaged choices are dropped', () => {
+  const old = JSON.parse(JSON.stringify(createBackup(device(), { app: 'x' }))); assert.equal('tala' in old, false);
+  const p = planRestore(new MemoryKv(), parseBackup(JSON.stringify(old)).backup, okChecks, opts); assert.deepEqual(p.tala, { add: null, kept: false });
+  const only = parseBackup(JSON.stringify({ format: 'ghoshnaad-backup/1', app: 'x', created: '', mine: [], fixes: {}, settings: {}, tala: TALA }));
+  assert.equal(only.ok, true);
+  assert.equal(parseBackup(JSON.stringify({ format: 'ghoshnaad-backup/1', mine: [], fixes: {}, settings: {}, tala: { junk: 1 } })).ok, false);
 });

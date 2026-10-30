@@ -82,7 +82,6 @@
     ]
   },
   "c_go": "composer.go",
-  "c_hear": "composer.hear",
   "c_high": "composer.high",
   "c_hold": "composer.hold",
   "c_import": "composer.import",
@@ -218,7 +217,6 @@
   },
   "done": "player.done",
   "f_bad": "correction.bad",
-  "f_brokenFix": "correction.brokenFix",
   "f_btn": "correction.btn",
   "f_cancel": "correction.cancel",
   "f_changed": {
@@ -230,8 +228,6 @@
       "n"
     ]
   },
-  "f_copied": "correction.copied",
-  "f_copy": "correction.copy",
   "f_delQ": "correction.delQ",
   "f_delete": "correction.delete",
   "f_dirty": "correction.dirty",
@@ -239,19 +235,7 @@
   "f_draft": "correction.draft",
   "f_err": "correction.err",
   "f_export": "correction.export",
-  "f_exportAll": "correction.exportAll",
-  "f_exportP": "correction.exportP",
   "f_file": "correction.file",
-  "f_fixCount": {
-    "fn": "correction.fixCount",
-    "numeric": [
-      "n"
-    ],
-    "params": [
-      "n"
-    ]
-  },
-  "f_fixes": "correction.fixes",
   "f_fromLib": "correction.fromLib",
   "f_help": "correction.help",
   "f_import": "correction.import",
@@ -289,19 +273,13 @@
   },
   "f_no": "correction.no",
   "f_noSrc": "correction.noSrc",
-  "f_notBook": "correction.notBook",
   "f_ok": "correction.ok",
   "f_orig": "correction.orig",
   "f_pickup": "correction.pickup",
   "f_play": "correction.play",
   "f_revert": "correction.revert",
   "f_revertQ": "correction.revertQ",
-  "f_reverted": "correction.reverted",
   "f_save": "correction.save",
-  "f_saved": "correction.saved",
-  "f_savedT": "correction.savedT",
-  "f_share": "correction.share",
-  "f_tag": "correction.tag",
   "f_tala": "correction.tala",
   "f_title": {
     "fn": "correction.title",
@@ -568,7 +546,6 @@
   },
   "now": "player.now",
   "once": "player.once",
-  "onceA": "player.onceA",
   "openErr": "list.openErr",
   "parts": {
     "anak": "common.parts.anak",
@@ -679,7 +656,6 @@
   "pitchL": "settings.pitchL",
   "pitchN": "settings.pitchN",
   "play": "player.play",
-  "playL": "player.playL",
   "playerA": "player.playerA",
   "prachalan": "list.prachalan",
   "prarambhik": "player.prarambhik",
@@ -726,7 +702,6 @@
     "soundcheck.kanO.2"
   ],
   "s_keep": "soundcheck.keep",
-  "s_kept": "soundcheck.kept",
   "s_key": {
     "fn": "soundcheck.key",
     "params": [
@@ -774,7 +749,6 @@
   "s_saptak": "soundcheck.saptak",
   "s_seq": "soundcheck.seq",
   "s_shankhNote": "soundcheck.shankhNote",
-  "s_steps": "soundcheck.steps",
   "s_stop": "soundcheck.stop",
   "s_swell": "soundcheck.swell",
   "s_swellO": [
@@ -847,9 +821,7 @@
   "x_btn": "export.btn",
   "x_copied": "export.copied",
   "x_copy": "export.copy",
-  "x_countL": "export.countL",
   "x_endL": "export.endL",
-  "x_from": "export.from",
   "x_grpL": "export.grpL",
   "x_highO": "export.highO",
   "x_holdL": "export.holdL",
@@ -863,7 +835,6 @@
   "x_order": "export.order",
   "x_pages": "export.pages",
   "x_parts": "export.parts",
-  "x_pickup": "export.pickup",
   "x_plain": "export.plain",
   "x_preview": "export.preview",
   "x_print": "export.print",
@@ -873,7 +844,6 @@
   "x_rich": "export.rich",
   "x_samL": "export.samL",
   "x_score": "export.score",
-  "x_setuL": "export.setuL",
   "x_steps": "export.steps",
   "x_style": "export.style",
   "x_tal": "export.tal",

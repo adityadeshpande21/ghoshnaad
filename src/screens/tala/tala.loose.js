@@ -1,8 +1,9 @@
-// @ts-nocheck — moved from v1.1.0's tala page (the content and drawing are unchanged); not fully typed yet.
+// Moved from v1.1.0's tala page (the content and drawing are unchanged). Checked by tsc as plain JavaScript (tsconfig.loose.json: wrong names, properties and argument types fail; implicit any is allowed).
 // ताल वेळरेषा: every ताल on one time line, so the आवर्तन, the steps, the ध्वंकार and the आनक's hands can be seen to line up (घोष परिचय pp. 47, 49–53).
 // It draws into a shadow root (its own styles, its own element ids) and uses the app's one audio engine and Transport.
 import { Transport } from '../../audio/transport.ts';
 import { tick as talaTick, levelOf as talaLevelOf, panavStroke as talaPanav, footfall as talaFoot } from '../../audio/tala.ts';
+import { clicked } from '../../ui/dom.js';
 
 /** @param {ShadowRoot} root @param {import('../../ui/env.d.ts').AppEnv} env */
 export function createTalaTimeline(root, env) {
@@ -141,15 +142,15 @@ function startPlay(ri){
   const b=root.querySelector(`[data-play="${ri}"]`);if(b){b.innerHTML=STOPI;b.setAttribute('aria-pressed','true')}
   root.getElementById('cell'+ri).classList.add('playing');
   const frame=()=>{if(!PLAY)return;const P=PLAY,tc=Math.max(0,TR.position()*P.sp),inLoop=tc%P.loop,rep=Math.floor(inLoop/P.cyc),k=Math.floor((inLoop-rep*P.cyc)/P.md+1e-6)+1;
-    const c=root.getElementById('cell'+P.ri);if(c){c.querySelector('.ph').style.left=(inLoop*st.pps)+'px';const id=rep+'-'+k;
+    const c=root.getElementById('cell'+P.ri);if(c){/** @type {HTMLElement} */ (c.querySelector('.ph')).style.left=(inLoop*st.pps)+'px';const id=rep+'-'+k;
       if(id!==P.lastC){const o=c.querySelector(`g[data-c="${P.lastC}"]`);if(o)o.classList.remove('on');const g=c.querySelector(`g[data-c="${id}"]`);if(g)g.classList.add('on');P.lastC=id;
         const n=root.getElementById('now'+P.ri);if(n)n.textContent=d(k)}}
     P.raf=requestAnimationFrame(frame)};
   frame();
 }
-root.getElementById('grid').addEventListener('click',e=>{const b=e.target.closest('[data-play]');if(!b)return;const ri=+b.dataset.play;if(PLAY&&PLAY.ri===ri)stopPlay();else startPlay(ri)});
+root.getElementById('grid').addEventListener('click',e=>{const b=clicked(e, '[data-play]');if(!b)return;const ri=+b.dataset.play;if(PLAY&&PLAY.ri===ri)stopPlay();else startPlay(ri)});
 document.addEventListener('visibilitychange',()=>{if(document.hidden)stopPlay()});
-root.getElementById('filters').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const ds=b.dataset;
+root.getElementById('filters').addEventListener('click',e=>{const b=clicked(e, 'button');if(!b)return;const ds=b.dataset;
   const was=PLAY&&PLAY.ri;stopPlay();
   if(ds.s){st.snd[ds.s]=!st.snd[ds.s]}else if(ds.v){st.speed=+ds.v}else if(ds.t){st.talas[ds.t]=!st.talas[ds.t]}else if(ds.c){st.chal=ds.c}else if(ds.l){st[ds.l]=!st[ds.l]}else if(ds.w){st.win=+ds.w}else if(ds.z){st.pps=+ds.z}
   save();render();if(was!=null&&(ds.s||ds.v||ds.l||ds.w||ds.z)&&root.getElementById('cell'+was))startPlay(was)});

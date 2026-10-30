@@ -76,6 +76,8 @@ test.describe('language', () => {
 
 test.describe('sound', () => {
   test.skip(() => !fs.existsSync(DIST), 'no dist build');
+  // WebKit's offline render once differed from the original recipe by 6e-6 against a limit of 1e-6 and passed on every rerun: a real change fails every time, so a retry tells them apart
+  test.describe.configure({ retries: 2 });
   test('the ठेका, ध्वंकार and footfall are the same sounds as the standalone page made', async ({ page }) => {
     await page.goto('file://' + DIST);
     await page.waitForSelector('#rows .row', { state: 'attached' });
